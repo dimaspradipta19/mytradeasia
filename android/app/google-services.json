@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "476020516162",
+    "project_id": "mytradeasia-920d9",
+    "storage_bucket": "mytradeasia-920d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476020516162:android:c1eda88b3f3573c312d4db",
+        "android_client_info": {
+          "package_name": "com.example.mytradeasia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476020516162-1ikqd5vd0af7tdclb0q9k4vnhiqj7t9s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO52FymUZwFloag66mv0ybeU9vnmLwdTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476020516162-1ikqd5vd0af7tdclb0q9k4vnhiqj7t9s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
