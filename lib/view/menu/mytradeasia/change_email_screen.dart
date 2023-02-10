@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/email_change_verfication.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
   const ChangeEmailScreen({super.key});
@@ -9,9 +10,10 @@ class ChangeEmailScreen extends StatefulWidget {
 }
 
 class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
-  TextEditingController _oldEmailController = TextEditingController();
-  TextEditingController _newEmailController = TextEditingController();
-  TextEditingController _confirmEmailController = TextEditingController();
+  final TextEditingController _oldEmailController = TextEditingController();
+  final TextEditingController _newEmailController = TextEditingController();
+  final TextEditingController _confirmEmailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -50,6 +52,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
               ),
               const SizedBox(height: 30.0),
               Form(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -63,8 +66,12 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                                 const BorderRadius.all(Radius.circular(7))),
                         child: TextFormField(
                           controller: _oldEmailController,
-                          decoration:
-                              const InputDecoration(border: InputBorder.none),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Enter your old email address",
+                              hintStyle: text12.copyWith(color: greyColor2),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 20, top: 16.0, bottom: 16.0)),
                         ),
                       ),
                     ),
@@ -78,8 +85,12 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                                 const BorderRadius.all(Radius.circular(7))),
                         child: TextFormField(
                           controller: _newEmailController,
-                          decoration:
-                              const InputDecoration(border: InputBorder.none),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Enter your new email address",
+                              hintStyle: text12.copyWith(color: greyColor2),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 20, top: 16.0, bottom: 16.0)),
                         ),
                       ),
                     ),
@@ -93,8 +104,12 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                                 const BorderRadius.all(Radius.circular(7))),
                         child: TextFormField(
                           controller: _confirmEmailController,
-                          decoration:
-                              const InputDecoration(border: InputBorder.none),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Enter your new email address",
+                              hintStyle: text12.copyWith(color: greyColor2),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 20, top: 16.0, bottom: 16.0)),
                         ),
                       ),
                     ),
@@ -108,24 +123,30 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
         child: Container(
-          height: 55,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(greyColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7.0),
+            height: 55,
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7.0),
+                  ),
                 ),
               ),
-            ),
-            onPressed: null,
-            child: Text(
-              "Verify",
-              style: text16.copyWith(color: whiteColor),
-            ),
-          ),
-        ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return EmailChangeVerfication();
+                  },
+                ));
+              },
+              child: Text(
+                "Verify",
+                style: text16.copyWith(color: whiteColor),
+              ),
+            )),
       ),
     );
   }

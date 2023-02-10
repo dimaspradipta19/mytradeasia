@@ -51,11 +51,13 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: Form(
                       child: TextFormField(
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           border: InputBorder.none,
                           hintText: "What do you want to search?",
-                          prefixIcon: Icon(
+                          hintStyle: text12.copyWith(color: greyColor2),
+                          prefixIcon: const Icon(
                             Icons.search_rounded,
+                            size: 24.0,
                           ),
                         ),
                       ),
@@ -109,8 +111,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
 
             // GRID DATA
             Expanded(
-              // width: MediaQuery.of(context).size.width,
-              // height: 100,
               child: Consumer<ListProductProvider>(
                 builder: (context, ListProductProvider value, _) {
                   if (value.state == ResultState.loading) {

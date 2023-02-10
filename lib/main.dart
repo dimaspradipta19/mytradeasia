@@ -4,7 +4,6 @@ import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/view/auth/register_screen.dart';
-// import 'package:mytradeasia/view/menu/navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -23,7 +22,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final DbManager manager = DbManager();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -42,7 +40,6 @@ class _MyAppState extends State<MyApp> {
           fontFamily: "Poppins",
         ),
         home: const RegisterScreen(),
-        // home: NavigationBarWidget(manager: manager,),
       ),
     );
   }

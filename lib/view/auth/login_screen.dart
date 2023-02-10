@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool value = false;
   bool isLoading = false;
+  bool obscureText = true;
 
   final _auth = FirebaseAuth.instance;
 
@@ -90,9 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             hintText: "Enter your email",
-                            contentPadding: EdgeInsets.all(10.0),
+                            hintStyle: text12.copyWith(
+                                color: greyColor2, fontWeight: FontWeight.w400),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             border: InputBorder.none),
                         controller: _emailController,
                       ),
@@ -121,14 +125,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 width: MediaQuery.of(context).size.width,
                 child: TextFormField(
+                  obscureText: obscureText,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: "Enter your password",
+                    hintStyle: text12.copyWith(
+                        color: greyColor2, fontWeight: FontWeight.w400),
                     contentPadding: const EdgeInsets.only(
-                        left: 8.0, top: 12.0, bottom: 8.0),
+                        left: 20.0, top: 12.0, bottom: 8.0),
                     border: InputBorder.none,
                     suffixIcon: IconButton(
                       onPressed: () {
+                        setState(() {
+                          obscureText = !obscureText;
+                        });
                         print("toggle  eyes");
                       },
                       icon: const Icon(Icons.remove_red_eye),
@@ -183,14 +193,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   email: _emailController.text,
                                   password: _phoneNumberController.text);
 
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return NavigationBarWidget(
-                                      manager: manager,
-                                    );
-                                  },
-                                ), (route) => false);
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return NavigationBarWidget(
+                                    manager: manager,
+                                  );
+                                },
+                              ), (route) => false);
                             } catch (e) {
                               final snackbar =
                                   SnackBar(content: Text(e.toString()));

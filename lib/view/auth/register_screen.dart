@@ -90,11 +90,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (emailValidator) {
                           if (emailValidator!.isEmpty) {
                             return "Email is empty";
-                          } return null;
+                          }
+                          return null;
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             hintText: "Enter your email",
-                            contentPadding: EdgeInsets.all(10.0),
+                            hintStyle: text12.copyWith(
+                                fontWeight: FontWeight.w400, color: greyColor2),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             border: InputBorder.none),
                         controller: _emailController,
                       ),
@@ -145,10 +149,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             width: MediaQuery.of(context).size.width,
                             child: TextFormField(
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                  hintText: "Enter your phone number",
-                                  contentPadding: EdgeInsets.all(10.0),
-                                  border: InputBorder.none),
+                              decoration: InputDecoration(
+                                hintText: "Enter your phone number",
+                                hintStyle: text12.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: greyColor2),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                border: InputBorder.none,
+                              ),
                               controller: _phoneNumberController,
                             ),
                           ),
@@ -168,7 +177,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Checkbox(
                       value: isChecked,
                       onChanged: (bool? value) {
-                        print("checkbox");
                         setState(() {
                           isChecked = value!;
                         });
