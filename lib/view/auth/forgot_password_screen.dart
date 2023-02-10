@@ -4,7 +4,6 @@ import 'package:mytradeasia/view/auth/reset_password_screen.dart';
 
 import '../../utils/theme.dart';
 
-
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -74,9 +73,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                       ),
                       child: TextFormField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             hintText: "Enter your email",
-                            contentPadding: EdgeInsets.all(10.0),
+                            hintStyle: text12.copyWith(
+                                color: greyColor2, fontWeight: FontWeight.w400),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             border: InputBorder.none),
                         controller: _emailController,
                       ),

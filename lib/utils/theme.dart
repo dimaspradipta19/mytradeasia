@@ -34,5 +34,7 @@ const TextStyle text16 =
     TextStyle(fontFamily: 'Poppins', fontSize: 16, color: primaryColor);
 const TextStyle text18 =
     TextStyle(fontFamily: 'Poppins', fontSize: 18, color: primaryColor);
+const TextStyle text20 =
+    TextStyle(fontFamily: 'Poppins', fontSize: 20, color: primaryColor);
 const TextStyle text22 =
     TextStyle(fontFamily: 'Poppins', fontSize: 22, color: primaryColor);

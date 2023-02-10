@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:mytradeasia/widget/dialog_reset_password_widget.dart';
 
 import '../../modelview/provider/db_manager.dart';
 import '../../utils/theme.dart';
-import '../menu/home_screen.dart';
 import 'login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -13,19 +12,21 @@ class ResetPasswordScreen extends StatefulWidget {
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController _oldPasswordController = TextEditingController();
-final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
 
-@override
+  @override
   void dispose() {
     _oldPasswordController.dispose();
     _newPasswordController.dispose();
     super.dispose();
   }
 
-DbManager manager = DbManager();
+  DbManager manager = DbManager();
+
+  bool obscureText = true;
+  bool obscureTextConfirm = true;
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +80,27 @@ DbManager manager = DbManager();
                         ),
                       ),
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                            hintText: "Enter your password",
-                            contentPadding: EdgeInsets.all(10.0),
-                            border: InputBorder.none),
+                        obscureText: obscureText,
+                        decoration: InputDecoration(
+                          hintText: "Enter your password",
+                          hintStyle: text12.copyWith(
+                              color: greyColor2, fontWeight: FontWeight.w400),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 16.0),
+                          border: InputBorder.none,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            icon: Image.asset(
+                              "assets/images/icon_eye_close.png",
+                              width: 24.0,
+                              height: 24.0,
+                            ),
+                          ),
+                        ),
                         controller: _oldPasswordController,
                       ),
                     ),
@@ -101,14 +119,25 @@ DbManager manager = DbManager();
                         ),
                       ),
                       child: TextFormField(
+                        obscureText: obscureTextConfirm,
                         decoration: InputDecoration(
                           hintText: "Enter your password",
-                          contentPadding: const EdgeInsets.only(
-                              left: 10.0, right: 10.0, top: 12.0),
+                          hintStyle: text12.copyWith(
+                              color: greyColor2, fontWeight: FontWeight.w400),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 16.0),
                           border: InputBorder.none,
                           suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.remove_red_eye),
+                            onPressed: () {
+                              setState(() {
+                                obscureTextConfirm = !obscureTextConfirm;
+                              });
+                            },
+                            icon: Image.asset(
+                              "assets/images/icon_eye_close.png",
+                              width: 24.0,
+                              height: 24.0,
+                            ),
                           ),
                         ),
                         controller: _newPasswordController,
@@ -136,15 +165,13 @@ DbManager manager = DbManager();
                         ),
                         onPressed: () {
                           print(_oldPasswordController.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return HomeScreen(
-                                  // manager: manager,
-                                );
-                              },
-                            ),
+
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return const ResetPasswordDialogWidget();
+                            },
                           );
                         },
                         child: Text(
@@ -174,9 +201,6 @@ DbManager manager = DbManager();
                   const Text("Remember Password?"),
                   TextButton(
                     onPressed: () {
-                      const snackbar =
-                          SnackBar(content: Text("Berhasil Registrasi"));
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
