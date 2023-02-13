@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import '../../model/biodata_model.dart';
 import '../../modelview/provider/db_manager.dart';
 import '../../utils/theme.dart';
+import '../../widget/dialog_sheet_widget.dart';
+import 'login_screen.dart';
 // import '../homescreen.dart';
 
 class BiodataScreen extends StatefulWidget {
@@ -23,6 +25,8 @@ class _BiodataScreenState extends State<BiodataScreen> {
   final TextEditingController _passwordController = TextEditingController();
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+
+  bool obscureText = true;
 
   DbManager manager = DbManager();
 
@@ -51,7 +55,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor),
+                        MaterialStateProperty.all<Color>(primaryColor1),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7.0),
@@ -70,12 +74,36 @@ class _BiodataScreenState extends State<BiodataScreen> {
 
                     await Provider.of<DbManager>(context, listen: false)
                         .addBiodata(biodata);
-                        
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+
+                    await showDialog(
+                      barrierDismissible: false,
+                      context: context,
                       builder: (context) {
-                        return NavigationBarWidget(manager: manager);
+                        return DialogWidget(
+                            urlIcon:
+                                "assets/images/icon_sukses_reset_password.png",
+                            title: "Successful Registration",
+                            subtitle:
+                                "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                            textForButton: "Go to Home",
+                            navigatorFunction: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const LoginScreen();
+                                  },
+                                ),
+                              );
+                            });
                       },
-                    ), (route) => false);
+                    );
+
+                    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return NavigationBarWidget(manager: manager);
+                    //   },
+                    // ), (route) => false);
                   },
                   child: Text(
                     "Create Account",
@@ -104,18 +132,16 @@ class _BiodataScreenState extends State<BiodataScreen> {
                 const SizedBox(
                   height: 50.48,
                 ),
-                Text(
+                const Text(
                   "Input Your Account Data",
-                  style: text22.copyWith(
-                      fontWeight: FontWeight.w500, color: primaryColor),
+                  style: heading1,
                 ),
                 const SizedBox(
                   height: 5.0,
                 ),
                 Text(
-                    "Lorem ipsum dolor sit amet consectetur. Tincidunt varius blandit a nisl purus pulvinar quis. Posuere ligula.",
-                    style: text14.copyWith(
-                        color: greyColor, fontWeight: FontWeight.w400)),
+                    "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor eget.",
+                    style: body1Regular.copyWith(color: fontColor2)),
                 const SizedBox(
                   height: 30.0,
                 ),
@@ -125,23 +151,22 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //First Name
-                      Text(
-                        "First Name",
-                        style: text22.copyWith(
-                            color: primaryColor, fontWeight: FontWeight.w500),
-                      ),
+                      const Text("First Name", style: heading3),
+                      const SizedBox(height: 8.0),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
+                          border: Border.all(color: greyColor3),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
                         ),
                         width: MediaQuery.of(context).size.width,
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               hintText: "Enter your first name",
-                              contentPadding: EdgeInsets.all(10.0),
+                              hintStyle:
+                                  body1Regular.copyWith(color: greyColor),
+                              contentPadding: const EdgeInsets.all(10.0),
                               border: InputBorder.none),
                           controller: _firstNameController,
                         ),
@@ -151,23 +176,21 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       ),
 
                       // Last Name
-                      Text(
-                        "Last Name",
-                        style: text22.copyWith(
-                            color: primaryColor, fontWeight: FontWeight.w500),
-                      ),
+                      const Text("Last Name", style: heading3),
+                      const SizedBox(height: 8.0),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
+                          border: Border.all(color: greyColor3),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
                         ),
                         width: MediaQuery.of(context).size.width,
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Enter your last name",
-                            contentPadding: EdgeInsets.all(10.0),
+                            hintStyle: body1Regular.copyWith(color: greyColor),
+                            contentPadding: const EdgeInsets.all(10.0),
                             border: InputBorder.none,
                           ),
                           controller: _lastNameController,
@@ -178,23 +201,21 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       ),
 
                       // Company Name
-                      Text(
-                        "Company Name",
-                        style: text22.copyWith(
-                            color: primaryColor, fontWeight: FontWeight.w500),
-                      ),
+                      const Text("Company Name", style: heading3),
+                      const SizedBox(height: 8.0),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
+                          border: Border.all(color: greyColor3),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
                         ),
                         width: MediaQuery.of(context).size.width,
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Enter your company name",
-                            contentPadding: EdgeInsets.all(10.0),
+                            hintStyle: body1Regular.copyWith(color: greyColor),
+                            contentPadding: const EdgeInsets.all(10.0),
                             border: InputBorder.none,
                           ),
                           controller: _companyNameController,
@@ -205,14 +226,11 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       ),
 
                       // Country
-                      Text(
-                        "Country",
-                        style: text22.copyWith(
-                            color: primaryColor, fontWeight: FontWeight.w500),
-                      ),
+                      const Text("Country", style: heading3),
+                      const SizedBox(height: 8.0),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
+                          border: Border.all(color: greyColor3),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
@@ -221,12 +239,16 @@ class _BiodataScreenState extends State<BiodataScreen> {
                         child: TextFormField(
                           decoration: InputDecoration(
                             hintText: "Enter your country",
-                            contentPadding: const EdgeInsets.all(10.0),
+                            hintStyle: body1Regular.copyWith(color: greyColor),
+                            contentPadding:
+                                const EdgeInsets.only(left: 10.0, top: 12.0),
                             border: InputBorder.none,
                             suffixIcon: IconButton(
                               onPressed: () {},
-                              icon:
-                                  const Icon(Icons.arrow_forward_ios_outlined),
+                              icon: Image.asset(
+                                  "assets/images/icon_forward.png",
+                                  width: 24.0,
+                                  height: 24.0),
                             ),
                           ),
                           controller: _countryController,
@@ -237,30 +259,42 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       ),
 
                       // Password
-                      Text(
-                        "Password",
-                        style: text22.copyWith(
-                            color: primaryColor, fontWeight: FontWeight.w500),
-                      ),
+                      const Text("Password", style: heading3),
+                      const SizedBox(height: 8.0),
                       Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
+                          border: Border.all(color: greyColor3),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
                         ),
                         width: MediaQuery.of(context).size.width,
                         child: TextFormField(
+                          obscureText: obscureText,
                           decoration: InputDecoration(
                             hintText: "Enter your password",
+                            hintStyle: body1Regular.copyWith(color: greyColor),
                             contentPadding: const EdgeInsets.only(
                                 left: 8.0, top: 12.0, bottom: 8.0),
                             border: InputBorder.none,
                             suffixIcon: IconButton(
                               onPressed: () {
+                                setState(() {
+                                  obscureText = !obscureText;
+                                });
                                 print("toggle eyes");
                               },
-                              icon: const Icon(Icons.remove_red_eye),
+                              icon: obscureText == true
+                                  ? Image.asset(
+                                      "assets/images/icon_eye_close.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/icon_eye_open.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    ),
                             ),
                           ),
                           controller: _passwordController,

@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: MediaQuery.of(context).size.width,
               height: 235.0,
               decoration: const BoxDecoration(
-                color: primaryColor,
+                color: primaryColor1,
               ),
               child: Stack(
                 children: [
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 40.0,
                               width: 40.0,
                               decoration: const BoxDecoration(
-                                  color: secondaryColor,
+                                  color: secondaryColor1,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5.0))),
                               child: IconButton(
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 40.0,
                               width: 40.0,
                               decoration: const BoxDecoration(
-                                color: secondaryColor,
+                                color: secondaryColor1,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
                               ),
@@ -359,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {},
                           child: Text(
                             "See More",
-                            style: text12.copyWith(color: secondaryColor),
+                            style: text12.copyWith(color: secondaryColor1),
                           )),
                     ],
                   ),
@@ -446,7 +446,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all<
-                                                        Color>(primaryColor),
+                                                        Color>(primaryColor1),
                                                 shape:
                                                     MaterialStateProperty.all<
                                                         RoundedRectangleBorder>(
@@ -475,7 +475,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 30,
                                       width: 30,
                                       decoration: const BoxDecoration(
-                                          color: secondaryColor,
+                                          color: secondaryColor1,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
                                       child: IconButton(
@@ -523,7 +523,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 50,
                           height: 50,
                           decoration: const BoxDecoration(
-                            color: thirdColor,
+                            color: thirdColor1,
                             borderRadius: BorderRadius.all(Radius.circular(7)),
                           ),
                           child: Column(
@@ -531,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Image.asset(
                                 iconModel[index],
-                                color: primaryColor,
+                                color: primaryColor1,
                                 width: 24.0,
                                 height: 24.0,
                               ),
@@ -638,7 +638,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {},
                       child: Text(
                         "See More",
-                        style: text12.copyWith(color: secondaryColor),
+                        style: text12.copyWith(color: secondaryColor1),
                       ),
                     ),
                   ),

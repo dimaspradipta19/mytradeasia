@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
-import 'package:mytradeasia/view/auth/register_screen.dart';
+import 'package:mytradeasia/widget/splash_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -39,7 +39,8 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
           fontFamily: "Poppins",
         ),
-        home: const RegisterScreen(),
+        // home: const RegisterScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

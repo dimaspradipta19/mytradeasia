@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/view/auth/biodata_screen.dart';
 import 'package:mytradeasia/view/auth/forgot_password_screen.dart';
 import 'package:mytradeasia/view/auth/register_screen.dart';
-// import 'package:mytradeasia/view/homescreen.dart';
 import 'package:mytradeasia/view/menu/navigation_bar.dart';
 
 import '../../modelview/provider/db_manager.dart';
@@ -53,18 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 50.48),
-              Text(
-                "Hi there, Welcome Back!",
-                style: text22.copyWith(
-                    fontWeight: FontWeight.w500, color: primaryColor),
-              ),
+              const Text("Hi there, Welcome Back!", style: heading1),
               const SizedBox(
                 height: 5.0,
               ),
               Text(
                   "Lorem ipsum dolor sit amet consectetur. Tincidunt varius blandit a nisl purus pulvinar quis. Posuere ligula.",
-                  style: text14.copyWith(
-                      color: greyColor, fontWeight: FontWeight.w400)),
+                  style: body1Medium.copyWith(color: fontColor2)),
               const SizedBox(
                 height: 30.0,
               ),
@@ -75,15 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Email",
-                      style: text22.copyWith(
-                          color: primaryColor, fontWeight: FontWeight.w500),
-                    ),
+                    Text("Email", style: heading3),
                     const SizedBox(height: 8),
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
+                        border: Border.all(color: greyColor3),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(7),
                         ),
@@ -93,8 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             hintText: "Enter your email",
-                            hintStyle: text12.copyWith(
-                                color: greyColor2, fontWeight: FontWeight.w400),
+                            hintStyle: body1Regular.copyWith(color: greyColor),
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             border: InputBorder.none),
@@ -109,16 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               // Phone Number
-              Text(
-                "Password",
-                style: text22.copyWith(
-                    color: primaryColor, fontWeight: FontWeight.w500),
-              ),
+              Text("Password", style: heading3),
               const SizedBox(height: 8),
 
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: greyColor),
+                  border: Border.all(color: greyColor3),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(7),
                   ),
@@ -129,8 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: "Enter your password",
-                    hintStyle: text12.copyWith(
-                        color: greyColor2, fontWeight: FontWeight.w400),
+                    hintStyle: body1Regular.copyWith(color: greyColor),
                     contentPadding: const EdgeInsets.only(
                         left: 20.0, top: 12.0, bottom: 8.0),
                     border: InputBorder.none,
@@ -141,7 +128,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                         print("toggle  eyes");
                       },
-                      icon: const Icon(Icons.remove_red_eye),
+                      icon: obscureText == true
+                          ? Image.asset(
+                              "assets/images/icon_eye_close.png",
+                              width: 24.0,
+                              height: 24.0,
+                            )
+                          : Image.asset("assets/images/icon_eye_open.png",
+                              width: 24.0, height: 24.0),
                     ),
                   ),
                   controller: _phoneNumberController,
@@ -162,7 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text("Forgot Password?"),
+                    child: Text(
+                      "Forgot Password?",
+                      style: body1Regular.copyWith(color: secondaryColor1),
+                    ),
                   ),
                 ],
               ),
@@ -175,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ? ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(primaryColor),
+                                MaterialStateProperty.all<Color>(primaryColor1),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -243,17 +240,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: greyColor,
+                      color: greyColor3,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 31.0),
-                    child: Text("or sign in with"),
+                    child: Text(
+                      "or sign in with",
+                      style: body1Regular,
+                    ),
                   ),
                   Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: greyColor,
+                      color: greyColor3,
                     ),
                   ),
                 ],
@@ -275,13 +275,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0),
-                              side: const BorderSide(color: primaryColor),
+                              side: const BorderSide(color: primaryColor1),
                             ),
                           ),
                         ),
                         child: Image.asset("assets/images/logo_google.png"),
                         onPressed: () {
                           print("Google");
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => BiodataScreen(),));
                         },
                       ),
                     ),
@@ -301,7 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0),
-                              side: const BorderSide(color: primaryColor),
+                              side: const BorderSide(color: primaryColor1),
                             ),
                           ),
                         ),
@@ -320,7 +321,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't Have an account?"),
+                  const Text(
+                    "Don't Have an account?",
+                    style: body1Regular,
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -332,7 +336,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text("Sign up here"),
+                    child: Text("Sign up here",
+                        style: body1Regular.copyWith(color: secondaryColor1)),
                   ),
                 ],
               ),

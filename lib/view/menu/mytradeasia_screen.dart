@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/contact_us_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/personal_data_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
         automaticallyImplyLeading: false,
         title: const Text(
           "My Tradeasia",
-          style: text18,
+          style: heading2,
         ),
         backgroundColor: whiteColor,
         centerTitle: true,
@@ -113,9 +114,19 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   urlIcon: "assets/images/icon_quotation.png",
                   onPressedFunction: () {}),
               MyTradeAsiaWidget(
-                  nama: "Contact Us",
-                  urlIcon: "assets/images/icon_cs.png",
-                  onPressedFunction: () {}),
+                nama: "Contact Us",
+                urlIcon: "assets/images/icon_cs.png",
+                onPressedFunction: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const ContactUsScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
               MyTradeAsiaWidget(
                   nama: "FAQs",
                   urlIcon: "assets/images/icon_faq.png",
@@ -148,7 +159,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor),
+                        MaterialStateProperty.all<Color>(primaryColor1),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7.0),

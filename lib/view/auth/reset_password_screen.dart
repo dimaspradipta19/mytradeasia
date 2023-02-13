@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/widget/dialog_reset_password_widget.dart';
+import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
 import '../../modelview/provider/db_manager.dart';
 import '../../utils/theme.dart';
@@ -69,7 +69,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     Text(
                       "Password",
                       style: text14.copyWith(
-                          color: primaryColor, fontWeight: FontWeight.w500),
+                          color: primaryColor1, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
                     Container(
@@ -94,11 +94,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 obscureText = !obscureText;
                               });
                             },
-                            icon: Image.asset(
-                              "assets/images/icon_eye_close.png",
-                              width: 24.0,
-                              height: 24.0,
-                            ),
+                            icon: obscureText == true
+                                ? Image.asset(
+                                    "assets/images/icon_eye_close.png",
+                                    width: 24.0,
+                                    height: 24.0,
+                                  )
+                                : Image.asset(
+                                    "assets/images/icon_eye_open.png",
+                                    width: 24.0,
+                                    height: 24.0,
+                                  ),
                           ),
                         ),
                         controller: _oldPasswordController,
@@ -108,7 +114,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     Text(
                       "Confirmation Password",
                       style: text14.copyWith(
-                          color: primaryColor, fontWeight: FontWeight.w500),
+                          color: primaryColor1, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
                     Container(
@@ -133,11 +139,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 obscureTextConfirm = !obscureTextConfirm;
                               });
                             },
-                            icon: Image.asset(
-                              "assets/images/icon_eye_close.png",
-                              width: 24.0,
-                              height: 24.0,
-                            ),
+                            icon: obscureTextConfirm == true
+                                ? Image.asset(
+                                    "assets/images/icon_eye_close.png",
+                                    width: 24.0,
+                                    height: 24.0,
+                                  )
+                                : Image.asset(
+                                    "assets/images/icon_eye_open.png",
+                                    width: 24.0,
+                                    height: 24.0,
+                                  ),
                           ),
                         ),
                         controller: _newPasswordController,
@@ -155,7 +167,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ? ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(primaryColor),
+                              MaterialStateProperty.all<Color>(primaryColor1),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -164,13 +176,27 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           ),
                         ),
                         onPressed: () {
-                          print(_oldPasswordController.text);
-
                           showDialog(
                             barrierDismissible: false,
                             context: context,
                             builder: (context) {
-                              return const ResetPasswordDialogWidget();
+                              return DialogWidget(
+                                urlIcon:
+                                    "assets/images/icon_sukses_reset_password.png",
+                                title: "Successful Reset Password",
+                                subtitle:
+                                    "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                textForButton: "Back to Sign In",
+                                navigatorFunction: () {
+                                  // navigatorFunction;
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return const LoginScreen();
+                                    },
+                                  ));
+                                },
+                              );
                             },
                           );
                         },

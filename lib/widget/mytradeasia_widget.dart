@@ -18,8 +18,6 @@ class MyTradeAsiaWidget extends StatefulWidget {
 }
 
 class _MyTradeAsiaWidgetState extends State<MyTradeAsiaWidget> {
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,11 +34,10 @@ class _MyTradeAsiaWidgetState extends State<MyTradeAsiaWidget> {
             ),
             const Spacer(),
             IconButton(
-                onPressed: widget.onPressedFunction,
-                icon: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: greyColor2,
-                ))
+              onPressed: widget.onPressedFunction,
+              icon: Image.asset("assets/images/icon_forward.png",
+                  width: 24.0, height: 24.0),
+            ),
           ],
         ),
       ),

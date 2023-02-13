@@ -47,18 +47,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 50.48),
-              Text(
-                "Sign Up Here",
-                style: text22.copyWith(
-                    fontWeight: FontWeight.w500, color: primaryColor),
-              ),
+              const Text("Sign Up Here", style: heading1),
               const SizedBox(
                 height: 5.0,
               ),
               Text(
-                "Lorem ipsum dolor sit amet consectetur. Tincidunt varius blandit a nisl purus pulvinar quis. Posuere ligula.",
-                style: text14.copyWith(
-                    color: greyColor, fontWeight: FontWeight.w400),
+                "Lorem ipsum dolor sit amet consectetur. Quam non commodo nulla ac condimentum ornare turpis.",
+                style: body1Regular.copyWith(color: fontColor2),
               ),
               Form(
                 key: _formKey,
@@ -70,16 +65,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     //Email
-                    Text(
+                    const Text(
                       "Email",
-                      style: text14.copyWith(
-                          color: primaryColor, fontWeight: FontWeight.w500),
+                      style: heading3,
                     ),
                     const SizedBox(height: 8),
 
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
+                        border: Border.all(color: greyColor3),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(7),
                         ),
@@ -95,8 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         decoration: InputDecoration(
                             hintText: "Enter your email",
-                            hintStyle: text12.copyWith(
-                                fontWeight: FontWeight.w400, color: greyColor2),
+                            hintStyle: body1Regular.copyWith(color: greyColor),
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             border: InputBorder.none),
@@ -108,10 +101,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     // Phone Number
-                    Text(
+                    const Text(
                       "Phone Number",
-                      style: text14.copyWith(
-                          color: primaryColor, fontWeight: FontWeight.w500),
+                      style: heading3,
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -122,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onTap: () => print("Print flag"),
                             child: Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: greyColor),
+                                border: Border.all(color: greyColor3),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(7.0),
                                 ),
@@ -141,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           flex: 5,
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: greyColor),
+                              border: Border.all(color: greyColor3),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(7),
                               ),
@@ -151,9 +143,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: "Enter your phone number",
-                                hintStyle: text12.copyWith(
+                                hintStyle: body1Regular.copyWith(
                                     fontWeight: FontWeight.w400,
-                                    color: greyColor2),
+                                    color: greyColor),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 20.0),
                                 border: InputBorder.none,
@@ -175,6 +167,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Expanded(
                     flex: 1,
                     child: Checkbox(
+                      checkColor: primaryColor1,
+                      activeColor: Colors.transparent,
+                      side: const BorderSide(color: primaryColor1, width: 2.0),
                       value: isChecked,
                       onChanged: (bool? value) {
                         setState(() {
@@ -188,11 +183,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: RichText(
                       text: TextSpan(
                           text: "I've read, understood and agree to the ",
-                          style: text12,
+                          style: body1Medium,
                           children: [
                             TextSpan(
                               text: "Privacy Policy",
-                              style: text12.copyWith(color: secondaryColor),
+                              style: text12.copyWith(color: secondaryColor1),
                             ),
                             const TextSpan(
                               text: " and ",
@@ -200,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             TextSpan(
                               text: "Terms and Conditions",
-                              style: text12.copyWith(color: secondaryColor),
+                              style: text12.copyWith(color: secondaryColor1),
                             ),
                           ]),
                     ),
@@ -219,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ? ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(primaryColor),
+                              MaterialStateProperty.all<Color>(primaryColor1),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -293,17 +288,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: greyColor,
+                      color: greyColor3,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 31.0),
-                    child: Text("or sign up with"),
+                    child: Text("or sign up with", style: body1Regular),
                   ),
                   Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: greyColor,
+                      color: greyColor3,
                     ),
                   ),
                 ],
@@ -325,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(7.0),
-                              side: const BorderSide(color: primaryColor),
+                              side: const BorderSide(color: primaryColor1),
                             ),
                           ),
                         ),
@@ -351,7 +346,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0),
-                                side: const BorderSide(color: primaryColor)),
+                                side: const BorderSide(color: primaryColor1)),
                           ),
                         ),
                         child: Image.asset("assets/images/logo_facebook.png"),
@@ -369,7 +364,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Have an account?"),
+                  const Text(
+                    "Have an account?",
+                    style: body1Medium,
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -381,7 +379,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       );
                     },
-                    child: const Text("Sign in here"),
+                    child: Text("Sign in here",
+                        style: body1Medium.copyWith(color: secondaryColor1)),
                   )
                 ],
               ),

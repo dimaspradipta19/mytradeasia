@@ -128,7 +128,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                 BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor1),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),

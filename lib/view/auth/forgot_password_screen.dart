@@ -62,7 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Text(
                       "Email",
                       style: text22.copyWith(
-                          color: primaryColor, fontWeight: FontWeight.w500),
+                          color: primaryColor1, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
                     Container(
@@ -94,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ? ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(primaryColor),
+                              MaterialStateProperty.all<Color>(primaryColor1),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(

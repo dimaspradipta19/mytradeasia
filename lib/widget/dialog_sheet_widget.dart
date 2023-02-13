@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/auth/login_screen.dart';
 
-class ResetPasswordDialogWidget extends StatelessWidget {
-  const ResetPasswordDialogWidget({super.key});
+class DialogWidget extends StatelessWidget {
+  const DialogWidget({
+    super.key,
+    required this.urlIcon,
+    required this.title,
+    required this.subtitle,
+    required this.textForButton,
+    required this.navigatorFunction,
+  });
+
+  final String urlIcon;
+  final String title;
+  final String subtitle;
+  final String textForButton;
+  final void Function()? navigatorFunction;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      
       insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 170.0),
       scrollable: false,
       contentPadding: const EdgeInsets.all(20),
@@ -16,19 +27,19 @@ class ResetPasswordDialogWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/images/icon_sukses_reset_password.png",
+            urlIcon,
             width: 150,
             height: 110,
           ),
           const SizedBox(height: 20),
-          const Center(
+          Center(
             child: Text(
-              "Successful Reset Password",
+              title,
               style: text20,
             ),
           ),
           Text(
-            "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+            subtitle,
             style:
                 text12.copyWith(color: greyColor2, fontWeight: FontWeight.w400),
             textAlign: TextAlign.justify,
@@ -40,22 +51,16 @@ class ResetPasswordDialogWidget extends StatelessWidget {
             child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(primaryColor),
+                      MaterialStateProperty.all<Color>(primaryColor1),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const LoginScreen();
-                    },
-                  ), (route) => false);
-                },
+                onPressed: navigatorFunction,
                 child: Text(
-                  "Back to Sign In",
+                  textForButton,
                   style: text16.copyWith(color: whiteColor),
                 )),
           )

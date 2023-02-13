@@ -21,7 +21,11 @@ class PersonalDataScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Image.asset("assets/images/icon_back.png")),
+            icon: Image.asset(
+              "assets/images/icon_back.png",
+              width: 24.0,
+              height: 24.0,
+            )),
         title: const Text(
           "Personal Data",
           style: text18,
@@ -51,7 +55,7 @@ class PersonalDataScreen extends StatelessWidget {
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: primaryColor1,
                             borderRadius: BorderRadius.circular(20)),
                         child: const Icon(
                           Icons.camera_alt_rounded,
@@ -217,7 +221,7 @@ class PersonalDataScreen extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
           child: ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+              backgroundColor: MaterialStateProperty.all<Color>(primaryColor1),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7.0),

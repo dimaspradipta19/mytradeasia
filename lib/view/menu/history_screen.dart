@@ -48,7 +48,7 @@ class HistoryScreen extends StatelessWidget {
                 );
               }
               return Container(
-                color: secondaryColor,
+                color: secondaryColor1,
                 child: const Text("Error"),
               );
             },

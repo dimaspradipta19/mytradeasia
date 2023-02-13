@@ -42,6 +42,7 @@ dependencies:
   path: ^1.8.2
   provider: ^6.0.5
   http: ^0.13.5
+  cloud_firestore: ^4.3.2
 
 dev_dependencies:
   flutter_test:

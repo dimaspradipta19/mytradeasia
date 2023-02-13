@@ -36,9 +36,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: primaryColor,
+                    icon: Image.asset(
+                      "assets/images/icon_back.png",
+                      width: 24.0,
+                      height: 24.0,
                     )),
                 const SizedBox(width: 10.0),
                 Expanded(
@@ -51,7 +52,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: Form(
                       child: TextFormField(
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "What do you want to search?",
                           hintStyle: text12.copyWith(color: greyColor2),
@@ -69,7 +70,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                   width: 50.0,
                   height: 50.0,
                   decoration: BoxDecoration(
-                      color: secondaryColor,
+                      color: secondaryColor1,
                       borderRadius: BorderRadius.circular(7)),
                   child: IconButton(
                     onPressed: () {},
@@ -86,7 +87,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(thirdColor),
+                        MaterialStateProperty.all<Color>(thirdColor1),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100.0),
@@ -100,7 +101,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     children: [
                       Text(
                         "Filter",
-                        style: text12.copyWith(color: secondaryColor),
+                        style: text12.copyWith(color: secondaryColor1),
                       ),
                     ],
                   ),
@@ -202,7 +203,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all<
-                                                        Color>(primaryColor),
+                                                        Color>(primaryColor1),
                                                 shape:
                                                     MaterialStateProperty.all<
                                                         RoundedRectangleBorder>(
@@ -231,7 +232,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                       height: 30,
                                       width: 30,
                                       decoration: const BoxDecoration(
-                                          color: secondaryColor,
+                                          color: secondaryColor1,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(5))),
                                       child: IconButton(
