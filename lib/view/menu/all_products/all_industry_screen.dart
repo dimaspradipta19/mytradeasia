@@ -29,10 +29,32 @@ class AllIndustryScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: const [
-            Text("All Industry Screen"),
-          ],
+        child: Expanded(
+          child: GridView.builder(
+            itemCount: 18,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+            ),
+            itemBuilder: (context, index) {
+              return Container(
+                height: 50,
+                width: 50,
+                color: secondaryColor4,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/icon_food.png",
+                      width: 24.0,
+                      height: 24.0,
+                    ),
+                    Text("Food and Beverages")
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
