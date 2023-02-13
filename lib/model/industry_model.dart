@@ -1,3 +1,5 @@
+import 'package:mytradeasia/view/menu/all_products/all_industry_screen.dart';
+
 List iconModel = [
   "assets/images/icon_agri.png",
   "assets/images/icon_animal.png",
@@ -18,4 +20,15 @@ List iconName = [
   "Leather",
   "Metal & Steel",
   "All Industries",
+];
+
+List urlNavigator = [
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
+  const AllIndustryScreen(),
 ];

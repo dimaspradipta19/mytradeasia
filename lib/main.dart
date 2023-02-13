@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
+import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/widget/splash_page.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +32,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => ListProductProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SearchProductProvider(),
         ),
       ],
       child: MaterialApp(

@@ -503,6 +503,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 16.0),
 
                   // GRID INDUSTRY
+
                   GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -517,7 +518,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          print(iconModel[index]);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return urlNavigator[index];
+                            },
+                          ));
                         },
                         child: Container(
                           width: 50,
@@ -652,5 +657,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
