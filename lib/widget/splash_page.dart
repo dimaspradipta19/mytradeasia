@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/view/auth/role_user_screen.dart';
 
 import '../view/auth/register_screen.dart';
 
@@ -15,7 +16,7 @@ class SplashScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const RegisterScreen();
+              return const RoleUserScreen();
             },
           ),
         );

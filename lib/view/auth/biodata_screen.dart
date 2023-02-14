@@ -126,7 +126,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                   child: SizedBox(
                     width: 159.0,
                     height: 65.0,
-                    child: Image.asset("assets/images/logo.png"),
+                    child: Image.asset("assets/images/logo_biru.png"),
                   ),
                 ),
                 const SizedBox(

@@ -38,10 +38,10 @@ class AllIndustryScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 itemCount: allIndustries[0].length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                ),
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.8),
                 itemBuilder: (context, index) {
                   var item = allIndustries[0][index];
                   var photoItem = allIndustries[1][index];
@@ -150,30 +150,38 @@ class AllIndustryScreen extends StatelessWidget {
                         },
                       );
                     },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                          color: thirdColor1,
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            photoItem,
-                            width: 24.0,
-                            height: 24.0,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Stack(
+                          alignment:AlignmentDirectional.center,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                  color: thirdColor1,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5.0))),
+                            ),
+                            Image.asset(
+                              photoItem,
+                              width: 24.0,
+                              height: 24.0,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Expanded(
+                          child: Text(
                             item,
                             style: text10.copyWith(color: fontColor1),
                             textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                   );
                 },

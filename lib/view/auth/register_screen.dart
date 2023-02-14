@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: SizedBox(
                   width: 159.0,
                   height: 65.0,
-                  child: Image.asset("assets/images/logo.png"),
+                  child: Image.asset("assets/images/logo_biru.png"),
                 ),
               ),
               const SizedBox(height: 50.48),

@@ -4,6 +4,7 @@ import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
+import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/widget/splash_page.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'MyTradeasia',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          backgroundColor: whiteColor,
           fontFamily: "Poppins",
         ),
         // home: const RegisterScreen(),

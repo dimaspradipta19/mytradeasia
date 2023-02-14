@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: Form(
                             child: TextFormField(
-                              onTap: (){},
+                              onTap: () {},
                               decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.only(
                                       left: 15.0, top: 14.0, bottom: 16.0),
@@ -515,9 +515,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 4,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15,
-                            childAspectRatio: 1),
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            childAspectRatio: 0.7),
                     itemCount: iconModel.length,
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
@@ -531,32 +531,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ));
                         },
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            color: thirdColor1,
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                iconModel[index],
-                                color: primaryColor1,
-                                width: 24.0,
-                                height: 24.0,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: const BoxDecoration(
+                                    color: thirdColor1,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(7)),
+                                  ),
+                                ),
+                                Image.asset(
+                                  iconModel[index],
+                                  color: primaryColor1,
+                                  width: 24.0,
+                                  height: 24.0,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Expanded(
+                              child: Text(
                                 iconName[index],
                                 style: text10,
                                 textAlign: TextAlign.center,
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       );
                     },
