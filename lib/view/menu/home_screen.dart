@@ -149,10 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: Form(
                             child: TextFormField(
-                              decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.search),
+                              onTap: (){},
+                              decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.only(
+                                      left: 15.0, top: 14.0, bottom: 16.0),
+                                  prefixIcon: Image.asset(
+                                    "assets/images/icon_search.png",
+                                    width: 24,
+                                    height: 24,
+                                  ),
                                   border: InputBorder.none,
-                                  hintText: "What do you want to search"),
+                                  hintText: "What do you want to search",
+                                  hintStyle:
+                                      body1Regular.copyWith(color: greyColor)),
                             ),
                           ),
                         ),
@@ -501,9 +510,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // INDUSTRY
                   const Text("Industry", style: text18),
                   const SizedBox(height: 16.0),
-
                   // GRID INDUSTRY
-
                   GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
