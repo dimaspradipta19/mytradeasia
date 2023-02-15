@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
@@ -44,37 +45,37 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   Image.asset("assets/images/profile_picture.png"),
                   const SizedBox(width: 20.0),
                   Column(
-                    children: [
-                      Consumer<DbManager>(
-                        builder: (context, DbManager value, child) {
-                          if (value.state == ResultState.loading) {
-                            return const Text("");
-                          } else if (value.state == ResultState.hasData) {
-                            return FutureBuilder(
-                              future:
-                                  value.getBiodataByUid(_auth.currentUser!.uid),
-                              builder: (context, snapshot) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
-                                        style: text16),
-                                    Text(
-                                      snapshot.data?.companyName ?? "company",
-                                      style: text15.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: greyColor2),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            return const Text("No Data");
-                          }
-                        },
-                      ),
+                    children: const [
+                      // Consumer<DbManager>(
+                      //   builder: (context, DbManager value, child) {
+                      //     if (value.state == ResultState.loading) {
+                      //       return const Text("");
+                      //     } else if (value.state == ResultState.hasData) {
+                      //       return FutureBuilder(
+                      //         future:
+                      //             value.getBiodataByUid(_auth.currentUser!.uid),
+                      //         builder: (context, snapshot) {
+                      //           return Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: [
+                      //               Text(
+                      //                   "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
+                      //                   style: text16),
+                      //               Text(
+                      //                 snapshot.data?.companyName ?? "company",
+                      //                 style: text15.copyWith(
+                      //                     fontWeight: FontWeight.w400,
+                      //                     color: greyColor2),
+                      //               ),
+                      //             ],
+                      //           );
+                      //         },
+                      //       );
+                      //     } else {
+                      //       return const Text("No Data");
+                      //     }
+                      //   },
+                      // ),
                     ],
                   )
                 ],

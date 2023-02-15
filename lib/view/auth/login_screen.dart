@@ -282,7 +282,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Image.asset("assets/images/logo_google.png"),
                         onPressed: () {
                           print("Google");
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => BiodataScreen(),));
                         },
                       ),
                     ),

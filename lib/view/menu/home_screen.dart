@@ -24,14 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final DbManager manager = DbManager();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     Provider.of<DbManager>(context, listen: false).getBiodataById(1);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,28 +61,29 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text("Welcome Back,",
                                     style: text12.copyWith(color: whiteColor)),
-                                Consumer<DbManager>(
-                                  builder: (context, DbManager value, child) {
-                                    if (value.state == ResultState.loading) {
-                                      return const Text("");
-                                    } else if (value.state ==
-                                        ResultState.hasData) {
-                                      return FutureBuilder(
-                                        future: value.getBiodataByUid(
-                                            _auth.currentUser!.uid),
-                                        builder: (context, snapshot) {
-                                          return Text(
-                                              "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
-                                              style: text16.copyWith(
-                                                  color: whiteColor,
-                                                  fontWeight: FontWeight.bold));
-                                        },
-                                      );
-                                    } else {
-                                      return const Text("No Data");
-                                    }
-                                  },
-                                ),
+                                
+                                // Consumer<DbManager>(
+                                //   builder: (context, DbManager value, child) {
+                                //     if (value.state == ResultState.loading) {
+                                //       return const Text("");
+                                //     } else if (value.state ==
+                                //         ResultState.hasData) {
+                                //       return FutureBuilder(
+                                //         future: value.getBiodataByUid(
+                                //             _auth.currentUser!.uid),
+                                //         builder: (context, snapshot) {
+                                //           return Text(
+                                //               "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
+                                //               style: text16.copyWith(
+                                //                   color: whiteColor,
+                                //                   fontWeight: FontWeight.bold));
+                                //         },
+                                //       );
+                                //     } else {
+                                //       return const Text("No Data");
+                                //     }
+                                //   },
+                                // ),
                               ],
                             ),
                             const Spacer(),

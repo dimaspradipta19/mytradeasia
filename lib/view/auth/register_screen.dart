@@ -326,6 +326,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         child: Image.asset("assets/images/logo_google.png"),
                         onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const BiodataScreen(),
+                              ));
                           print("Google");
                         },
                       ),

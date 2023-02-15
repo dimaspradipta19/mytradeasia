@@ -56,9 +56,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                           border: InputBorder.none,
                           hintText: "What do you want to search?",
                           hintStyle: text12.copyWith(color: greyColor2),
-                          prefixIcon: const Icon(
-                            Icons.search_rounded,
-                            size: 24.0,
+                          prefixIcon: Image.asset(
+                            "assets/images/icon_search.png",
+                            width: 24.0,
+                            height: 24.0,
                           ),
                         ),
                       ),
@@ -137,15 +138,12 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Center(
-                                    child: Image.network(
-                                  "$url${value.listProduct[index].productimage}",
-                                  width: 148.0,
-                                  height: 116.0,
-                                )),
-                              ),
+                              Center(
+                                  child: Image.network(
+                                "$url${value.listProduct[index].productimage}",
+                                width: 148.0,
+                                height: 116.0,
+                              )),
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(

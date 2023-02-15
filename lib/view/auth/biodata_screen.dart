@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/navigation_bar.dart';
@@ -23,12 +24,11 @@ class _BiodataScreenState extends State<BiodataScreen> {
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
 
   bool obscureText = true;
-
-  DbManager manager = DbManager();
+  // DbManager manager = DbManager();
 
   @override
   void dispose() {
@@ -40,10 +40,9 @@ class _BiodataScreenState extends State<BiodataScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    final auth = FirebaseAuth.instance;
-
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
@@ -63,17 +62,33 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    final biodata = BiodataModel(
-                      firstName: _firstNameController.text,
-                      lastName: _lastNameController.text,
-                      companyName: _companyNameController.text,
-                      country: _countryController.text,
-                      password: _passwordController.text,
-                      uid: auth.currentUser!.uid.toString(),
-                    );
+                    String docsId = auth.currentUser!.uid.toString();
+                    Map<String, dynamic> data = {
+                      'firstName': _firstNameController.text,
+                      'lastName': _lastNameController.text,
+                      'companyName': _companyNameController.text,
+                      'country': _countryController.text,
+                      'password': _passwordController.text,
+                      'uid': auth.currentUser!.uid.toString(),
+                    };
+                    await FirebaseFirestore.instance
+                        .collection('biodata')
+                        .doc(docsId)
+                        .set(data);
 
-                    await Provider.of<DbManager>(context, listen: false)
-                        .addBiodata(biodata);
+                    // users.add(data);
+
+                    // final biodata = BiodataModel(
+                    //   firstName: _firstNameController.text,
+                    //   lastName: _lastNameController.text,
+                    //   companyName: _companyNameController.text,
+                    //   country: _countryController.text,
+                    //   password: _passwordController.text,
+                    //   uid: auth.currentUser!.uid.toString(),
+                    // );
+
+                    // await Provider.of<DbManager>(context, listen: false)
+                    //     .addBiodata(biodata);
 
                     await showDialog(
                       barrierDismissible: false,
