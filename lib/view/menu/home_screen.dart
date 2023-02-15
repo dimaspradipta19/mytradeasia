@@ -4,6 +4,7 @@ import 'package:mytradeasia/modelview/provider/db_manager.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/all_products/all_products_screen.dart';
+import 'package:mytradeasia/view/menu/search_product_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/industry_model.dart';
@@ -149,7 +150,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: Form(
                             child: TextFormField(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return const SearchScreen();
+                                },));
+                              },
+                              readOnly: true,
                               decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.only(
                                       left: 15.0, top: 14.0, bottom: 16.0),
@@ -159,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 24,
                                   ),
                                   border: InputBorder.none,
-                                  hintText: "What do you want to search",
+                                  hintText: "What do you want to search?",
                                   hintStyle:
                                       body1Regular.copyWith(color: greyColor)),
                             ),
@@ -310,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             print("ALL PRODUCTS");
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return AllProductsScreen();
+                                return const AllProductsScreen();
                               },
                             ));
                           },

@@ -1,8 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mytradeasia/utils/theme.dart';
 
-class EmailChangeVerfication extends StatelessWidget {
+class EmailChangeVerfication extends StatefulWidget {
   const EmailChangeVerfication({super.key});
+
+  @override
+  State<EmailChangeVerfication> createState() => _EmailChangeVerficationState();
+}
+
+class _EmailChangeVerficationState extends State<EmailChangeVerfication> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _digit1Controller = TextEditingController();
+  final TextEditingController _digit2Controller = TextEditingController();
+  final TextEditingController _digit3Controller = TextEditingController();
+  final TextEditingController _digit4Controller = TextEditingController();
+  final FocusNode _focusNode1 = FocusNode();
+  final FocusNode _focusNode2 = FocusNode();
+  final FocusNode _focusNode3 = FocusNode();
+  final FocusNode _focusNode4 = FocusNode();
+
+  @override
+  void dispose() {
+    _digit1Controller.dispose();
+    _digit2Controller.dispose();
+    _digit3Controller.dispose();
+    _digit4Controller.dispose();
+    _focusNode1.dispose();
+    _focusNode2.dispose();
+    _focusNode3.dispose();
+    _focusNode4.dispose();
+    super.dispose();
+  }
+
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +66,7 @@ class EmailChangeVerfication extends StatelessWidget {
                     style: text12,
                   ),
                   Text(
-                    "amelia@chemtradeasia.com",
+                    _auth.currentUser?.email ?? "Email",
                     style: text12.copyWith(color: secondaryColor1),
                   )
                 ],
@@ -42,69 +74,143 @@ class EmailChangeVerfication extends StatelessWidget {
               const SizedBox(height: 40),
               // FORM OTP
               Form(
+                key: _formKey,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(7),
-                        ),
-                      ),
+                    SizedBox(
+                      width: 60,
                       child: TextFormField(
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
+                        controller: _digit1Controller,
+                        focusNode: _focusNode1,
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            _focusNode1.unfocus();
+                            _focusNode2.requestFocus();
+                          }
+                        },
                         decoration: const InputDecoration(
-                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                          border: OutlineInputBorder(),
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor),
+                          ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: secondaryColor1, width: 1.0),
+                            borderSide: BorderSide(color: secondaryColor1),
                           ),
                         ),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a digit';
+                          }
+                          return null;
+                        },
                       ),
                     ),
-                    const Spacer(),
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(7),
-                        ),
-                      ),
+                    SizedBox(
+                      width: 60,
                       child: TextFormField(
+                        controller: _digit2Controller,
+                        focusNode: _focusNode2,
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            _focusNode2.unfocus();
+                            _focusNode3.requestFocus();
+                          }
+                        },
                         decoration: const InputDecoration(
-                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                          border: OutlineInputBorder(),
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: secondaryColor1),
+                          ),
                         ),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a digit';
+                          }
+                          return null;
+                        },
                       ),
                     ),
-                    const Spacer(),
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(7))),
+                    SizedBox(
+                      width: 60,
                       child: TextFormField(
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
+                        controller: _digit3Controller,
+                        focusNode: _focusNode3,
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            _focusNode3.unfocus();
+                            _focusNode4.requestFocus();
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                          border: OutlineInputBorder(),
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: secondaryColor1),
+                          ),
+                        ),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a digit';
+                          }
+                          return null;
+                        },
                       ),
                     ),
-                    const Spacer(),
-                    Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(7))),
+                    SizedBox(
+                      width: 60,
                       child: TextFormField(
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
+                        controller: _digit4Controller,
+                        focusNode: _focusNode4,
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            _focusNode4.unfocus();
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                          border: OutlineInputBorder(),
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: secondaryColor1),
+                          ),
+                        ),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a digit';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
