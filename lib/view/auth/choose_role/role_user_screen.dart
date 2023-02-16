@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/auth/register_screen.dart';
+import 'package:mytradeasia/view/auth/register/register_screen.dart';
 
 class RoleUserScreen extends StatefulWidget {
   const RoleUserScreen({super.key});

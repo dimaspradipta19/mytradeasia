@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/service/firestore_service.dart';
 import 'package:provider/provider.dart';
 
-import '../../modelview/provider/db_manager.dart';
-import '../../utils/result_state.dart';
-import '../../utils/theme.dart';
+import '../../../modelview/provider/db_manager.dart';
+import '../../../utils/result_state.dart';
+import '../../../utils/theme.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -18,18 +17,8 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
-    // final DbManager manager = DbManager();
-
-    // final DocumentReference documentReference = FirebaseFirestore.instance
-    //     .collection('biodata')
-    //     .doc(_auth.currentUser!.uid.toString());
-
-    // final DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-    //     .collection('biodata')
-    //     .doc(_auth.currentUser!.uid.toString()).get();
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -37,25 +26,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
           const Center(
             child: Text("History Screen"),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          const Text("Get Data"),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: StreamBuilder(
+              stream: _firestore
                   .collection('biodata')
-                  .doc(_auth.currentUser!.uid.toString())
-                  .get();
-              if (snapshot.exists) {
-                print("FirstName :${snapshot.get("firstName")}");
-                print("LastName :${snapshot.get("lastName")}");
-                print("CompanyName ${snapshot.get("companyName")}");
-                print("Country :${snapshot.get("country")}");
-                print("Password :${snapshot.get("password")}");
-                print("UID :${snapshot.get("uid")}");
-              } else {
-                print('Document does not exist');
-              }
-            },
-            child: const Text("Get Data"),
-          ),
+                  .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                if (streamSnapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: streamSnapshot.data!.docs.length,
+                      itemBuilder: (ctx, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                "First Name: ${streamSnapshot.data!.docs[index]['firstName']}"),
+                            Text(
+                                "Last Name: ${streamSnapshot.data!.docs[index]['lastName']}"),
+                            Text(
+                                "Company Name: ${streamSnapshot.data!.docs[index]['companyName']}"),
+                            Text(
+                                "Country: ${streamSnapshot.data!.docs[index]['country']}"),
+                            Text(
+                                "Password: ${streamSnapshot.data!.docs[index]['password']}"),
+                            Text(
+                                "UID: ${streamSnapshot.data!.docs[index]['uid']}"),
+                          ],
+                        );
+                      });
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
           // Consumer<DbManager>(
           //   builder: (context, DbManager value, _) {
           //     if (value.state == ResultState.loading) {
@@ -87,8 +100,3 @@ class _HistoryScreenState extends State<HistoryScreen> {
           //     );
           //   },
           // ),
-        ],
-      ),
-    );
-  }
-}

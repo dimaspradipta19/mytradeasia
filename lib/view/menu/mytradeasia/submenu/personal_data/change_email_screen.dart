@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/email_change_verfication.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/email_change_verfication.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
   const ChangeEmailScreen({super.key});

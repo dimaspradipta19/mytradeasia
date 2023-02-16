@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/navigation_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/biodata_model.dart';
-import '../../modelview/provider/db_manager.dart';
-import '../../utils/theme.dart';
-import '../../widget/dialog_sheet_widget.dart';
-import 'login_screen.dart';
+import '../../../model/biodata_model.dart';
+import '../../../modelview/provider/db_manager.dart';
+import '../../../utils/theme.dart';
+import '../../../widget/dialog_sheet_widget.dart';
+import '../login/login_screen.dart';
 // import '../homescreen.dart';
 
 class BiodataScreen extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/result_state.dart';
+import '../../../../utils/result_state.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -31,6 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       // Navigator.pop(context);
+
                       Provider.of<SearchProductProvider>(context, listen: false)
                           .getListProduct(_searchProductController.text);
                     },
@@ -52,14 +53,14 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: RawKeyboardListener(
                       focusNode: FocusNode(),
-                      onKey: (RawKeyEvent event) {
-                        if (event is RawKeyDownEvent &&
-                            event.logicalKey == LogicalKeyboardKey.enter) {
-                          Provider.of<SearchProductProvider>(context,
-                                  listen: false)
-                              .getListProduct(_searchProductController.text);
-                        }
-                      },
+                      // onKey: (RawKeyEvent event) {
+                      //   if (event is RawKeyDownEvent &&
+                      //       event.logicalKey == LogicalKeyboardKey.enter) {
+                      //     Provider.of<SearchProductProvider>(context,
+                      //             listen: false)
+                      //         .getListProduct(_searchProductController.text);
+                      //   }
+                      // },
                       child: Form(
                         child: TextFormField(
                           controller: _searchProductController,
@@ -99,10 +100,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       itemCount: value.searchProduct.length,
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
-                      // physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         String url = "https://chemtradea.chemtradeasia.com/";
-
                         return Card(
                           shadowColor: blackColor,
                           elevation: 3.0,
@@ -225,7 +224,69 @@ class _SearchScreenState extends State<SearchScreen> {
                       },
                     );
                   } else if (value.state == ResultState.noData) {
-                    return const Text("No Data");
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Recently Seen",
+                              style: heading2,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Provider.of<SearchProductProvider>(context,
+                                        listen: false)
+                                    .getListProduct(
+                                        _searchProductController.text);
+                                print("Delete Button");
+                              },
+                              child: Text(
+                                "Delete",
+                                style: body1Regular.copyWith(
+                                    color: secondaryColor1),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 100,
+                          width: double.infinity,
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemCount: 4,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    crossAxisSpacing: 10.0,
+                                    childAspectRatio: 0.7),
+                            itemBuilder: (context, index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(7.0)),
+                                    child: Image.asset(
+                                      "assets/images/products.png",
+                                      fit: BoxFit.cover,
+                                      height: 76,
+                                      width: 76,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5.0),
+                                  const Text(
+                                    "Dipentine",
+                                    style: body1Medium,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
                   } else {
                     return const Text("Something went wrong");
                   }

@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/contact_us_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/personal_data_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../modelview/provider/db_manager.dart';
-import '../../utils/result_state.dart';
-import '../auth/login_screen.dart';
+import '../../../modelview/provider/db_manager.dart';
+import '../../../utils/result_state.dart';
+import '../../auth/login/login_screen.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});

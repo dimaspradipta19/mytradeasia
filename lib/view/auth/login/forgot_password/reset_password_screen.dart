@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
-import '../../modelview/provider/db_manager.dart';
-import '../../utils/theme.dart';
-import 'login_screen.dart';
+import '../../../../modelview/provider/db_manager.dart';
+import '../../../../utils/theme.dart';
+import '../login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});

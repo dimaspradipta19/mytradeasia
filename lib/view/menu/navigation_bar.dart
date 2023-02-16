@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
-import 'package:mytradeasia/view/menu/history_screen.dart';
-import 'package:mytradeasia/view/menu/messages_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia_screen.dart';
+import 'package:mytradeasia/view/menu/history/history_screen.dart';
+import 'package:mytradeasia/view/menu/messages/messages_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
 
-import 'home_screen.dart';
+import 'home/home_screen.dart';
 
 class NavigationBarWidget extends StatefulWidget {
-  const NavigationBarWidget({super.key, required this.manager});
-  // const NavigationBarWidget({super.key});
+  // const NavigationBarWidget({super.key, required this.manager});
+  const NavigationBarWidget({super.key});
 
-  final DbManager manager;
+  // final DbManager manager;
 
   @override
   State<NavigationBarWidget> createState() => _NavigationBarWidgetState();

@@ -16,7 +16,7 @@ class SearchProductProvider with ChangeNotifier {
       state = ResultState.loading;
       notifyListeners();
       searchProduct = await service.getSearchProduct(productName);
-      if (searchProduct != []) {
+      if (searchProduct.isNotEmpty) {
         state = ResultState.hasData;
         notifyListeners();
       } else {

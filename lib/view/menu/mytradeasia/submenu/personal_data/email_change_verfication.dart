@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/home/home_screen.dart';
+import 'package:mytradeasia/view/menu/navigation_bar.dart';
+import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
 class EmailChangeVerfication extends StatefulWidget {
   const EmailChangeVerfication({super.key});
@@ -230,7 +233,26 @@ class _EmailChangeVerficationState extends State<EmailChangeVerfication> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DialogWidget(
+                            urlIcon: "assets/images/logo_email_change.png",
+                            title: "Email has been Change",
+                            subtitle:
+                                "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                            textForButton: "Back to My Tradeasia",
+                            navigatorFunction: () =>
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(
+                                  builder: (context) {
+                                    return NavigationBarWidget();
+                                  },
+                                ), (route) => false));
+                      },
+                    );
+                  },
                   child: Text(
                     "Verify",
                     style: text16.copyWith(color: whiteColor),

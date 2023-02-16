@@ -1,19 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/db_manager.dart';
-import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/all_products/all_products_screen.dart';
-import 'package:mytradeasia/view/menu/search_product_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 
-import '../../model/industry_model.dart';
+import '../../../model/industry_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  // const HomeScreen({super.key, required this.manager});
   const HomeScreen({super.key});
-
-  // final DbManager manager;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,8 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  final DbManager manager = DbManager();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -61,29 +55,40 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text("Welcome Back,",
                                     style: text12.copyWith(color: whiteColor)),
-                                
-                                // Consumer<DbManager>(
-                                //   builder: (context, DbManager value, child) {
-                                //     if (value.state == ResultState.loading) {
-                                //       return const Text("");
-                                //     } else if (value.state ==
-                                //         ResultState.hasData) {
-                                //       return FutureBuilder(
-                                //         future: value.getBiodataByUid(
-                                //             _auth.currentUser!.uid),
-                                //         builder: (context, snapshot) {
-                                //           return Text(
-                                //               "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
-                                //               style: text16.copyWith(
-                                //                   color: whiteColor,
-                                //                   fontWeight: FontWeight.bold));
-                                //         },
-                                //       );
-                                //     } else {
-                                //       return const Text("No Data");
-                                //     }
-                                //   },
-                                // ),
+                                SizedBox(
+                                  height: 27,
+                                  width: 144,
+                                  child: StreamBuilder(
+                                    stream: _firestore
+                                        .collection('biodata')
+                                        .where('uid',
+                                            isEqualTo: _auth.currentUser!.uid
+                                                .toString())
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot>
+                                            streamSnapshot) {
+                                      if (streamSnapshot.hasData) {
+                                        return ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            itemCount: streamSnapshot
+                                                .data!.docs.length,
+                                            itemBuilder: (context, index) {
+                                              return Text(
+                                                "${streamSnapshot.data?.docs[index]['firstName'] ?? "FirstName"} ${streamSnapshot.data!.docs[index]['lastName'] ?? "LastName"}",
+                                                style: text16.copyWith(
+                                                    color: whiteColor,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              );
+                                            });
+                                      } else {
+                                        return const Text(
+                                            "First Name Last Name");
+                                      }
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                             const Spacer(),
@@ -144,9 +149,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Form(
                             child: TextFormField(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return const SearchScreen();
-                                },));
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const SearchScreen();
+                                  },
+                                ));
                               },
                               readOnly: true,
                               decoration: InputDecoration(
@@ -671,3 +678,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+// Consumer<DbManager>(
+                                //   builder: (context, DbManager value, child) {
+                                //     if (value.state == ResultState.loading) {
+                                //       return const Text("");
+                                //     } else if (value.state ==
+                                //         ResultState.hasData) {
+                                //       return FutureBuilder(
+                                //         future: value.getBiodataByUid(
+                                //             _auth.currentUser!.uid),
+                                //         builder: (context, snapshot) {
+                                //           return Text(
+                                //               "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
+                                //               style: text16.copyWith(
+                                //                   color: whiteColor,
+                                //                   fontWeight: FontWeight.bold));
+                                //         },
+                                //       );
+                                //     } else {
+                                //       return const Text("No Data");
+                                //     }
+                                //   },
+                                // ),

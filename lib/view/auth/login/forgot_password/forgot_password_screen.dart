@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/auth/login_screen.dart';
-import 'package:mytradeasia/view/auth/reset_password_screen.dart';
+import 'package:mytradeasia/view/auth/login/login_screen.dart';
+import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_screen.dart';
 
-import '../../utils/theme.dart';
+import '../../../../utils/theme.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});

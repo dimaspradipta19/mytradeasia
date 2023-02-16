@@ -40,17 +40,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => SearchProductProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => FirestoreProvider()..myField = "Initial Data",
-        // ),
-        // StreamProvider<String>(
-        //   create: (context) => FirebaseFirestore.instance
-        //       .collection('biodata')
-        //       .doc('my-document')
-        //       .snapshots()
-        //       .map((snapshot) => snapshot.get('my-field')),
-        //   initialData: 'Initial Data',
-        // ),
       ],
       child: MaterialApp(
         title: 'MyTradeasia',

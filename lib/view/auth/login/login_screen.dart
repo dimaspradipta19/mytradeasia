@@ -2,13 +2,13 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/auth/biodata_screen.dart';
-import 'package:mytradeasia/view/auth/forgot_password_screen.dart';
-import 'package:mytradeasia/view/auth/register_screen.dart';
+import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
+import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
+import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/navigation_bar.dart';
 
-import '../../modelview/provider/db_manager.dart';
-import '../../utils/theme.dart';
+import '../../../modelview/provider/db_manager.dart';
+import '../../../utils/theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -194,8 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   MaterialPageRoute(
                                 builder: (context) {
                                   return NavigationBarWidget(
-                                    manager: manager,
-                                  );
+                                      // manager: manager,
+                                      );
                                 },
                               ), (route) => false);
                             } catch (e) {
