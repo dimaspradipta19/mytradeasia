@@ -1,4 +1,4 @@
-import 'package:mytradeasia/view/menu/all_products/all_industry_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/industry/all_industry_screen.dart';
 
 // iconModel for homescreen
 List iconModel = [

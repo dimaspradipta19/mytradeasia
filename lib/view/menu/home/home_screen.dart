@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/all_products/all_products_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 
 import '../../../model/industry_model.dart';
