@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             streamSnapshot) {
                                       if (streamSnapshot.hasData) {
                                         return ListView.builder(
+                                          physics: const NeverScrollableScrollPhysics(),
                                             padding: EdgeInsets.zero,
                                             itemCount: streamSnapshot
                                                 .data!.docs.length,

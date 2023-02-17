@@ -144,9 +144,6 @@ class AllIndustryScreen extends StatelessWidget {
                               )
                             ],
                           );
-                          // Container(
-                          //   width: MediaQuery.of(context).size.width,
-                          // );
                         },
                       );
                     },
@@ -154,7 +151,7 @@ class AllIndustryScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Stack(
-                          alignment:AlignmentDirectional.center,
+                          alignment: AlignmentDirectional.center,
                           children: [
                             Container(
                               width: 50,

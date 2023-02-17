@@ -72,43 +72,44 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           color: primaryColor1, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(7),
-                        ),
-                      ),
-                      child: TextFormField(
-                        obscureText: obscureText,
-                        decoration: InputDecoration(
-                          hintText: "Enter your password",
-                          hintStyle: text12.copyWith(
-                              color: greyColor2, fontWeight: FontWeight.w400),
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 16.0),
-                          border: InputBorder.none,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                obscureText = !obscureText;
-                              });
-                            },
-                            icon: obscureText == true
-                                ? Image.asset(
-                                    "assets/images/icon_eye_close.png",
-                                    width: 24.0,
-                                    height: 24.0,
-                                  )
-                                : Image.asset(
-                                    "assets/images/icon_eye_open.png",
-                                    width: 24.0,
-                                    height: 24.0,
-                                  ),
+                    TextFormField(
+                      obscureText: obscureText,
+                      decoration: InputDecoration(
+                        hintText: "Enter your password",
+                        hintStyle: body1Regular.copyWith(
+                            color: greyColor2, fontWeight: FontWeight.w400),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20.0),
+                        border: const OutlineInputBorder(),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: greyColor),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(7.0),
                           ),
                         ),
-                        controller: _oldPasswordController,
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: secondaryColor1),
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obscureText = !obscureText;
+                            });
+                          },
+                          icon: obscureText == true
+                              ? Image.asset(
+                                  "assets/images/icon_eye_close.png",
+                                  width: 24.0,
+                                  height: 24.0,
+                                )
+                              : Image.asset(
+                                  "assets/images/icon_eye_open.png",
+                                  width: 24.0,
+                                  height: 24.0,
+                                ),
+                        ),
                       ),
+                      controller: _oldPasswordController,
                     ),
                     const SizedBox(height: 15),
                     Text(
@@ -117,43 +118,44 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           color: primaryColor1, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(7),
-                        ),
-                      ),
-                      child: TextFormField(
-                        obscureText: obscureTextConfirm,
-                        decoration: InputDecoration(
-                          hintText: "Enter your password",
-                          hintStyle: text12.copyWith(
-                              color: greyColor2, fontWeight: FontWeight.w400),
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 16.0),
-                          border: InputBorder.none,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                obscureTextConfirm = !obscureTextConfirm;
-                              });
-                            },
-                            icon: obscureTextConfirm == true
-                                ? Image.asset(
-                                    "assets/images/icon_eye_close.png",
-                                    width: 24.0,
-                                    height: 24.0,
-                                  )
-                                : Image.asset(
-                                    "assets/images/icon_eye_open.png",
-                                    width: 24.0,
-                                    height: 24.0,
-                                  ),
+                    TextFormField(
+                      obscureText: obscureTextConfirm,
+                      decoration: InputDecoration(
+                        hintText: "Enter your password",
+                        hintStyle: body1Regular.copyWith(
+                            color: greyColor2, fontWeight: FontWeight.w400),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20.0),
+                        border: const OutlineInputBorder(),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: greyColor),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(7.0),
                           ),
                         ),
-                        controller: _newPasswordController,
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: secondaryColor1),
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obscureTextConfirm = !obscureTextConfirm;
+                            });
+                          },
+                          icon: obscureTextConfirm == true
+                              ? Image.asset(
+                                  "assets/images/icon_eye_close.png",
+                                  width: 24.0,
+                                  height: 24.0,
+                                )
+                              : Image.asset(
+                                  "assets/images/icon_eye_open.png",
+                                  width: 24.0,
+                                  height: 24.0,
+                                ),
+                        ),
                       ),
+                      controller: _newPasswordController,
                     ),
                   ],
                 ),
@@ -162,8 +164,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 55.0,
-                child: _oldPasswordController.text.isNotEmpty &&
-                        _newPasswordController.text.isNotEmpty
+                child: (_oldPasswordController.text.isNotEmpty &&
+                            _newPasswordController.text.isNotEmpty) &&
+                        (_oldPasswordController.text ==
+                            _newPasswordController.text)
                     ? ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:

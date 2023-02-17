@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';

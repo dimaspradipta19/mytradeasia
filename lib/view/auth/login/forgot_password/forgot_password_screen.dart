@@ -65,23 +65,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           color: primaryColor1, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 8),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greyColor),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(7),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Enter your email",
+                        hintStyle: body1Regular.copyWith(
+                            color: greyColor, fontWeight: FontWeight.w400),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20.0),
+                        border: const OutlineInputBorder(),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor3),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(7.0))),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: secondaryColor1),
                         ),
                       ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "Enter your email",
-                            hintStyle: text12.copyWith(
-                                color: greyColor2, fontWeight: FontWeight.w400),
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            border: InputBorder.none),
-                        controller: _emailController,
-                      ),
+                      controller: _emailController,
                     ),
                   ],
                 ),

@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/home/home_screen.dart';
-import 'package:mytradeasia/view/menu/navigation_bar.dart';
+import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
 class EmailChangeVerfication extends StatefulWidget {

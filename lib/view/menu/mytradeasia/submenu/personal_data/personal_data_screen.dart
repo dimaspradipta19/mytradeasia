@@ -2,9 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
-
-import '../../../../../modelview/provider/db_manager.dart';
-
 class PersonalDataScreen extends StatelessWidget {
   const PersonalDataScreen({super.key});
 
@@ -12,7 +9,6 @@ class PersonalDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
-    final DbManager manager = DbManager();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(

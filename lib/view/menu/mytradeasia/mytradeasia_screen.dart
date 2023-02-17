@@ -5,10 +5,7 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
-import 'package:provider/provider.dart';
 
-import '../../../modelview/provider/db_manager.dart';
-import '../../../utils/result_state.dart';
 import '../../auth/login/login_screen.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
@@ -20,6 +17,7 @@ class MyTradeAsiaScreen extends StatefulWidget {
 
 class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,49 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   Image.asset("assets/images/profile_picture.png"),
                   const SizedBox(width: 20.0),
                   Column(
-                    children: const [
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: 144,
+                        child: StreamBuilder(
+                          stream: _firestore
+                              .collection('biodata')
+                              .where('uid',
+                                  isEqualTo: _auth.currentUser!.uid.toString())
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                            if (streamSnapshot.hasData) {
+                              return ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.zero,
+                                  itemCount: streamSnapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${streamSnapshot.data?.docs[index]['firstName'] ?? "FirstName"} ${streamSnapshot.data!.docs[index]['lastName'] ?? "LastName"}",
+                                          style: text16,
+                                        ),
+                                        Text(
+                                          streamSnapshot.data?.docs[index]
+                                                  ['companyName'] ??
+                                              "company",
+                                          style: text15.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              color: greyColor2),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            } else {
+                              return const Text("First Name Last Name");
+                            }
+                          },
+                        ),
+                      ),
                       // Consumer<DbManager>(
                       //   builder: (context, DbManager value, child) {
                       //     if (value.state == ResultState.loading) {

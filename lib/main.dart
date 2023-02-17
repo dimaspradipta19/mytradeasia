@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
-import 'package:mytradeasia/modelview/provider/firestore_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/widget/splash_page.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

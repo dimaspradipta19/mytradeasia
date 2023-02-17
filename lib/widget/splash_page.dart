@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 
-import '../view/auth/register/register_screen.dart';
-
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 

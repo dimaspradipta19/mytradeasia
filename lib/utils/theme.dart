@@ -11,6 +11,10 @@ const Color greyColor = Color(0XFFB9C0C5);
 const Color greyColor2 = Color(0XFF87888A);
 const Color greyColor3 = Color(0XFFE5E7E9);
 
+// Red Color
+const Color redColor1 = Color(0XFF862828);
+const Color redColor2 = Color(0XFFF4E2E2);
+
 
 // Primary Color
 const Color primaryColor1 = Color(0XFF123C69);
