@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/view/menu/history/order_detail_screen.dart';
 
 import '../../../utils/theme.dart';
 
@@ -31,10 +32,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       contentPadding:
-                          const EdgeInsets.symmetric(vertical: 20.0),
+                          EdgeInsets.zero,
                       border: const OutlineInputBorder(),
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.only(left: 20),
                         child: Image.asset(
                           "assets/images/icon_search.png",
                           width: 24.0,
@@ -92,48 +93,60 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                       ),
                                       // Order Detail
-                                      Container(
-                                        height: 110.0,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: greyColor3),
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(7.0),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                            return OrderDetailScreen(index: index);
+                                          },)); 
+                                        },
+                                        child: Container(
+                                          height: 110.0,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: greyColor3),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(7.0),
+                                            ),
                                           ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 15.0),
-                                          child: Row(
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/icon_order_detail.png",
-                                                width: 43.0,
-                                                height: 43.0,
-                                              ),
-                                              const SizedBox(width: 20.0),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      "Order Detail",
-                                                      style: heading3,
-                                                    ),
-                                                    const SizedBox(height: 5.0),
-                                                    Text(
-                                                      "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",
-                                                      style:
-                                                          body2Medium.copyWith(
-                                                        color: greyColor2,
-                                                      ),
-                                                    ),
-                                                  ],
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20.0,
+                                                vertical: 15.0),
+                                            child: Row(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/icon_order_detail.png",
+                                                  width: 43.0,
+                                                  height: 43.0,
                                                 ),
-                                              )
-                                            ],
+                                                const SizedBox(width: 20.0),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "Order Detail",
+                                                        style: heading3,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5.0),
+                                                      Text(
+                                                        "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",
+                                                        style: body2Medium
+                                                            .copyWith(
+                                                          color: greyColor2,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
