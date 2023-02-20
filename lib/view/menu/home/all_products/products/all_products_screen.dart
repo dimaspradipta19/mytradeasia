@@ -3,6 +3,7 @@ import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllProductsScreen extends StatefulWidget {
   const AllProductsScreen({super.key});
@@ -80,7 +81,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 30.0),
+            // const SizedBox(height: 30.0),
             Row(
               children: [
                 const Text("All Products", style: text18),
@@ -115,23 +116,25 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
             Expanded(
               child: Consumer<ListProductProvider>(
                 builder: (context, ListProductProvider value, _) {
-                  if (value.state == ResultState.loading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (value.state == ResultState.hasData) {
-                    return GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 15,
-                              childAspectRatio: 0.6),
-                      itemCount: value.listProduct.length,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      // physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: 0.6),
+                    itemCount: value.state == ResultState.loading
+                        ? 10
+                        : value.listProduct.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      if (value.state == ResultState.loading) {
+                        return Shimmer.fromColors(
+                            baseColor: greyColor3,
+                            highlightColor: greyColor,
+                            child: const Card());
+                      } else {
                         return Card(
                           shadowColor: blackColor,
                           elevation: 3.0,
@@ -248,13 +251,9 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                             ],
                           ),
                         );
-                      },
-                    );
-                  } else if (value.state == ResultState.noData) {
-                    return const Text("No Data");
-                  } else {
-                    return const Text("Something went wrong");
-                  }
+                      }
+                    },
+                  );
                 },
               ),
             )
@@ -264,9 +263,3 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
     );
   }
 }
-// return ListView.builder(
-//                         itemCount: value.listProduct.length,
-//                         itemBuilder: (context, index) {
-//                           return Text(value.listProduct[index].productname);
-//                         },
-//                       );

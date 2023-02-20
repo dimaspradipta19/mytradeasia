@@ -10,9 +10,9 @@ class RoleUserScreen extends StatefulWidget {
 }
 
 class _RoleUserScreenState extends State<RoleUserScreen> {
-  bool isCutomer = false;
-  // bool isAgent = false;
-  // bool isSales = false;
+  bool isCustomer = false;
+  bool isAgent = false;
+  bool isSales = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  isCutomer = !isCutomer;
+                  isCustomer = !isCustomer;
                 });
               },
               child: Container(
@@ -47,7 +47,7 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
                 height: 100.0,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: isCutomer == true ? secondaryColor1 : greyColor3),
+                      color: isCustomer == true ? secondaryColor1 : greyColor3),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Padding(
@@ -82,14 +82,14 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
             // Agent
             GestureDetector(
               onTap: () => setState(() {
-                isCutomer = !isCutomer;
+                isAgent = !isAgent;
               }),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 100.0,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: isCutomer == true ? secondaryColor1 : greyColor3),
+                      color: isAgent == true ? secondaryColor1 : greyColor3),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Padding(
@@ -124,14 +124,15 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
             // Sales Associate
             GestureDetector(
               onTap: () => setState(() {
-                isCutomer = !isCutomer;
+                isSales = !isSales;
               }),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 100.0,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: isCutomer == false ? greyColor3 : secondaryColor1),
+                      color:
+                          isSales == false ? greyColor3 : secondaryColor1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Padding(
@@ -167,48 +168,49 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13.0),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 50.0,
-            child: isCutomer == true
-                ? ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(primaryColor1),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0),
-                        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13.0),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 50.0,
+          child: isCustomer == true
+              ? ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(primaryColor1),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterScreen(),
-                          ));
-                    },
-                    child: Text("Choose Role",
-                        style: text16.copyWith(color: whiteColor)),
-                  )
-                : ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(greyColor),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      "Choose Role",
-                      style: text16.copyWith(color: whiteColor),
                     ),
                   ),
-          )),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ));
+                  },
+                  child: Text("Choose Role",
+                      style: text16.copyWith(color: whiteColor)),
+                )
+              : ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(greyColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    "Choose Role",
+                    style: text16.copyWith(color: whiteColor),
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }

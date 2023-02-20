@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 
@@ -70,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             streamSnapshot) {
                                       if (streamSnapshot.hasData) {
                                         return ListView.builder(
-                                          physics: const NeverScrollableScrollPhysics(),
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             padding: EdgeInsets.zero,
                                             itemCount: streamSnapshot
                                                 .data!.docs.length,
@@ -276,6 +278,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: InkWell(
                           onTap: () {
                             print("Tracking Shipment");
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const TrackingShipmentScreen();
+                              },
+                            ));
                           },
                           child: Container(
                             height: 60,
@@ -379,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                     ],
                   ),
-                  const SizedBox(height: 26),
+                  // const SizedBox(height: 26),
                   // GRID TOP PRODUCT
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
