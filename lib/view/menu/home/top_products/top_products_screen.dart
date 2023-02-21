@@ -16,7 +16,6 @@ class TopProductsScreen extends StatelessWidget {
               const SizedBox(
                 height: size20px * 2.0,
               ),
-              
               Stack(
                 children: [
                   Container(
@@ -40,7 +39,7 @@ class TopProductsScreen extends StatelessWidget {
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15,
                       childAspectRatio: 0.65),
-                  itemCount: 40,
+                  itemCount: 5,
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
@@ -52,7 +51,7 @@ class TopProductsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                              child: Image.asset("assets/images/products.png")),
+                              child: Image.asset("assets/images/products.png", width: MediaQuery.of(context).size.width,)),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 5.0, horizontal: 10.0),

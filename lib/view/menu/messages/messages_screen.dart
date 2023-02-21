@@ -16,41 +16,46 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 200,
-        child: StreamBuilder(
-          stream: _firestore
-              .collection('biodata')
-              .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
-              .snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-            if (streamSnapshot.hasData) {
-              return ListView.builder(
-                  itemCount: streamSnapshot.data!.docs.length,
-                  itemBuilder: (ctx, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "First Name: ${streamSnapshot.data!.docs[index]['firstName']}"),
-                        Text(
-                            "Last Name: ${streamSnapshot.data!.docs[index]['lastName']}"),
-                        Text(
-                            "Company Name: ${streamSnapshot.data!.docs[index]['companyName']}"),
-                        Text(
-                            "Country: ${streamSnapshot.data!.docs[index]['country']}"),
-                        Text(
-                            "Password: ${streamSnapshot.data!.docs[index]['password']}"),
-                        Text("UID: ${streamSnapshot.data!.docs[index]['uid']}"),
-                      ],
-                    );
-                  });
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: StreamBuilder(
+              stream: _firestore
+                  .collection('biodata')
+                  .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                if (streamSnapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: streamSnapshot.data!.docs.length,
+                      itemBuilder: (ctx, index) {
+                        return Column(
+                          children: [
+                            Text(
+                                "First Name: ${streamSnapshot.data!.docs[index]['firstName']}"),
+                            Text(
+                                "Last Name: ${streamSnapshot.data!.docs[index]['lastName']}"),
+                            Text(
+                                "Company Name: ${streamSnapshot.data!.docs[index]['companyName']}"),
+                            Text(
+                                "Country: ${streamSnapshot.data!.docs[index]['country']}"),
+                            Text(
+                                "Password: ${streamSnapshot.data!.docs[index]['password']}"),
+                            Text(
+                                "UID: ${streamSnapshot.data!.docs[index]['uid']}"),
+                          ],
+                        );
+                      });
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
