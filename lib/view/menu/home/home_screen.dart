@@ -5,6 +5,7 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
+import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 
 import '../../../model/industry_model.dart';
 
@@ -379,7 +380,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const TopProductsScreen();
+                              },
+                            ));
+                          },
                           child: Text(
                             "See More",
                             style: text12.copyWith(color: secondaryColor1),

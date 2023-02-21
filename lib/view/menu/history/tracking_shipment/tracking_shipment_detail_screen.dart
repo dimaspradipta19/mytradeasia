@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment/detailed_products_screen.dart';
 
 import '../../../../utils/theme.dart';
 
 class TrackingShipmentDetailScreen extends StatelessWidget {
-  const TrackingShipmentDetailScreen({super.key, required this.product, required this.indexProducts});
+  const TrackingShipmentDetailScreen(
+      {super.key, required this.product, required this.indexProducts});
 
   final String product;
   final int indexProducts;
@@ -127,83 +129,97 @@ class TrackingShipmentDetailScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: size20px * 0.75),
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    child: Container(
-                      height: size20px * 4.5,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(7.0))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: size20px, vertical: size20px * 0.5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "BOOKING No.6890524180",
-                              style: heading3.copyWith(color: secondaryColor1),
-                            ),
-                            const SizedBox(height: size20px * 0.5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // POL
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Jakarta, ID",
-                                      style: body1Regular,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/icon_anchor.png",
-                                          width: size20px * 0.5,
-                                          height: size20px * 0.5,
-                                        ),
-                                        const SizedBox(width: size20px * 0.4),
-                                        const Text(
-                                          "Jakarta",
-                                          style: text8,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 28.0,
-                                  width: size20px * 5,
-                                  color: secondaryColor1,
-                                ),
-                                // POD
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Piraeus,GR",
-                                      style: body1Regular,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/icon_anchor.png",
-                                          width: size20px * 0.5,
-                                          height: size20px * 0.5,
-                                        ),
-                                        const SizedBox(width: size20px * 0.4),
-                                        const Text(
-                                          "Piraeus",
-                                          style: text8,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return DetailedProductsScreen();
+                        },
+                      ));
+                    },
+                    child: Card(
+                      margin: EdgeInsets.zero,
+                      child: Container(
+                        height: size20px * 4.5,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(7.0))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: size20px, vertical: size20px * 0.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "BOOKING No.6890524180",
+                                style:
+                                    heading3.copyWith(color: secondaryColor1),
+                              ),
+                              const SizedBox(height: size20px * 0.5),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // POL
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Jakarta, ID",
+                                        style: body1Regular,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/icon_anchor.png",
+                                            width: size20px * 0.5,
+                                            height: size20px * 0.5,
+                                          ),
+                                          const SizedBox(width: size20px * 0.4),
+                                          const Text(
+                                            "Jakarta",
+                                            style: text8,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Image.asset(
+                                    "assets/images/icon_shipping.png",
+                                    width: 104.0,
+                                    height: size20px + 8.0,
+                                  ),
+                                  // POD
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Piraeus,GR",
+                                        style: body1Regular,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/icon_anchor.png",
+                                            width: size20px * 0.5,
+                                            height: size20px * 0.5,
+                                          ),
+                                          const SizedBox(width: size20px * 0.4),
+                                          const Text(
+                                            "Piraeus",
+                                            style: text8,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

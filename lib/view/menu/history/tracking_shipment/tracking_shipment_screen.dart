@@ -50,7 +50,7 @@ class TrackingShipmentScreen extends StatelessWidget {
                           builder: (context) {
                             return TrackingShipmentDetailScreen(
                               product: productName,
-                              indexProducts: index+1,
+                              indexProducts: index + 1,
                             );
                           },
                         ));
@@ -176,11 +176,10 @@ class TrackingShipmentScreen extends StatelessWidget {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, bottom: 13.0),
-                                  child: Container(
-                                      height: 28, color: secondaryColor1),
-                                ),
+                                    padding: const EdgeInsets.only(
+                                        top: size20px / 2),
+                                    child: Image.asset(
+                                        "assets/images/shipping_indicator_length.png")),
                                 Text(
                                   "Lorem ipsum dolor sit amet consectetur. In est",
                                   style:
