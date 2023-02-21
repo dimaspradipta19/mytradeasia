@@ -1,7 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/menu/history/order_detail_screen.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment_screen.dart';
+import 'package:mytradeasia/view/menu/history/order/order_detail_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 
 import '../../../utils/theme.dart';
 

@@ -23,7 +23,6 @@ const Color greenColor2 = Color(0XFFE2F4E6);
 // Red Color
 const Color blueColor = Color(0XFFEFF3FC);
 
-
 // Primary Color
 const Color primaryColor1 = Color(0XFF123C69);
 const Color primaryColor2 = Color(0XFF416387);
@@ -40,10 +39,6 @@ const Color secondaryColor5 = Color(0XFFE8F6FA);
 
 // Third Color
 const Color thirdColor1 = Color(0XFFF3F7FA);
-// const Color thirdColor2 = Color(0XFFF3F7FA);
-// const Color thirdColor3 = Color(0XFFF3F7FA);
-// const Color thirdColor4 = Color(0XFFF3F7FA);
-// const Color thirdColor5 = Color(0XFFF3F7FA);
 
 // Font Color
 const Color fontColor1 = Color(0XFF17234D);
@@ -62,7 +57,16 @@ const Color trackingShipTua = Color(0XFFF48B88);
 const Color allProductsMuda = Color(0XFF858CEF);
 const Color allProductsTua = Color(0XFFDB9FFF);
 
+// // Padding 20
+// const EdgeInsets paddingAll = EdgeInsets.all(20.0);
+// const EdgeInsets paddingLeft = EdgeInsets.only(left: 20.0);
+// const EdgeInsets paddingRight = EdgeInsets.only(right: 20.0);
+// const EdgeInsets paddingBottom = EdgeInsets.only(bottom: 20.0);
+const double size20px = 20.0;
+
 // Textstyle
+const TextStyle text8 =
+    TextStyle(fontFamily: 'Poppins', fontSize: 8, color: fontColor1);
 const TextStyle text10 =
     TextStyle(fontFamily: 'Poppins', fontSize: 10, color: fontColor1);
 const TextStyle text12 =
@@ -81,7 +85,7 @@ const TextStyle text22 =
     TextStyle(fontFamily: 'Poppins', fontSize: 22, color: fontColor1);
 
 // Heading size 22 18 14
-const TextStyle heading1 =  
+const TextStyle heading1 =
     TextStyle(fontFamily: 'Poppins', fontSize: 22, color: fontColor1);
 const TextStyle heading2 =
     TextStyle(fontFamily: 'Poppins', fontSize: 18, color: fontColor1);

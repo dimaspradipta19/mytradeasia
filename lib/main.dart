@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/db_manager.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
@@ -13,7 +14,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then(
+    (value) => runApp(
+      const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -28,9 +36,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => DbManager(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => DbManager(),
+        // ),
         ChangeNotifierProvider(
           create: (context) => ListProductProvider(),
         ),

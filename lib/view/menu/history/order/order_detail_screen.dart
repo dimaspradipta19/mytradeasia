@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
-import '../../../model/industry_model.dart';
+import '../../../../model/industry_model.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   // const OrderDetailScreen({super.key, required this.index});
