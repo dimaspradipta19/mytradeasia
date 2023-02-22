@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/history/order/order_detail_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 
 import '../../../utils/theme.dart';
@@ -47,7 +48,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         ),
                         enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: greyColor3),
-                            borderRadius: BorderRadius.all(Radius.circular(7.0))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(7.0))),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: secondaryColor1),
                         ),
@@ -59,7 +61,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
-                    itemCount: 20,
+                    itemCount: 2,
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
@@ -96,20 +98,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           ),
                                         ),
                                         // Order Detail
-                                        GestureDetector(
+                                        InkWell(
                                           onTap: () {
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                               builder: (context) {
-                                                // return OrderDetailScreen(index: index);
                                                 return const OrderDetailScreen();
                                               },
                                             ));
                                           },
                                           child: Container(
                                             height: 110.0,
-                                            width:
-                                                MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             decoration: BoxDecoration(
                                               border:
                                                   Border.all(color: greyColor3),
@@ -119,9 +121,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 20.0,
-                                                  vertical: 15.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0,
+                                                      vertical: 15.0),
                                               child: Row(
                                                 children: [
                                                   Image.asset(
@@ -162,7 +165,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                         // Tracking Shipping
                                         const SizedBox(height: 10.0),
-                                        GestureDetector(
+                                        InkWell(
                                           onTap: () {
                                             Navigator.push(context,
                                                 MaterialPageRoute(
@@ -173,8 +176,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           },
                                           child: Container(
                                             height: 110.0,
-                                            width:
-                                                MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             decoration: BoxDecoration(
                                               border:
                                                   Border.all(color: greyColor3),
@@ -184,9 +188,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 20.0,
-                                                  vertical: 15.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0,
+                                                      vertical: 15.0),
                                               child: Row(
                                                 children: [
                                                   Image.asset(
@@ -227,51 +232,68 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         ),
                                         // Tracking Document
                                         const SizedBox(height: 10.0),
-                                        Container(
-                                          height: 110.0,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: greyColor3),
-                                            borderRadius: const BorderRadius.all(
-                                              Radius.circular(7.0),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return const TrackingDocumentScreen();
+                                              },
+                                            ));
+                                          },
+                                          child: Container(
+                                            height: 110.0,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            decoration: BoxDecoration(
+                                              border:
+                                                  Border.all(color: greyColor3),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(7.0),
+                                              ),
                                             ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20.0, vertical: 15.0),
-                                            child: Row(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/icon_tracking_document.png",
-                                                  width: 43.0,
-                                                  height: 43.0,
-                                                ),
-                                                const SizedBox(width: 20.0),
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      const Text(
-                                                        "Tracking Document",
-                                                        style: heading3,
-                                                      ),
-                                                      const SizedBox(height: 5.0),
-                                                      Text(
-                                                        "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",
-                                                        style:
-                                                            body2Medium.copyWith(
-                                                          color: greyColor2,
-                                                        ),
-                                                        maxLines: 2,
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                      ),
-                                                    ],
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20.0,
+                                                      vertical: 15.0),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/icon_tracking_document.png",
+                                                    width: 43.0,
+                                                    height: 43.0,
                                                   ),
-                                                )
-                                              ],
+                                                  const SizedBox(width: 20.0),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        const Text(
+                                                          "Tracking Document",
+                                                          style: heading3,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5.0),
+                                                        Text(
+                                                          "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",
+                                                          style: body2Medium
+                                                              .copyWith(
+                                                            color: greyColor2,
+                                                          ),
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -291,7 +313,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             color: whiteColor,
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: 180,
+                              height: size20px * 8.0,
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     top: 10.0,
@@ -308,15 +330,50 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               color: secondaryColor1),
                                         ),
                                         const Spacer(),
-                                        Chip(
-                                          padding: EdgeInsets.zero,
-                                          backgroundColor: redColor2,
-                                          label: Text(
-                                            "Pending",
-                                            style: body1Regular.copyWith(
-                                                color: redColor1),
+                                        if (index.isEven)
+                                          Container(
+                                            height: size20px + 4,
+                                            decoration: const BoxDecoration(
+                                              color: greenColor2,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(size20px / 2.0),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                child: Text(
+                                                  "Shipped",
+                                                  style: body1Regular.copyWith(
+                                                      color: greenColor1),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        else
+                                          Container(
+                                            height: size20px + 4,
+                                            decoration: const BoxDecoration(
+                                              color: redColor2,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(size20px / 2.0),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                child: Text(
+                                                  "Pending",
+                                                  style: body1Regular.copyWith(
+                                                      color: redColor1),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
                                         Image.asset(
                                           "assets/images/icon_forward.png",
                                           width: 24.0,
@@ -325,6 +382,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         )
                                       ],
                                     ),
+                                    const SizedBox(height: 10.0),
                                     const DottedLine(
                                       dashColor: greyColor3,
                                       dashGapLength: 3.0,
@@ -363,8 +421,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                     ),
                                                     Text(
                                                       "Port name",
-                                                      style: body2Light.copyWith(
-                                                          color: greyColor2),
+                                                      style:
+                                                          body2Light.copyWith(
+                                                              color:
+                                                                  greyColor2),
                                                     ),
                                                   ],
                                                 ),
@@ -379,18 +439,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                     ),
                                                     Text(
                                                       "Port name",
-                                                      style: body2Light.copyWith(
-                                                          color: greyColor2),
+                                                      style:
+                                                          body2Light.copyWith(
+                                                              color:
+                                                                  greyColor2),
                                                     ),
                                                   ],
                                                 ),
                                               ],
                                             ),
                                             const SizedBox(height: 10.0),
-                                            Text(
-                                              "Qyt : 84,00 MT",
-                                              style: body1Medium.copyWith(
-                                                  color: secondaryColor1),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                "Qty : 84,00 MT",
+                                                style: body1Medium.copyWith(
+                                                    color: secondaryColor1),
+                                              ),
                                             ),
                                           ],
                                         )

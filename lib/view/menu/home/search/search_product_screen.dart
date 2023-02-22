@@ -18,6 +18,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _searchProd =
+        Provider.of<SearchProductProvider>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -29,10 +31,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      // Navigator.pop(context);
-
-                      Provider.of<SearchProductProvider>(context, listen: false)
-                          .getListProduct(_searchProductController.text);
+                      Navigator.pop(context);
+                      _searchProd.searchProduct.clear();
                     },
                     icon: Image.asset(
                       "assets/images/icon_back.png",
@@ -50,28 +50,26 @@ class _SearchScreenState extends State<SearchScreen> {
                             const BorderRadius.all(Radius.circular(10.0))),
                     height: 50.0,
                     width: MediaQuery.of(context).size.width,
-                    child: RawKeyboardListener(
-                      focusNode: FocusNode(),
-                      // onKey: (RawKeyEvent event) {
-                      //   if (event is RawKeyDownEvent &&
-                      //       event.logicalKey == LogicalKeyboardKey.enter) {
-                      //     Provider.of<SearchProductProvider>(context,
-                      //             listen: false)
-                      //         .getListProduct(_searchProductController.text);
-                      //   }
-                      // },
-                      child: Form(
-                        child: TextFormField(
-                          controller: _searchProductController,
-                          autofocus: true,
-                          decoration: InputDecoration(
-                              prefixIcon:
-                                  Image.asset("assets/images/icon_search.png"),
-                              border: InputBorder.none,
-                              hintText: "Search",
-                              contentPadding:
-                                  const EdgeInsets.only(left: 20.0, top: 12.0)),
-                        ),
+                    child: Form(
+                      child: TextFormField(
+                        onChanged: (value) {
+                          if (_searchProductController.text == "") {
+                            return _searchProductController.clear();
+                          } else {
+                            Provider.of<SearchProductProvider>(context,
+                                    listen: false)
+                                .getListProduct(_searchProductController.text);
+                          }
+                        },
+                        controller: _searchProductController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                            prefixIcon:
+                                Image.asset("assets/images/icon_search.png"),
+                            border: InputBorder.none,
+                            hintText: "Search",
+                            contentPadding:
+                                const EdgeInsets.only(left: 20.0, top: 12.0)),
                       ),
                     ),
                   ),
@@ -222,7 +220,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         );
                       },
                     );
-                  } else if (value.state == ResultState.noData) {
+                  } else if (value.service.resultAwal == []) {
+                    return const Text("Something went wrong");
+                  } else {
                     return Column(
                       children: [
                         Row(
@@ -286,8 +286,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ],
                     );
-                  } else {
-                    return const Text("Something went wrong");
                   }
                 },
               ),

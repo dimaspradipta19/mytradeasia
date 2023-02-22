@@ -118,7 +118,7 @@ const TextStyle body2Light = TextStyle(
     color: fontColor1,
     fontWeight: FontWeight.w300);
 const TextStyle body2Medium =
-    TextStyle(fontFamily: 'Poppins', fontSize: 12, color: fontColor1);
+    TextStyle(fontFamily: 'Poppins', fontSize: 10, color: fontColor1);
 
 // Button
 const TextStyle buttonLarge =

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
-import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
 import '../../../modelview/provider/db_manager.dart';
 import '../../../utils/theme.dart';
@@ -39,12 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 30.0),
@@ -80,16 +78,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _emailController,
                           decoration: InputDecoration(
                             hintText: "Enter your email",
-                            hintStyle: body1Regular.copyWith(color: greyColor),
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            hintStyle:
+                                body1Regular.copyWith(color: greyColor),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 20.0),
                             border: const OutlineInputBorder(),
                             enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: greyColor3),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7.0))),
                             focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor1),
+                              borderSide:
+                                  BorderSide(color: secondaryColor1),
                             ),
                           ),
                         ),
@@ -116,7 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: const OutlineInputBorder(),
                       enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: greyColor3),
-                          borderRadius: BorderRadius.all(Radius.circular(7.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(7.0))),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: secondaryColor1),
                       ),
@@ -155,7 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           "Forgot Password?",
-                          style: body1Regular.copyWith(color: secondaryColor1),
+                          style:
+                              body1Regular.copyWith(color: secondaryColor1),
                         ),
                       ),
                     ],
@@ -174,7 +176,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7.0),
+                                    borderRadius:
+                                        BorderRadius.circular(7.0),
                                   ),
                                 ),
                               ),
@@ -186,12 +189,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 try {
                                   await _auth.signInWithEmailAndPassword(
                                       email: _emailController.text,
-                                      password: _phoneNumberController.text);
+                                      password:
+                                          _phoneNumberController.text);
 
                                   Navigator.pushAndRemoveUntil(context,
                                       MaterialPageRoute(
                                     builder: (context) {
-                                      return NavigationBarWidget(
+                                      return const NavigationBarWidget(
                                           // manager: manager,
                                           );
                                     },
@@ -215,11 +219,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           : ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all<Color>(greyColor),
+                                    MaterialStateProperty.all<Color>(
+                                        greyColor),
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7.0),
+                                    borderRadius:
+                                        BorderRadius.circular(7.0),
                                   ),
                                 ),
                               ),
@@ -268,16 +274,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all<Color>(whiteColor),
+                                  MaterialStateProperty.all<Color>(
+                                      whiteColor),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7.0),
-                                  side: const BorderSide(color: primaryColor1),
+                                  side: const BorderSide(
+                                      color: primaryColor1),
                                 ),
                               ),
                             ),
-                            child: Image.asset("assets/images/logo_google.png"),
+                            child: Image.asset(
+                                "assets/images/logo_google.png"),
                             onPressed: () {
                               print("Google");
                             },
@@ -294,17 +303,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all<Color>(whiteColor),
+                                  MaterialStateProperty.all<Color>(
+                                      whiteColor),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7.0),
-                                  side: const BorderSide(color: primaryColor1),
+                                  side: const BorderSide(
+                                      color: primaryColor1),
                                 ),
                               ),
                             ),
-                            child:
-                                Image.asset("assets/images/logo_facebook.png"),
+                            child: Image.asset(
+                                "assets/images/logo_facebook.png"),
                             onPressed: () {
                               print("Facebook");
                             },
@@ -335,21 +346,51 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text("Sign up here",
-                            style:
-                                body1Regular.copyWith(color: secondaryColor1)),
+                            style: body1Regular.copyWith(
+                                color: secondaryColor1)),
                       ),
                     ],
                   ),
                 ],
               ),
-              if (isLoading)
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
-            ],
-          ),
+            ),
+            if (isLoading)
+              Container(
+                child: const LoadingOverlay(),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+              )
+            // const Center(
+            //   child: CircularProgressIndicator(),
+            // )
+          ],
         ),
       ),
+    );
+  }
+}
+
+class LoadingOverlay extends StatelessWidget {
+  const LoadingOverlay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        // Grey background
+        Opacity(
+          opacity: 0.5,
+          child: ModalBarrier(
+            dismissible: false,
+            color: Colors.grey[300],
+          ),
+        ),
+
+        // Loading indicator
+        const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ],
     );
   }
 }

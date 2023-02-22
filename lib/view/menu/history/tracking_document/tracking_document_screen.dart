@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_detail_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_detail.dart';
 
-class TrackingShipmentScreen extends StatelessWidget {
-  const TrackingShipmentScreen({super.key});
+class TrackingDocumentScreen extends StatelessWidget {
+  const TrackingDocumentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String productName = "Dipentene";
+    const String productName = "Dipentene";
+    bool isShipped = true;
     return Scaffold(
       backgroundColor: whiteColor,
       // Appbar
       appBar: AppBar(
         title: const Text(
-          "Tracking Shipment",
+          "Tracking Document",
           style: heading2,
         ),
         centerTitle: true,
@@ -48,7 +49,7 @@ class TrackingShipmentScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return TrackingShipmentDetailScreen(
+                            return TrackingDocumentDetail(
                               product: productName,
                               indexProducts: index + 1,
                             );
@@ -67,7 +68,7 @@ class TrackingShipmentScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       productName,
                                       style: heading2,
                                     ),

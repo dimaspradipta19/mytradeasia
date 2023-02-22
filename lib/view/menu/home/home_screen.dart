@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
@@ -57,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Welcome Back,",
-                                      style: text12.copyWith(color: whiteColor)),
+                                      style:
+                                          text12.copyWith(color: whiteColor)),
                                   SizedBox(
                                     height: 27,
                                     width: 144,
@@ -171,8 +173,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     border: InputBorder.none,
                                     hintText: "What do you want to search?",
-                                    hintStyle:
-                                        body1Regular.copyWith(color: greyColor)),
+                                    hintStyle: body1Regular.copyWith(
+                                        color: greyColor)),
                               ),
                             ),
                           ),
@@ -183,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 15.0),
-        
+
               //Main Content
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -236,7 +238,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           flex: 5,
                           child: InkWell(
                             onTap: () {
-                              print("Tracking Doc");
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return const TrackingDocumentScreen();
+                                },
+                              ));
                             },
                             child: Container(
                               height: 60,
@@ -295,7 +301,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
-                                    colors: [trackingShipMuda, trackingShipTua]),
+                                    colors: [
+                                      trackingShipMuda,
+                                      trackingShipTua
+                                    ]),
                               ),
                               child: Stack(children: [
                                 Padding(
@@ -364,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 20),
-        
+
                     // TOP PRODUCT
                     Row(
                       children: [
@@ -415,12 +424,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6.0),
-                                  child: Center(
-                                      child: Image.asset(
-                                          "assets/images/products.png")),
-                                ),
+                                Center(
+                                    child: Image.asset(
+                                        "assets/images/products.png")),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 5.0, horizontal: 10.0),
@@ -450,7 +456,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text("HS Code :", style: text10),
+                                          const Text("HS Code :",
+                                              style: text10),
                                           Text("-",
                                               style: text10.copyWith(
                                                   color: greyColor2)),
@@ -527,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 20.0),
-        
+
                     // INDUSTRY
                     const Text("Industry", style: text18),
                     const SizedBox(height: 16.0),
@@ -614,12 +621,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6.0),
-                                  child: Center(
-                                      child: Image.asset(
-                                          "assets/images/products.png")),
-                                ),
+                                Center(
+                                    child: Image.asset(
+                                        "assets/images/products.png")),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 5.0, horizontal: 10.0),
@@ -649,7 +653,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text("HS Code :", style: text10),
+                                          const Text("HS Code :",
+                                              style: text10),
                                           Text("-",
                                               style: text10.copyWith(
                                                   color: greyColor2)),
