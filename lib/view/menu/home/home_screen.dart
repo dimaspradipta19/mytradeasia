@@ -394,7 +394,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                       ],
                     ),
-                    // const SizedBox(height: 26),
                     // GRID TOP PRODUCT
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
