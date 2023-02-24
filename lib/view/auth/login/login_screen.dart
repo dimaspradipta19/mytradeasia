@@ -196,6 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackbar);
                               } finally {
+                                valueLoading.getStateLoading();
                                 valueLoading.isLoading;
                               }
                             },

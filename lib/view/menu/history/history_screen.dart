@@ -98,70 +98,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           ),
                                         ),
                                         // Order Detail
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return const OrderDetailScreen();
-                                              },
-                                            ));
-                                          },
-                                          child: Container(
-                                            height: 110.0,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            decoration: BoxDecoration(
-                                              border:
-                                                  Border.all(color: greyColor3),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(7.0),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20.0,
-                                                      vertical: 15.0),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/icon_order_detail.png",
-                                                    width: 43.0,
-                                                    height: 43.0,
-                                                  ),
-                                                  const SizedBox(width: 20.0),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          "Order Detail",
-                                                          style: heading3,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 5.0),
-                                                        Text(
-                                                          "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",
-                                                          style: body2Medium
-                                                              .copyWith(
-                                                            color: greyColor2,
-                                                          ),
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                        const BottomSheetHistory(
+                                          title: "Order Detail",
+                                          subTitle:
+                                              "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",
+                                          urlLogo:
+                                              "assets/images/icon_order_detail.png",
+                                          navigationPage: OrderDetailScreen(),
                                         ),
                                         // Tracking Shipping
                                         const SizedBox(height: 10.0),
@@ -477,34 +420,73 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ));
   }
 }
-// Consumer<DbManager>(
-//   builder: (context, DbManager value, _) {
-//     if (value.state == ResultState.loading) {
-//       return const Center(
-//         child: CircularProgressIndicator(),
-//       );
-//     } else if (value.state == ResultState.hasData) {
-//       return FutureBuilder(
-//         future: value.getBiodataByUid(_auth.currentUser!.uid),
-//         builder: (context, snapshot) {
-//           return Column(
-//             children: [
-//               Text(
-//                   "UID : ${snapshot.data?.uid.toString() ?? "Kosong"}"),
-//               Text(
-//                   "Firstname : ${snapshot.data?.firstName ?? "Kosong"}"),
-//               Text(
-//                   "Lastname : ${snapshot.data?.lastName ?? "Kosong"}"),
-//               Text(
-//                   "Companyname : ${snapshot.data?.companyName ?? "Kosong"}"),
-//             ],
-//           );
-//         },
-//       );
-//     }
-//     return Container(
-//       color: secondaryColor1,
-//       child: const Text("Error"),
-//     );
-//   },
-// ),
+
+class BottomSheetHistory extends StatelessWidget {
+  const BottomSheetHistory(
+      {Key? key,
+      required this.urlLogo,
+      required this.title,
+      required this.subTitle,
+      required this.navigationPage})
+      : super(key: key);
+
+  final String urlLogo;
+  final String title;
+  final String subTitle;
+  final Widget navigationPage;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return navigationPage;
+          },
+        ));
+      },
+      child: Container(
+        height: 110.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          border: Border.all(color: greyColor3),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(7.0),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+          child: Row(
+            children: [
+              Image.asset(
+                urlLogo,
+                width: 43.0,
+                height: 43.0,
+              ),
+              const SizedBox(width: 20.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: heading3,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      subTitle,
+                      style: body2Medium.copyWith(
+                        color: greyColor2,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

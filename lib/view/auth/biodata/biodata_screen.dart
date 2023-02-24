@@ -25,8 +25,6 @@ class _BiodataScreenState extends State<BiodataScreen> {
   final _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
 
-  // bool obscureText = true;
-
   @override
   void dispose() {
     _firstNameController.dispose();

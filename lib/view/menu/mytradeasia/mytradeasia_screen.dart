@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
-import 'package:provider/provider.dart';
 
 import '../../auth/login/login_screen.dart';
 
@@ -23,7 +21,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var valueLoading = Provider.of<LoadingProvider>(context, listen: false);
+    // var valueLoading = Provider.of<LoadingProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -183,7 +181,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   onPressed: () async {
                     await _auth.signOut();
 
-                    valueLoading.getStateLoading();
+                    // valueLoading.getStateLoading();
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                       builder: (context) {
                         return const LoginScreen();
