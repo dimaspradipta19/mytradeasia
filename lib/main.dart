@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
+import 'package:mytradeasia/modelview/provider/loading_provider.dart';
+import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/widget/splash_page.dart';
@@ -41,8 +43,15 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => SearchProductProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => LoadingProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ObscureTextProvider(),
+        ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'MyTradeasia',
         theme: ThemeData(
           appBarTheme: const AppBarTheme(color: whiteColor),

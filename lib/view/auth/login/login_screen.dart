@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/loading_provider.dart';
+import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 import '../../../modelview/provider/db_manager.dart';
 import '../../../utils/theme.dart';
+import '../../../widget/loading_overlay_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,8 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  DbManager manager = DbManager();
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -28,14 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  bool value = false;
-  bool isLoading = false;
-  bool obscureText = true;
-
   final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
+    var valueLoading = Provider.of<LoadingProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -55,16 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 50.48),
                   const Text("Hi there, Welcome Back!", style: heading1),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
+                  const SizedBox(height: 5.0),
                   Text(
                       "Lorem ipsum dolor sit amet consectetur. Tincidunt varius blandit a nisl purus pulvinar quis. Posuere ligula.",
                       style: body1Medium.copyWith(color: fontColor2)),
                   const SizedBox(
                     height: 30.0,
                   ),
-
                   //Email
                   Form(
                     key: _formKey,
@@ -73,72 +69,74 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Text("Email", style: heading3),
                         const SizedBox(height: 8),
+                        // email
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           controller: _emailController,
                           decoration: InputDecoration(
                             hintText: "Enter your email",
-                            hintStyle:
-                                body1Regular.copyWith(color: greyColor),
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20.0),
+                            hintStyle: body1Regular.copyWith(color: greyColor),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
                             border: const OutlineInputBorder(),
                             enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: greyColor3),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7.0))),
                             focusedBorder: const OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: secondaryColor1),
+                              borderSide: BorderSide(color: secondaryColor1),
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(
+                              top: size20px * 0.75, bottom: size20px - 12.0),
+                          child: Text("Password", style: heading3),
+                        ),
+                        // phone nuber
+                        Consumer<ObscureTextProvider>(
+                          builder: (context, ObscureTextProvider valueObsecure,
+                                  child) =>
+                              TextFormField(
+                            obscureText: valueObsecure.obscureText,
+                            keyboardType: TextInputType.number,
+                            controller: _phoneNumberController,
+                            decoration: InputDecoration(
+                              hintText: "Enter your password",
+                              hintStyle:
+                                  body1Regular.copyWith(color: greyColor),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              border: const OutlineInputBorder(),
+                              enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: greyColor3),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(7.0))),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor1),
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  valueObsecure.getObsecureText();
+                                },
+                                icon: valueObsecure.obscureText
+                                    ? Image.asset(
+                                        "assets/images/icon_eye_close.png",
+                                        width: 24.0,
+                                        height: 24.0,
+                                      )
+                                    : Image.asset(
+                                        "assets/images/icon_eye_open.png",
+                                        width: 24.0,
+                                        height: 24.0),
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-
-                  // Phone Number
-                  const Text("Password", style: heading3),
-                  const SizedBox(height: 8),
-
-                  TextFormField(
-                    obscureText: obscureText,
-                    keyboardType: TextInputType.number,
-                    controller: _phoneNumberController,
-                    decoration: InputDecoration(
-                      hintText: "Enter your password",
-                      hintStyle: body1Regular.copyWith(color: greyColor),
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 20.0),
-                      border: const OutlineInputBorder(),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: greyColor3),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(7.0))),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: secondaryColor1),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            obscureText = !obscureText;
-                          });
-                          print("toggle  eyes");
-                        },
-                        icon: obscureText == true
-                            ? Image.asset(
-                                "assets/images/icon_eye_close.png",
-                                width: 24.0,
-                                height: 24.0,
-                              )
-                            : Image.asset("assets/images/icon_eye_open.png",
-                                width: 24.0, height: 24.0),
-                      ),
-                    ),
-                  ),
+                  // forgot password
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -156,115 +154,92 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           "Forgot Password?",
-                          style:
-                              body1Regular.copyWith(color: secondaryColor1),
+                          style: body1Regular.copyWith(color: secondaryColor1),
                         ),
                       ),
                     ],
                   ),
-
                   SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 55.0,
-                      child: _emailController.text.isNotEmpty &&
-                              _phoneNumberController.text.isNotEmpty
-                          ? ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        primaryColor1),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(7.0),
-                                  ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 55.0,
+                    child: _emailController.text.isNotEmpty &&
+                            _phoneNumberController.text.isNotEmpty
+                        ? ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  primaryColor1),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0),
                                 ),
                               ),
-                              onPressed: () async {
-                                setState(() {
-                                  isLoading = true;
-                                });
+                            ),
+                            onPressed: () async {
+                              valueLoading.isLoading;
+                              valueLoading.getStateLoading();
 
-                                try {
-                                  await _auth.signInWithEmailAndPassword(
-                                      email: _emailController.text,
-                                      password:
-                                          _phoneNumberController.text);
+                              try {
+                                await _auth.signInWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _phoneNumberController.text);
 
-                                  Navigator.pushAndRemoveUntil(context,
-                                      MaterialPageRoute(
-                                    builder: (context) {
-                                      return const NavigationBarWidget(
-                                          // manager: manager,
-                                          );
-                                    },
-                                  ), (route) => false);
-                                } catch (e) {
-                                  final snackbar =
-                                      SnackBar(content: Text(e.toString()));
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackbar);
-                                } finally {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                }
-                              },
-                              child: Text(
-                                "Sign In",
-                                style: text16.copyWith(color: whiteColor),
-                              ),
-                            )
-                          : ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        greyColor),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(7.0),
-                                  ),
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(
+                                  builder: (context) {
+                                    return const NavigationBarWidget();
+                                  },
+                                ), (route) => false);
+                              } catch (e) {
+                                final snackbar =
+                                    SnackBar(content: Text(e.toString()));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackbar);
+                              } finally {
+                                valueLoading.isLoading;
+                              }
+                            },
+                            child: Text(
+                              "Sign In",
+                              style: text16.copyWith(color: whiteColor),
+                            ),
+                          )
+                        : ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(greyColor),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0),
                                 ),
                               ),
-                              onPressed: null,
-                              child: Text(
-                                "Sign In",
-                                style: text16.copyWith(color: whiteColor),
-                              ),
-                            )),
-                  const SizedBox(
-                    height: 20,
+                            ),
+                            onPressed: null,
+                            child: Text(
+                              "Sign In",
+                              style: text16.copyWith(color: whiteColor),
+                            ),
+                          ),
                   ),
+                  // ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Expanded(
-                        child: Divider(
-                          thickness: 2,
-                          color: greyColor3,
-                        ),
+                        child: Divider(thickness: 2, color: greyColor3),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 31.0),
-                        child: Text(
-                          "or sign in with",
-                          style: body1Regular,
-                        ),
+                        child: Text("or sign in with", style: body1Regular),
                       ),
                       Expanded(
-                        child: Divider(
-                          thickness: 2,
-                          color: greyColor3,
-                        ),
+                        child: Divider(thickness: 2, color: greyColor3),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
@@ -274,28 +249,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all<Color>(
-                                      whiteColor),
+                                  MaterialStateProperty.all<Color>(whiteColor),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7.0),
-                                  side: const BorderSide(
-                                      color: primaryColor1),
+                                  side: const BorderSide(color: primaryColor1),
                                 ),
                               ),
                             ),
-                            child: Image.asset(
-                                "assets/images/logo_google.png"),
+                            child: Image.asset("assets/images/logo_google.png"),
                             onPressed: () {
                               print("Google");
                             },
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 16.0,
-                      ),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: SizedBox(
                           width: 160.0,
@@ -303,19 +273,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all<Color>(
-                                      whiteColor),
+                                  MaterialStateProperty.all<Color>(whiteColor),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7.0),
-                                  side: const BorderSide(
-                                      color: primaryColor1),
+                                  side: const BorderSide(color: primaryColor1),
                                 ),
                               ),
                             ),
-                            child: Image.asset(
-                                "assets/images/logo_facebook.png"),
+                            child:
+                                Image.asset("assets/images/logo_facebook.png"),
                             onPressed: () {
                               print("Facebook");
                             },
@@ -324,9 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -346,51 +312,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text("Sign up here",
-                            style: body1Regular.copyWith(
-                                color: secondaryColor1)),
+                            style:
+                                body1Regular.copyWith(color: secondaryColor1)),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            if (isLoading)
-              Container(
-                child: const LoadingOverlay(),
+            if (valueLoading.isLoading)
+              SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
-              )
-            // const Center(
-            //   child: CircularProgressIndicator(),
-            // )
+                child: const LoadingOverlay(),
+              ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class LoadingOverlay extends StatelessWidget {
-  const LoadingOverlay({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Grey background
-        Opacity(
-          opacity: 0.5,
-          child: ModalBarrier(
-            dismissible: false,
-            color: Colors.grey[300],
-          ),
-        ),
-
-        // Loading indicator
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
-      ],
     );
   }
 }

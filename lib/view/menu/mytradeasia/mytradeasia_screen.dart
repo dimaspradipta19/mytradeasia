@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../../auth/login/login_screen.dart';
 
@@ -21,6 +23,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var valueLoading = Provider.of<LoadingProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -86,36 +89,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                           },
                         ),
                       ),
-                      // Consumer<DbManager>(
-                      //   builder: (context, DbManager value, child) {
-                      //     if (value.state == ResultState.loading) {
-                      //       return const Text("");
-                      //     } else if (value.state == ResultState.hasData) {
-                      //       return FutureBuilder(
-                      //         future:
-                      //             value.getBiodataByUid(_auth.currentUser!.uid),
-                      //         builder: (context, snapshot) {
-                      //           return Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             children: [
-                      //               Text(
-                      //                   "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
-                      //                   style: text16),
-                      //               Text(
-                      //                 snapshot.data?.companyName ?? "company",
-                      //                 style: text15.copyWith(
-                      //                     fontWeight: FontWeight.w400,
-                      //                     color: greyColor2),
-                      //               ),
-                      //             ],
-                      //           );
-                      //         },
-                      //       );
-                      //     } else {
-                      //       return const Text("No Data");
-                      //     }
-                      //   },
-                      // ),
                     ],
                   )
                 ],
@@ -209,6 +182,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   ),
                   onPressed: () async {
                     await _auth.signOut();
+
+                    valueLoading.getStateLoading();
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                       builder: (context) {
                         return const LoginScreen();

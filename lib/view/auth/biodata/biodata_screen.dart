@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utils/theme.dart';
 import '../../../widget/dialog_sheet_widget.dart';
@@ -23,7 +25,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
   final _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
 
-  bool obscureText = true;
+  // bool obscureText = true;
 
   @override
   void dispose() {
@@ -243,40 +245,41 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       // Password
                       const Text("Password", style: heading3),
                       const SizedBox(height: 8.0),
-                      TextFormField(
-                        obscureText: obscureText,
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: "Enter your company name",
-                          hintStyle: body1Regular.copyWith(color: greyColor),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 20.0),
-                          border: const OutlineInputBorder(),
-                          enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: greyColor3),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(7.0))),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: secondaryColor1),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                obscureText = !obscureText;
-                              });
-                              print("toggle eyes");
-                            },
-                            icon: obscureText == true
-                                ? Image.asset(
-                                    "assets/images/icon_eye_close.png",
-                                    width: 24.0,
-                                    height: 24.0,
-                                  )
-                                : Image.asset(
-                                    "assets/images/icon_eye_open.png",
-                                    width: 24.0,
-                                    height: 24.0,
-                                  ),
+                      Consumer<ObscureTextProvider>(
+                        builder: (context, ObscureTextProvider valueObscureText,
+                                child) =>
+                            TextFormField(
+                          obscureText: valueObscureText.obscureText,
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            hintText: "Enter your company name",
+                            hintStyle: body1Regular.copyWith(color: greyColor),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            border: const OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: greyColor3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7.0))),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor1),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                valueObscureText.getObsecureText();
+                              },
+                              icon: valueObscureText.obscureText
+                                  ? Image.asset(
+                                      "assets/images/icon_eye_close.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/icon_eye_open.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    ),
+                            ),
                           ),
                         ),
                       ),

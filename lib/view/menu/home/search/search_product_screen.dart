@@ -28,17 +28,17 @@ class _SearchScreenState extends State<SearchScreen> {
             const SizedBox(height: 60),
             Row(
               children: [
-                IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      Navigator.pop(context);
-                      _searchProd.searchProduct.clear();
-                    },
-                    icon: Image.asset(
-                      "assets/images/icon_back.png",
-                      width: 24.0,
-                      height: 24.0,
-                    )),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                    _searchProd.searchProduct.clear();
+                  },
+                  child: Image.asset(
+                    "assets/images/icon_back.png",
+                    width: 24.0,
+                    height: 24.0,
+                  ),
+                ),
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: Container(
@@ -112,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   "$url${value.searchProduct[index].productimage}",
                                   width: 148.0,
                                   height: 116.0,
-                                )),
+                                ),),
                               ),
                               Expanded(
                                 child: Padding(
