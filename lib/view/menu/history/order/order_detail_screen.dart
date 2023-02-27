@@ -15,7 +15,6 @@ class OrderDetailScreen extends StatelessWidget {
     const int index = 1;
     return Scaffold(
       backgroundColor: whiteColor,
-      // appBar: AppBar(title: Text(index.toString()),),
       appBar: AppBar(
         title: const Text(
           "Order Detail",

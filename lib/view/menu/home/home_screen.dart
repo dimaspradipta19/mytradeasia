@@ -5,6 +5,7 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
+import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 
@@ -128,6 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: IconButton(
                                   onPressed: () {
                                     print("Cart");
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return const CartScreen();
+                                      },
+                                    ));
                                   },
                                   icon: Image.asset(
                                     "assets/images/icon_cart.png",
@@ -699,26 +705,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// Consumer<DbManager>(
-                                //   builder: (context, DbManager value, child) {
-                                //     if (value.state == ResultState.loading) {
-                                //       return const Text("");
-                                //     } else if (value.state ==
-                                //         ResultState.hasData) {
-                                //       return FutureBuilder(
-                                //         future: value.getBiodataByUid(
-                                //             _auth.currentUser!.uid),
-                                //         builder: (context, snapshot) {
-                                //           return Text(
-                                //               "${snapshot.data?.firstName ?? "FirstName"} ${snapshot.data?.lastName ?? "Lastname"}",
-                                //               style: text16.copyWith(
-                                //                   color: whiteColor,
-                                //                   fontWeight: FontWeight.bold));
-                                //         },
-                                //       );
-                                //     } else {
-                                //       return const Text("No Data");
-                                //     }
-                                //   },
-                                // ),
