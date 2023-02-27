@@ -27,29 +27,32 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(right: size20px, left: size20px, top: 8.0),
+          padding:
+              const EdgeInsets.only(right: size20px, left: size20px, top: 8.0),
           child: Column(
             children: [
               // SEARCHBAR
               Row(
                 children: [
-                  IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Image.asset(
-                        "assets/images/icon_back.png",
-                        width: 24.0,
-                        height: 24.0,
-                      )),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      "assets/images/icon_back.png",
+                      width: 24.0,
+                      height: 24.0,
+                    ),
+                  ),
                   const SizedBox(width: 10.0),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: greyColor),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(7))),
+                        border: Border.all(color: greyColor),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(7),
+                        ),
+                      ),
                       height: 50,
                       width: MediaQuery.of(context).size.width,
                       child: Form(
@@ -82,37 +85,62 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                   )
                 ],
               ),
-              // const SizedBox(height: 30.0),
+              const SizedBox(height: 30.0),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text("All Products", style: text18),
-                  const Spacer(),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(thirdColor1),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
+                  InkWell(
+                    onTap: () {
                       print("Filter");
                     },
-                    child: Row(
-                      children: [
-                        Text(
-                          "Filter",
-                          style: text12.copyWith(color: secondaryColor1),
-                        ),
-                      ],
+                    child: Container(
+                      width: size20px * 3,
+                      height: size20px + 4,
+                      decoration: const BoxDecoration(
+                          color: secondaryColor5,
+                          borderRadius: BorderRadius.all(Radius.circular(100))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Filter",
+                            style: text12.copyWith(color: secondaryColor1),
+                          ),
+                          const Icon(
+                            Icons.filter,
+                            size: 14.0,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
+                  )
+                  // ElevatedButton(
+                  //   style: ButtonStyle(
+                  //     backgroundColor:
+                  //         MaterialStateProperty.all<Color>(thirdColor1),
+                  //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //       RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(100.0),
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   onPressed: () {
+                  //     print("Filter");
+                  //   },
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //         "Filter",
+                  //         style: text12.copyWith(color: secondaryColor1),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
               const SizedBox(height: 16.0),
-      
+
               // GRID DATA
               Expanded(
                 child: Consumer<ListProductProvider>(
@@ -179,7 +207,8 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text("HS Code :", style: text10),
+                                          const Text("HS Code :",
+                                              style: text10),
                                           Text("-",
                                               style: text10.copyWith(
                                                   color: greyColor2)),
