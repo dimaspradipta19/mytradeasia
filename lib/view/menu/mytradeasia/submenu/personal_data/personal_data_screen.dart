@@ -7,7 +7,6 @@ class PersonalDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
 
     return Scaffold(
       backgroundColor: whiteColor,
