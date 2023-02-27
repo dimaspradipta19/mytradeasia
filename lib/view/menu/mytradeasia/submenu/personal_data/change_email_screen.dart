@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/email_change_otp.dart';
+import 'package:mytradeasia/widget/text_editing_widget.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
   const ChangeEmailScreen({super.key});
@@ -59,58 +60,34 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                     const Text("Old Email"),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 15.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: greyColor),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(7))),
-                        child: TextFormField(
-                          controller: _oldEmailController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter your old email address",
-                              hintStyle: text12.copyWith(color: greyColor2),
-                              contentPadding: const EdgeInsets.only(
-                                  left: 20, top: 16.0, bottom: 16.0)),
-                        ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: TextEditingWidget(
+                            readOnly: false,
+                            controller: _oldEmailController,
+                            hintText: "Enter your old email address"),
                       ),
                     ),
                     const Text("New Email"),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 15.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: greyColor),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(7))),
-                        child: TextFormField(
-                          controller: _newEmailController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter your new email address",
-                              hintStyle: text12.copyWith(color: greyColor2),
-                              contentPadding: const EdgeInsets.only(
-                                  left: 20, top: 16.0, bottom: 16.0)),
-                        ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: TextEditingWidget(
+                            readOnly: false,
+                            controller: _newEmailController,
+                            hintText: "Enter your new email address"),
                       ),
                     ),
                     const Text("Confirm New Email"),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 15.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: greyColor),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(7))),
-                        child: TextFormField(
-                          controller: _confirmEmailController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter your new email address",
-                              hintStyle: text12.copyWith(color: greyColor2),
-                              contentPadding: const EdgeInsets.only(
-                                  left: 20, top: 16.0, bottom: 16.0)),
-                        ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: TextEditingWidget(
+                            readOnly: false,
+                            controller: _confirmEmailController,
+                            hintText: "Enter your new email adress"),
                       ),
                     ),
                   ],
@@ -128,7 +105,8 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                 BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(primaryColor1),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(primaryColor1),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),
@@ -138,7 +116,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return EmailChangeVerfication();
+                    return const EmailChangeVerfication();
                   },
                 ));
               },

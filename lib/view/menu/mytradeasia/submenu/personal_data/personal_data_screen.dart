@@ -1,13 +1,42 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
-class PersonalDataScreen extends StatelessWidget {
+
+import '../../../../../widget/text_editing_widget.dart';
+
+class PersonalDataScreen extends StatefulWidget {
   const PersonalDataScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<PersonalDataScreen> createState() => _PersonalDataScreenState();
+}
 
+class _PersonalDataScreenState extends State<PersonalDataScreen> {
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneNumberController.dispose();
+    _companyNameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -33,177 +62,194 @@ class PersonalDataScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 28.0),
               // Photo Profile
-              Center(
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      "assets/images/profile_picture.png",
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                            color: primaryColor1,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Icon(
-                          Icons.camera_alt_rounded,
-                          color: whiteColor,
-                          size: 12,
-                        ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: size20px + 8.0),
+                child: Center(
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        "assets/images/profile_picture.png",
                       ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 28.0),
-              // FIRST NAME + LAST NAME
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "First Name",
-                          style: text14,
-                        ),
-                        const SizedBox(height: 8.0),
-                        Container(
-                          width: 160,
-                          height: 50,
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          width: 20,
+                          height: 20,
                           decoration: BoxDecoration(
-                            border: Border.all(color: greyColor),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          child: TextFormField(
-                            decoration:
-                                const InputDecoration(border: InputBorder.none),
+                              color: primaryColor1,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: const Icon(
+                            Icons.camera_alt_rounded,
+                            color: whiteColor,
+                            size: 12,
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                  const SizedBox(width: 15.0),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Last Name",
-                          style: text14,
-                        ),
-                        const SizedBox(height: 8.0),
-                        Container(
-                          width: 160,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: greyColor),
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          child: TextFormField(
-                            decoration:
-                                const InputDecoration(border: InputBorder.none),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-              const SizedBox(height: 15.0),
-              // PHONE NUMBER
-              const Text(
-                "Phone Number",
-                style: text14,
-              ),
-              const SizedBox(height: 8),
-              // PHONE NUMBER FIELD TEXT
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 50,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(7),
+              StreamBuilder(
+                stream: _firestore
+                    .collection('biodata')
+                    .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+                    .snapshots(),
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if (streamSnapshot.hasData) {
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          // FIRST NAME + LAST NAME
+                          Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "First Name",
+                                    style: text14,
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  SizedBox(
+                                    width: size20px * 8.0,
+                                    height: size20px + 30,
+                                    child: TextEditingWidget(
+                                        controller: _firstNameController,
+                                        hintText: streamSnapshot.data?.docs[0]
+                                            ["firstName"]),
+                                  ),
+                                ],
+                              ),
+                              Expanded(child: Container()),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Last Name",
+                                    style: text14,
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  SizedBox(
+                                    width: size20px * 8.0,
+                                    height: size20px + 30,
+                                    child: TextEditingWidget(
+                                        controller: _lastNameController,
+                                        hintText: streamSnapshot.data?.docs[0]
+                                            ["lastName"]),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          border: Border.all(color: greyColor)),
-                      child: Image.asset("assets/images/logo_indonesia.png"),
-                    ),
-                  ),
-                  // const Expanded(child: SizedBox(width: 15.0)),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Container(
-                      height: 50.0,
-                      width: 275.0,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(7),
-                        ),
-                        border: Border.all(color: greyColor),
+                          // PHONE NUMBER + Flag
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Phone Number",
+                                  style: text14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      height: 50,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(7),
+                                          ),
+                                          border: Border.all(color: greyColor)),
+                                      child: Image.asset(
+                                          "assets/images/logo_indonesia.png"),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      child: TextEditingWidget(
+                                          controller: _phoneNumberController,
+                                          hintText: "Phone Number"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          // COMPANY NAME
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Company Name",
+                                  style: text14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWidget(
+                                    controller: _companyNameController,
+                                    hintText: streamSnapshot.data?.docs[0]
+                                        ["companyName"]),
+                              ),
+                            ],
+                          ),
+                          // Email with suffix
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Email",
+                                  style: text14,
+                                ),
+                              ),
+                              // EMAIL NAMEFIELD TEXT
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWithIconSuffix(
+                                  readOnly: true,
+                                  controller: _emailController,
+                                  hintText: _auth.currentUser?.email ??
+                                      "cannot read email...",
+                                  imageUrl: "assets/images/icon_forward.png",
+                                  navigationPage: const ChangeEmailScreen(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      child: TextFormField(
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15.0),
-              // COMPANY NAME
-              const Text(
-                "Company Name",
-                style: text14,
-              ),
-              const SizedBox(height: 8),
-              // COMPANY NAMEFIELD TEXT
-              Container(
-                height: 50.0,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(7),
-                  ),
-                  border: Border.all(color: greyColor),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(border: InputBorder.none),
-                ),
-              ),
-              const SizedBox(height: 15.0),
-              // COMPANY NAME
-              const Text(
-                "Email",
-                style: text14,
-              ),
-              const SizedBox(height: 8),
-              // EMAIL NAMEFIELD TEXT
-              Container(
-                height: 50.0,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(7),
-                  ),
-                  border: Border.all(color: greyColor),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(border: InputBorder.none),
-                ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ],
           ),
@@ -223,13 +269,7 @@ class PersonalDataScreen extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChangeEmailScreen(),
-                  ));
-            },
+            onPressed: () {},
             child: Text(
               "Edit Personal Data",
               style: text16.copyWith(color: whiteColor),

@@ -21,7 +21,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var valueLoading = Provider.of<LoadingProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -58,29 +57,30 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                             if (streamSnapshot.hasData) {
                               return ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  itemCount: streamSnapshot.data!.docs.length,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${streamSnapshot.data?.docs[index]['firstName'] ?? "FirstName"} ${streamSnapshot.data!.docs[index]['lastName'] ?? "LastName"}",
-                                          style: text16,
-                                        ),
-                                        Text(
-                                          streamSnapshot.data?.docs[index]
-                                                  ['companyName'] ??
-                                              "company",
-                                          style: text15.copyWith(
-                                              fontWeight: FontWeight.w400,
-                                              color: greyColor2),
-                                        ),
-                                      ],
-                                    );
-                                  });
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                itemCount: streamSnapshot.data!.docs.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${streamSnapshot.data?.docs[index]['firstName'] ?? "FirstName"} ${streamSnapshot.data!.docs[index]['lastName'] ?? "LastName"}",
+                                        style: text16,
+                                      ),
+                                      Text(
+                                        streamSnapshot.data?.docs[index]
+                                                ['companyName'] ??
+                                            "company",
+                                        style: text15.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            color: greyColor2),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             } else {
                               return const Text("First Name Last Name");
                             }
