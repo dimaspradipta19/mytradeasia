@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -107,36 +108,13 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                             "Filter",
                             style: text12.copyWith(color: secondaryColor1),
                           ),
-                          const Icon(
-                            Icons.filter,
-                            size: 14.0,
-                          )
+                          const SizedBox(width: 2.0),
+                          Image.asset("assets/images/icon_filter.png",
+                              width: size20px - 10.0, height: size20px - 10.0)
                         ],
                       ),
                     ),
-                  )
-                  // ElevatedButton(
-                  //   style: ButtonStyle(
-                  //     backgroundColor:
-                  //         MaterialStateProperty.all<Color>(thirdColor1),
-                  //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //       RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(100.0),
-                  //       ),
-                  //     ),
-                  //   ),
-                  //   onPressed: () {
-                  //     print("Filter");
-                  //   },
-                  //   child: Row(
-                  //     children: [
-                  //       Text(
-                  //         "Filter",
-                  //         style: text12.copyWith(color: secondaryColor1),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  ),
                 ],
               ),
               const SizedBox(height: 16.0),
@@ -268,7 +246,14 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                 Radius.circular(5))),
                                         child: IconButton(
                                           onPressed: () {
-                                            print("cart icon");
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return const CartScreen();
+                                                },
+                                              ),
+                                            );
                                           },
                                           icon: Image.asset(
                                             "assets/images/icon_cart.png",

@@ -6,6 +6,7 @@ import 'package:mytradeasia/view/menu/history/tracking_document/tracking_documen
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
+import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 
@@ -109,7 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         BorderRadius.all(Radius.circular(5.0))),
                                 child: IconButton(
                                   onPressed: () {
-                                    print("notification");
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return const NotificationScreen();
+                                      },
+                                    ));
                                   },
                                   icon: Image.asset(
                                       "assets/images/icon_notification.png",
