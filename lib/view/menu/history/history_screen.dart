@@ -34,10 +34,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Form(
                     child: TextFormField(
                       decoration: InputDecoration(
-                        hintText: "What do you want to search?",
-                        hintStyle: body1Regular.copyWith(color: greyColor),
-                        contentPadding: EdgeInsets.zero,
-                        border: const OutlineInputBorder(),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.only(left: 20, right: 15.0),
                           child: Image.asset(
@@ -46,17 +42,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             height: 24.0,
                           ),
                         ),
+                        hintText: "What do you want to search?",
+                        hintStyle: body1Regular.copyWith(color: greyColor),
+                        contentPadding: EdgeInsets.zero,
                         enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: greyColor3),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(7.0))),
+                          borderSide: BorderSide(color: greyColor3),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(7.0),
+                          ),
+                        ),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: secondaryColor1),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20.0),
+                  const SizedBox(height: size20px),
                   ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -69,8 +70,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           showModalBottomSheet<dynamic>(
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(40.0))),
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(40.0),
+                              ),
+                            ),
                             context: context,
                             builder: (context) {
                               return Wrap(

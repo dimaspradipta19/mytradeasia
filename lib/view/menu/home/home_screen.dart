@@ -392,27 +392,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Text("Our Top Products", style: text18),
                         const Spacer(),
                         ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(whiteColor),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100.0),
-                                ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(whiteColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.0),
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return const TopProductsScreen();
-                                },
-                              ));
-                            },
-                            child: Text(
-                              "See More",
-                              style: text12.copyWith(color: secondaryColor1),
-                            )),
+                          ),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const TopProductsScreen();
+                              },
+                            ));
+                          },
+                          child: Text(
+                            "See More",
+                            style: text12.copyWith(color: secondaryColor1),
+                          ),
+                        ),
                       ],
                     ),
                     // GRID TOP PRODUCT

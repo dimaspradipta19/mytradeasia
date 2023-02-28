@@ -14,6 +14,7 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     const int index = 10;
     return Scaffold(
+      backgroundColor: whiteColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -33,10 +34,17 @@ class _MessageScreenState extends State<MessageScreen> {
                   child: Form(
                     child: TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon:
-                            Image.asset("assets/images/icon_search.png"),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 15.0),
+                          child: Image.asset(
+                            "assets/images/icon_search.png",
+                            width: 24.0,
+                            height: 24.0,
+                          ),
+                        ),
                         hintText: "What do you want to search?",
                         hintStyle: body1Regular.copyWith(color: greyColor),
+                        contentPadding: EdgeInsets.zero,
                         enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide(color: greyColor3),
                           borderRadius: BorderRadius.all(
@@ -58,7 +66,7 @@ class _MessageScreenState extends State<MessageScreen> {
                       print("Read All");
                     },
                     child: Text(
-                    index != 0 ?  "Read All($index)" : "Read All(0)",
+                      index != 0 ? "Read All($index)" : "Read All(0)",
                       style: body1Regular.copyWith(color: secondaryColor1),
                     ),
                   ),
