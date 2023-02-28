@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../cart/cart_screen.dart';
 
 class AllProductsScreen extends StatefulWidget {
   const AllProductsScreen({super.key});
@@ -80,7 +81,16 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                         color: secondaryColor1,
                         borderRadius: BorderRadius.circular(7)),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const CartScreen();
+                            },
+                          ),
+                        );
+                      },
                       icon: Image.asset("assets/images/icon_cart.png"),
                     ),
                   )
@@ -246,14 +256,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                 Radius.circular(5))),
                                         child: IconButton(
                                           onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) {
-                                                  return const CartScreen();
-                                                },
-                                              ),
-                                            );
+                                            print("cart icon");
                                           },
                                           icon: Image.asset(
                                             "assets/images/icon_cart.png",
