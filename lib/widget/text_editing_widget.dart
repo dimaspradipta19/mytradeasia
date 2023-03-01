@@ -90,3 +90,41 @@ class TextEditingWithIconSuffix extends StatelessWidget {
     );
   }
 }
+
+// Textfield with prefix
+
+class TextEditingWithPrefixFilled extends StatelessWidget {
+  const TextEditingWithPrefixFilled(
+      {Key? key,
+      required this.hintText,
+      required this.urlImage,
+      required this.controller})
+      : super(key: key);
+
+  final String hintText;
+  final String urlImage;
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: body1Regular,
+        filled: true,
+        fillColor: whiteColor,
+        prefixIcon: Image.asset("assets/images/icon_search.png"),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: greyColor3),
+          borderRadius: BorderRadius.all(
+            Radius.circular(7.0),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: secondaryColor1),
+        ),
+      ),
+    );
+  }
+}

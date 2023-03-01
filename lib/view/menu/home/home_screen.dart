@@ -435,9 +435,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
-                                  return ProductsDetailScreen(
-                                    indexing: index,
-                                  );
+                                  return const ProductsDetailScreen();
                                 },
                               ));
                             },
