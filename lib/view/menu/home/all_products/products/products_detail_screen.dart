@@ -37,9 +37,12 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     color: secondaryColor1,
                     width: MediaQuery.of(context).size.width,
                     height: size20px * 15.0,
-                    child: Image.asset(
-                      "assets/images/product_big_size.png",
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: "dash",
+                      child: Image.asset(
+                        "assets/images/product_big_size.png",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ],
@@ -392,7 +395,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     ),
                     // content
                     SizedBox(
-                      height: 350,
+                      height: 270,
                       width: MediaQuery.of(context).size.width,
                       child: TabBarView(
                         children: [
@@ -474,14 +477,166 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox()
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: size20px - 4.0),
+                      child: Text(
+                        "Related products",
+                        style: heading2,
+                      ),
+                    ),
+                    GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 15,
+                              childAspectRatio: 0.8),
+                      itemCount: 2,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const ProductsDetailScreen();
+                              },
+                            ));
+                          },
+                          child: Card(
+                            shadowColor: blackColor,
+                            elevation: 3.0,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                    child: Image.asset(
+                                        "assets/images/products.png")),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5.0, horizontal: 10.0),
+                                  child: Text(
+                                    "Dipentene",
+                                    style: text14,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("CAS Number :",
+                                              style: text10),
+                                          Text("138 - 86 - 3",
+                                              style: text10.copyWith(
+                                                  color: greyColor2)),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("HS Code :",
+                                              style: text10),
+                                          Text("-",
+                                              style: text10.copyWith(
+                                                  color: greyColor2)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: size20px, vertical: size20px - 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: size20px * 2.75,
+                width: size20px * 2.75,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(whiteColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(color: greyColor3)),
+                    ),
+                    elevation: MaterialStateProperty.all<double>(0.0),
+                  ),
+                  onPressed: () {},
+                  child: Image.asset(
+                    "assets/images/icon_message_not_active.png",
+                    width: size20px + 4.0,
+                    color: primaryColor1,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: size20px * 2.75,
+                width: size20px * 2.75,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(whiteColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(color: greyColor3)),
+                    ),
+                    elevation: MaterialStateProperty.all<double>(0.0),
+                  ),
+                  onPressed: () {},
+                  child: Image.asset(
+                    "assets/images/icon_cart.png",
+                    width: size20px + 4.0,
+                    color: primaryColor1,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: size20px * 2.75,
+                width: 195,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(primaryColor1),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: greyColor3)),
+                      ),
+                      elevation: MaterialStateProperty.all<double>(0.0),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      "Send Inquiry",
+                      style: text16.copyWith(color: whiteColor),
+                    )),
+              ),
+            ],
+          ),
+        ),
         // CustomScrollView(
         //   slivers: [
         //     SliverAppBar(

@@ -12,6 +12,7 @@ import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 
 import '../../../model/industry_model.dart';
+import 'all_products/request_quotation_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -212,6 +213,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: InkWell(
                             onTap: () {
                               print("RFQ");
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return const RequestQuotationScreen();
+                                },
+                              ));
                             },
                             child: Container(
                               height: 60,
@@ -426,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisSpacing: 15,
                                 mainAxisSpacing: 15,
                                 childAspectRatio: 0.65),
-                        itemCount: 4,
+                        itemCount: 1,
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         physics: const NeverScrollableScrollPhysics(),
@@ -446,8 +452,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Center(
-                                      child: Image.asset(
-                                          "assets/images/products.png")),
+                                      child: Hero(
+                                    tag: "dash",
+                                    child: Image.asset(
+                                        "assets/images/products.png"),
+                                  )),
                                   const Padding(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 5.0, horizontal: 10.0),

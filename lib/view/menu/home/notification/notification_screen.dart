@@ -27,63 +27,59 @@ class NotificationScreen extends StatelessWidget {
         ),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                height: size20px * 4.0,
-                decoration: const BoxDecoration(color: secondaryColor5),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Image.asset(
-                        "assets/images/icon_badge_notif.png",
-                        width: size20px * 2 + 3,
-                        height: size20px * 2 + 3,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: size20px),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView.builder(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        itemCount: 11,
+        itemBuilder: (context, index) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: size20px * 4.0,
+            decoration: const BoxDecoration(color: secondaryColor5),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Image.asset(
+                    "assets/images/icon_badge_notif.png",
+                    width: size20px * 2 + 3,
+                    height: size20px * 2 + 3,
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: size20px),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "RFQ has ben submitted!",
-                                  style: body1Medium,
-                                ),
-                                Text(
-                                  "1 Min Ago",
-                                  style: text8.copyWith(color: greyColor2),
-                                ),
-                              ],
+                            const Text(
+                              "RFQ has ben submitted!",
+                              style: body1Medium,
                             ),
-                            const SizedBox(height: size20px / 4.0),
                             Text(
-                              "Lorem ipsum dolor sit amet consectetur. Viverra odio est varius id nisi. Aliquet adipiscing tristique risus.",
-                              style: body2Medium.copyWith(color: greyColor2),
+                              "1 Min Ago",
+                              style: text8.copyWith(color: greyColor2),
                             ),
                           ],
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
+                        const SizedBox(height: size20px / 4.0),
+                        Text(
+                          "Lorem ipsum dolor sit amet consectetur. Viverra odio est varius id nisi. Aliquet adipiscing tristique risus.",
+                          style: body2Medium.copyWith(color: greyColor2),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
