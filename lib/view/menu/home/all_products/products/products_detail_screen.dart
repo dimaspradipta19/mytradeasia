@@ -11,159 +11,204 @@ class ProductsDetailScreen extends StatefulWidget {
 
 final TextEditingController searchController = TextEditingController();
 
-const bool _pinned = true;
+// const bool _pinned = true;
 
 class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
+  List<List<String>> basicInformation = [
+    ["IUPAC NAME", "C10H16"],
+    ["Appearance", "Clear Liquid"],
+    ["Common Name", "Dipentene"],
+    ["Packaging", "170-250 KG Net Galvanized Iron Drum"]
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  color: secondaryColor1,
-                  width: MediaQuery.of(context).size.width,
-                  height: size20px * 15.0,
-                  child: Image.asset(
-                    "assets/images/product_big_size.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: size20px),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return DefaultTabController(
+      length: 2,
+      initialIndex: 1,
+      child: Scaffold(
+        backgroundColor: whiteColor,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: size20px * 2.0, bottom: size20px * 7.0),
-                    child: SizedBox(
-                      height: size20px + 30,
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Image.asset(
-                              "assets/images/icon_back.png",
-                              color: whiteColor,
-                              width: size20px + 4,
-                              height: size20px + 4,
-                            ),
-                          ),
-                          SizedBox(
-                            height: size20px + 30,
-                            width: size20px * 12,
-                            child: Form(
-                              child: TextEditingWithPrefixFilled(
-                                  hintText: "Dipentene",
-                                  urlImage: "assets/images/icon_serach.png",
-                                  controller: searchController),
-                            ),
-                          ),
-                          Container(
-                            width: size20px + 30,
-                            height: size20px + 30,
-                            decoration: const BoxDecoration(
-                              color: secondaryColor1,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
-                            ),
-                            child: Image.asset("assets/images/icon_cart.png"),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    color: secondaryColor1,
+                    width: MediaQuery.of(context).size.width,
+                    height: size20px * 15.0,
+                    child: Image.asset(
+                      "assets/images/product_big_size.png",
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
-                    height: size20px * 9.0,
-                    width: size20px * 16.75,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        //set border radius more than 50% of height and width to make circle
-                      ),
-                      elevation: 2,
-                      margin: EdgeInsets.zero,
-                      child: Padding(
-                        padding: const EdgeInsets.all(size20px),
-                        child: Column(
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: size20px),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: size20px * 2.0, bottom: size20px * 7.0),
+                      child: SizedBox(
+                        height: size20px + 30,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Dipentene",
-                                  style: heading1,
-                                ),
-                                Container(
-                                  height: size20px + 10.0,
-                                  width: size20px + 10.0,
-                                  padding: const EdgeInsets.all(size20px / 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(size20px),
-                                      ),
-                                      border: Border.all(color: greyColor)),
-                                  child: Image.asset(
-                                    "assets/images/icon_share.png",
-                                  ),
-                                ),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Image.asset(
+                                "assets/images/icon_back.png",
+                                color: whiteColor,
+                                width: size20px + 4,
+                                height: size20px + 4,
+                              ),
                             ),
-                            const SizedBox(height: size20px * 0.75),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("CAS Number :",
-                                        style: body1Medium),
-                                    Text("138 - 86 - 3",
-                                        style: body1Regular.copyWith(
-                                            color: greyColor2)),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("HS Code :", style: body1Medium),
-                                    Text("-",
-                                        style: body1Regular.copyWith(
-                                            color: greyColor2)),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Formula :", style: body1Medium),
-                                    Text("C10H16",
-                                        style: body1Regular.copyWith(
-                                            color: greyColor2)),
-                                  ],
-                                ),
-                              ],
+                            SizedBox(
+                              height: size20px + 30,
+                              width: size20px * 12,
+                              child: Form(
+                                child: TextEditingWithPrefixFilled(
+                                    hintText: "Dipentene",
+                                    urlImage: "assets/images/icon_serach.png",
+                                    controller: searchController),
+                              ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: size20px - 5.0),
-                              child: Row(
+                            Container(
+                              width: size20px + 30,
+                              height: size20px + 30,
+                              decoration: const BoxDecoration(
+                                color: secondaryColor1,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Image.asset("assets/images/icon_cart.png"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size20px * 9.0,
+                      width: size20px * 16.75,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        elevation: 2,
+                        margin: EdgeInsets.zero,
+                        child: Padding(
+                          padding: const EdgeInsets.all(size20px),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: size20px * 2,
-                                      width: size20px * 7.0,
-                                      child: ElevatedButton(
+                                  const Text(
+                                    "Dipentene",
+                                    style: heading1,
+                                  ),
+                                  Container(
+                                    height: size20px + 10.0,
+                                    width: size20px + 10.0,
+                                    padding: const EdgeInsets.all(size20px / 5),
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(size20px),
+                                        ),
+                                        border: Border.all(color: greyColor)),
+                                    child: Image.asset(
+                                      "assets/images/icon_share.png",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: size20px * 0.75),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("CAS Number :",
+                                          style: body1Medium),
+                                      Text("138 - 86 - 3",
+                                          style: body1Regular.copyWith(
+                                              color: greyColor2)),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("HS Code :",
+                                          style: body1Medium),
+                                      Text("-",
+                                          style: body1Regular.copyWith(
+                                              color: greyColor2)),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Formula :",
+                                          style: body1Medium),
+                                      Text("C10H16",
+                                          style: body1Regular.copyWith(
+                                              color: greyColor2)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: size20px - 5.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: size20px * 2,
+                                        width: size20px * 7.0,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(primaryColor1),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              print("donwload TDS");
+                                            },
+                                            child: Text(
+                                              "Download TDS",
+                                              style: body1Medium.copyWith(
+                                                  color: whiteColor),
+                                            )),
+                                      ),
+                                    ),
+                                    const SizedBox(width: size20px * 0.75),
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: size20px * 2,
+                                        width: size20px * 7.0,
+                                        child: ElevatedButton(
                                           style: ButtonStyle(
                                             backgroundColor:
                                                 MaterialStateProperty.all<
@@ -176,174 +221,351 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                               ),
                                             ),
                                           ),
-                                          onPressed: () {
-                                            print("donwload TDS");
-                                          },
+                                          onPressed: () {},
                                           child: Text(
-                                            "Download TDS",
+                                            "Download MSDS",
                                             style: body1Medium.copyWith(
                                                 color: whiteColor),
-                                          )),
-                                    ),
-                                  ),
-                                  const SizedBox(width: size20px * 0.75),
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: size20px * 2,
-                                      width: size20px * 7.0,
-                                      child: ElevatedButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  primaryColor1),
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(7.0),
-                                            ),
                                           ),
-                                        ),
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Download MSDS",
-                                          style: body1Medium.copyWith(
-                                              color: whiteColor),
                                         ),
                                       ),
                                     ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: size20px),
+                      child: Text(
+                        "Basic Information",
+                        style: heading2,
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: index.isEven ? greyColor4 : whiteColor,
+                                borderRadius: BorderRadius.circular(7)),
+                            height: size20px * 2.5,
+                            width: MediaQuery.of(context).size.width,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: size20px),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Text(basicInformation[index][0]),
+                                  ),
+                                  const Expanded(
+                                    flex: 1,
+                                    child: Text(":"),
+                                  ),
+                                  Expanded(
+                                    flex: 6,
+                                    child: Text(basicInformation[index][1]),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: size20px),
-                    child: Text(
-                      "Basic Information",
-                      style: heading2,
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: size20px),
+                      child: Text(
+                        "Industry",
+                        style: heading2,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: index.isEven ? greyColor4 : whiteColor,
-                            borderRadius: BorderRadius.circular(7)
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(thirdColor1),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(size20px * 5),
+                              ),
+                            ),
                           ),
-                          height: size20px * 2.5,
-                          width: MediaQuery.of(context).size.width,
-                          child: Row(
-                            children: const [
-                              Text("IUPAC Name :"),
-                              Text("C10H16"),
+                          onPressed: () {},
+                          child: const Text(
+                            "Lorem ipsum dolor sit",
+                            style: body1Regular,
+                          ),
+                        ),
+                        const SizedBox(width: size20px / 2),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(thirdColor1),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(size20px * 5),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "Pine Derivative",
+                            style: body1Regular,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(thirdColor1),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(size20px * 5),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "Pine Derivative",
+                            style: body1Regular,
+                          ),
+                        ),
+                        const SizedBox(width: size20px / 2),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(thirdColor1),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(size20px * 5),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "Lorem ipsum dolor sit",
+                            style: body1Regular,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: size20px + 8.0),
+                    const TabBar(
+                      indicatorColor: primaryColor1,
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            "Description",
+                            style: heading2,
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "Application",
+                            style: heading2,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // content
+                    SizedBox(
+                      height: 350,
+                      width: MediaQuery.of(context).size.width,
+                      child: TabBarView(
+                        children: [
+                          // Description content
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: size20px, bottom: size20px / 4.0),
+                                child: Text("Brief Overview",
+                                    style: text15.copyWith(color: fontColor1)),
+                              ),
+                              const Text(
+                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  style: body1Regular),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: size20px / 2, bottom: size20px / 4.0),
+                                child: Text("Manufacturing Process",
+                                    style: text15.copyWith(color: fontColor1)),
+                              ),
+                              const Text(
+                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  style: body1Regular),
+                              const SizedBox(height: size20px),
+                              InkWell(
+                                onTap: () {
+                                  print("see more");
+                                },
+                                child: Center(
+                                  child: Text(
+                                    "See More",
+                                    style: body1Regular.copyWith(
+                                        color: secondaryColor1),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        );
-                      },
+
+                          // Application content
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: size20px, bottom: size20px / 4.0),
+                                child: Text("Brief Overview",
+                                    style: text15.copyWith(color: fontColor1)),
+                              ),
+                              const Text(
+                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  style: body1Regular),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: size20px / 2, bottom: size20px / 4.0),
+                                child: Text("Manufacturing Process",
+                                    style: text15.copyWith(color: fontColor1)),
+                              ),
+                              const Text(
+                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  style: body1Regular),
+                              const SizedBox(height: size20px),
+                              InkWell(
+                                onTap: () {
+                                  print("see more");
+                                },
+                                child: Center(
+                                  child: Text(
+                                    "See More",
+                                    style: body1Regular.copyWith(
+                                        color: secondaryColor1),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox()
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+
+        // CustomScrollView(
+        //   slivers: [
+        //     SliverAppBar(
+        //       elevation: 2.0,
+        //       backgroundColor: primaryColor1,
+        //       toolbarHeight: size20px * 4,
+        //       automaticallyImplyLeading: false,
+        //       pinned: _pinned,
+        //       // Searchbar fixed
+        //       actions: [
+        //         Expanded(
+        //           child: Padding(
+        //             padding: const EdgeInsets.symmetric(horizontal: size20px),
+        //             child: Row(
+        //               children: [
+        //                 InkWell(
+        //                   onTap: () {
+        //                     Navigator.pop(context);
+        //                   },
+        //                   child: Image.asset(
+        //                     "assets/images/icon_back.png",
+        //                     color: whiteColor,
+        //                     width: size20px + 4,
+        //                     height: size20px + 4,
+        //                   ),
+        //                 ),
+        //                 Expanded(
+        //                   child: Padding(
+        //                     padding: const EdgeInsets.symmetric(
+        //                         horizontal: size20px / 2),
+        //                     child: SizedBox(
+        //                       height: size20px + 30,
+        //                       child: Form(
+        //                         child: TextEditingWithPrefixFilled(
+        //                             hintText: "Dipentene",
+        //                             urlImage: "assets/images/icon_serach.png",
+        //                             controller: searchController),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ),
+        //                 Container(
+        //                   width: size20px + 30,
+        //                   height: size20px + 30,
+        //                   decoration: const BoxDecoration(
+        //                     color: secondaryColor1,
+        //                     borderRadius: BorderRadius.all(
+        //                       Radius.circular(10.0),
+        //                     ),
+        //                   ),
+        //                   child: Image.asset("assets/images/icon_cart.png"),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         )
+        //       ],
+        //       expandedHeight: size20px * 15.0,
+        //       collapsedHeight: size20px * 4,
+        //       // Image when collapsed
+        //       flexibleSpace: FlexibleSpaceBar(
+        //         background: Image.asset(
+        //           "assets/images/product_big_size.png",
+        //           fit: BoxFit.cover,
+        //         ),
+        //       ),
+        //     ),
+        // SliverList(
+        //   delegate: SliverChildBuilderDelegate(
+        //     (BuildContext context, int index) {
+        //       return Container(
+        //         color: index.isOdd ? Colors.white : Colors.black12,
+        //         height: 100.0,
+        //         child: Center(
+        //           child: Text('$index', textScaleFactor: 5),
+        //         ),
+        //       );
+        //     },
+        //     childCount: 10,
+        //   ),
+        // ),
+        //   ],
+        // ),
       ),
-
-      // CustomScrollView(
-      //   slivers: [
-      //     SliverAppBar(
-      //       elevation: 2.0,
-      //       backgroundColor: primaryColor1,
-      //       toolbarHeight: size20px * 4,
-      //       automaticallyImplyLeading: false,
-      //       pinned: _pinned,
-
-      //       // Searchbar fixed
-      //       actions: [
-      //         Expanded(
-      //           child: Padding(
-      //             padding: const EdgeInsets.symmetric(horizontal: size20px),
-      //             child: Row(
-      //               children: [
-      //                 InkWell(
-      //                   onTap: () {
-      //                     Navigator.pop(context);
-      //                   },
-      //                   child: Image.asset(
-      //                     "assets/images/icon_back.png",
-      //                     color: whiteColor,
-      //                     width: size20px + 4,
-      //                     height: size20px + 4,
-      //                   ),
-      //                 ),
-      //                 Expanded(
-      //                   child: Padding(
-      //                     padding: const EdgeInsets.symmetric(
-      //                         horizontal: size20px / 2),
-      //                     child: SizedBox(
-      //                       height: size20px + 30,
-      //                       child: Form(
-      //                         child: TextEditingWithPrefixFilled(
-      //                             hintText: "Dipentene",
-      //                             urlImage: "assets/images/icon_serach.png",
-      //                             controller: searchController),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 Container(
-      //                   width: size20px + 30,
-      //                   height: size20px + 30,
-      //                   decoration: const BoxDecoration(
-      //                     color: secondaryColor1,
-      //                     borderRadius: BorderRadius.all(
-      //                       Radius.circular(10.0),
-      //                     ),
-      //                   ),
-      //                   child: Image.asset("assets/images/icon_cart.png"),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         )
-      //       ],
-      //       expandedHeight: size20px * 15.0,
-      //       collapsedHeight: size20px * 4,
-      //       // Image when collapsed
-      //       flexibleSpace: FlexibleSpaceBar(
-      //         background: Image.asset(
-      //           "assets/images/product_big_size.png",
-      //           fit: BoxFit.cover,
-      //         ),
-      //       ),
-      //     ),
-      // SliverList(
-      //   delegate: SliverChildBuilderDelegate(
-      //     (BuildContext context, int index) {
-      //       return Container(
-      //         color: index.isOdd ? Colors.white : Colors.black12,
-      //         height: 100.0,
-      //         child: Center(
-      //           child: Text('$index', textScaleFactor: 5),
-      //         ),
-      //       );
-      //     },
-      //     childCount: 10,
-      //   ),
-      // ),
-      //   ],
-      // ),
     );
   }
 }
