@@ -106,43 +106,50 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                         children: [
                           // FIRST NAME + LAST NAME
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "First Name",
-                                    style: text14,
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  SizedBox(
-                                    width: size20px * 8.0,
-                                    height: size20px + 30,
-                                    child: TextEditingWidget(
-                                        controller: _firstNameController,
-                                        hintText: streamSnapshot.data?.docs[0]
-                                            ["firstName"]),
-                                  ),
-                                ],
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "First Name",
+                                      style: text14,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      child: TextEditingWidget(
+                                          controller: _firstNameController,
+                                          hintText: streamSnapshot.data?.docs[0]
+                                              ["firstName"]),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Expanded(child: Container()),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Last Name",
-                                    style: text14,
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  SizedBox(
-                                    width: size20px * 8.0,
-                                    height: size20px + 30,
-                                    child: TextEditingWidget(
-                                        controller: _lastNameController,
-                                        hintText: streamSnapshot.data?.docs[0]
-                                            ["lastName"]),
-                                  ),
-                                ],
+                              Expanded(flex: 1, child: Container()),
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Last Name",
+                                      style: text14,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      child: TextEditingWidget(
+                                          controller: _lastNameController,
+                                          hintText: streamSnapshot.data?.docs[0]
+                                              ["lastName"]),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

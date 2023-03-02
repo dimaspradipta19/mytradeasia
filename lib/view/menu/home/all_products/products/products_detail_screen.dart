@@ -395,7 +395,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     ),
                     // content
                     SizedBox(
-                      height: 270,
+                      height: 320,
                       width: MediaQuery.of(context).size.width,
                       child: TabBarView(
                         children: [
@@ -406,22 +406,12 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: size20px, bottom: size20px / 4.0),
-                                child: Text("Brief Overview",
+                                child: Text("Personal Care & Cosmetics",
                                     style: text15.copyWith(color: fontColor1)),
                               ),
                               const Text(
-                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  "Limonene and β-phellandrene are cyclic monoterpenes and are double-bond ismoers. in α-phellandrene, both double are endocyclic and β-phellandrene, one of them is exocyclic. Both are insoluble in water, but miscrible with ether. β-phellandrene is widely distributed in essential oils. The phellandrene are used in fragrances because of their pleasing aromas. The odors of β-phellandrene has been described as peppery-minty and slightly citrusy. Consequently, β-phellandrene is widely used in flavor industry",
                                   style: body1Regular),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: size20px / 2, bottom: size20px / 4.0),
-                                child: Text("Manufacturing Process",
-                                    style: text15.copyWith(color: fontColor1)),
-                              ),
-                              const Text(
-                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
-                                  style: body1Regular),
-                              const SizedBox(height: size20px),
                               InkWell(
                                 onTap: () {
                                   print("see more");
