@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 
 import '../../../../widget/text_editing_widget.dart';
+import '../../mytradeasia/submenu/personal_data/change_email_screen.dart';
 
 class RequestQuotationScreen extends StatefulWidget {
   const RequestQuotationScreen({super.key});
@@ -11,14 +12,18 @@ class RequestQuotationScreen extends StatefulWidget {
 }
 
 class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
-  // final TextEditingController _firstNameController = TextEditingController();
-  // final TextEditingController _lastNameController = TextEditingController();
-  // final TextEditingController _phoneNumberController = TextEditingController();
-  // final TextEditingController _countryController = TextEditingController();
-  // final TextEditingController _companyNameController = TextEditingController();
-  // final TextEditingController _productNameController = TextEditingController();
-  // final TextEditingController _companyNameController = TextEditingController();
-  // final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _countryController = TextEditingController();
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _incotermController = TextEditingController();
+  final TextEditingController _portOfDetinationController =
+      TextEditingController();
+  final TextEditingController _messagesController = TextEditingController();
+
+  // TODO: Dispose here fist
 
   @override
   Widget build(BuildContext context) {
@@ -55,64 +60,471 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                     "Request for Quotation",
                     style: heading2.copyWith(color: whiteColor),
                   ),
-                  Container(
-                    height: 900,
-                    width: 200,
-                    color: secondaryColor1,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: size20px * 3),
+                    child: Form(
+                      child: Column(
+                        children: [
+                          // FIRST NAME + LAST NAME
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "First Name",
+                                      style: text14,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      // TexteditingController here
+                                      child: TextEditingWidget(
+                                        controller: _firstNameController,
+                                        hintText: "First Name",
+                                        readOnly: false,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(flex: 1, child: Container()),
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Last Name",
+                                      style: text14,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      // TexteditingController here
+                                      child: TextEditingWidget(
+                                        controller: _lastNameController,
+                                        hintText: "First Name",
+                                        readOnly: false,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // Phone Number
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Phone Number",
+                                  style: text14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      height: 50,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(7),
+                                          ),
+                                          border: Border.all(color: greyColor)),
+                                      child: Image.asset(
+                                          "assets/images/logo_indonesia.png"),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      child: TextEditingWidget(
+                                          controller: _phoneNumberController,
+                                          hintText: "Phone Number",
+                                          readOnly: false),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                          // Country
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Country",
+                                  style: text14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWithIconSuffix(
+                                  readOnly: true,
+                                  controller: _countryController,
+                                  hintText: "Country",
+                                  imageUrl: "assets/images/icon_forward.png",
+                                  navigationPage: const ChangeEmailScreen(),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // Product Name
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Product Name",
+                                  style: text14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWidget(
+                                  readOnly: true,
+                                  controller: _productNameController,
+                                  hintText: "Dipentene",
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          //Quantity & Unit
+                          const SizedBox(height: size20px - 5.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Quantity",
+                                      style: text14,
+                                    ),
+                                    const SizedBox(height: 8.0),
+                                    SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      // TexteditingController here
+                                      child: TextEditingWidget(
+                                        controller: _quantityController,
+                                        hintText: "Quantity",
+                                        readOnly: false,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(flex: 1, child: Container()),
+                              Expanded(
+                                flex: 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      "Unit",
+                                      style: text14,
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    SizedBox(
+                                      width: size20px * 8.0,
+                                      height: size20px + 30,
+                                      // TexteditingController here
+                                      child: TextEditingWithIconSuffix(
+                                        hintText: "Unit",
+                                        readOnly: true,
+                                        imageUrl: "assets/images/icon_up.png",
+                                        navigationPage: ChangeEmailScreen(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          //Incoterm
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Incoterm",
+                                  style: text14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWithIconSuffix(
+                                  readOnly: true,
+                                  controller: _incotermController,
+                                  hintText: "Incoterm",
+                                  imageUrl: "assets/images/icon_bottom.png",
+                                  navigationPage: const ChangeEmailScreen(),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          //Port Of Destination
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Port Of Destination",
+                                  style: text14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWidget(
+                                  readOnly: false,
+                                  controller: _portOfDetinationController,
+                                  hintText: "Port Of Destination",
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // Messages
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Messages",
+                                  style: text14,
+                                ),
+                              ),
+                              Container(
+                                height: size20px * 14.25,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(7.0)),
+                                    border: Border.all(color: greyColor3)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: size20px,
+                                    right: size20px,
+                                    top: size20px - 4.0,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextFormField(
+                                        controller: _messagesController,
+                                        maxLength: 8000,
+                                        maxLines: 3,
+                                        style: body1Regular,
+                                        decoration: const InputDecoration(
+                                            hintText:
+                                                "Hi, I'm interested in this product.",
+                                            hintStyle: body1Regular,
+                                            border: InputBorder.none),
+                                      ),
+                                      const Divider(
+                                        color: greyColor2,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: size20px / 2.0),
+                                        child: Text(
+                                          "Or choose from these questions :",
+                                          style: body2Medium.copyWith(
+                                              color: greyColor2),
+                                        ),
+                                      ),
+
+                                      // Button 1
+                                      SizedBox(
+                                        height: size20px * 1.5,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              elevation:
+                                                  const MaterialStatePropertyAll<
+                                                      double>(0.0),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(whiteColor),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: greyColor3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          2.0),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              _messagesController.text =
+                                                  "What is the shipping cost?";
+                                            },
+                                            child: const Text(
+                                              "What is the shipping cost?",
+                                              style: body1Regular,
+                                            )),
+                                      ),
+
+                                      // Button 2
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0),
+                                        child: SizedBox(
+                                          height: size20px * 1.5,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                elevation:
+                                                    const MaterialStatePropertyAll<
+                                                        double>(0.0),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(whiteColor),
+                                                shape:
+                                                    MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    side: const BorderSide(
+                                                        color: greyColor3),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                _messagesController.text =
+                                                    "How long will it take to ship to my country?";
+                                              },
+                                              child: const Text(
+                                                "How long will it take to ship to my country?",
+                                                style: body1Regular,
+                                              )),
+                                        ),
+                                      ),
+
+                                      // Sizebox 3
+                                      SizedBox(
+                                        height: size20px * 1.5,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              elevation:
+                                                  const MaterialStatePropertyAll<
+                                                      double>(0.0),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(whiteColor),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: greyColor3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          2.0),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              _messagesController.text =
+                                                  "Can I get a sample first?";
+                                            },
+                                            child: const Text(
+                                              "Can I get a sample first?",
+                                              style: body1Regular,
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  // Form(
-                  //   child: Column(
-                  //     children: [
-                  //       // FIRST NAME + LAST NAME
-                  //       Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           Expanded(
-                  //             flex: 10,
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.start,
-                  //               children: const [
-                  //                 Text(
-                  //                   "First Name",
-                  //                   style: text14,
-                  //                 ),
-                  //                 SizedBox(height: 8.0),
-                  //                 SizedBox(
-                  //                   width: size20px * 8.0,
-                  //                   height: size20px + 30,
-                  //                   // TexteditingController here
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //           Expanded(flex: 1, child: Container()),
-                  //           Expanded(
-                  //             flex: 10,
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.start,
-                  //               children: const [
-                  //                 Text(
-                  //                   "Last Name",
-                  //                   style: text14,
-                  //                 ),
-                  //                 SizedBox(height: 8.0),
-                  //                 SizedBox(
-                  //                   width: size20px * 8.0,
-                  //                   height: size20px + 30,
-                  //                   // TexteditingController here
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: size20px, vertical: size20px - 7.0),
+        child: SizedBox(
+          height: size20px * 2.5,
+          child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(primaryColor1),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7.0),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                print(_messagesController.text);
+              },
+              child: Text(
+                "Send",
+                style: text16.copyWith(color: whiteColor),
+              )),
         ),
       ),
     );

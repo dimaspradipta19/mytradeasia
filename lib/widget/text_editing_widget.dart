@@ -42,13 +42,13 @@ class TextEditingWidget extends StatelessWidget {
 class TextEditingWithIconSuffix extends StatelessWidget {
   const TextEditingWithIconSuffix(
       {super.key,
-      required this.controller,
+      this.controller,
       required this.hintText,
       required this.imageUrl,
       required this.navigationPage,
       this.readOnly = false});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final String imageUrl;
   final bool readOnly;
