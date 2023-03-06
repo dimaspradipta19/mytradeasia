@@ -92,7 +92,6 @@ class TextEditingWithIconSuffix extends StatelessWidget {
 }
 
 // Textfield with prefix
-
 class TextEditingWithPrefixFilled extends StatelessWidget {
   const TextEditingWithPrefixFilled(
       {Key? key,
@@ -128,3 +127,60 @@ class TextEditingWithPrefixFilled extends StatelessWidget {
     );
   }
 }
+
+
+// DropdownTextField
+/*
+class TextEditingDropdown extends StatefulWidget {
+  const TextEditingDropdown({super.key, this.selectedValue});
+final  String? selectedValue;
+
+  @override
+  State<TextEditingDropdown> createState() => _TextEditingDropdownState();
+}
+
+class _TextEditingDropdownState extends State<TextEditingDropdown> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+      icon: Image.asset("assets/images/icon_bottom.png"),
+      hint: Text(
+        "Unit",
+        style: body1Regular.copyWith(color: greyColor),
+      ),
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+      ),
+      style: body1Regular,
+      items: const [
+        DropdownMenuItem(
+          value: 'Tonne',
+          child: Text('Tonne', style: body1Regular),
+        ),
+        DropdownMenuItem(
+          value: '20” FCL',
+          child: Text('20” FCL', style: body1Regular),
+        ),
+        DropdownMenuItem(
+          value: 'Litres',
+          child: Text('Litres', style: body1Regular),
+        ),
+        DropdownMenuItem(
+          value: 'Kilogram (Kg)',
+          child: Text('Kilogram (Kg)', style: body1Regular),
+        ),
+        DropdownMenuItem(
+          value: 'Metric Tonne (MT)',
+          child: Text('Metric Tonne (MT)', style: body1Regular),
+        ),
+      ],
+      value: widget.selectedValue,
+      onChanged: (value) {
+        setState(() {
+          widget.selectedValue = value;
+        });
+      },
+    );
+  }
+}
+*/

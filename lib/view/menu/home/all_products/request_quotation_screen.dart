@@ -22,8 +22,24 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   final TextEditingController _portOfDetinationController =
       TextEditingController();
   final TextEditingController _messagesController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  // TODO: Dispose here fist
+  String? _selectedValueUnit;
+  String? _selectedValueIncoterm;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneNumberController.dispose();
+    _countryController.dispose();
+    _productNameController.dispose();
+    _quantityController.dispose();
+    _incotermController.dispose();
+    _portOfDetinationController.dispose();
+    _messagesController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +79,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: size20px * 3),
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         children: [
                           // FIRST NAME + LAST NAME
@@ -252,21 +269,70 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                 flex: 10,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
+                                  children: [
+                                    const Text(
                                       "Unit",
                                       style: text14,
                                     ),
-                                    SizedBox(height: 8.0),
-                                    SizedBox(
+                                    const SizedBox(height: 8.0),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: greyColor3),
+                                          borderRadius:
+                                              BorderRadius.circular(7.0)),
                                       width: size20px * 8.0,
-                                      height: size20px + 30,
+                                      height: size20px + 28,
                                       // TexteditingController here
-                                      child: TextEditingWithIconSuffix(
-                                        hintText: "Unit",
-                                        readOnly: true,
-                                        imageUrl: "assets/images/icon_up.png",
-                                        navigationPage: ChangeEmailScreen(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: size20px,
+                                        ),
+                                        child: DropdownButtonFormField(
+                                          icon: Image.asset(
+                                              "assets/images/icon_bottom.png"),
+                                          hint: Text(
+                                            "Unit",
+                                            style: body1Regular.copyWith(
+                                                color: greyColor),
+                                          ),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                          ),
+                                          style: body1Regular,
+                                          items: const [
+                                            DropdownMenuItem(
+                                              value: 'Tonne',
+                                              child: Text('Tonne',
+                                                  style: body1Regular),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: '20” FCL',
+                                              child: Text('20” FCL',
+                                                  style: body1Regular),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Litres',
+                                              child: Text('Litres',
+                                                  style: body1Regular),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Kilogram (Kg)',
+                                              child: Text('Kilogram (Kg)',
+                                                  style: body1Regular),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Metric Tonne (MT)',
+                                              child: Text('Metric Tonne (MT)',
+                                                  style: body1Regular),
+                                            ),
+                                          ],
+                                          value: _selectedValueUnit,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _selectedValueUnit = value;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -288,15 +354,45 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                   style: text14,
                                 ),
                               ),
-                              SizedBox(
-                                height: 50.0,
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: greyColor3),
+                                    borderRadius: BorderRadius.circular(7.0)),
                                 width: MediaQuery.of(context).size.width,
-                                child: TextEditingWithIconSuffix(
-                                  readOnly: true,
-                                  controller: _incotermController,
-                                  hintText: "Incoterm",
-                                  imageUrl: "assets/images/icon_bottom.png",
-                                  navigationPage: const ChangeEmailScreen(),
+                                height: size20px + 28,
+                                // TexteditingController here
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: size20px, right: size20px),
+                                  child: DropdownButtonFormField(
+                                    icon: Image.asset(
+                                        "assets/images/icon_bottom.png"),
+                                    hint: Text(
+                                      "Unit",
+                                      style: body1Regular.copyWith(
+                                          color: greyColor),
+                                    ),
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                    style: body1Regular,
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 'FCA',
+                                        child: Text('FCA', style: body1Regular),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'FOB',
+                                        child: Text('FOB', style: body1Regular),
+                                      ),
+                                    ],
+                                    value: _selectedValueIncoterm,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedValueIncoterm = value;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
@@ -520,6 +616,8 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
               ),
               onPressed: () {
                 print(_messagesController.text);
+                print(_selectedValueUnit);
+                print(_selectedValueIncoterm);
               },
               child: Text(
                 "Send",
