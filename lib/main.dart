@@ -57,6 +57,8 @@ class _MyAppState extends State<MyApp> {
           appBarTheme: const AppBarTheme(color: whiteColor),
           primaryColor: whiteColor,
           backgroundColor: whiteColor,
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: whiteColor),
+          scaffoldBackgroundColor: whiteColor,
           fontFamily: "Poppins",
         ),
         home: const SplashScreen(),
