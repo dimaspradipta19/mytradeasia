@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/home/all_products/products/rfq_submitted_screen.dart';
 
 import '../../../../widget/text_editing_widget.dart';
 import '../../mytradeasia/submenu/personal_data/change_email_screen.dart';
@@ -126,7 +127,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                       // TexteditingController here
                                       child: TextEditingWidget(
                                         controller: _lastNameController,
-                                        hintText: "First Name",
+                                        hintText: "Last Name",
                                         readOnly: false,
                                       ),
                                     ),
@@ -174,6 +175,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                       width: size20px * 8.0,
                                       height: size20px + 30,
                                       child: TextEditingWidget(
+                                          inputType: TextInputType.number,
                                           controller: _phoneNumberController,
                                           hintText: "Phone Number",
                                           readOnly: false),
@@ -259,6 +261,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                         controller: _quantityController,
                                         hintText: "Quantity",
                                         readOnly: false,
+                                        inputType: TextInputType.number,
                                       ),
                                     ),
                                   ],
@@ -368,7 +371,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                     icon: Image.asset(
                                         "assets/images/icon_bottom.png"),
                                     hint: Text(
-                                      "Unit",
+                                      "Incoterm",
                                       style: body1Regular.copyWith(
                                           color: greyColor),
                                     ),
@@ -618,6 +621,11 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                 print(_messagesController.text);
                 print(_selectedValueUnit);
                 print(_selectedValueIncoterm);
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return const SubmittedRFQScreen();
+                  },
+                ));
               },
               child: Text(
                 "Send",

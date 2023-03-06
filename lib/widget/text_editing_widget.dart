@@ -7,17 +7,19 @@ class TextEditingWidget extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.hintText,
-      this.readOnly = true});
+      this.readOnly = true,
+      this.inputType = TextInputType.text});
 
   final TextEditingController controller;
   final String hintText;
   final bool readOnly;
+  final TextInputType inputType;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: readOnly,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: inputType,
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
