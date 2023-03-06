@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 
 import '../../auth/login/login_screen.dart';
@@ -92,6 +93,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                 ],
               ),
               const SizedBox(height: 30.0),
+              // personal data
               MyTradeAsiaWidget(
                   nama: "Personal data",
                   urlIcon: "assets/images/icon_profile.png",
@@ -105,26 +107,47 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                       ),
                     );
                   }),
+
+              // change password
               MyTradeAsiaWidget(
                   nama: "Change Password",
                   urlIcon: "assets/images/icon_password.png",
                   onPressedFunction: () {}),
+
+              // settings
               MyTradeAsiaWidget(
                   nama: "Settings",
                   urlIcon: "assets/images/icon_setting.png",
                   onPressedFunction: () {}),
+
+              // language
               MyTradeAsiaWidget(
                   nama: "Language",
                   urlIcon: "assets/images/icon_language.png",
                   onPressedFunction: () {}),
+
+              // my cart
               MyTradeAsiaWidget(
                   nama: "My Cart",
                   urlIcon: "assets/images/icon_mycart.png",
                   onPressedFunction: () {}),
+
+              // quotations
               MyTradeAsiaWidget(
                   nama: "Quotations",
                   urlIcon: "assets/images/icon_quotation.png",
-                  onPressedFunction: () {}),
+                  onPressedFunction: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const QuotationsScreen();
+                        },
+                      ),
+                    );
+                  }),
+
+              // contact us
               MyTradeAsiaWidget(
                 nama: "Contact Us",
                 urlIcon: "assets/images/icon_cs.png",
@@ -139,10 +162,14 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   );
                 },
               ),
+
+              // faq
               MyTradeAsiaWidget(
                   nama: "FAQs",
                   urlIcon: "assets/images/icon_faq.png",
                   onPressedFunction: () {}),
+
+              // Version
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: SizedBox(
@@ -156,42 +183,47 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                         style: text12,
                       ),
                       const Spacer(),
-                      const Text(
-                        "1.0.0",
-                        style: text12,
+                      const Padding(
+                        padding: EdgeInsets.only(right: size20px),
+                        child: Text(
+                          "1.0.0",
+                          style: text12,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 30.0),
-              SizedBox(
-                height: 55.0,
-                width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor1),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
+
+              // sign out button
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: size20px + 10.0, bottom: size20px),
+                child: SizedBox(
+                  height: 55.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(primaryColor1),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                        ),
                       ),
                     ),
+                    onPressed: () async {
+                      await _auth.signOut();
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const LoginScreen();
+                        },
+                      ), (route) => false);
+                    },
+                    child: const Text("Logout"),
                   ),
-                  onPressed: () async {
-                    await _auth.signOut();
-
-                    // valueLoading.getStateLoading();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const LoginScreen();
-                      },
-                    ), (route) => false);
-                  },
-                  child: const Text("Logout"),
                 ),
               ),
-              const SizedBox(height: 20.0),
             ],
           ),
         ),

@@ -16,9 +16,6 @@ class SubmittedRFQScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
         leading: IconButton(
           enableFeedback: false,
           icon: Image.asset(

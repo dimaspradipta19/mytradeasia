@@ -16,12 +16,16 @@ const Color greyColor4 = Color(0XFFF6F6F6);
 const Color redColor1 = Color(0XFF862828);
 const Color redColor2 = Color(0XFFF4E2E2);
 
-// Red Color
+// Green Color
 const Color greenColor1 = Color(0XFF28863D);
 const Color greenColor2 = Color(0XFFE2F4E6);
 
-// Red Color
+// Blue Color
 const Color blueColor = Color(0XFFEFF3FC);
+
+// Yellow Color
+const Color yellowColor = Color(0XFFCF9A11);
+const Color yellowColor2 = Color(0XFFFEF5DD);
 
 // Primary Color
 const Color primaryColor1 = Color(0XFF123C69);

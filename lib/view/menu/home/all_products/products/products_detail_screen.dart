@@ -25,7 +25,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      initialIndex: 1,
+      initialIndex: 0,
       child: Scaffold(
         backgroundColor: whiteColor,
         body: SingleChildScrollView(
@@ -560,6 +560,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // message button icon
               SizedBox(
                 height: size20px * 2.75,
                 width: size20px * 2.75,
@@ -582,6 +583,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                   ),
                 ),
               ),
+              // Cart
               SizedBox(
                 height: size20px * 2.75,
                 width: size20px * 2.75,
@@ -604,6 +606,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                   ),
                 ),
               ),
+              // Send Inquiry Button
               SizedBox(
                 height: size20px * 2.75,
                 width: 195,
@@ -627,89 +630,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
             ],
           ),
         ),
-        // CustomScrollView(
-        //   slivers: [
-        //     SliverAppBar(
-        //       elevation: 2.0,
-        //       backgroundColor: primaryColor1,
-        //       toolbarHeight: size20px * 4,
-        //       automaticallyImplyLeading: false,
-        //       pinned: _pinned,
-        //       // Searchbar fixed
-        //       actions: [
-        //         Expanded(
-        //           child: Padding(
-        //             padding: const EdgeInsets.symmetric(horizontal: size20px),
-        //             child: Row(
-        //               children: [
-        //                 InkWell(
-        //                   onTap: () {
-        //                     Navigator.pop(context);
-        //                   },
-        //                   child: Image.asset(
-        //                     "assets/images/icon_back.png",
-        //                     color: whiteColor,
-        //                     width: size20px + 4,
-        //                     height: size20px + 4,
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                   child: Padding(
-        //                     padding: const EdgeInsets.symmetric(
-        //                         horizontal: size20px / 2),
-        //                     child: SizedBox(
-        //                       height: size20px + 30,
-        //                       child: Form(
-        //                         child: TextEditingWithPrefixFilled(
-        //                             hintText: "Dipentene",
-        //                             urlImage: "assets/images/icon_serach.png",
-        //                             controller: searchController),
-        //                       ),
-        //                     ),
-        //                   ),
-        //                 ),
-        //                 Container(
-        //                   width: size20px + 30,
-        //                   height: size20px + 30,
-        //                   decoration: const BoxDecoration(
-        //                     color: secondaryColor1,
-        //                     borderRadius: BorderRadius.all(
-        //                       Radius.circular(10.0),
-        //                     ),
-        //                   ),
-        //                   child: Image.asset("assets/images/icon_cart.png"),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         )
-        //       ],
-        //       expandedHeight: size20px * 15.0,
-        //       collapsedHeight: size20px * 4,
-        //       // Image when collapsed
-        //       flexibleSpace: FlexibleSpaceBar(
-        //         background: Image.asset(
-        //           "assets/images/product_big_size.png",
-        //           fit: BoxFit.cover,
-        //         ),
-        //       ),
-        //     ),
-        // SliverList(
-        //   delegate: SliverChildBuilderDelegate(
-        //     (BuildContext context, int index) {
-        //       return Container(
-        //         color: index.isOdd ? Colors.white : Colors.black12,
-        //         height: 100.0,
-        //         child: Center(
-        //           child: Text('$index', textScaleFactor: 5),
-        //         ),
-        //       );
-        //     },
-        //     childCount: 10,
-        //   ),
-        // ),
-        //   ],
-        // ),
       ),
     );
   }
