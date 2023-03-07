@@ -5,6 +5,7 @@ import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
 
 import '../../../utils/theme.dart';
+import '../../menu/other/languages_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -115,7 +116,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Expanded(
                               flex: 1,
                               child: InkWell(
-                                onTap: () => print("Print flag"),
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LanguagesScreen(),
+                                    )),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(color: greyColor3),

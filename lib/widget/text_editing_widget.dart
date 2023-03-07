@@ -31,9 +31,15 @@ class TextEditingWidget extends StatelessWidget {
         focusedBorder: readOnly == false
             ? const OutlineInputBorder(
                 borderSide: BorderSide(color: secondaryColor1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(7.0),
+                ),
               )
             : const OutlineInputBorder(
                 borderSide: BorderSide(color: greyColor3),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(7.0),
+                ),
               ),
       ),
     );
@@ -73,6 +79,9 @@ class TextEditingWithIconSuffix extends StatelessWidget {
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: greyColor3),
+          borderRadius: BorderRadius.all(
+            Radius.circular(7.0),
+          ),
         ),
         suffixIcon: IconButton(
           onPressed: () {
@@ -99,12 +108,14 @@ class TextEditingWithPrefixFilled extends StatelessWidget {
       {Key? key,
       required this.hintText,
       required this.urlImage,
-      required this.controller})
+      required this.controller,
+      this.radiusBorder = 7.0})
       : super(key: key);
 
   final String hintText;
   final String urlImage;
   final TextEditingController controller;
+  final double radiusBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -116,14 +127,17 @@ class TextEditingWithPrefixFilled extends StatelessWidget {
         filled: true,
         fillColor: whiteColor,
         prefixIcon: Image.asset("assets/images/icon_search.png"),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: greyColor3),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: greyColor3),
           borderRadius: BorderRadius.all(
-            Radius.circular(7.0),
+            Radius.circular(radiusBorder),
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: secondaryColor1),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: secondaryColor1),
+          borderRadius: BorderRadius.all(
+            Radius.circular(radiusBorder),
+          ),
         ),
       ),
     );

@@ -67,8 +67,9 @@ class QuotationsScreen extends StatelessWidget {
                           navigationPage: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const QuotationDetailScreen(),
+                              builder: (context) => const QuotationDetailScreen(
+                                status: "submitted",
+                              ),
                             ),
                           ),
                         ),
@@ -79,8 +80,9 @@ class QuotationsScreen extends StatelessWidget {
                           navigationPage: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const QuotationDetailScreen(),
+                              builder: (context) => const QuotationDetailScreen(
+                                status: "approved",
+                              ),
                             ),
                           ),
                         ),
@@ -91,8 +93,9 @@ class QuotationsScreen extends StatelessWidget {
                           navigationPage: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const QuotationDetailScreen(),
+                              builder: (context) => const QuotationDetailScreen(
+                                status: "rejected",
+                              ),
                             ),
                           ),
                         ),

@@ -79,6 +79,7 @@ List<List<dynamic>> allIndustries = [
   ],
 ];
 
+// detail products item
 List<List<String>> detailProductsItem = [
   [
     "P.I Number",
@@ -100,6 +101,36 @@ List<List<String>> detailProductsItem = [
     "...",
     "2023/01/17 13:00 PM",
     "2023/01/31 13:00 PM",
+    "...",
+  ],
+];
+
+// detail quotations
+List<List<String>> detailQuotations = [
+  [
+    "First Name",
+    "Last Name",
+    "Phone Number",
+    "Country",
+    "Company Name",
+    "Product Name",
+    "Quantity",
+    "Unit",
+    "Incoterm",
+    "Port of Destination",
+    "Message",
+  ],
+  [
+    "Dimas",
+    "Pradipta",
+    "(+62) 885691410815",
+    "Bangladesh",
+    "Tradeasia International",
+    "DIpentene",
+    "800",
+    "Tone",
+    "FOB",
+    "Any port in Vietnam",
     "...",
   ],
 ];
