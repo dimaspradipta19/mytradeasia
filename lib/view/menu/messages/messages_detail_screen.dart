@@ -100,7 +100,9 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                       isFirstMessage: false,
                     ),
                     const UserBubleChat(isSeen: true, message: "Dipentene"),
-                    const UserBubleChat(isSeen: true, message: "or any kind of product contains acid"),
+                    const UserBubleChat(
+                        isSeen: true,
+                        message: "or any kind of product contains acid"),
                     const SalesBubleChat(
                       message: "...",
                       isFirstMessage: false,
@@ -136,8 +138,8 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                     ),
                     const SizedBox(width: size20px - 4.0),
                     Container(
-                      width: size20px + 35.0,
-                      height: size20px + 35.0,
+                      width: size20px * 2.5,
+                      height: size20px * 2.5,
                       decoration: const BoxDecoration(
                         color: secondaryColor1,
                         borderRadius: BorderRadius.all(
@@ -150,7 +152,8 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                           _message.clear();
                         },
                         icon: Image.asset(
-                          "assets/images/icon_forward.png",
+                          "assets/images/icon_send.png",
+                          width: size20px,
                           color: whiteColor,
                         ),
                       ),

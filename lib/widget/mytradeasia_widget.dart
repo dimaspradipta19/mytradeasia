@@ -26,8 +26,10 @@ class _MyTradeAsiaWidgetState extends State<MyTradeAsiaWidget> {
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
-            Image.asset(widget.urlIcon),
-            const SizedBox(width: 15.0),
+            Padding(
+              padding: const EdgeInsets.only(right: size20px * 0.75),
+              child: Image.asset(widget.urlIcon, width: size20px * 2,),
+            ),
             Text(
               widget.nama,
               style: text12,
@@ -36,7 +38,7 @@ class _MyTradeAsiaWidgetState extends State<MyTradeAsiaWidget> {
             IconButton(
               onPressed: widget.onPressedFunction,
               icon: Image.asset("assets/images/icon_forward.png",
-                  width: 24.0, height: 24.0),
+                  width: 24.0, height: 24.0, color: greyColor2,),
             ),
           ],
         ),

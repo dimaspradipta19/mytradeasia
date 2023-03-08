@@ -249,7 +249,7 @@ class _PasswordChangeOtpScreenState extends State<PasswordChangeOtpScreen> {
                               return DialogWidget(
                                   urlIcon:
                                       "assets/images/logo_email_change.png",
-                                  title: "Email has been Change",
+                                  title: "Password has been Change",
                                   subtitle:
                                       "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                                   textForButton: "Back to My Tradeasia",

@@ -7,10 +7,8 @@ import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
 import '../home/home_screen.dart';
 
 class NavigationBarWidget extends StatefulWidget {
-  // const NavigationBarWidget({super.key, required this.manager});
   const NavigationBarWidget({super.key});
 
-  // final DbManager manager;
 
   @override
   State<NavigationBarWidget> createState() => _NavigationBarWidgetState();

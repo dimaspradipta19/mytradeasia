@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
 
 import '../../../../../widget/text_editing_widget.dart';
@@ -71,6 +70,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     children: [
                       Image.asset(
                         "assets/images/profile_picture.png",
+                        width: size20px * 3.6,
                       ),
                       Positioned(
                         bottom: 0,
@@ -179,7 +179,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                           ),
                                           border: Border.all(color: greyColor)),
                                       child: Image.asset(
-                                          "assets/images/logo_indonesia.png"),
+                                          "assets/images/logo_indonesia.png", width: size20px,),
                                     ),
                                   ),
                                   const SizedBox(

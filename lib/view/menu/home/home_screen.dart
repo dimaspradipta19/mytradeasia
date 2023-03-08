@@ -246,6 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Image.asset(
                                       "assets/images/icon_target.png",
                                       color: whiteColor,
+                                      width: size20px * 3,
                                     )),
                               ]),
                             ),
@@ -289,6 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Image.asset(
                                       "assets/images/icon_docs.png",
                                       color: whiteColor,
+                                      width: size20px * 3,
                                     )),
                               ]),
                             ),
@@ -343,6 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Image.asset(
                                         "assets/images/icon_boat.png",
                                         color: whiteColor,
+                                        width: size20px * 3,
                                       )),
                                 ]),
                               ),
@@ -390,6 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Image.asset(
                                         "assets/images/icon_box.png",
                                         color: whiteColor,
+                                        width: size20px * 3,
                                       )),
                                 ]),
                               ),
