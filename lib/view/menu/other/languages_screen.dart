@@ -35,23 +35,166 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                left: size20px,
-                right: size20px,
-                top: size20px / 2,
-                bottom: size20px),
-            child: TextEditingWithPrefixFilled(
-              hintText: "Search",
-              urlImage: "assets/images/icon_search.png",
-              controller: _searchController,
-              radiusBorder: 10.0,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: size20px,
+                  right: size20px,
+                  top: size20px / 2,
+                  bottom: size20px),
+              child: TextEditingWithPrefixFilled(
+                hintText: "Search",
+                urlImage: "assets/images/icon_search.png",
+                controller: _searchController,
+                radiusBorder: 10.0,
+              ),
             ),
-          ),
-          
-        ],
+
+            // Popular countries 
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: size20px, bottom: size20px / 2),
+                  child: Text(
+                    "Popular Countries/Region",
+                    style: body1Regular.copyWith(color: greyColor2),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: size20px + 30.0,
+                      width: MediaQuery.of(context).size.width,
+                      color: whiteColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: size20px + 8,
+                            vertical: size20px / 4.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/logo_indonesia.png",
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  left: size20px + 3.0, right: size20px / 5),
+                              child: Text("Indonesia", style: body1Regular),
+                            ),
+                            Text("(+62)",
+                                style:
+                                    body1Regular.copyWith(color: greyColor2)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            // A 
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: size20px, bottom: size20px / 2),
+                  child: Text(
+                    "A",
+                    style: body1Regular.copyWith(color: greyColor2),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: size20px + 30.0,
+                      width: MediaQuery.of(context).size.width,
+                      color: whiteColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: size20px + 8,
+                            vertical: size20px / 4.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/logo_indonesia.png",
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  left: size20px + 3.0, right: size20px / 5),
+                              child: Text("Indonesia", style: body1Regular),
+                            ),
+                            Text("(+62)",
+                                style:
+                                    body1Regular.copyWith(color: greyColor2)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            // B 
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: size20px, bottom: size20px / 2),
+                  child: Text(
+                    "B",
+                    style: body1Regular.copyWith(color: greyColor2),
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: size20px + 30.0,
+                      width: MediaQuery.of(context).size.width,
+                      color: whiteColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: size20px + 8,
+                            vertical: size20px / 4.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/logo_indonesia.png",
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  left: size20px + 3.0, right: size20px / 5),
+                              child: Text("Indonesia", style: body1Regular),
+                            ),
+                            Text("(+62)",
+                                style:
+                                    body1Regular.copyWith(color: greyColor2)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,18 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
-import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
-class EmailChangeOtpScreen extends StatefulWidget {
-  const EmailChangeOtpScreen({super.key});
+import '../../../../../utils/theme.dart';
+import '../../../../../widget/dialog_sheet_widget.dart';
+import '../../../other/navigation_bar.dart';
+
+class PasswordChangeOtpScreen extends StatefulWidget {
+  const PasswordChangeOtpScreen({super.key});
 
   @override
-  State<EmailChangeOtpScreen> createState() => _EmailChangeOtpScreenState();
+  State<PasswordChangeOtpScreen> createState() =>
+      _PasswordChangeOtpScreenState();
 }
 
-class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
-  final _formKey = GlobalKey<FormState>();
+class _PasswordChangeOtpScreenState extends State<PasswordChangeOtpScreen> {
   final TextEditingController _digit1Controller = TextEditingController();
   final TextEditingController _digit2Controller = TextEditingController();
   final TextEditingController _digit3Controller = TextEditingController();
@@ -21,6 +22,7 @@ class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
   final FocusNode _focusNode2 = FocusNode();
   final FocusNode _focusNode3 = FocusNode();
   final FocusNode _focusNode4 = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -55,7 +57,7 @@ class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
               ),
               const SizedBox(height: 20),
               const Text(
-                "New Email Verification",
+                "New Password Verification",
                 style: text22,
               ),
               const SizedBox(height: 5),
@@ -223,34 +225,45 @@ class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor1),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        _digit1Controller.text.isNotEmpty &&
+                                _digit2Controller.text.isNotEmpty &&
+                                _digit3Controller.text.isNotEmpty &&
+                                _digit4Controller.text.isNotEmpty
+                            ? primaryColor1
+                            : greyColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7.0),
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return DialogWidget(
-                            urlIcon: "assets/images/logo_email_change.png",
-                            title: "Email has been Change",
-                            subtitle:
-                                "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                            textForButton: "Back to My Tradeasia",
-                            navigatorFunction: () =>
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return NavigationBarWidget();
-                                  },
-                                ), (route) => false));
-                      },
-                    );
-                  },
+                  onPressed: _digit1Controller.text.isNotEmpty &&
+                          _digit2Controller.text.isNotEmpty &&
+                          _digit3Controller.text.isNotEmpty &&
+                          _digit4Controller.text.isNotEmpty
+                      ? () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DialogWidget(
+                                  urlIcon:
+                                      "assets/images/logo_email_change.png",
+                                  title: "Email has been Change",
+                                  subtitle:
+                                      "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                  textForButton: "Back to My Tradeasia",
+                                  navigatorFunction: () =>
+                                      Navigator.pushAndRemoveUntil(context,
+                                          MaterialPageRoute(
+                                        builder: (context) {
+                                          return const NavigationBarWidget();
+                                        },
+                                      ), (route) => false));
+                            },
+                          );
+                        }
+                      : null,
                   child: Text(
                     "Verify",
                     style: text16.copyWith(color: whiteColor),
@@ -261,7 +274,7 @@ class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don’t receive the OTP code? "),
+                  const Text("Don't receive the OTP code? "),
                   TextButton(
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,

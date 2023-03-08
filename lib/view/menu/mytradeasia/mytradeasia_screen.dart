@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
@@ -112,7 +113,27 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
               MyTradeAsiaWidget(
                   nama: "Change Password",
                   urlIcon: "assets/images/icon_password.png",
-                  onPressedFunction: () {}),
+                  onPressedFunction: () {
+                    showBottomSheet(
+                      context: context,
+                      backgroundColor: secondaryColor1,
+                      builder: (context) {
+                        return SizedBox(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ChangePasswordScreen(),
+                                )),
+                            child: const Text("Move to the screen"),
+                          ),
+                        );
+                      },
+                    );
+                  }),
 
               // settings
               MyTradeAsiaWidget(

@@ -6,13 +6,13 @@ import 'package:mytradeasia/view/menu/history/tracking_document/tracking_documen
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/request_quotation_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 
 import '../../../model/industry_model.dart';
-import 'all_products/request_quotation_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -197,6 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              // End of AppBar
+
               //Main Content
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -204,6 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // RFQ & Tracking Doc menu baris 1
                     Row(
                       children: [
                         // RFQ
@@ -294,104 +296,110 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                    const SizedBox(height: 15.0),
-                    Row(
-                      children: [
-                        // TRACKINGSHIP
-                        Expanded(
-                          flex: 5,
-                          child: InkWell(
-                            onTap: () {
-                              print("Tracking Shipment");
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return const TrackingShipmentScreen();
-                                },
-                              ));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: 160,
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      trackingShipMuda,
-                                      trackingShipTua
-                                    ]),
-                              ),
-                              child: Stack(children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20.0, top: 12.0, bottom: 12.0),
-                                  child: Text("Tracking \nShipment",
-                                      style: text12.copyWith(
-                                          color: whiteColor,
-                                          fontWeight: FontWeight.w600)),
+                    // Tracking Ship & All Products menu baris 2
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: size20px * 0.75, bottom: size20px),
+                      child: Row(
+                        children: [
+                          // TRACKINGSHIP
+                          Expanded(
+                            flex: 5,
+                            child: InkWell(
+                              onTap: () {
+                                print("Tracking Shipment");
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const TrackingShipmentScreen();
+                                  },
+                                ));
+                              },
+                              child: Container(
+                                height: 60,
+                                width: 160,
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        trackingShipMuda,
+                                        trackingShipTua
+                                      ]),
                                 ),
-                                Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: Image.asset(
-                                      "assets/images/icon_boat.png",
-                                      color: whiteColor,
-                                    )),
-                              ]),
+                                child: Stack(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, top: 12.0, bottom: 12.0),
+                                    child: Text("Tracking \nShipment",
+                                        style: text12.copyWith(
+                                            color: whiteColor,
+                                            fontWeight: FontWeight.w600)),
+                                  ),
+                                  Positioned(
+                                      bottom: 0.0,
+                                      right: 0.0,
+                                      child: Image.asset(
+                                        "assets/images/icon_boat.png",
+                                        color: whiteColor,
+                                      )),
+                                ]),
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 15.0),
-                        // ALL PRODUCTS
-                        Expanded(
-                          flex: 5,
-                          child: InkWell(
-                            onTap: () {
-                              print("ALL PRODUCTS");
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return const AllProductsScreen();
-                                },
-                              ));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: 160,
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [allProductsMuda, allProductsTua]),
-                              ),
-                              child: Stack(children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20.0, top: 12.0, bottom: 12.0),
-                                  child: Text("All \nProducts",
-                                      style: text12.copyWith(
-                                          color: whiteColor,
-                                          fontWeight: FontWeight.w600)),
+                          const SizedBox(width: 15.0),
+                          // ALL PRODUCTS
+                          Expanded(
+                            flex: 5,
+                            child: InkWell(
+                              onTap: () {
+                                print("ALL PRODUCTS");
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const AllProductsScreen();
+                                  },
+                                ));
+                              },
+                              child: Container(
+                                height: 60,
+                                width: 160,
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        allProductsMuda,
+                                        allProductsTua
+                                      ]),
                                 ),
-                                Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: Image.asset(
-                                      "assets/images/icon_box.png",
-                                      color: whiteColor,
-                                    )),
-                              ]),
+                                child: Stack(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, top: 12.0, bottom: 12.0),
+                                    child: Text("All \nProducts",
+                                        style: text12.copyWith(
+                                            color: whiteColor,
+                                            fontWeight: FontWeight.w600)),
+                                  ),
+                                  Positioned(
+                                      bottom: 0.0,
+                                      right: 0.0,
+                                      child: Image.asset(
+                                        "assets/images/icon_box.png",
+                                        color: whiteColor,
+                                      )),
+                                ]),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 20),
 
-                    // TOP PRODUCT
+                    // OUR TOP PRODUCT Section
                     Row(
                       children: [
                         const Text("Our Top Products", style: text18),
@@ -450,12 +458,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Center(
-                                      child: Hero(
+                                  Hero(
                                     tag: "dash",
                                     child: Image.asset(
-                                        "assets/images/products.png"),
-                                  )),
+                                      "assets/images/products.png",
+                                      width: MediaQuery.of(context).size.width,
+                                    ),
+                                  ),
                                   const Padding(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 5.0, horizontal: 10.0),
@@ -568,11 +577,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 20.0),
+                    // End of OUR TOP PRODUCT Section
 
-                    // INDUSTRY
-                    const Text("Industry", style: text18),
-                    const SizedBox(height: 16.0),
+                    // INDUSTRY Section
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: size20px),
+                      child: Text("Industry", style: text18),
+                    ),
                     // GRID INDUSTRY
                     GridView.builder(
                       gridDelegate:
@@ -632,10 +643,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
+                    // ENd of INDUSTRY Section
+
+                    // Last Seen Section
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Text("Last Seen Products", style: text18),
                     ),
+                    // Grid Last Seen Section
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: GridView.builder(
@@ -658,7 +673,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Center(
                                     child: Image.asset(
-                                        "assets/images/products.png")),
+                                  "assets/images/products.png",
+                                  width: MediaQuery.of(context).size.width,
+                                )),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 5.0, horizontal: 10.0),
@@ -704,6 +721,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+                    // End of Last Seen Section
+
+                    // Button See More
                     Center(
                       child: ElevatedButton(
                         style: ButtonStyle(

@@ -116,7 +116,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return const EmailChangeVerfication();
+                    return const EmailChangeOtpScreen();
                   },
                 ));
               },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/rfq_submitted_screen.dart';
+import 'package:mytradeasia/view/menu/other/languages_screen.dart';
 
 import '../../../../widget/text_editing_widget.dart';
 import '../../mytradeasia/submenu/personal_data/change_email_screen.dart';
@@ -78,7 +79,8 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                     style: heading2.copyWith(color: whiteColor),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: size20px * 3),
+                    padding: const EdgeInsets.only(
+                        top: size20px * 3, bottom: size20px / 2.0),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -154,16 +156,28 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: Container(
-                                      height: 50,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(7),
-                                          ),
-                                          border: Border.all(color: greyColor)),
-                                      child: Image.asset(
-                                          "assets/images/logo_indonesia.png"),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const LanguagesScreen();
+                                          },
+                                        ));
+                                      },
+                                      child: Container(
+                                        height: 48,
+                                        width: size20px * 3,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(7),
+                                            ),
+                                            border:
+                                                Border.all(color: greyColor3)),
+                                        child: Image.asset(
+                                            "assets/images/logo_indonesia.png"),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
