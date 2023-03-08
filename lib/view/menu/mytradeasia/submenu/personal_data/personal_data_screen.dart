@@ -177,9 +177,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                           borderRadius: const BorderRadius.all(
                                             Radius.circular(7),
                                           ),
-                                          border: Border.all(color: greyColor)),
-                                      child: Image.asset(
-                                          "assets/images/logo_indonesia.png", width: size20px,),
+                                          border: Border.all(color: greyColor3)),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.all(size20px / 2),
+                                        child: Image.asset(
+                                          "assets/images/logo_indonesia.png",
+                                          width: size20px,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(

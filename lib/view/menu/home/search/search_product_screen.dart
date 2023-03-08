@@ -64,8 +64,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         controller: _searchProductController,
                         autofocus: true,
                         decoration: InputDecoration(
-                            prefixIcon:
-                                Image.asset("assets/images/icon_search.png"),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(size20px / 2),
+                              child:
+                                  Image.asset("assets/images/icon_search.png"),
+                            ),
                             border: InputBorder.none,
                             hintText: "Search",
                             contentPadding:
@@ -108,11 +111,12 @@ class _SearchScreenState extends State<SearchScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 6.0),
                                 child: Center(
-                                    child: Image.network(
-                                  "$url${value.searchProduct[index].productimage}",
-                                  width: 148.0,
-                                  height: 116.0,
-                                ),),
+                                  child: Image.network(
+                                    "$url${value.searchProduct[index].productimage}",
+                                    width: 148.0,
+                                    height: 116.0,
+                                  ),
+                                ),
                               ),
                               Expanded(
                                 child: Padding(

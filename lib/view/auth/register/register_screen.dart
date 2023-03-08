@@ -131,8 +131,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   width: 60,
                                   height: 50,
-                                  child: Image.asset(
-                                      "assets/images/logo_indonesia.png"),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(size20px / 2),
+                                    child: Image.asset(
+                                      "assets/images/logo_indonesia.png",
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -336,21 +340,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
-                            child: Image.asset("assets/images/logo_google.png"),
+                            child: Image.asset(
+                              "assets/images/logo_google.png",
+                              width: size20px + 4,
+                            ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const BiodataScreen(),
-                                  ));
                               print("Google");
                             },
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 16.0,
-                      ),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: SizedBox(
                           width: 160.0,
@@ -367,17 +367,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         const BorderSide(color: primaryColor1)),
                               ),
                             ),
-                            child:
-                                Image.asset("assets/images/logo_facebook.png"),
+                            child: Image.asset(
+                              "assets/images/logo_facebook.png",
+                              width: size20px + 4,
+                            ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const ProductsDetailScreen();
-                                  },
-                                ),
-                              );
                               print("Facebook");
                             },
                           ),

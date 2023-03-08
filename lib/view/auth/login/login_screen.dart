@@ -259,7 +259,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                            child: Image.asset("assets/images/logo_google.png"),
+                            child: Image.asset(
+                              "assets/images/logo_google.png",
+                              width: size20px + 4,
+                            ),
                             onPressed: () {
                               print("Google");
                             },
@@ -283,8 +286,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                            child:
-                                Image.asset("assets/images/logo_facebook.png"),
+                            child: Image.asset(
+                              "assets/images/logo_facebook.png",
+                              width: size20px + 4,
+                            ),
                             onPressed: () {
                               print("Facebook");
                             },

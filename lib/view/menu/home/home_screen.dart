@@ -11,6 +11,7 @@ import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
+import 'package:mytradeasia/widget/text_editing_widget.dart';
 
 import '../../../model/industry_model.dart';
 
@@ -24,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -156,38 +158,69 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             height: 50.0,
-                            decoration: const BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
                             child: Form(
                               child: TextFormField(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return const SearchScreen();
-                                    },
-                                  ));
-                                },
                                 readOnly: true,
+                                onTap: () =>
+                                    Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const SearchScreen();
+                                  },
+                                )),
                                 decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 15.0, top: 14.0, bottom: 16.0),
-                                    prefixIcon: Image.asset(
-                                      "assets/images/icon_search.png",
-                                      width: 24,
-                                      height: 24,
+                                  border: InputBorder.none,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: greyColor3),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(size20px / 2),
                                     ),
-                                    border: InputBorder.none,
-                                    hintText: "What do you want to search?",
-                                    hintStyle: body1Regular.copyWith(
-                                        color: greyColor)),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: greyColor3),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(size20px / 2),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: whiteColor,
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 15.0),
+                                    child: Image.asset(
+                                      "assets/images/icon_search.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    ),
+                                  ),
+                                  hintText: "What do you want to search?",
+                                  hintStyle:
+                                      body1Regular.copyWith(color: greyColor),
+                                ),
                               ),
+
+                              //   TextFormField(
+                              // onTap: () {
+                              //   Navigator.push(context, MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return const SearchScreen();
+                              //     },
+                              //   ));
+                              // },
+                              // readOnly: true,
+                              // decoration: InputDecoration(
+                              //     contentPadding: const EdgeInsets.only(
+                              //         left: 15.0, top: 14.0, bottom: 16.0),
+                              //     prefixIcon: Image.asset(
+                              //       "assets/images/icon_search.png",
+                              //     ),
+                              //     border: InputBorder.none,
+                              //     hintText: "What do you want to search?",
+                              //     hintStyle: body1Regular.copyWith(
+                              //         color: greyColor)),
+                              // ),
                             ),
                           ),
                         )
