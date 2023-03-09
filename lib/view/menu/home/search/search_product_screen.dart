@@ -18,7 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _searchProd =
+    final searchProd =
         Provider.of<SearchProductProvider>(context, listen: false);
     return Scaffold(
       body: Padding(
@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 InkWell(
                   onTap: () {
                     Navigator.pop(context);
-                    _searchProd.searchProduct.clear();
+                    searchProd.searchProduct.clear();
                   },
                   child: Image.asset(
                     "assets/images/icon_back.png",

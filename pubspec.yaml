@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^4.3.2
   dotted_line: ^3.1.0
   shimmer: ^2.0.0
+  getwidget: ^3.0.1
 
 dev_dependencies:
   flutter_test:
