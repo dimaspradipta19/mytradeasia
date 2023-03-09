@@ -81,9 +81,14 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
             const SizedBox(height: 10),
             // Agent
             GestureDetector(
-              onTap: () => setState(() {
-                isAgent = !isAgent;
-              }),
+              onTap: () {
+                const snackbar = SnackBar(
+                  content: Text(
+                      "Agent is under Development, sorry for the incovenience! "),
+                  backgroundColor: redColor1,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              },
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 100.0,
@@ -123,16 +128,20 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
             const SizedBox(height: 10),
             // Sales Associate
             GestureDetector(
-              onTap: () => setState(() {
-                isSales = !isSales;
-              }),
+              onTap: () {
+                const snackbar = SnackBar(
+                  content: Text(
+                      "Sales Associate is under Development, sorry for the incovenience! "),
+                  backgroundColor: redColor1,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              },
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 100.0,
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color:
-                          isSales == false ? greyColor3 : secondaryColor1),
+                      color: isSales == false ? greyColor3 : secondaryColor1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Padding(

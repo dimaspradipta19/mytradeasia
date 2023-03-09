@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
@@ -17,6 +18,12 @@ class _SearchScreenState extends State<SearchScreen> {
       TextEditingController();
 
   @override
+  void dispose() {
+    _searchProductController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final searchProd =
         Provider.of<SearchProductProvider>(context, listen: false);
@@ -25,61 +32,59 @@ class _SearchScreenState extends State<SearchScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
-            const SizedBox(height: 60),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                    searchProd.searchProduct.clear();
-                  },
-                  child: Image.asset(
-                    "assets/images/icon_back.png",
-                    width: 24.0,
-                    height: 24.0,
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: size20px * 3, bottom: size20px),
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      searchProd.searchProduct.clear();
+                    },
+                    child: Image.asset(
+                      "assets/images/icon_back.png",
+                      width: 24.0,
+                      height: 24.0,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: greyColor3,
-                        ),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0))),
-                    height: 50.0,
-                    width: MediaQuery.of(context).size.width,
-                    child: Form(
-                      child: TextFormField(
-                        onChanged: (value) {
-                          if (_searchProductController.text == "") {
-                            return _searchProductController.clear();
-                          } else {
+                  const SizedBox(width: 10.0),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: greyColor3,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0))),
+                      height: 50.0,
+                      width: MediaQuery.of(context).size.width,
+                      child: Form(
+                        child: TextFormField(
+                          onChanged: (value) {
                             Provider.of<SearchProductProvider>(context,
                                     listen: false)
                                 .getListProduct(_searchProductController.text);
-                          }
-                        },
-                        controller: _searchProductController,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(size20px / 2),
-                              child:
-                                  Image.asset("assets/images/icon_search.png"),
-                            ),
-                            border: InputBorder.none,
-                            hintText: "Search",
-                            contentPadding:
-                                const EdgeInsets.only(left: 20.0, top: 12.0)),
+                          },
+                          controller: _searchProductController,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(size20px / 2),
+                                child: Image.asset(
+                                    "assets/images/icon_search.png"),
+                              ),
+                              border: InputBorder.none,
+                              hintText: "Search",
+                              contentPadding:
+                                  const EdgeInsets.only(left: 20.0, top: 12.0)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const SizedBox(height: 20.0),
 
             // Grid Data Search Product
             Expanded(
@@ -89,7 +94,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if (value.state == ResultState.hasData) {
+                  } else if (value.state == ResultState.hasData &&
+                      _searchProductController.text.isNotEmpty) {
                     return GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -99,6 +105,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               childAspectRatio: 0.6),
                       itemCount: value.searchProduct.length,
                       shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         String url = "https://chemtradea.chemtradeasia.com/";
@@ -224,33 +231,39 @@ class _SearchScreenState extends State<SearchScreen> {
                         );
                       },
                     );
-                  } else if (value.service.resultAwal == []) {
-                    return const Text("Something went wrong");
-                  } else {
+                  } else if (value.state == ResultState.hasData) {
                     return Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Recently Seen",
-                              style: heading2,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Provider.of<SearchProductProvider>(context,
-                                        listen: false)
-                                    .getListProduct(
-                                        _searchProductController.text);
-                                print("Delete Button");
-                              },
-                              child: Text(
-                                "Delete",
-                                style: body1Regular.copyWith(
-                                    color: secondaryColor1),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: size20px - 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Recently Seen",
+                                style: heading2,
                               ),
-                            ),
-                          ],
+                              InkWell(
+                                onTap: () => print("Delete"),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: secondaryColor5,
+                                      borderRadius:
+                                          BorderRadius.circular(size20px / 2)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: size20px / 2,
+                                        vertical: 3.0),
+                                    child: Text(
+                                      "Delete",
+                                      style: body1Regular.copyWith(
+                                          color: secondaryColor1),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 100,
@@ -290,6 +303,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ],
                     );
+                  } else {
+                    return const Text("Something went wrong");
                   }
                 },
               ),
