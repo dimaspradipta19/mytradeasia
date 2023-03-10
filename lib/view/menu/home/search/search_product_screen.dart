@@ -143,7 +143,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
@@ -237,8 +238,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     );
                   } else if (value.state == ResultState.hasData) {
                     return const RecentlySeenWidget();
+                  } else if (value.state == ResultState.error) {
+                    return const Text("Error");
                   } else {
-                    return const Text("Not Found");
+                    return RecentlySeenWidget();
                   }
                 },
               ),

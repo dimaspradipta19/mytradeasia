@@ -43,8 +43,11 @@ class TopProductsScreen extends StatelessWidget {
                             decoration: InputDecoration(
                               hintText: nameProd,
                               hintStyle: body1Regular,
-                              prefixIcon:
-                                  Image.asset("assets/images/icon_search.png"),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(size20px / 2),
+                                child: Image.asset(
+                                    "assets/images/icon_search.png"),
+                              ),
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: greyColor3),
                                 borderRadius: BorderRadius.all(
@@ -67,7 +70,10 @@ class TopProductsScreen extends StatelessWidget {
                             Radius.circular(10.0),
                           ),
                         ),
-                        child: Image.asset("assets/images/icon_cart.png"),
+                        child: Padding(
+                          padding: const EdgeInsets.all(size20px / 2),
+                          child: Image.asset("assets/images/icon_cart.png"),
+                        ),
                       )
                     ],
                   ),
@@ -77,8 +83,8 @@ class TopProductsScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(size20px - 10.0)),
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(size20px - 10.0)),
                         child: Image.asset(
                           "assets/images/background_products.png",
                           fit: BoxFit.cover,

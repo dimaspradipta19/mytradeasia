@@ -58,50 +58,48 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     ),
                   ),
                   const SizedBox(width: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        child: Form(
-                          child: TextFormField(
-                            onChanged: ((value) {
-                              Provider.of<SearchProductProvider>(context,
-                                      listen: false)
-                                  .getListProduct(_searchProductController.text);
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      child: Form(
+                        child: TextFormField(
+                          controller: _searchProductController,
+                          onChanged: ((value) {
+                            Provider.of<SearchProductProvider>(context,
+                                    listen: false)
+                                .getListProduct(_searchProductController.text);
 
-                              print(_searchProductController.text);
-                              print(searchProd.searchProduct.length);
-                            }),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: greyColor3),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(size20px / 2),
-                                ),
+                            print(_searchProductController.text);
+                            print(searchProd.searchProduct.length);
+                          }),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: greyColor3),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(size20px / 2),
                               ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: greyColor3),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(size20px / 2),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: whiteColor,
-                              prefixIcon: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 15.0),
-                                child: Image.asset(
-                                  "assets/images/icon_search.png",
-                                  width: 24.0,
-                                  height: 24.0,
-                                ),
-                              ),
-                              hintText: "What do you want to search",
-                              hintStyle: body1Regular.copyWith(color: greyColor),
                             ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: greyColor3),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(size20px / 2),
+                              ),
+                            ),
+                            filled: true,
+                            fillColor: whiteColor,
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 15.0),
+                              child: Image.asset(
+                                "assets/images/icon_search.png",
+                                width: 24.0,
+                                height: 24.0,
+                              ),
+                            ),
+                            hintText: "What do you want to search",
+                            hintStyle: body1Regular.copyWith(color: greyColor),
                           ),
                         ),
                       ),
@@ -175,150 +173,333 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                   builder: (context, ListProductProvider value, _) {
                     return Consumer<SearchProductProvider>(
                       builder: (context, valueSearch, child) =>
-                          GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 15,
-                                mainAxisSpacing: 15,
-                                childAspectRatio: 0.6),
-                        itemCount: value.state == ResultState.loading
-                            ? 10
-                            : value.listProduct.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          if (value.state == ResultState.loading) {
-                            return Shimmer.fromColors(
-                                baseColor: greyColor3,
-                                highlightColor: greyColor,
-                                child: const Card());
-                          } else {
-                            return Card(
-                              shadowColor: blackColor,
-                              elevation: 3.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                      child: Image.network(
-                                    "$url${value.listProduct[index].productimage}",
-                                    width: 148.0,
-                                    height: 116.0,
-                                  )),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0, horizontal: 10.0),
-                                      child: Text(
-                                        value.listProduct[index].productname,
-                                        style: text14,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Row(
-                                      children: [
-                                        Column(
+                          _searchProductController.text.isEmpty
+                              ? GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 15,
+                                          mainAxisSpacing: 15,
+                                          childAspectRatio: 0.6),
+                                  itemCount: value.state == ResultState.loading
+                                      ? 4
+                                      : value.listProduct.length,
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder: (context, index) {
+                                    if (value.state == ResultState.loading) {
+                                      return Shimmer.fromColors(
+                                          baseColor: greyColor3,
+                                          highlightColor: greyColor,
+                                          child: const Card());
+                                    } else {
+                                      return Card(
+                                        shadowColor: blackColor,
+                                        elevation: 3.0,
+                                        child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            const Text("CAS Number :",
-                                                style: text10),
-                                            Text("138 - 86 - 3",
-                                                style: text10.copyWith(
-                                                    color: greyColor2)),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("HS Code :",
-                                                style: text10),
-                                            Text("-",
-                                                style: text10.copyWith(
-                                                    color: greyColor2)),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10.0,
-                                        right: 10.0,
-                                        top: 10.0,
-                                        bottom: 12.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: SizedBox(
-                                            height: 30,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor1),
-                                                    shape: MaterialStateProperty
-                                                        .all<
-                                                            RoundedRectangleBorder>(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7.0),
+                                            Center(
+                                                child: Image.network(
+                                              "$url${value.listProduct[index].productimage}",
+                                              width: 148.0,
+                                              height: 116.0,
+                                            )),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 5.0,
+                                                        horizontal: 10.0),
+                                                child: Text(
+                                                  value.listProduct[index]
+                                                      .productname,
+                                                  style: text14,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("CAS Number :",
+                                                          style: text10),
+                                                      Text("138 - 86 - 3",
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("HS Code :",
+                                                          style: text10),
+                                                      Text("-",
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10.0,
+                                                  right: 10.0,
+                                                  top: 10.0,
+                                                  bottom: 12.0),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height: 30,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all<
+                                                                          Color>(
+                                                                      primaryColor1),
+                                                              shape: MaterialStateProperty
+                                                                  .all<
+                                                                      RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              7.0),
+                                                                ),
+                                                              ),
+                                                              padding: MaterialStateProperty
+                                                                  .all<EdgeInsets>(
+                                                                      EdgeInsets
+                                                                          .zero)),
+                                                          onPressed: () {
+                                                            print(
+                                                                "send inquiry");
+                                                          },
+                                                          child: Text(
+                                                            "Send Inquiry",
+                                                            style:
+                                                                text12.copyWith(
+                                                              color: whiteColor,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 2),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                secondaryColor1,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            5))),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        print("cart icon");
+                                                      },
+                                                      icon: Image.asset(
+                                                        "assets/images/icon_cart.png",
                                                       ),
                                                     ),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all<
-                                                                    EdgeInsets>(
-                                                                EdgeInsets
-                                                                    .zero)),
-                                                onPressed: () {
-                                                  print("send inquiry");
-                                                },
-                                                child: Text(
-                                                  "Send Inquiry",
-                                                  style: text12.copyWith(
-                                                    color: whiteColor,
                                                   ),
-                                                )),
-                                          ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        const SizedBox(width: 2),
-                                        Container(
-                                          height: 30,
-                                          width: 30,
-                                          decoration: const BoxDecoration(
-                                              color: secondaryColor1,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5))),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              print("cart icon");
-                                            },
-                                            icon: Image.asset(
-                                              "assets/images/icon_cart.png",
+                                      );
+                                    }
+                                  },
+                                )
+                              // Search Provider
+                              : GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 15,
+                                          mainAxisSpacing: 15,
+                                          childAspectRatio: 0.6),
+                                  itemCount:
+                                      valueSearch.state == ResultState.loading
+                                          ? 4
+                                          : valueSearch.searchProduct.length,
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder: (context, index) {
+                                    if (valueSearch.state ==
+                                        ResultState.loading) {
+                                      return Shimmer.fromColors(
+                                          baseColor: greyColor3,
+                                          highlightColor: greyColor,
+                                          child: const Card());
+                                    } else {
+                                      return Card(
+                                        shadowColor: blackColor,
+                                        elevation: 3.0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Center(
+                                                child: Image.network(
+                                              "$url${valueSearch.searchProduct[index].productimage}",
+                                              width: 148.0,
+                                              height: 116.0,
+                                            )),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 5.0,
+                                                        horizontal: 10.0),
+                                                child: Text(
+                                                  valueSearch
+                                                      .searchProduct[index]
+                                                      .productname,
+                                                  style: text14,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("CAS Number :",
+                                                          style: text10),
+                                                      Text("138 - 86 - 3",
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("HS Code :",
+                                                          style: text10),
+                                                      Text("-",
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10.0,
+                                                  right: 10.0,
+                                                  top: 10.0,
+                                                  bottom: 12.0),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height: 30,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all<
+                                                                          Color>(
+                                                                      primaryColor1),
+                                                              shape: MaterialStateProperty
+                                                                  .all<
+                                                                      RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              7.0),
+                                                                ),
+                                                              ),
+                                                              padding: MaterialStateProperty
+                                                                  .all<EdgeInsets>(
+                                                                      EdgeInsets
+                                                                          .zero)),
+                                                          onPressed: () {
+                                                            print(
+                                                                "send inquiry");
+                                                          },
+                                                          child: Text(
+                                                            "Send Inquiry",
+                                                            style:
+                                                                text12.copyWith(
+                                                              color: whiteColor,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 2),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                secondaryColor1,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            5))),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        print("cart icon");
+                                                      },
+                                                      icon: Image.asset(
+                                                        "assets/images/icon_cart.png",
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                                      );
+                                    }
+                                  },
+                                ),
                     );
                   },
                 ),
