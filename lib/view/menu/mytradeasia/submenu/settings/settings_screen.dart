@@ -12,7 +12,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  TextEditingController _verificationEmail = TextEditingController();
+ final TextEditingController _verificationEmail = TextEditingController();
   @override
   void dispose() {
     _verificationEmail.dispose();

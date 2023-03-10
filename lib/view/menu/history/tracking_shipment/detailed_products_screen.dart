@@ -70,7 +70,7 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
         backgroundColor: whiteColor,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             // Worldwide images + text
@@ -241,7 +241,7 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
                   ),
                 ),
               ),
-              contentChild: Container(
+              contentChild: SizedBox(
                 height: size20px * 23,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(

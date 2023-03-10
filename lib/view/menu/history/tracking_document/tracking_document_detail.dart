@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment/detailed_products_screen.dart';
 
 import '../../../../utils/theme.dart';
 

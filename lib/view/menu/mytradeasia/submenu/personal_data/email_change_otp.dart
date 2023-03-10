@@ -245,7 +245,7 @@ class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
                                 Navigator.pushAndRemoveUntil(context,
                                     MaterialPageRoute(
                                   builder: (context) {
-                                    return NavigationBarWidget();
+                                    return const NavigationBarWidget();
                                   },
                                 ), (route) => false));
                       },

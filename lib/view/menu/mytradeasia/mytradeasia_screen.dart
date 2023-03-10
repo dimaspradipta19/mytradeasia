@@ -51,7 +51,10 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                     // Image
                     Padding(
                       padding: const EdgeInsets.only(right: size20px),
-                      child: Image.asset("assets/images/profile_picture.png", width: size20px * 3.6,),
+                      child: Image.asset(
+                        "assets/images/profile_picture.png",
+                        width: size20px * 3.6,
+                      ),
                     ),
                     // First, Last, Company Name
                     Column(
@@ -126,24 +129,11 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   nama: "Change Password",
                   urlIcon: "assets/images/icon_password.png",
                   onPressedFunction: () {
-                    showBottomSheet(
-                      context: context,
-                      backgroundColor: secondaryColor1,
-                      builder: (context) {
-                        return SizedBox(
-                          height: 200,
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ChangePasswordScreen(),
-                                )),
-                            child: const Text("Move to the screen"),
-                          ),
-                        );
-                      },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePasswordScreen(),
+                      ),
                     );
                   }),
 

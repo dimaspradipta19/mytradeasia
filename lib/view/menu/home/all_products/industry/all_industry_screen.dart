@@ -91,7 +91,7 @@ class AllIndustryScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: MediaQuery.of(context).size.width,
                                       height: 50.0,
                                       child: const Padding(
@@ -103,7 +103,7 @@ class AllIndustryScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: MediaQuery.of(context).size.width,
                                       height: 50.0,
                                       child: const Padding(
@@ -115,7 +115,7 @@ class AllIndustryScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: MediaQuery.of(context).size.width,
                                       height: 50.0,
                                       child: const Padding(
@@ -127,7 +127,7 @@ class AllIndustryScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: MediaQuery.of(context).size.width,
                                       height: 50.0,
                                       child: const Padding(

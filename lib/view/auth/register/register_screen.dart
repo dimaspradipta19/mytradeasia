@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
-import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
 
 import '../../../utils/theme.dart';
 import '../../menu/other/languages_screen.dart';

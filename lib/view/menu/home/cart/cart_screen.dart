@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/view/auth/login/login_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 
 import '../../../../utils/theme.dart';
 
@@ -10,6 +12,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  bool isCheckedAll = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,30 +35,36 @@ class _CartScreenState extends State<CartScreen> {
         ),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30,
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  const Text(
-                    "Choose All",
-                    style: body1Regular,
-                  )
-                ],
-              ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              children: [
+                Checkbox(
+                  value: isCheckedAll,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isCheckedAll = value!;
+                    });
+                    print(isCheckedAll);
+                  },
+                ),
+                const Text(
+                  "Choose All",
+                  style: body1Regular,
+                )
+              ],
             ),
-            const SizedBox(height: size20px / 4.0),
-            // list of product in cart
-            ListView.builder(
+          ),
+          const SizedBox(height: size20px / 4.0),
+          // list of product in cart
+          Expanded(
+            child: ListView.builder(
               shrinkWrap: true,
-              itemCount: 5,
+              physics: const BouncingScrollPhysics(),
+              itemCount: 15,
               itemBuilder: (context, index) {
                 return SizedBox(
                   height: size20px * 5.0,
@@ -63,8 +72,12 @@ class _CartScreenState extends State<CartScreen> {
                   child: Row(
                     children: [
                       Checkbox(
-                        value: false,
-                        onChanged: (value) {},
+                        value: isCheckedAll,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isCheckedAll = value!;
+                          });
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: size20px + 5.0),
@@ -112,16 +125,20 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 );
               },
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
-      bottomNavigationBar: const Padding(
-        padding: EdgeInsets.symmetric(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(
             horizontal: size20px, vertical: size20px - 8.0),
-        child: InactiveButton(
-          titleButton: "Send Inquiry",
-        ),
+        child: isCheckedAll == false
+            ? const InactiveButton(
+                titleButton: "Send Inquiry",
+              )
+            : const ActiveButton(
+                titleButton: "Send Incquiry",
+                navigationPage: QuotationsScreen()),
       ),
     );
   }
@@ -157,11 +174,8 @@ class InactiveButton extends StatelessWidget {
 }
 
 class ActiveButton extends StatelessWidget {
-  const ActiveButton({
-    super.key,
-    required this.titleButton,
-    required this.navigationPage
-  });
+  const ActiveButton(
+      {super.key, required this.titleButton, required this.navigationPage});
 
   final String titleButton;
   final Widget navigationPage;

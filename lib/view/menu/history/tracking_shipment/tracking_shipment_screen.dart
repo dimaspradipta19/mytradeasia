@@ -7,7 +7,7 @@ class TrackingShipmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String productName = "Dipentene";
+    const String productName = "Dipentene";
     return Scaffold(
       backgroundColor: whiteColor,
       // Appbar
@@ -31,13 +31,13 @@ class TrackingShipmentScreen extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: whiteColor,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 itemCount: 4,
@@ -67,7 +67,7 @@ class TrackingShipmentScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Text(
+                                    const Text(
                                       productName,
                                       style: heading2,
                                     ),
@@ -229,8 +229,8 @@ class TrackingShipmentScreen extends StatelessWidget {
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

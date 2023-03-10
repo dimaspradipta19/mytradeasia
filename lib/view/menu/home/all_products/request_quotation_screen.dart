@@ -175,8 +175,12 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                             ),
                                             border:
                                                 Border.all(color: greyColor3)),
-                                        child: Image.asset(
-                                            "assets/images/logo_indonesia.png"),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              size20px / 2),
+                                          child: Image.asset(
+                                              "assets/images/logo_indonesia.png"),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -633,8 +637,6 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
               ),
               onPressed: () {
                 print(_messagesController.text);
-                print(_selectedValueUnit);
-                print(_selectedValueIncoterm);
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     return const SubmittedRFQScreen();

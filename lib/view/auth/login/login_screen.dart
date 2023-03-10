@@ -7,7 +7,6 @@ import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../../modelview/provider/db_manager.dart';
 import '../../../utils/theme.dart';
 import '../../../widget/loading_overlay_widget.dart';
 

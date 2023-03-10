@@ -61,11 +61,11 @@ class _NotificationMenuState extends State<NotificationMenu> {
                           quotationNotificaiton = value;
                         });
 
-                        print("all notif: $isNotificationOn");
-                        print("shipment notif: $shipmentNotification");
-                        print("document notif: $documentNotification");
-                        print("message notif: $messageNotification");
-                        print("quotation notif: $quotationNotificaiton");
+                        // print("all notif: $isNotificationOn");
+                        // print("shipment notif: $shipmentNotification");
+                        // print("document notif: $documentNotification");
+                        // print("message notif: $messageNotification");
+                        // print("quotation notif: $quotationNotificaiton");
                       })
                 ],
               ),

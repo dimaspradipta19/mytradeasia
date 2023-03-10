@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/widget/text_editing_widget.dart';
 
 import '../../../utils/theme.dart';
 
@@ -9,8 +8,6 @@ class LanguagesScreen extends StatefulWidget {
   @override
   State<LanguagesScreen> createState() => _LanguagesScreenState();
 }
-
-final _searchController = TextEditingController();
 
 class _LanguagesScreenState extends State<LanguagesScreen> {
   @override

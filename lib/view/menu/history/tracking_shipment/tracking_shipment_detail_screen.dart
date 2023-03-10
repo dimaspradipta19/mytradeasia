@@ -133,7 +133,7 @@ class TrackingShipmentDetailScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return DetailedProductsScreen();
+                          return const DetailedProductsScreen();
                         },
                       ));
                     },

@@ -8,7 +8,6 @@ class TrackingDocumentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const String productName = "Dipentene";
-    bool isShipped = true;
     return Scaffold(
       backgroundColor: whiteColor,
       // Appbar
@@ -32,13 +31,13 @@ class TrackingDocumentScreen extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: whiteColor,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 itemCount: 4,
@@ -230,8 +229,8 @@ class TrackingDocumentScreen extends StatelessWidget {
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

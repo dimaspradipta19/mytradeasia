@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../utils/result_state.dart';
 
@@ -71,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           autofocus: true,
                           decoration: InputDecoration(
                               prefixIcon: Padding(
-                                padding: const EdgeInsets.all(size20px / 2),
+                                padding: const EdgeInsets.all(size20px - 5),
                                 child: Image.asset(
                                     "assets/images/icon_search.png"),
                               ),
@@ -90,12 +88,12 @@ class _SearchScreenState extends State<SearchScreen> {
             // Grid Data Search Product
             Expanded(
               child: Consumer<SearchProductProvider>(
-                builder: (context, SearchProductProvider value, _) {
-                  if (value.state == ResultState.loading) {
+                builder: (context, SearchProductProvider valueSearch, _) {
+                  if (valueSearch.state == ResultState.loading) {
                     return const Center(
                       child: CircularProgressIndicator.adaptive(),
                     );
-                  } else if (value.state == ResultState.hasData &&
+                  } else if (valueSearch.state == ResultState.hasData &&
                       _searchProductController.text.isNotEmpty) {
                     return GridView.builder(
                       gridDelegate:
@@ -104,15 +102,14 @@ class _SearchScreenState extends State<SearchScreen> {
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                               childAspectRatio: 0.6),
-                      itemCount: value.state == ResultState.loading
-                          ? 2
-                          : value.searchProduct.length,
+                      itemCount: valueSearch.state == ResultState.loading
+                          ? 4
+                          : valueSearch.searchProduct.length,
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         String url = "https://chemtradea.chemtradeasia.com/";
-
                         return Card(
                           shadowColor: blackColor,
                           elevation: 3.0,
@@ -123,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 padding: const EdgeInsets.only(top: 6.0),
                                 child: Center(
                                   child: Image.network(
-                                    "$url${value.searchProduct[index].productimage}",
+                                    "$url${valueSearch.searchProduct[index].productimage}",
                                     width: 148.0,
                                     height: 116.0,
                                   ),
@@ -134,7 +131,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 5.0, horizontal: 10.0),
                                   child: Text(
-                                    value.searchProduct[index].productname,
+                                    valueSearch
+                                        .searchProduct[index].productname,
                                     style: text14,
                                   ),
                                 ),
@@ -180,36 +178,34 @@ class _SearchScreenState extends State<SearchScreen> {
                                   children: [
                                     Expanded(
                                       child: SizedBox(
-                                        height: 30,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                        Color>(primaryColor1),
-                                                shape:
-                                                    MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7.0),
+                                          height: 30,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(primaryColor1),
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              7.0),
+                                                    ),
                                                   ),
-                                                ),
-                                                padding: MaterialStateProperty
-                                                    .all<EdgeInsets>(
-                                                        EdgeInsets.zero)),
-                                            onPressed: () {
-                                              print("send inquiry");
-                                            },
-                                            child: Text(
-                                              "Send Inquiry",
-                                              style: text12.copyWith(
-                                                color: whiteColor,
-                                              ),
-                                            )),
-                                      ),
+                                                  padding: MaterialStateProperty
+                                                      .all<EdgeInsets>(
+                                                          EdgeInsets.zero)),
+                                              onPressed: () {
+                                                print("send inquiry");
+                                              },
+                                              child: Text(
+                                                "Send Inquiry",
+                                                style: text12.copyWith(
+                                                    color: whiteColor),
+                                              ))),
                                     ),
                                     const SizedBox(width: 2),
                                     Container(
@@ -236,12 +232,24 @@ class _SearchScreenState extends State<SearchScreen> {
                         );
                       },
                     );
-                  } else if (value.state == ResultState.hasData) {
-                    return const RecentlySeenWidget();
-                  } else if (value.state == ResultState.error) {
+                  } else if (valueSearch.state == ResultState.hasData) {
+                    return Column(
+                      children: const [
+                        RecentlySeenWidget(),
+                        SizedBox(height: size20px),
+                        PopularSearchWidget()
+                      ],
+                    );
+                  } else if (valueSearch.state == ResultState.error) {
                     return const Text("Error");
                   } else {
-                    return RecentlySeenWidget();
+                    return Column(
+                      children: const [
+                        RecentlySeenWidget(),
+                        SizedBox(height: size20px),
+                        PopularSearchWidget()
+                      ],
+                    );
                   }
                 },
               ),
@@ -249,6 +257,96 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PopularSearchWidget extends StatelessWidget {
+  const PopularSearchWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(bottom: size20px - 4),
+          child: Text(
+            "Popular Search",
+            style: heading2,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: secondaryColor5,
+                  borderRadius: BorderRadius.circular(size20px * 5)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: size20px / 2, vertical: size20px / 4),
+                child: Text("Dipentene",
+                    style: body1Regular.copyWith(color: blackColor)),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: secondaryColor5,
+                  borderRadius: BorderRadius.circular(size20px * 5)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: size20px / 2, vertical: size20px / 4),
+                child: Text("Gum turpentine",
+                    style: body1Regular.copyWith(color: blackColor)),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: secondaryColor5,
+                  borderRadius: BorderRadius.circular(size20px * 5)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: size20px / 2, vertical: size20px / 4),
+                child: Text("Liquid Glucose",
+                    style: body1Regular.copyWith(color: blackColor)),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: size20px / 2,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: secondaryColor5,
+                  borderRadius: BorderRadius.circular(size20px * 5)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: size20px / 2, vertical: size20px / 4),
+                child: Text("Maize starch powder",
+                    style: body1Regular.copyWith(color: blackColor)),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: secondaryColor5,
+                  borderRadius: BorderRadius.circular(size20px * 5)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: size20px / 2, vertical: size20px / 4),
+                child: Text("Stearic acid",
+                    style: body1Regular.copyWith(color: blackColor)),
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

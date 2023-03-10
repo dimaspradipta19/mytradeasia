@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/menu/home/all_products/request_quotation_screen.dart';
 
 class SubmittedRFQScreen extends StatelessWidget {
   const SubmittedRFQScreen({super.key});
@@ -66,8 +67,14 @@ class SubmittedRFQScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {},
-                  child:  Text(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RequestQuotationScreen(),
+                        ));
+                  },
+                  child: Text(
                     "Submit a new RFQ",
                     style: text16.copyWith(color: whiteColor),
                   ),
@@ -93,10 +100,6 @@ class SubmittedRFQScreen extends StatelessWidget {
           ],
         ),
       ),
-      // bottomNavigationBar: Padding(
-      //   padding: EdgeInsets.all(10),
-      //   child: ElevatedButton(onPressed: () {}, child: Text("aaa")),
-      // ),
     );
   }
 }

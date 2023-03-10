@@ -7,6 +7,7 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRead = true;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -30,12 +31,13 @@ class NotificationScreen extends StatelessWidget {
       body: ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
-        itemCount: 11,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
             width: MediaQuery.of(context).size.width,
             height: size20px * 4.0,
-            decoration: const BoxDecoration(color: secondaryColor5),
+            decoration: BoxDecoration(
+                color: index.isEven ? secondaryColor5 : whiteColor),
             child: Row(
               children: [
                 Expanded(

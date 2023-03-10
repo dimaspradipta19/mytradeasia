@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
-import 'package:mytradeasia/widget/text_editing_widget.dart';
 
 class ProductsDetailScreen extends StatefulWidget {
   const ProductsDetailScreen({super.key});
@@ -77,36 +76,35 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               width: size20px * 12,
                               child: Form(
                                 child: TextFormField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: greyColor3),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(size20px / 2),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(color: greyColor3),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(size20px / 2),
+                                      ),
                                     ),
-                                  ),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: greyColor3),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(size20px / 2),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(color: greyColor3),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(size20px / 2),
+                                      ),
                                     ),
-                                  ),
-                                  filled: true,
-                                  fillColor: whiteColor,
-                                  prefixIcon: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, right: 15.0),
-                                    child: Image.asset(
-                                      "assets/images/icon_search.png",
-                                      width: 24.0,
-                                      height: 24.0,
+                                    filled: true,
+                                    fillColor: whiteColor,
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20, right: 15.0),
+                                      child: Image.asset(
+                                        "assets/images/icon_search.png",
+                                        width: 24.0,
+                                        height: 24.0,
+                                      ),
                                     ),
+                                    hintText: "Dipentene",
+                                    hintStyle: body1Regular,
                                   ),
-                                  hintText: "Dipentene",
-                                  hintStyle:
-                                      body1Regular,
                                 ),
-                              ),
                               ),
                             ),
                             Container(
@@ -120,7 +118,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(size20px - 6),
-                                child: Image.asset("assets/images/icon_cart.png"),
+                                child:
+                                    Image.asset("assets/images/icon_cart.png"),
                               ),
                             ),
                           ],
@@ -436,12 +435,22 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: size20px, bottom: size20px / 4.0),
-                                child: Text("Personal Care & Cosmetics",
+                                child: Text("Brief Overview",
                                     style: text15.copyWith(color: fontColor1)),
                               ),
                               const Text(
-                                  "Limonene and β-phellandrene are cyclic monoterpenes and are double-bond ismoers. in α-phellandrene, both double are endocyclic and β-phellandrene, one of them is exocyclic. Both are insoluble in water, but miscrible with ether. β-phellandrene is widely distributed in essential oils. The phellandrene are used in fragrances because of their pleasing aromas. The odors of β-phellandrene has been described as peppery-minty and slightly citrusy. Consequently, β-phellandrene is widely used in flavor industry",
+                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
                                   style: body1Regular),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: size20px / 2, bottom: size20px / 4.0),
+                                child: Text("Manufacturing Process",
+                                    style: text15.copyWith(color: fontColor1)),
+                              ),
+                              const Text(
+                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  style: body1Regular),
+                              const SizedBox(height: size20px),
                               InkWell(
                                 onTap: () {
                                   print("see more");
@@ -464,22 +473,12 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: size20px, bottom: size20px / 4.0),
-                                child: Text("Brief Overview",
+                                child: Text("Personal Care & Cosmetics",
                                     style: text15.copyWith(color: fontColor1)),
                               ),
                               const Text(
-                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
+                                  "Limonene and β-phellandrene are cyclic monoterpenes and are double-bond ismoers. in α-phellandrene, both double are endocyclic and β-phellandrene, one of them is exocyclic. Both are insoluble in water, but miscrible with ether. β-phellandrene is widely distributed in essential oils. The phellandrene are used in fragrances because of their pleasing aromas. The odors of β-phellandrene has been described as peppery-minty and slightly citrusy. Consequently, β-phellandrene is widely used in flavor industry",
                                   style: body1Regular),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: size20px / 2, bottom: size20px / 4.0),
-                                child: Text("Manufacturing Process",
-                                    style: text15.copyWith(color: fontColor1)),
-                              ),
-                              const Text(
-                                  "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
-                                  style: body1Regular),
-                              const SizedBox(height: size20px),
                               InkWell(
                                 onTap: () {
                                   print("see more");

@@ -11,7 +11,6 @@ import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
-import 'package:mytradeasia/widget/text_editing_widget.dart';
 
 import '../../../model/industry_model.dart';
 
@@ -25,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 );
                                               });
                                         } else {
-                                          return const Text(
-                                              "First Name Last Name");
+                                          return const Text(" ");
                                         }
                                       },
                                     ),
