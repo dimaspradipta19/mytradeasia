@@ -126,7 +126,7 @@ class TextEditingWithPrefixFilled extends StatelessWidget {
         hintStyle: body1Regular,
         filled: true,
         fillColor: whiteColor,
-        prefixIcon: Image.asset("assets/images/icon_search.png"),
+        prefixIcon: Image.asset("assets/images/icon_search.png", width: size20px + 4, height: size20px + 4,),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: greyColor3),
           borderRadius: BorderRadius.all(

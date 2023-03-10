@@ -64,7 +64,7 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Costumer"),
+                            const Text("Customer"),
                             const SizedBox(height: 5.0),
                             Text(
                               "Lorem ipsum dolor sit amet consectetur. In est porta nisi pulvinar lectus fringilla eget volutpat.",

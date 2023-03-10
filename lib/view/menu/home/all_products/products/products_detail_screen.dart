@@ -76,10 +76,37 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               height: size20px + 30,
                               width: size20px * 12,
                               child: Form(
-                                child: TextEditingWithPrefixFilled(
-                                    hintText: "Dipentene",
-                                    urlImage: "assets/images/icon_serach.png",
-                                    controller: searchController),
+                                child: TextFormField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: greyColor3),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(size20px / 2),
+                                    ),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(color: greyColor3),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(size20px / 2),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: whiteColor,
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 15.0),
+                                    child: Image.asset(
+                                      "assets/images/icon_search.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    ),
+                                  ),
+                                  hintText: "Dipentene",
+                                  hintStyle:
+                                      body1Regular,
+                                ),
+                              ),
                               ),
                             ),
                             Container(
@@ -91,7 +118,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                   Radius.circular(10.0),
                                 ),
                               ),
-                              child: Image.asset("assets/images/icon_cart.png"),
+                              child: Padding(
+                                padding: const EdgeInsets.all(size20px - 6),
+                                child: Image.asset("assets/images/icon_cart.png"),
+                              ),
                             ),
                           ],
                         ),

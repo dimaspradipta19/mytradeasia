@@ -45,15 +45,38 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
                   right: size20px,
                   top: size20px / 2,
                   bottom: size20px),
-              child: TextEditingWithPrefixFilled(
-                hintText: "Search",
-                urlImage: "assets/images/icon_search.png",
-                controller: _searchController,
-                radiusBorder: 10.0,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: greyColor3),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(size20px / 2),
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: greyColor3),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(size20px / 2),
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: whiteColor,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 15.0),
+                    child: Image.asset(
+                      "assets/images/icon_search.png",
+                      width: 24.0,
+                      height: 24.0,
+                    ),
+                  ),
+                  hintText: "Search",
+                  hintStyle: body1Regular.copyWith(color: greyColor),
+                ),
               ),
             ),
 
-            // Popular countries 
+            // Popular countries
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -76,8 +99,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
                       color: whiteColor,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: size20px + 8,
-                            vertical: size20px / 4.0),
+                            horizontal: size20px + 8, vertical: size20px / 4.0),
                         child: Row(
                           children: [
                             Image.asset(
@@ -100,7 +122,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
               ],
             ),
 
-            // A 
+            // A
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -123,8 +145,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
                       color: whiteColor,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: size20px + 8,
-                            vertical: size20px / 4.0),
+                            horizontal: size20px + 8, vertical: size20px / 4.0),
                         child: Row(
                           children: [
                             Image.asset(
@@ -147,7 +168,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
               ],
             ),
 
-            // B 
+            // B
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -170,8 +191,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
                       color: whiteColor,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: size20px + 8,
-                            vertical: size20px / 4.0),
+                            horizontal: size20px + 8, vertical: size20px / 4.0),
                         child: Row(
                           children: [
                             Image.asset(

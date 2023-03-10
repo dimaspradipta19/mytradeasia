@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../utils/result_state.dart';
 
@@ -92,7 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder: (context, SearchProductProvider value, _) {
                   if (value.state == ResultState.loading) {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator.adaptive(),
                     );
                   } else if (value.state == ResultState.hasData &&
                       _searchProductController.text.isNotEmpty) {
@@ -103,12 +104,15 @@ class _SearchScreenState extends State<SearchScreen> {
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                               childAspectRatio: 0.6),
-                      itemCount: value.searchProduct.length,
+                      itemCount: value.state == ResultState.loading
+                          ? 2
+                          : value.searchProduct.length,
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         String url = "https://chemtradea.chemtradeasia.com/";
+
                         return Card(
                           shadowColor: blackColor,
                           elevation: 3.0,
@@ -139,6 +143,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
@@ -151,7 +156,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 color: greyColor2)),
                                       ],
                                     ),
-                                    const Spacer(),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -232,79 +236,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       },
                     );
                   } else if (value.state == ResultState.hasData) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: size20px - 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Recently Seen",
-                                style: heading2,
-                              ),
-                              InkWell(
-                                onTap: () => print("Delete"),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: secondaryColor5,
-                                      borderRadius:
-                                          BorderRadius.circular(size20px / 2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: size20px / 2,
-                                        vertical: 3.0),
-                                    child: Text(
-                                      "Delete",
-                                      style: body1Regular.copyWith(
-                                          color: secondaryColor1),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 100,
-                          width: double.infinity,
-                          child: GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.zero,
-                            itemCount: 4,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    crossAxisSpacing: 10.0,
-                                    childAspectRatio: 0.7),
-                            itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(7.0)),
-                                    child: Image.asset(
-                                      "assets/images/products.png",
-                                      fit: BoxFit.cover,
-                                      height: 76,
-                                      width: 76,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  const Text(
-                                    "Dipentine",
-                                    style: body1Medium,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    );
+                    return const RecentlySeenWidget();
                   } else {
-                    return const Text("Something went wrong");
+                    return const Text("Not Found");
                   }
                 },
               ),
@@ -312,6 +246,82 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class RecentlySeenWidget extends StatelessWidget {
+  const RecentlySeenWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: size20px - 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Recently Seen",
+                style: heading2,
+              ),
+              InkWell(
+                onTap: () => print("Delete"),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: secondaryColor5,
+                      borderRadius: BorderRadius.circular(size20px / 2)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: size20px / 2, vertical: 3.0),
+                    child: Text(
+                      "Delete",
+                      style: body1Regular.copyWith(color: secondaryColor1),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 100,
+          width: double.infinity,
+          child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: 4,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 0.7),
+            itemBuilder: (context, index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(7.0)),
+                    child: Image.asset(
+                      "assets/images/products.png",
+                      fit: BoxFit.cover,
+                      height: 76,
+                      width: 76,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
+                  const Text(
+                    "Dipentine",
+                    style: body1Medium,
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

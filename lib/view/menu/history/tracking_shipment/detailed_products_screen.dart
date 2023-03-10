@@ -262,11 +262,18 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
                               const EdgeInsets.symmetric(horizontal: size20px),
                           child: Row(
                             children: [
-                              Text(basicInformation[0][index],
-                                  style: body1Regular),
-                              const Text(" : ", style: body1Regular),
-                              Text(basicInformation[1][index],
-                                  style: body1Regular),
+                              Expanded(
+                                flex: 3,
+                                child: Text(basicInformation[0][index],
+                                    style: body1Regular),
+                              ),
+                              const Expanded(
+                                  child: Text(" : ", style: body1Regular)),
+                              Expanded(
+                                flex: 5,
+                                child: Text(basicInformation[1][index],
+                                    style: body1Regular),
+                              ),
                             ],
                           ),
                         ),

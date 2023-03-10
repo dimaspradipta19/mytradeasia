@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .data!.docs.length,
                                               itemBuilder: (context, index) {
                                                 return Text(
-                                                  "${streamSnapshot.data?.docs[index]['firstName'] ?? "FirstName"} ${streamSnapshot.data!.docs[index]['lastName'] ?? "LastName"}",
+                                                  "${streamSnapshot.data?.docs[index]['firstName'] ?? " "} ${streamSnapshot.data!.docs[index]['lastName'] ?? " "}",
                                                   style: text16.copyWith(
                                                       color: whiteColor,
                                                       fontWeight:
@@ -200,27 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       body1Regular.copyWith(color: greyColor),
                                 ),
                               ),
-
-                              //   TextFormField(
-                              // onTap: () {
-                              //   Navigator.push(context, MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return const SearchScreen();
-                              //     },
-                              //   ));
-                              // },
-                              // readOnly: true,
-                              // decoration: InputDecoration(
-                              //     contentPadding: const EdgeInsets.only(
-                              //         left: 15.0, top: 14.0, bottom: 16.0),
-                              //     prefixIcon: Image.asset(
-                              //       "assets/images/icon_search.png",
-                              //     ),
-                              //     border: InputBorder.none,
-                              //     hintText: "What do you want to search?",
-                              //     hintStyle: body1Regular.copyWith(
-                              //         color: greyColor)),
-                              // ),
                             ),
                           ),
                         )
