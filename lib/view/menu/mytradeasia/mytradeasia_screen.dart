@@ -39,6 +39,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(

@@ -31,6 +31,8 @@ class ContactUsScreen extends StatelessWidget {
             Expanded(
                 child: ListView.builder(
               itemCount: 5,
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
