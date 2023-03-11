@@ -141,6 +141,72 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     InkWell(
                       onTap: () {
                         print("Filter");
+
+                        showModalBottomSheet<dynamic>(
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(40.0))),
+                          context: context,
+                          builder: (context) {
+                            return Wrap(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Center(
+                                        child: Image.asset(
+                                          "assets/images/icon_spacing.png",
+                                          width: 25.0,
+                                        ),
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 20.0),
+                                        child: Text(
+                                          "Industries",
+                                          style: heading2,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            width: size20px * 8,
+                                            height: 50.0,
+                                            decoration: const BoxDecoration(
+                                                color: secondaryColor1),
+                                            child: const Center(
+                                              child: Text(
+                                                "Gum Rosin",
+                                                style: body1Medium,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: size20px * 8,
+                                            height: 50.0,
+                                            decoration: const BoxDecoration(
+                                                color: secondaryColor1),
+                                            child: const Center(
+                                              child: Text(
+                                                "Gum Rosin",
+                                                style: body1Medium,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Container(
                         width: size20px * 3,
