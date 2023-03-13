@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
+import 'package:timelines/timelines.dart';
 
 import '../../../../utils/theme.dart';
 
@@ -156,8 +157,17 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
                     ],
                   ),
                 ),
-                contentChild: Column(
-                  children: [Image.asset("assets/images/dummy_map.png")],
+                contentChild: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: size20px),
+                  child: Column(
+                    children: [
+                      Image.asset("assets/images/dummy_map.png"),
+                      const WidgetScheduleDetail(),
+                      const WidgetScheduleDetail(),
+                      const WidgetScheduleDetail(),
+                      const WidgetScheduleDetail(),
+                    ],
+                  ),
                 ),
                 collapsedIcon: Padding(
                   padding: const EdgeInsets.only(right: size20px),
@@ -170,7 +180,7 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
                       width: size20px + 4, color: greyColor2),
                 ),
                 expandedTitleBackgroundColor: whiteColor,
-                showAccordion: true,
+                showAccordion: false,
               ),
             ),
 
@@ -296,6 +306,43 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
                     width: size20px + 4, color: greyColor2),
               ),
               expandedTitleBackgroundColor: whiteColor,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class WidgetScheduleDetail extends StatelessWidget {
+  const WidgetScheduleDetail({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: size20px),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: size20px * 2.5,
+        child: Row(
+          children: [
+            const FlutterLogo(),
+            const SizedBox(width: size20px / 2),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: const [
+                    Text("Lorem Ipsum", style: text15),
+                    Text("Tanggal/Waktu", style: body2Medium)
+                  ],
+                ),
+                const Text("Lorem ipsum dolor sit amet consectetur. Nibh.",
+                    style: body1Regular),
+              ],
             ),
           ],
         ),

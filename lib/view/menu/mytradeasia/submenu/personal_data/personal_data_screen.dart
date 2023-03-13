@@ -283,14 +283,14 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
           child: ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor1),
+              backgroundColor: MaterialStateProperty.all<Color>(greyColor),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7.0),
                 ),
               ),
             ),
-            onPressed: () {},
+            onPressed: null,
             child: Text(
               "Edit Personal Data",
               style: text16.copyWith(color: whiteColor),

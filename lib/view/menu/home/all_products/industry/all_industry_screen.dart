@@ -8,7 +8,6 @@ class AllIndustryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -35,6 +34,8 @@ class AllIndustryScreen extends StatelessWidget {
           children: [
             Expanded(
               child: GridView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 itemCount: allIndustries[0].length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

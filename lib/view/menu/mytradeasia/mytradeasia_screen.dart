@@ -5,6 +5,7 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/faq/faq_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/languages/language_apps_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
@@ -208,7 +209,16 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
               MyTradeAsiaWidget(
                   nama: "FAQs",
                   urlIcon: "assets/images/icon_faq.png",
-                  onPressedFunction: () {}),
+                  onPressedFunction:  () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const FaqScreen();
+                      },
+                    ),
+                  );
+                },),
 
               // Version menu
               Padding(

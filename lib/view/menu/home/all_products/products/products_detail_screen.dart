@@ -26,7 +26,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
       length: 2,
       initialIndex: 0,
       child: Scaffold(
-        backgroundColor: whiteColor,
         body: SingleChildScrollView(
           child: Stack(
             children: [
@@ -363,48 +362,50 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(thirdColor1),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(size20px * 5),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: size20px + 8),
+                      child: Row(
+                        children: [
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(thirdColor1),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(size20px * 5),
+                                ),
                               ),
                             ),
-                          ),
-                          onPressed: () {},
-                          child: const Text(
-                            "Pine Derivative",
-                            style: body1Regular,
-                          ),
-                        ),
-                        const SizedBox(width: size20px / 2),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(thirdColor1),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(size20px * 5),
-                              ),
+                            onPressed: () {},
+                            child: const Text(
+                              "Pine Derivative",
+                              style: body1Regular,
                             ),
                           ),
-                          onPressed: () {},
-                          child: const Text(
-                            "Lorem ipsum dolor sit",
-                            style: body1Regular,
+                          const SizedBox(width: size20px / 2),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(thirdColor1),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(size20px * 5),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              "Lorem ipsum dolor sit",
+                              style: body1Regular,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: size20px + 8.0),
                     const TabBar(
                       indicatorColor: primaryColor1,
                       tabs: [
@@ -424,7 +425,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     ),
                     // content
                     SizedBox(
-                      height: 320,
+                      height: size20px * 16,
                       width: MediaQuery.of(context).size.width,
                       child: TabBarView(
                         children: [
@@ -510,7 +511,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                               childAspectRatio: 0.8),
-                      itemCount: 2,
+                      itemCount: 5,
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
                       physics: const NeverScrollableScrollPhysics(),

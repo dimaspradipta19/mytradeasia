@@ -4,7 +4,6 @@ import 'package:mytradeasia/view/menu/home/all_products/products/rfq_submitted_s
 import 'package:mytradeasia/view/menu/other/languages_screen.dart';
 
 import '../../../../widget/text_editing_widget.dart';
-import '../../mytradeasia/submenu/personal_data/change_email_screen.dart';
 
 class RequestQuotationScreen extends StatefulWidget {
   const RequestQuotationScreen({super.key});

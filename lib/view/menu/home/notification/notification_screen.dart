@@ -7,7 +7,6 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isRead = true;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
