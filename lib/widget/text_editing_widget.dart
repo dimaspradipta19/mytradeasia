@@ -60,7 +60,7 @@ class TextEditingWithIconSuffix extends StatelessWidget {
   final String hintText;
   final String imageUrl;
   final bool readOnly;
-  final Widget navigationPage;
+  final void Function() navigationPage;
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +84,15 @@ class TextEditingWithIconSuffix extends StatelessWidget {
           ),
         ),
         suffixIcon: IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return navigationPage;
-              },
-            ));
-          },
+          onPressed: navigationPage,
+          
+          // () {
+          //   Navigator.push(context, MaterialPageRoute(
+          //     builder: (context) {
+          //       return navigationPage;
+          //     },
+          //   ));
+          // },
           icon: Image.asset(
             imageUrl,
             width: 24.0,

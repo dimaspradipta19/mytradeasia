@@ -80,7 +80,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           controller: _oldPasswordController,
                           hintText: "Enter your old password",
                           imageUrl: "assets/images/icon_eye_open.png",
-                          navigationPage: const NavigationBarWidget(),
+                          navigationPage: () {
+                            print("old password");
+                          },
                         ),
                       ),
                     ),
@@ -94,7 +96,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           controller: _newPasswordController,
                           hintText: "Enter your new password",
                           imageUrl: "assets/images/icon_eye_open.png",
-                          navigationPage: const NavigationBarWidget(),
+                          navigationPage: () {
+                            print("new password");
+                          },
                         ),
                       ),
                     ),
@@ -108,7 +112,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           controller: _confirmPasswordController,
                           hintText: "Enter your new password",
                           imageUrl: "assets/images/icon_eye_open.png",
-                          navigationPage: const NavigationBarWidget() ,
+                          navigationPage: () {
+                            print("confirm new password");
+                          },
                         ),
                       ),
                     ),

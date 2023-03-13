@@ -177,7 +177,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                           borderRadius: const BorderRadius.all(
                                             Radius.circular(7),
                                           ),
-                                          border: Border.all(color: greyColor3)),
+                                          border:
+                                              Border.all(color: greyColor3)),
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.all(size20px / 2),
@@ -251,7 +252,14 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   hintText: _auth.currentUser?.email ??
                                       "cannot read email...",
                                   imageUrl: "assets/images/icon_forward.png",
-                                  navigationPage: const ChangeEmailScreen(),
+                                  // navigationPage: const ChangeEmailScreen(),
+                                  navigationPage: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return ChangeEmailScreen();
+                                      },
+                                    ));
+                                  },
                                 ),
                               ),
                             ],

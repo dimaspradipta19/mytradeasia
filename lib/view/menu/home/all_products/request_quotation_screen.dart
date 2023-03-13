@@ -225,7 +225,14 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                   controller: _countryController,
                                   hintText: "Country",
                                   imageUrl: "assets/images/icon_forward.png",
-                                  navigationPage: const ChangeEmailScreen(),
+                                  // navigationPage: const ChangeEmailScreen(),
+                                  navigationPage: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return const LanguagesScreen();
+                                      },
+                                    ));
+                                  },
                                 ),
                               ),
                             ],
