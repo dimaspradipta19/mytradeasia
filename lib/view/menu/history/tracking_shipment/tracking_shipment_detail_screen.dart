@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment/detailed_products_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment/detailed_shipment_products_screen.dart';
 
 import '../../../../utils/theme.dart';
 
@@ -133,7 +133,7 @@ class TrackingShipmentDetailScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return const DetailedProductsScreen();
+                          return const DetailedShipmentProductsScreen();
                         },
                       ));
                     },

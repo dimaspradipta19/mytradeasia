@@ -414,37 +414,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // OUR TOP PRODUCT Section
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Our Top Products", style: text18),
-                        const Spacer(),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(whiteColor),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100.0),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: secondaryColor5,
+                            borderRadius: BorderRadius.circular(size20px * 5),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return const TopProductsScreen();
+                                },
+                              ));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: size20px / 2,
+                                  vertical: size20px / 5),
+                              child: Text(
+                                "See More",
+                                style: text12.copyWith(color: secondaryColor1),
                               ),
                             ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return const TopProductsScreen();
-                              },
-                            ));
-                          },
-                          child: Text(
-                            "See More",
-                            style: text12.copyWith(color: secondaryColor1),
                           ),
                         ),
                       ],
                     ),
                     // GRID TOP PRODUCT
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
+                      padding: const EdgeInsets.only(bottom: size20px/2, top: size20px ),
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -665,7 +666,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     // Grid Last Seen Section
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
+                      padding: const EdgeInsets.only(bottom: size20px),
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -738,23 +739,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Button See More
                     Center(
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(whiteColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100.0),
+                      child: Container(
+                            decoration: BoxDecoration(
+                              color: secondaryColor5,
+                              borderRadius: BorderRadius.circular(size20px * 5),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const TopProductsScreen();
+                                  },
+                                ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: size20px / 2,
+                                    vertical: size20px / 5),
+                                child: Text(
+                                  "See More",
+                                  style: text12.copyWith(color: secondaryColor1),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          "See More",
-                          style: text12.copyWith(color: secondaryColor1),
-                        ),
-                      ),
                     ),
                   ],
                 ),

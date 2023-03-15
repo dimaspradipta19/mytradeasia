@@ -31,7 +31,7 @@ class FaqScreen extends StatelessWidget {
       ],
     ];
     return Scaffold(
-      backgroundColor: greyColor4,
+        backgroundColor: greyColor4,
         appBar: AppBar(
           title: const Text(
             "FAQ",
@@ -58,32 +58,34 @@ class FaqScreen extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => Column(
             children: [
-              GFAccordion(
-                margin: EdgeInsets.zero,
-                titleChild: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: size20px),
-                  child: Text(basicInformation[0][index], style: body1Medium),
-                ),
-                contentChild: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: size20px),
-                  child: Center(child: Text(basicInformation[1][index])),
-                ),
-                collapsedIcon: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Image.asset(
-                    "assets/images/icon_bottom.png",
-                    width: size20px + 4,
-                    color: greyColor2,
+              Padding(
+                padding: const EdgeInsets.only(bottom: size20px / 2),
+                child: GFAccordion(
+                  margin: EdgeInsets.zero,
+                  titleChild: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: size20px),
+                    child: Text(basicInformation[0][index], style: body1Medium),
                   ),
+                  contentChild: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: size20px),
+                    child: Center(child: Text(basicInformation[1][index])),
+                  ),
+                  collapsedIcon: Padding(
+                    padding: const EdgeInsets.only(right: size20px),
+                    child: Image.asset(
+                      "assets/images/icon_bottom.png",
+                      width: size20px + 4,
+                      color: greyColor2,
+                    ),
+                  ),
+                  expandedIcon: Padding(
+                    padding: const EdgeInsets.only(right: size20px),
+                    child: Image.asset("assets/images/icon_up.png",
+                        width: size20px + 4, color: greyColor2),
+                  ),
+                  expandedTitleBackgroundColor: whiteColor,
                 ),
-                expandedIcon: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Image.asset("assets/images/icon_up.png",
-                      width: size20px + 4, color: greyColor2),
-                ),
-                expandedTitleBackgroundColor: whiteColor,
               ),
-              Container(color: greyColor4, height: size20px / 2)
             ],
           ),
         ));

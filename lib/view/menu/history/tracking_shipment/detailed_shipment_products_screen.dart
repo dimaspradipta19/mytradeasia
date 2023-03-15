@@ -4,14 +4,14 @@ import 'package:timelines/timelines.dart';
 
 import '../../../../utils/theme.dart';
 
-class DetailedProductsScreen extends StatefulWidget {
-  const DetailedProductsScreen({super.key});
+class DetailedShipmentProductsScreen extends StatefulWidget {
+  const DetailedShipmentProductsScreen({super.key});
 
   @override
-  State<DetailedProductsScreen> createState() => _DetailedProductsScreenState();
+  State<DetailedShipmentProductsScreen> createState() => _DetailedShipmentProductsScreenState();
 }
 
-class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
+class _DetailedShipmentProductsScreenState extends State<DetailedShipmentProductsScreen> {
   List<List<String>> basicInformation = [
     [
       "BL No.",
@@ -162,10 +162,8 @@ class _DetailedProductsScreenState extends State<DetailedProductsScreen> {
                   child: Column(
                     children: [
                       Image.asset("assets/images/dummy_map.png"),
-                      const WidgetScheduleDetail(),
-                      const WidgetScheduleDetail(),
-                      const WidgetScheduleDetail(),
-                      const WidgetScheduleDetail(),
+                      
+                      // const WidgetScheduleDetail(),
                     ],
                   ),
                 ),

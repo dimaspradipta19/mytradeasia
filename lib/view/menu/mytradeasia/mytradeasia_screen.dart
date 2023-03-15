@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
@@ -207,9 +208,9 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
               // faq menu
               MyTradeAsiaWidget(
-                  nama: "FAQs",
-                  urlIcon: "assets/images/icon_faq.png",
-                  onPressedFunction:  () {
+                nama: "FAQs",
+                urlIcon: "assets/images/icon_faq.png",
+                onPressedFunction: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -218,7 +219,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                       },
                     ),
                   );
-                },),
+                },
+              ),
 
               // Version menu
               Padding(
@@ -272,7 +274,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                       await _auth.signOut();
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                         builder: (context) {
-                          return const LoginScreen();
+                          return const RoleUserScreen();
                         },
                       ), (route) => false);
                     },
