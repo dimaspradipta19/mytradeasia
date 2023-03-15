@@ -67,6 +67,7 @@ const Color allProductsTua = Color(0XFFDB9FFF);
 // const EdgeInsets paddingRight = EdgeInsets.only(right: 20.0);
 // const EdgeInsets paddingBottom = EdgeInsets.only(bottom: 20.0);
 const double size20px = 20.0;
+const double size24px = 24.0;
 
 // Textstyle
 const TextStyle text8 =

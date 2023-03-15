@@ -9,12 +9,14 @@ import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/other/splash_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -56,7 +58,8 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           appBarTheme: const AppBarTheme(color: whiteColor),
           primaryColor: whiteColor,
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: whiteColor),
+          bottomNavigationBarTheme:
+              const BottomNavigationBarThemeData(backgroundColor: whiteColor),
           scaffoldBackgroundColor: whiteColor,
           fontFamily: "Poppins",
         ),

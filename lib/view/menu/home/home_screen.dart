@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // Appbar
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 150.0,
+                height: size20px * 7.5,
                 decoration: const BoxDecoration(
                   color: primaryColor1,
                 ),
@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       stream: _firestore
                                           .collection('biodata')
                                           .where('uid',
-                                              isEqualTo: _auth.currentUser!.uid
+                                              isEqualTo:
+                                               _auth.currentUser!.uid
                                                   .toString())
                                           .snapshots(),
                                       builder: (context,
@@ -100,52 +102,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              const Spacer(),
-                              Container(
-                                height: 40.0,
-                                width: 40.0,
-                                decoration: const BoxDecoration(
-                                    color: secondaryColor1,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0))),
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return const NotificationScreen();
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 40.0,
+                                    width: 40.0,
+                                    decoration: const BoxDecoration(
+                                        color: secondaryColor1,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0))),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const NotificationScreen();
+                                          },
+                                        ));
                                       },
-                                    ));
-                                  },
-                                  icon: Image.asset(
-                                      "assets/images/icon_notification.png",
-                                      width: 24,
-                                      height: 24),
-                                ),
-                              ),
-                              const SizedBox(width: 10.0),
-                              Container(
-                                height: 40.0,
-                                width: 40.0,
-                                decoration: const BoxDecoration(
-                                  color: secondaryColor1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                                child: IconButton(
-                                  onPressed: () {
-                                    print("Cart");
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return const CartScreen();
-                                      },
-                                    ));
-                                  },
-                                  icon: Image.asset(
-                                    "assets/images/icon_cart.png",
-                                    width: 24,
-                                    height: 24,
+                                      icon: Image.asset(
+                                          "assets/images/icon_notification.png",
+                                          width: 24,
+                                          height: 24),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(width: size20px / 2),
+                                  Container(
+                                    height: 40.0,
+                                    width: 40.0,
+                                    decoration: const BoxDecoration(
+                                      color: secondaryColor1,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0)),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const CartScreen();
+                                          },
+                                        ));
+                                      },
+                                      icon: Image.asset(
+                                        "assets/images/icon_cart.png",
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               )
                             ],
                           ),
@@ -157,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            height: 50.0,
+                            height: size20px * 2.5,
                             child: Form(
                               child: TextFormField(
                                 readOnly: true,
@@ -222,7 +228,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           flex: 5,
                           child: InkWell(
                             onTap: () {
-                              print("RFQ");
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
                                   return const RequestQuotationScreen();
@@ -318,7 +323,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             flex: 5,
                             child: InkWell(
                               onTap: () {
-                                print("Tracking Shipment");
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return const TrackingShipmentScreen();
@@ -366,7 +370,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             flex: 5,
                             child: InkWell(
                               onTap: () {
-                                print("ALL PRODUCTS");
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return const AllProductsScreen();
@@ -445,7 +448,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     // GRID TOP PRODUCT
                     Padding(
-                      padding: const EdgeInsets.only(bottom: size20px/2, top: size20px ),
+                      padding: const EdgeInsets.only(
+                          bottom: size20px / 2, top: size20px),
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -553,9 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     EdgeInsets>(
                                                                 EdgeInsets
                                                                     .zero)),
-                                                onPressed: () {
-                                                  print("send inquiry");
-                                                },
+                                                onPressed: () {},
                                                 child: Text(
                                                   "Send Inquiry",
                                                   style: text12.copyWith(
@@ -573,9 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(5))),
                                           child: IconButton(
-                                            onPressed: () {
-                                              print("cart icon");
-                                            },
+                                            onPressed: () {},
                                             icon: Image.asset(
                                               "assets/images/icon_cart.png",
                                             ),
@@ -595,9 +595,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // INDUSTRY Section
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: size20px),
-                      child: Text("Industry", style: text18),
-                    ),
+                        padding: EdgeInsets.symmetric(vertical: size20px),
+                        child: Text("Industry", style: text18)),
                     // GRID INDUSTRY
                     GridView.builder(
                       gridDelegate:
@@ -740,29 +739,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Button See More
                     Center(
                       child: Container(
-                            decoration: BoxDecoration(
-                              color: secondaryColor5,
-                              borderRadius: BorderRadius.circular(size20px * 5),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const TopProductsScreen();
-                                  },
-                                ));
+                        decoration: BoxDecoration(
+                          color: secondaryColor5,
+                          borderRadius: BorderRadius.circular(size20px * 5),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const TopProductsScreen();
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: size20px / 2,
-                                    vertical: size20px / 5),
-                                child: Text(
-                                  "See More",
-                                  style: text12.copyWith(color: secondaryColor1),
-                                ),
-                              ),
+                            ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: size20px / 2,
+                                vertical: size20px / 5),
+                            child: Text(
+                              "See More",
+                              style: text12.copyWith(color: secondaryColor1),
                             ),
                           ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

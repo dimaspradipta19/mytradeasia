@@ -1,12 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
-  void splashScreenTime(BuildContext context) {
+  void splashScreenTime(BuildContext context) async {
     Timer(
       const Duration(seconds: 4),
       () {

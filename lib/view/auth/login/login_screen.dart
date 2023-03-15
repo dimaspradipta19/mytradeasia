@@ -6,6 +6,7 @@ import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_scre
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/theme.dart';
 import '../../../widget/loading_overlay_widget.dart';
@@ -222,8 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                   ),
-                  // ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: size20px),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -239,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: size20px),
                   Row(
                     children: [
                       Expanded(
@@ -263,15 +263,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: size20px + 4,
                             ),
                             onPressed: () {
-                              print("Google");
+                              const snackbar = SnackBar(
+                                content:
+                                    Text("Google is not available right now"),
+                                backgroundColor: redColor1,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackbar);
                             },
                           ),
                         ),
                       ),
-                      const SizedBox(width: 16.0),
+                      const SizedBox(width: size20px - 4.0),
                       Expanded(
                         child: SizedBox(
-                          width: 160.0,
+                          width: size20px * 8,
                           height: 55.0,
                           child: ElevatedButton(
                             style: ButtonStyle(
@@ -290,14 +296,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: size20px + 4,
                             ),
                             onPressed: () {
-                              print("Facebook");
+                              const snackbar = SnackBar(
+                                content:
+                                    Text("Facebook is not available right now"),
+                                backgroundColor: redColor1,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackbar);
                             },
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: size20px),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

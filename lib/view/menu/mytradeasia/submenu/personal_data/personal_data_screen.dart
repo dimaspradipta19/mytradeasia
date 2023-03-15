@@ -256,7 +256,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   navigationPage: () {
                                     Navigator.push(context, MaterialPageRoute(
                                       builder: (context) {
-                                        return ChangeEmailScreen();
+                                        return const ChangeEmailScreen();
                                       },
                                     ));
                                   },

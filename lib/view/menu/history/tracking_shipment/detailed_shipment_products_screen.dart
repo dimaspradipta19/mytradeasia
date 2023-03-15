@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
-import 'package:timelines/timelines.dart';
 
 import '../../../../utils/theme.dart';
 

@@ -12,8 +12,7 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
-
-import '../../auth/login/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
@@ -85,13 +84,13 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${streamSnapshot.data?.docs[index]['firstName'] ?? "FirstName"} ${streamSnapshot.data!.docs[index]['lastName'] ?? "LastName"}",
+                                          "${streamSnapshot.data?.docs[index]['firstName'] ?? ""} ${streamSnapshot.data!.docs[index]['lastName'] ?? ""}",
                                           style: text16,
                                         ),
                                         Text(
                                           streamSnapshot.data?.docs[index]
                                                   ['companyName'] ??
-                                              "company",
+                                              "",
                                           style: text15.copyWith(
                                               fontWeight: FontWeight.w400,
                                               color: greyColor2),
@@ -101,7 +100,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                   },
                                 );
                               } else {
-                                return const Text("First Name Last Name");
+                                return const Text("");
                               }
                             },
                           ),
@@ -270,13 +269,41 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                         ),
                       ),
                     ),
-                    onPressed: () async {
-                      await _auth.signOut();
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
                         builder: (context) {
-                          return const RoleUserScreen();
+                          return AlertDialog(
+                            title: const Text(
+                              'Are you sure want to log out?',
+                              style: heading3,
+                            ),
+                            content: Text(
+                              'You need to insert Email and Password again',
+                              style: body1Medium.copyWith(color: greyColor2),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await _auth.signOut();
+                                  Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return const RoleUserScreen();
+                                    },
+                                  ), (route) => false);
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
                         },
-                      ), (route) => false);
+                      );
                     },
                     child: const Text("Logout"),
                   ),

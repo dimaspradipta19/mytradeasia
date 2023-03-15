@@ -36,7 +36,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   @override
   Widget build(BuildContext context) {
     String url = "https://chemtradea.chemtradeasia.com/";
-    var searchProd = Provider.of<SearchProductProvider>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -69,9 +68,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                             Provider.of<SearchProductProvider>(context,
                                     listen: false)
                                 .getListProduct(_searchProductController.text);
-
-                            print(_searchProductController.text);
-                            print(searchProd.searchProduct.length);
                           }),
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -140,8 +136,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     const Text("All Products", style: text18),
                     InkWell(
                       onTap: () {
-                        print("Filter");
-
                         showModalBottomSheet<dynamic>(
                           isScrollControlled: true,
                           shape: const RoundedRectangleBorder(
@@ -172,29 +166,44 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                         ),
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            width: size20px * 8,
-                                            height: 50.0,
-                                            decoration: const BoxDecoration(
-                                                color: secondaryColor1),
-                                            child: const Center(
-                                              child: Text(
-                                                "Gum Rosin",
-                                                style: body1Medium,
+                                          Expanded(
+                                            child: Container(
+                                              width: size20px * 8,
+                                              height: 50.0,
+                                              decoration: const BoxDecoration(
+                                                  color: thirdColor1,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              size20px / 4))),
+                                              child: const Center(
+                                                child: Text(
+                                                  "Gum Rosin",
+                                                  style: body1Medium,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            width: size20px * 8,
-                                            height: 50.0,
-                                            decoration: const BoxDecoration(
-                                                color: secondaryColor1),
-                                            child: const Center(
-                                              child: Text(
-                                                "Gum Rosin",
-                                                style: body1Medium,
+                                          const SizedBox(
+                                              width: size20px * 0.75),
+                                          Expanded(
+                                            child: Container(
+                                              width: size20px * 8,
+                                              height: 50.0,
+                                              decoration: const BoxDecoration(
+                                                  color: thirdColor1,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              size20px / 4))),
+                                              child: const Center(
+                                                child: Text(
+                                                  "Gum Rosin",
+                                                  style: body1Medium,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -248,7 +257,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                           mainAxisSpacing: 15,
                                           childAspectRatio: 0.6),
                                   itemCount: value.state == ResultState.loading
-                                      ? 4
+                                      ? 6
                                       : value.listProduct.length,
                                   shrinkWrap: true,
                                   physics: const BouncingScrollPhysics(),
@@ -268,12 +277,57 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Center(
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: size20px * 5.5,
                                                 child: Image.network(
-                                              "$url${value.listProduct[index].productimage}",
-                                              width: 148.0,
-                                              height: 116.0,
-                                            )),
-                                            Expanded(
+                                                  "$url${value.listProduct[index].productimage}",
+                                                  fit: BoxFit.fill,
+                                                  loadingBuilder: (context,
+                                                      child, loadingProgress) {
+                                                    if (loadingProgress ==
+                                                        null) {
+                                                      return child;
+                                                    } else {
+                                                      return SizedBox(
+                                                        width: 148.0,
+                                                        height: 116.0,
+                                                        child: Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color:
+                                                                primaryColor1,
+                                                            value: loadingProgress
+                                                                        .expectedTotalBytes !=
+                                                                    null
+                                                                ? loadingProgress
+                                                                        .cumulativeBytesLoaded /
+                                                                    loadingProgress
+                                                                        .expectedTotalBytes!
+                                                                : null,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return const FlutterLogo(
+                                                      size: size20px * 3,
+                                                    );
+                                                  },
+                                                  width: 148.0,
+                                                  height: 116.0,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: size20px * 2.5,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -283,6 +337,9 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                   value.listProduct[index]
                                                       .productname,
                                                   style: text14,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
                                                 ),
                                               ),
                                             ),
@@ -431,12 +488,49 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Center(
-                                                child: Image.network(
-                                              "$url${valueSearch.searchProduct[index].productimage}",
-                                              width: 148.0,
-                                              height: 116.0,
-                                            )),
+                                            SizedBox(
+                                              height: size20px * 5.5,
+                                              width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                              child: Image.network(
+                                            "$url${valueSearch.searchProduct[index].productimage}",
+                                            fit: BoxFit.fill,
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return SizedBox(
+                                                  width: 148.0,
+                                                  height: 116.0,
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: primaryColor1,
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes!
+                                                          : null,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            errorBuilder: (context, error,
+                                                stackTrace) {
+                                              return const FlutterLogo(
+                                                size: size20px * 3,
+                                              );
+                                            },
+                                            width: 148.0,
+                                            height: 116.0,
+                                              ),
+                                            ),
                                             Expanded(
                                               child: Padding(
                                                 padding:
