@@ -292,7 +292,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                       return child;
                                                     } else {
                                                       return SizedBox(
-                                                        width: 148.0,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
                                                         height: 116.0,
                                                         child: Center(
                                                           child:
@@ -491,44 +494,44 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             SizedBox(
                                               height: size20px * 5.5,
                                               width: MediaQuery.of(context)
-                                              .size
-                                              .width,
+                                                  .size
+                                                  .width,
                                               child: Image.network(
-                                            "$url${valueSearch.searchProduct[index].productimage}",
-                                            fit: BoxFit.fill,
-                                            loadingBuilder: (context, child,
-                                                loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
-                                                return SizedBox(
-                                                  width: 148.0,
-                                                  height: 116.0,
-                                                  child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: primaryColor1,
-                                                      value: loadingProgress
-                                                                  .expectedTotalBytes !=
-                                                              null
-                                                          ? loadingProgress
-                                                                  .cumulativeBytesLoaded /
-                                                              loadingProgress
-                                                                  .expectedTotalBytes!
-                                                          : null,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                            errorBuilder: (context, error,
-                                                stackTrace) {
-                                              return const FlutterLogo(
-                                                size: size20px * 3,
-                                              );
-                                            },
-                                            width: 148.0,
-                                            height: 116.0,
+                                                "$url${valueSearch.searchProduct[index].productimage}",
+                                                fit: BoxFit.fill,
+                                                loadingBuilder: (context, child,
+                                                    loadingProgress) {
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  } else {
+                                                    return SizedBox(
+                                                      width: 148.0,
+                                                      height: 116.0,
+                                                      child: Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: primaryColor1,
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes!
+                                                              : null,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return const FlutterLogo(
+                                                    size: size20px * 3,
+                                                  );
+                                                },
+                                                width: 148.0,
+                                                height: 116.0,
                                               ),
                                             ),
                                             Expanded(

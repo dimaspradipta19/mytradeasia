@@ -35,12 +35,9 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     color: secondaryColor1,
                     width: MediaQuery.of(context).size.width,
                     height: size20px * 15.0,
-                    child: Hero(
-                      tag: "dash",
-                      child: Image.asset(
-                        "assets/images/product_big_size.png",
-                        fit: BoxFit.cover,
-                      ),
+                    child: Image.asset(
+                      "assets/images/product_big_size.png",
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ],

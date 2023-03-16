@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
+import 'package:mytradeasia/utils/result_state.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../utils/theme.dart';
 
-class TopProductsScreen extends StatelessWidget {
+class TopProductsScreen extends StatefulWidget {
   const TopProductsScreen({super.key});
 
   @override
+  State<TopProductsScreen> createState() => _TopProductsScreenState();
+}
+
+class _TopProductsScreenState extends State<TopProductsScreen> {
+  @override
   Widget build(BuildContext context) {
     const String nameProd = "Dipentene";
+    const String url = "https://chemtradea.chemtradeasia.com/";
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -71,13 +81,19 @@ class TopProductsScreen extends StatelessWidget {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(size20px / 2),
+                          padding: const EdgeInsets.only(
+                              top: size20px / 2,
+                              right: size20px / 2,
+                              bottom: size20px / 2,
+                              left: size20px - 12),
                           child: Image.asset("assets/images/icon_cart.png"),
                         ),
                       )
                     ],
                   ),
                 ),
+
+                // banner top products
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: size20px),
                   child: Stack(
@@ -113,130 +129,195 @@ class TopProductsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                // main content
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15,
-                            childAspectRatio: 0.65),
-                    itemCount: 5,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Card(
-                        shadowColor: blackColor,
-                        elevation: 3.0,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                                child: Image.asset(
-                              "assets/images/products.png",
-                              width: MediaQuery.of(context).size.width,
-                            )),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 10.0),
-                              child: Text(
-                                "Dipentene",
-                                style: text14,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(
+                  child: Consumer<TopProductsProvider>(
+                    builder:
+                        (context, TopProductsProvider valueTopProducts, child) {
+                      if (valueTopProducts.state == ResultState.loading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor1,
+                          ),
+                        );
+                      } else {
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio: 0.65),
+                          itemCount:
+                              valueTopProducts.state == ResultState.loading
+                                  ? 2
+                                  : valueTopProducts.listResultTop.length,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Card(
+                              shadowColor: blackColor,
+                              elevation: 3.0,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("CAS Number :", style: text10),
-                                      Text("138 - 86 - 3",
-                                          style: text10.copyWith(
-                                              color: greyColor2)),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("HS Code :", style: text10),
-                                      Text("-",
-                                          style: text10.copyWith(
-                                              color: greyColor2)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0,
-                                  right: 10.0,
-                                  top: 10.0,
-                                  bottom: 12.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: 30,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                      Color>(primaryColor1),
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          7.0),
-                                                ),
+                                  SizedBox(
+                                    height: size20px * 5.5,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Image.network(
+                                      "$url${valueTopProducts.listResultTop[index].productimage}",
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 116.0,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: primaryColor1,
+                                                value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        loadingProgress
+                                                            .expectedTotalBytes!
+                                                    : null,
                                               ),
-                                              padding: MaterialStateProperty
-                                                  .all<EdgeInsets>(
-                                                      EdgeInsets.zero)),
-                                          onPressed: () {
-                                            print("send inquiry");
-                                          },
-                                          child: Text(
-                                            "Send Inquiry",
-                                            style: text12.copyWith(
-                                              color: whiteColor,
                                             ),
-                                          )),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 2),
-                                  Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: const BoxDecoration(
-                                        color: secondaryColor1,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        print("cart icon");
+                                          );
+                                        }
                                       },
-                                      icon: Image.asset(
-                                        "assets/images/icon_cart.png",
-                                      ),
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const FlutterLogo(
+                                          size: size20px * 3,
+                                        );
+                                      },
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5.0, horizontal: 10.0),
+                                    child: Text(
+                                      valueTopProducts
+                                          .listResultTop[index].productname,
+                                      style: text14,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0),
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text("CAS Number :",
+                                                style: text10),
+                                            Text("138 - 86 - 3",
+                                                style: text10.copyWith(
+                                                    color: greyColor2)),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text("HS Code :",
+                                                style: text10),
+                                            Text("-",
+                                                style: text10.copyWith(
+                                                    color: greyColor2)),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0,
+                                        right: 10.0,
+                                        top: 10.0,
+                                        bottom: 12.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: SizedBox(
+                                            height: 30,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                primaryColor1),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(7.0),
+                                                      ),
+                                                    ),
+                                                    padding:
+                                                        MaterialStateProperty
+                                                            .all<
+                                                                    EdgeInsets>(
+                                                                EdgeInsets
+                                                                    .zero)),
+                                                onPressed: () {
+                                                  print("send inquiry");
+                                                },
+                                                child: Text(
+                                                  "Send Inquiry",
+                                                  style: text12.copyWith(
+                                                    color: whiteColor,
+                                                  ),
+                                                )),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 2),
+                                        Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: const BoxDecoration(
+                                              color: secondaryColor1,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              print("cart icon");
+                                            },
+                                            icon: Image.asset(
+                                              "assets/images/icon_cart.png",
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      );
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),

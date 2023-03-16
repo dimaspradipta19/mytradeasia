@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
+import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
+import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
@@ -11,6 +14,8 @@ import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../model/industry_model.dart';
 
@@ -26,7 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<TopProductsProvider>(context, listen: false).getTopProducts();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    const String url = "https://chemtradea.chemtradeasia.com/";
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -71,8 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       stream: _firestore
                                           .collection('biodata')
                                           .where('uid',
-                                              isEqualTo:
-                                               _auth.currentUser!.uid
+                                              isEqualTo: _auth.currentUser!.uid
                                                   .toString())
                                           .snapshots(),
                                       builder: (context,
@@ -427,6 +440,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: InkWell(
                             onTap: () {
+                              Provider.of<TopProductsProvider>(context,
+                                      listen: false)
+                                  .getTopProducts();
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
                                   return const TopProductsScreen();
@@ -450,146 +466,209 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.only(
                           bottom: size20px / 2, top: size20px),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 15,
-                                mainAxisSpacing: 15,
-                                childAspectRatio: 0.65),
-                        itemCount: 1,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return const ProductsDetailScreen();
-                                },
-                              ));
-                            },
-                            child: Card(
-                              shadowColor: blackColor,
-                              elevation: 3.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Hero(
-                                    tag: "dash",
-                                    child: Image.asset(
-                                      "assets/images/products.png",
-                                      width: MediaQuery.of(context).size.width,
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5.0, horizontal: 10.0),
-                                    child: Text(
-                                      "Dipentene",
-                                      style: text14,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("CAS Number :",
-                                                style: text10),
-                                            Text("138 - 86 - 3",
-                                                style: text10.copyWith(
-                                                    color: greyColor2)),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("HS Code :",
-                                                style: text10),
-                                            Text("-",
-                                                style: text10.copyWith(
-                                                    color: greyColor2)),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10.0,
-                                        right: 10.0,
-                                        top: 10.0,
-                                        bottom: 12.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: SizedBox(
-                                            height: 30,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor1),
-                                                    shape: MaterialStateProperty
-                                                        .all<
-                                                            RoundedRectangleBorder>(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7.0),
-                                                      ),
-                                                    ),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all<
-                                                                    EdgeInsets>(
-                                                                EdgeInsets
-                                                                    .zero)),
-                                                onPressed: () {},
-                                                child: Text(
-                                                  "Send Inquiry",
-                                                  style: text12.copyWith(
-                                                    color: whiteColor,
-                                                  ),
-                                                )),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 2),
-                                        Container(
-                                          height: 30,
-                                          width: 30,
-                                          decoration: const BoxDecoration(
-                                              color: secondaryColor1,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5))),
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            icon: Image.asset(
-                                              "assets/images/icon_cart.png",
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                      child: Consumer<TopProductsProvider>(builder:
+                          (context, TopProductsProvider valueTopProducts, _) {
+                        if (valueTopProducts.state == ResultState.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor1,
                             ),
                           );
-                        },
-                      ),
+                        } else if (valueTopProducts.state ==
+                            ResultState.hasData) {
+                          return GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.65),
+                            itemCount:
+                                valueTopProducts.state == ResultState.loading
+                                    ? 2
+                                    : 4,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return const ProductsDetailScreen();
+                                    },
+                                  ));
+                                },
+                                child: Card(
+                                  shadowColor: blackColor,
+                                  elevation: 3.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // wrap image asset with hero for animation
+                                      SizedBox(
+                                        height: size20px * 5.5,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Image.network(
+                                          "$url${valueTopProducts.listResultTop[index].productimage}",
+                                          fit: BoxFit.fill,
+                                          loadingBuilder: (context, child,
+                                              loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 116.0,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: primaryColor1,
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return const FlutterLogo(
+                                              size: size20px * 3,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0, horizontal: 10.0),
+                                        child: Text(
+                                          valueTopProducts
+                                              .listResultTop[index].productname,
+                                          style: text14,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text("CAS Number :",
+                                                    style: text10),
+                                                Text("138 - 86 - 3",
+                                                    style: text10.copyWith(
+                                                        color: greyColor2)),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text("HS Code :",
+                                                    style: text10),
+                                                Text("-",
+                                                    style: text10.copyWith(
+                                                        color: greyColor2)),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0,
+                                            right: 10.0,
+                                            top: 10.0,
+                                            bottom: 12.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: SizedBox(
+                                                height: 30,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: ElevatedButton(
+                                                    style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    primaryColor1),
+                                                        shape: MaterialStateProperty
+                                                            .all<
+                                                                RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        7.0),
+                                                          ),
+                                                        ),
+                                                        padding:
+                                                            MaterialStateProperty
+                                                                .all<EdgeInsets>(
+                                                                    EdgeInsets
+                                                                        .zero)),
+                                                    onPressed: () {},
+                                                    child: Text(
+                                                      "Send Inquiry",
+                                                      style: text12.copyWith(
+                                                        color: whiteColor,
+                                                      ),
+                                                    )),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 2),
+                                            Container(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: const BoxDecoration(
+                                                  color: secondaryColor1,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(5))),
+                                              child: IconButton(
+                                                onPressed: () {},
+                                                icon: Image.asset(
+                                                  "assets/images/icon_cart.png",
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(
+                            child: Text(
+                              "Error",
+                              style: heading1.copyWith(color: redColor1),
+                            ),
+                          );
+                        }
+                      }),
                     ),
                     // End of OUR TOP PRODUCT Section
 
@@ -612,6 +691,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
+                            Provider.of<AllIndustryProvider>(context,
+                                    listen: false)
+                                .getAllIndustry();
+                            // var test = Provider.of<AllIndustryProvider>(context,
+                            //     listen: false);
+                            // print(test.allIndustryList);
+                            // print(test.allIndustryList.length);
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return urlNavigator[index];

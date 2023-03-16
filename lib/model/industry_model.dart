@@ -76,6 +76,8 @@ List<List<dynamic>> allIndustries = [
     "assets/images/icon_surplus.png",
     "assets/images/icon_textile.png",
     "assets/images/icon_water.png",
+    "assets/images/icon_textile.png",
+    "assets/images/icon_water.png",
   ],
 ];
 
