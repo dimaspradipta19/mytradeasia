@@ -38,26 +38,6 @@ List urlNavigator = [
 
 List<List<dynamic>> allIndustries = [
   [
-    "Agriculture",
-    "Animal Feed",
-    "Beauty & Personal Care",
-    "Food & Beverage",
-    "Glass & Ceramic",
-    "Leather",
-    "Metal & Steel",
-    "Paint, Ink & Coating",
-    "Palm Derivative",
-    "Pharmacheutical",
-    "Pine Derivative",
-    "Plastic &  Polymer",
-    "Pulp & Paper",
-    "Rubber",
-    "Soap & Detergent",
-    "Surplus Chemicals",
-    "Textile",
-    "Water Treatment",
-  ],
-  [
     "assets/images/icon_agri.png",
     "assets/images/icon_animal.png",
     "assets/images/icon_beauty.png",

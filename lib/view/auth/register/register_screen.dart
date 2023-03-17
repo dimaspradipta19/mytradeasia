@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
+import 'package:provider/provider.dart';
 
+import '../../../modelview/provider/loading_provider.dart';
 import '../../../utils/theme.dart';
 import '../../menu/other/languages_screen.dart';
 
@@ -15,7 +18,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool isChecked = false;
-  bool isLoading = false;
+  // bool isLoading = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -32,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var valueLoading = Provider.of<LoadingProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -238,38 +242,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             onPressed: () async {
-                              setState(() {
-                                isLoading = true;
+                              valueLoading.isLoading;
+                              valueLoading.getStateLoading();
+
+                              Provider.of<AuthProvider>(context, listen: false)
+                                  .registerWithEmail(_emailController.text,
+                                      _phoneNumberController.text, context)
+                                  .then((value) {
+                                valueLoading.isLoading;
+                                valueLoading.getStateLoading();
                               });
 
-                              try {
-                                await _auth.createUserWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _phoneNumberController.text);
+                              // setState(() {
+                              //   isLoading = true;
+                              // });
 
-                                const snackbar = SnackBar(
-                                    content: Text("Berhasil Registrasi"));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackbar);
+                              // try {
+                              //   await _auth.createUserWithEmailAndPassword(
+                              //       email: _emailController.text,
+                              //       password: _phoneNumberController.text);
 
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const BiodataScreen();
-                                    },
-                                  ),
-                                );
-                              } catch (e) {
-                                final snackbar =
-                                    SnackBar(content: Text(e.toString()));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackbar);
-                              } finally {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
+                              //   const snackbar = SnackBar(
+                              //       content: Text("Berhasil Registrasi"));
+                              //   ScaffoldMessenger.of(context)
+                              //       .showSnackBar(snackbar);
+
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) {
+                              //         return const BiodataScreen();
+                              //       },
+                              //     ),
+                              //   );
+                              // } catch (e) {
+                              //   final snackbar =
+                              //       SnackBar(content: Text(e.toString()));
+                              //   ScaffoldMessenger.of(context)
+                              //       .showSnackBar(snackbar);
+                              // } finally {
+                              //   setState(() {
+                              //     isLoading = false;
+                              //   });
+                              // }
                             },
                             child: Text(
                               "Sign Up",
@@ -407,7 +422,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              if (isLoading)
+              if (valueLoading.isLoading == true)
                 const Center(
                   child: CircularProgressIndicator(),
                 )

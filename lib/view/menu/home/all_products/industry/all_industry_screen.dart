@@ -63,8 +63,7 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                             mainAxisSpacing: 10,
                             childAspectRatio: 0.8),
                     itemBuilder: (context, index) {
-                      // var item = allIndustries[0][index];
-                      var photoItem = allIndustries[1][index];
+                      var photoItem = allIndustries[0][index];
                       return InkWell(
                         onTap: () {
                           showModalBottomSheet<dynamic>(
@@ -187,7 +186,11 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5.0))),
                                 ),
-                                Image.asset(photoItem, width: size24px, height: size24px,)
+                                Image.asset(
+                                  photoItem,
+                                  width: size24px,
+                                  height: size24px,
+                                )
                               ],
                             ),
                             const SizedBox(

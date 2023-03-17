@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
+import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
@@ -59,9 +60,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => AllIndustryProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => TopProductsProvider(),
-        // ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
         // ChangeNotifierProvider(
         //   create: (context) => TopProductsProvider(),
         // ),

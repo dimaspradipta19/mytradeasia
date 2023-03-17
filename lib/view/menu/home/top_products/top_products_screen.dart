@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../utils/theme.dart';
 
@@ -19,16 +20,15 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
     const String url = "https://chemtradea.chemtradeasia.com/";
 
     return Scaffold(
-      backgroundColor: whiteColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: size20px),
             child: Column(
               children: [
-                const SizedBox(
-                  height: size20px - 12.0,
-                ),
+                const SizedBox(height: size20px - 12.0),
+
+                // SearchBar
                 SizedBox(
                   height: size20px + 30,
                   width: MediaQuery.of(context).size.width,
@@ -131,200 +131,338 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
                 ),
 
                 // main content
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Consumer<TopProductsProvider>(
-                    builder:
-                        (context, TopProductsProvider valueTopProducts, child) {
-                      if (valueTopProducts.state == ResultState.loading) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: primaryColor1,
-                          ),
-                        );
-                      } else {
-                        return GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 15,
-                                  childAspectRatio: 0.65),
-                          itemCount:
-                              valueTopProducts.state == ResultState.loading
-                                  ? 2
-                                  : valueTopProducts.listResultTop.length,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Card(
-                              shadowColor: blackColor,
-                              elevation: 3.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: size20px * 5.5,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Image.network(
-                                      "$url${valueTopProducts.listResultTop[index].productimage}",
-                                      fit: BoxFit.cover,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        } else {
-                                          return SizedBox(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 116.0,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                color: primaryColor1,
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const FlutterLogo(
-                                          size: size20px * 3,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5.0, horizontal: 10.0),
-                                    child: Text(
-                                      valueTopProducts
-                                          .listResultTop[index].productname,
-                                      style: text14,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("CAS Number :",
-                                                style: text10),
-                                            Text("138 - 86 - 3",
-                                                style: text10.copyWith(
-                                                    color: greyColor2)),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("HS Code :",
-                                                style: text10),
-                                            Text("-",
-                                                style: text10.copyWith(
-                                                    color: greyColor2)),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10.0,
-                                        right: 10.0,
-                                        top: 10.0,
-                                        bottom: 12.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: SizedBox(
-                                            height: 30,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all<Color>(
-                                                                primaryColor1),
-                                                    shape: MaterialStateProperty
-                                                        .all<
-                                                            RoundedRectangleBorder>(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7.0),
-                                                      ),
-                                                    ),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all<
-                                                                    EdgeInsets>(
-                                                                EdgeInsets
-                                                                    .zero)),
-                                                onPressed: () {
-                                                  print("send inquiry");
-                                                },
-                                                child: Text(
-                                                  "Send Inquiry",
-                                                  style: text12.copyWith(
-                                                    color: whiteColor,
-                                                  ),
-                                                )),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 2),
-                                        Container(
-                                          height: 30,
-                                          width: 30,
-                                          decoration: const BoxDecoration(
-                                              color: secondaryColor1,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5))),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              print("cart icon");
-                                            },
-                                            icon: Image.asset(
-                                              "assets/images/icon_cart.png",
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                ),
+                const AllTopProductsWidget(url: url),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AllTopProductsWidget extends StatelessWidget {
+  const AllTopProductsWidget({
+    Key? key,
+    required this.url,
+  }) : super(key: key);
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Consumer<TopProductsProvider>(
+        builder: (context, TopProductsProvider valueTopProducts, child) {
+          if (valueTopProducts.state == ResultState.loading) {
+            return Shimmer.fromColors(
+                baseColor: greyColor3,
+                highlightColor: greyColor,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15,
+                      childAspectRatio: 0.72),
+                  itemCount: valueTopProducts.state == ResultState.loading
+                      ? 4
+                      : valueTopProducts.listResultTop.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Card(
+                      shadowColor: blackColor,
+                      elevation: 3.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: size20px * 5.5,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(
+                              "$url${valueTopProducts.listResultTop[index].productimage}",
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 116.0,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: primaryColor1,
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return const FlutterLogo(
+                                  size: size20px * 3,
+                                );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5.0, horizontal: 10.0),
+                            child: Text(
+                              valueTopProducts.listResultTop[index].productname,
+                              style: text14,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text("CAS Number :", style: text10),
+                                    Text("138 - 86 - 3",
+                                        style:
+                                            text10.copyWith(color: greyColor2)),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text("HS Code :", style: text10),
+                                    Text("-",
+                                        style:
+                                            text10.copyWith(color: greyColor2)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0,
+                                right: 10.0,
+                                top: 10.0,
+                                bottom: 12.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 30,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(primaryColor1),
+                                            shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7.0),
+                                              ),
+                                            ),
+                                            padding: MaterialStateProperty.all<
+                                                EdgeInsets>(EdgeInsets.zero)),
+                                        onPressed: () {
+                                          print("send inquiry");
+                                        },
+                                        child: Text(
+                                          "Send Inquiry",
+                                          style: text12.copyWith(
+                                            color: whiteColor,
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                                const SizedBox(width: 2),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: const BoxDecoration(
+                                      color: secondaryColor1,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      print("cart icon");
+                                    },
+                                    icon: Image.asset(
+                                      "assets/images/icon_cart.png",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ));
+          } else {
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: 0.72),
+              itemCount: valueTopProducts.state == ResultState.loading
+                  ? 2
+                  : valueTopProducts.listResultTop.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Card(
+                  shadowColor: blackColor,
+                  elevation: 3.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: size20px * 5.5,
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.network(
+                          "$url${valueTopProducts.listResultTop[index].productimage}",
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: 116.0,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: primaryColor1,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return const FlutterLogo(
+                              size: size20px * 3,
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 10.0),
+                        child: Text(
+                          valueTopProducts.listResultTop[index].productname,
+                          style: text14,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("CAS Number :", style: text10),
+                                Text("138 - 86 - 3",
+                                    style: text10.copyWith(color: greyColor2)),
+                              ],
+                            ),
+                            const Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("HS Code :", style: text10),
+                                Text("-",
+                                    style: text10.copyWith(color: greyColor2)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10.0, right: 10.0, top: 10.0, bottom: 12.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: SizedBox(
+                                height: 30,
+                                width: MediaQuery.of(context).size.width,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                primaryColor1),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.0),
+                                          ),
+                                        ),
+                                        padding: MaterialStateProperty.all<
+                                            EdgeInsets>(EdgeInsets.zero)),
+                                    onPressed: () {
+                                      print("send inquiry");
+                                    },
+                                    child: Text(
+                                      "Send Inquiry",
+                                      style: text12.copyWith(
+                                        color: whiteColor,
+                                      ),
+                                    )),
+                              ),
+                            ),
+                            const SizedBox(width: 2),
+                            Container(
+                              height: 30,
+                              width: 30,
+                              decoration: const BoxDecoration(
+                                  color: secondaryColor1,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: IconButton(
+                                onPressed: () {
+                                  print("cart icon");
+                                },
+                                icon: Image.asset(
+                                  "assets/images/icon_cart.png",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

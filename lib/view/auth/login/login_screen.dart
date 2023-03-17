@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
@@ -30,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -164,45 +165,55 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 55.0,
                     child: _emailController.text.isNotEmpty &&
                             _phoneNumberController.text.isNotEmpty
-                        ? ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  primaryColor1),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7.0),
+                        ? Consumer<AuthProvider>(
+                            builder: (context, value, child) => ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        primaryColor1),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                  ),
                                 ),
                               ),
-                            ),
-                            onPressed: () async {
-                              valueLoading.isLoading;
-                              valueLoading.getStateLoading();
-
-                              try {
-                                await _auth.signInWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _phoneNumberController.text);
-
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return const NavigationBarWidget();
-                                  },
-                                ), (route) => false);
-                              } catch (e) {
-                                final snackbar =
-                                    SnackBar(content: Text(e.toString()));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackbar);
-                              } finally {
-                                valueLoading.getStateLoading();
+                              onPressed: () async {
                                 valueLoading.isLoading;
-                              }
-                            },
-                            child: Text(
-                              "Sign In",
-                              style: text16.copyWith(color: whiteColor),
+                                valueLoading.getStateLoading();
+                                Provider.of<AuthProvider>(context,
+                                        listen: false)
+                                    .loginWithEmail(_emailController.text,
+                                        _phoneNumberController.text, context)
+                                    .then((value) {
+                                  valueLoading.isLoading;
+                                  valueLoading.getStateLoading();
+                                });
+
+                                // try {
+                                //   await _auth.signInWithEmailAndPassword(
+                                //       email: _emailController.text,
+                                //       password: _phoneNumberController.text);
+                                //   Navigator.pushAndRemoveUntil(context,
+                                //       MaterialPageRoute(
+                                //     builder: (context) {
+                                //       return const NavigationBarWidget();
+                                //     },
+                                //   ), (route) => false);
+                                // } catch (e) {
+                                //   final snackbar =
+                                //       SnackBar(content: Text(e.toString()));
+                                //   ScaffoldMessenger.of(context)
+                                //       .showSnackBar(snackbar);
+                                // } finally {
+                                //   valueLoading.getStateLoading();
+                                //   valueLoading.isLoading;
+                                // }
+                              },
+                              child: Text(
+                                "Sign In",
+                                style: text16.copyWith(color: whiteColor),
+                              ),
                             ),
                           )
                         : ElevatedButton(
