@@ -245,10 +245,12 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
               // GRID DATA
               Expanded(
                 child: Consumer<ListProductProvider>(
-                  builder: (context, ListProductProvider value, _) {
+                  builder: (context, ListProductProvider valueAllProduct, _) {
                     return Consumer<SearchProductProvider>(
-                      builder: (context, valueSearch, child) =>
+                      builder: (context, SearchProductProvider valueSearch,
+                              child) =>
                           _searchProductController.text.isEmpty
+                              // All Products Provider
                               ? GridView.builder(
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
@@ -256,14 +258,16 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                           crossAxisSpacing: 15,
                                           mainAxisSpacing: 15,
                                           childAspectRatio: 0.6),
-                                  itemCount: value.state == ResultState.loading
+                                  itemCount: valueAllProduct.state ==
+                                          ResultState.loading
                                       ? 6
-                                      : value.listProduct.length,
+                                      : valueAllProduct.listAllProduct.length,
                                   shrinkWrap: true,
                                   physics: const BouncingScrollPhysics(),
                                   padding: EdgeInsets.zero,
                                   itemBuilder: (context, index) {
-                                    if (value.state == ResultState.loading) {
+                                    if (valueAllProduct.state ==
+                                        ResultState.loading) {
                                       return Shimmer.fromColors(
                                           baseColor: greyColor3,
                                           highlightColor: greyColor,
@@ -283,7 +287,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                     .width,
                                                 height: size20px * 5.5,
                                                 child: Image.network(
-                                                  "$url${value.listProduct[index].productimage}",
+                                                  "$url${valueAllProduct.listAllProduct[index].productimage}",
                                                   fit: BoxFit.fill,
                                                   loadingBuilder: (context,
                                                       child, loadingProgress) {
@@ -337,7 +341,8 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                         vertical: 5.0,
                                                         horizontal: 10.0),
                                                 child: Text(
-                                                  value.listProduct[index]
+                                                  valueAllProduct
+                                                      .listAllProduct[index]
                                                       .productname,
                                                   style: text14,
                                                   overflow:
@@ -359,7 +364,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                     children: [
                                                       const Text("CAS Number :",
                                                           style: text10),
-                                                      Text("138 - 86 - 3",
+                                                      Text(valueAllProduct.listAllProduct[index].casNumber,
                                                           style: text10.copyWith(
                                                               color:
                                                                   greyColor2)),
@@ -373,7 +378,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                     children: [
                                                       const Text("HS Code :",
                                                           style: text10),
-                                                      Text("-",
+                                                      Text(valueAllProduct.listAllProduct[index].hsCode,
                                                           style: text10.copyWith(
                                                               color:
                                                                   greyColor2)),

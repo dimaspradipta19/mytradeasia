@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Appbar
             Container(
               width: MediaQuery.of(context).size.width,
-              height: size20px * 10,
+              height: size20px * 9,
               decoration: const BoxDecoration(
                 color: primaryColor1,
               ),
@@ -57,14 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   SizedBox(
                       width: double.infinity,
-                      child: Image.asset(
-                        "assets/images/background.png",
-                        fit: BoxFit.cover,
-                      )),
+                      child: Image.asset("assets/images/background.png",
+                          fit: BoxFit.cover)),
                   Column(
                     children: [
                       const SizedBox(
-                        height: size24px * 3,
+                        height: size20px * 2.5,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -229,8 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Grid for Menu
-                  const MenuHomeScreen(),
+                  const MenuGridWidget(),
 
                   // OUR TOP PRODUCT Section
                   Row(
@@ -267,9 +264,223 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-
                   // GRID TOP PRODUCT
-                  const TopProductWidget(url: url),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: size20px / 2, top: size20px),
+                    child: Consumer<TopProductsProvider>(builder:
+                        (context, TopProductsProvider valueTopProducts, _) {
+                      if (valueTopProducts.state == ResultState.loading) {
+                        return Shimmer.fromColors(
+                          baseColor: greyColor3,
+                          highlightColor: greyColor,
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.67),
+                            itemCount: 4,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => const Card(),
+                          ),
+                        );
+                      } else if (valueTopProducts.state ==
+                          ResultState.hasData) {
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio: 0.67),
+                          itemCount: 4,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const ProductsDetailScreen();
+                                  },
+                                ));
+                              },
+                              child: Card(
+                                shadowColor: blackColor,
+                                elevation: 3.0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // wrap image asset with hero for animation
+                                    SizedBox(
+                                      height: size20px * 5.5,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Image.network(
+                                        "$url${valueTopProducts.listResultTop[index].productimage}",
+                                        fit: BoxFit.fill,
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          } else {
+                                            return SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 116.0,
+                                              child: Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: primaryColor1,
+                                                  value: loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return const FlutterLogo(
+                                            size: size20px * 3,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0, horizontal: 10.0),
+                                        child: Text(
+                                          valueTopProducts
+                                              .listResultTop[index].productname,
+                                          style: text14,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text("CAS Number :",
+                                                  style: text10),
+                                              Text(valueTopProducts.listResultTop[index].casNumber,
+                                                  style: text10.copyWith(
+                                                      color: greyColor2)),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text("HS Code :",
+                                                  style: text10),
+                                              Text(valueTopProducts.listResultTop[index].hsCode,
+                                                  style: text10.copyWith(
+                                                      color: greyColor2)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10.0,
+                                          right: 10.0,
+                                          top: 10.0,
+                                          bottom: 12.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: SizedBox(
+                                              height: 30,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all<
+                                                                      Color>(
+                                                                  primaryColor1),
+                                                      shape: MaterialStateProperty
+                                                          .all<
+                                                              RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      7.0),
+                                                        ),
+                                                      ),
+                                                      padding:
+                                                          MaterialStateProperty
+                                                              .all<EdgeInsets>(
+                                                                  EdgeInsets
+                                                                      .zero)),
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    "Send Inquiry",
+                                                    style: text12.copyWith(
+                                                      color: whiteColor,
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 2),
+                                          Container(
+                                            height: 30,
+                                            width: 30,
+                                            decoration: const BoxDecoration(
+                                                color: secondaryColor1,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5))),
+                                            child: IconButton(
+                                              onPressed: () {},
+                                              icon: Image.asset(
+                                                "assets/images/icon_cart.png",
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: Text(
+                            "Error",
+                            style: heading1.copyWith(color: redColor1),
+                          ),
+                        );
+                      }
+                    }),
+                  ),
                   // End of OUR TOP PRODUCT Section
 
                   // INDUSTRY Section
@@ -345,9 +556,76 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: Text("Last Seen Products", style: text18),
                   ),
-                  
                   // Grid Last Seen Section
-                  const LastSeenWidget(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: size20px),
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 15,
+                              childAspectRatio: 0.8),
+                      itemCount: 6,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Card(
+                          shadowColor: blackColor,
+                          elevation: 3.0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                  child: Image.asset(
+                                "assets/images/products.png",
+                                width: MediaQuery.of(context).size.width,
+                              )),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 10.0),
+                                child: Text(
+                                  "Dipentene",
+                                  style: text14,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("CAS Number :",
+                                            style: text10),
+                                        Text("138 - 86 - 3",
+                                            style: text10.copyWith(
+                                                color: greyColor2)),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("HS Code :", style: text10),
+                                        Text("-",
+                                            style: text10.copyWith(
+                                                color: greyColor2)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   // End of Last Seen Section
 
                   // Button See More
@@ -376,7 +654,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  // End for Button See More
                 ],
               ),
             )
@@ -387,8 +664,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class MenuHomeScreen extends StatelessWidget {
-  const MenuHomeScreen({
+class MenuGridWidget extends StatelessWidget {
+  const MenuGridWidget({
     Key? key,
   }) : super(key: key);
 
@@ -579,401 +856,6 @@ class MenuHomeScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class LastSeenWidget extends StatelessWidget {
-  const LastSeenWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: size20px),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15,
-            childAspectRatio: 0.8),
-        itemCount: 6,
-        shrinkWrap: true,
-        padding: EdgeInsets.zero,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Card(
-            shadowColor: blackColor,
-            elevation: 3.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                    child: Image.asset(
-                  "assets/images/products.png",
-                  width: MediaQuery.of(context).size.width,
-                )),
-                const Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                  child: Text(
-                    "Dipentene",
-                    style: text14,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("CAS Number :", style: text10),
-                          Text("138 - 86 - 3",
-                              style: text10.copyWith(color: greyColor2)),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("HS Code :", style: text10),
-                          Text("-", style: text10.copyWith(color: greyColor2)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class TopProductWidget extends StatelessWidget {
-  const TopProductWidget({
-    Key? key,
-    required this.url,
-  }) : super(key: key);
-
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: size20px / 2, top: size20px),
-      child: Consumer<TopProductsProvider>(
-          builder: (context, TopProductsProvider valueTopProducts, _) {
-        if (valueTopProducts.state == ResultState.loading) {
-          return Shimmer.fromColors(
-            baseColor: greyColor3,
-            highlightColor: greyColor,
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 0.72),
-              itemCount: 4,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Card(
-                  shadowColor: blackColor,
-                  elevation: 3.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // wrap image asset with hero for animation
-                      SizedBox(
-                        height: size20px * 5.5,
-                        width: MediaQuery.of(context).size.width,
-                        child: Image.network(
-                          "$url${valueTopProducts.listResultTop[index].productimage}",
-                          fit: BoxFit.fill,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: 116.0,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: primaryColor1,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            return const FlutterLogo(
-                              size: size20px * 3,
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        child: Text(
-                          valueTopProducts.listResultTop[index].productname,
-                          style: text14,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("CAS Number :", style: text10),
-                                Text("138 - 86 - 3",
-                                    style: text10.copyWith(color: greyColor2)),
-                              ],
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("HS Code :", style: text10),
-                                Text("-",
-                                    style: text10.copyWith(color: greyColor2)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 10.0, bottom: 12.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                primaryColor1),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(7.0),
-                                          ),
-                                        ),
-                                        padding: MaterialStateProperty.all<
-                                            EdgeInsets>(EdgeInsets.zero)),
-                                    onPressed: () {},
-                                    child: Text(
-                                      "Send Inquiry",
-                                      style: text12.copyWith(
-                                        color: whiteColor,
-                                      ),
-                                    )),
-                              ),
-                            ),
-                            const SizedBox(width: 2),
-                            Container(
-                              height: 30,
-                              width: 30,
-                              decoration: const BoxDecoration(
-                                  color: secondaryColor1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Image.asset(
-                                  "assets/images/icon_cart.png",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        } else if (valueTopProducts.state == ResultState.hasData) {
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                childAspectRatio: 0.72),
-            itemCount: valueTopProducts.state == ResultState.loading ? 2 : 4,
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const ProductsDetailScreen();
-                    },
-                  ));
-                },
-                child: Card(
-                  shadowColor: blackColor,
-                  elevation: 3.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // wrap image asset with hero for animation
-                      SizedBox(
-                        height: size20px * 5.5,
-                        width: MediaQuery.of(context).size.width,
-                        child: Image.network(
-                          "$url${valueTopProducts.listResultTop[index].productimage}",
-                          fit: BoxFit.fill,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: 116.0,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: primaryColor1,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            return const FlutterLogo(
-                              size: size20px * 3,
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        child: Text(
-                          valueTopProducts.listResultTop[index].productname,
-                          style: text14,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("CAS Number :", style: text10),
-                                Text("138 - 86 - 3",
-                                    style: text10.copyWith(color: greyColor2)),
-                              ],
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("HS Code :", style: text10),
-                                Text("-",
-                                    style: text10.copyWith(color: greyColor2)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 10.0, bottom: 12.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                primaryColor1),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(7.0),
-                                          ),
-                                        ),
-                                        padding: MaterialStateProperty.all<
-                                            EdgeInsets>(EdgeInsets.zero)),
-                                    onPressed: () {},
-                                    child: Text(
-                                      "Send Inquiry",
-                                      style: text12.copyWith(
-                                        color: whiteColor,
-                                      ),
-                                    )),
-                              ),
-                            ),
-                            const SizedBox(width: 2),
-                            Container(
-                              height: 30,
-                              width: 30,
-                              decoration: const BoxDecoration(
-                                  color: secondaryColor1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Image.asset(
-                                  "assets/images/icon_cart.png",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        } else {
-          return Center(
-            child: Text(
-              "Error",
-              style: heading1.copyWith(color: redColor1),
-            ),
-          );
-        }
-      }),
     );
   }
 }

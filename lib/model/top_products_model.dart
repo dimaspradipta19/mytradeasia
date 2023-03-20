@@ -1,31 +1,36 @@
 class TopProductsModel {
-    TopProductsModel({
-        required this.productimage,
-        required this.productname,
-        required this.productId,
-        required this.seoUrl,
-        required this.priority,
-    });
+  TopProductsModel({
+    required this.productimage,
+    required this.productname,
+    required this.casNumber,
+    required this.hsCode,
+    required this.seoUrl,
+    required this.priority,
+  });
 
-    String productimage;
-    String productname;
-    int productId;
-    String seoUrl;
-    int priority;
+  String productimage;
+  String productname;
+  String casNumber;
+  String hsCode;
+  String seoUrl;
+  int priority;
 
-    factory TopProductsModel.fromJson(Map<String, dynamic> json) => TopProductsModel(
+  factory TopProductsModel.fromJson(Map<String, dynamic> json) =>
+      TopProductsModel(
         productimage: json["productimage"],
         productname: json["productname"],
-        productId: json["product_id"],
+        casNumber: json["cas_number"],
+        hsCode: json["hs_code"],
         seoUrl: json["seo_url"],
         priority: json["priority"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "productimage": productimage,
         "productname": productname,
-        "product_id": productId,
+        "cas_number": casNumber,
+        "hs_code": hsCode,
         "seo_url": seoUrl,
         "priority": priority,
-    };
+      };
 }

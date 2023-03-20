@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
+import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
+import 'package:mytradeasia/modelview/provider/faq_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
@@ -12,7 +14,6 @@ import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/other/splash_page.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,9 +64,12 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => TopProductsProvider(),
-        // ),
+        ChangeNotifierProvider(
+          create: (context) => FaqProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DetailProductProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

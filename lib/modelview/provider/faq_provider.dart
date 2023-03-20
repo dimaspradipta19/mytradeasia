@@ -1,29 +1,27 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mytradeasia/model/all_industry_model.dart';
-import 'package:mytradeasia/modelview/service/all_industry_service.dart';
+import 'package:mytradeasia/model/faq_model.dart';
+import 'package:mytradeasia/modelview/service/faq_service.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 
-class AllIndustryProvider with ChangeNotifier {
+class FaqProvider with ChangeNotifier {
   ResultState state = ResultState.noData;
-  AllIndustryService service = AllIndustryService();
-  AllIndustryModel? allIndustryList;
+  FaqService service = FaqService();
+  List<FaqModel> faqResult = [];
 
-  Future<dynamic> getAllIndustry() async {
+  Future<dynamic> getFaqResult() async {
     try {
       state = ResultState.loading;
       notifyListeners();
-      allIndustryList = await service.getAllIndustryList();
-
-      if (allIndustryList != null) {
+      faqResult = await service.getFaq();
+      if (faqResult != []) {
         state = ResultState.hasData;
         notifyListeners();
       } else {
         state = ResultState.noData;
         notifyListeners();
       }
-      notifyListeners();
     } on SocketException {
       throw Exception("Gagal menyambung server");
     } catch (e) {

@@ -117,7 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Center(
-                                child: Container(
+                                child: SizedBox(
                                   height: size20px * 5.5,
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.network(

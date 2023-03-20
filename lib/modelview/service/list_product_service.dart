@@ -1,18 +1,18 @@
 import 'dart:convert';
-import 'package:mytradeasia/model/list_product_model.dart';
+import 'package:mytradeasia/model/all_product_model.dart';
 import 'package:http/http.dart' as http;
 
 class ListProductService {
   // 0. buat sebuah penampung dengan nama resultAwal dengan nilai list kosong []
-  List<ListProductModel> resultAwal = [];
+  List<AllProductModel> resultAwal = [];
 
   // 1. Buat function get dengan return Future<List<model yang direturn>>
-  Future<List<ListProductModel>> getListProduct() async {
+  Future<List<AllProductModel>> getListProduct() async {
     // 2. buat variabel untuk url
-    String url = "https://www.chemtradeasia.com/en";
+    String url = "http://tradeasia.sg/en";
 
     // 3. Buat variabel untuk end_pointnya
-    String endPoint = "/product-list";
+    String endPoint = "/list-product";
 
     // 4. Gunakan try catch
     try {
@@ -27,7 +27,7 @@ class ListProductService {
 
         // 8. lalu return List tadi kemudian ubah dari map ke list
         return decodedJson
-            .map((data) => ListProductModel.fromJson(data))
+            .map((data) => AllProductModel.fromJson(data))
             .toList();
       } else {
         throw Exception('Unexpected error occured!');

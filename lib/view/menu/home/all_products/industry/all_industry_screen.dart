@@ -16,8 +16,6 @@ class AllIndustryScreen extends StatefulWidget {
 class _AllIndustryScreenState extends State<AllIndustryScreen> {
   @override
   Widget build(BuildContext context) {
-    const String url = "https://chemtradea.chemtradeasia.com/";
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -55,7 +53,8 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
-                    itemCount: valueAllIndustry.allIndustryList.length,
+                    itemCount:
+                        valueAllIndustry.allIndustryList!.detailIndustry.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 4,
@@ -89,7 +88,7 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                         ),
                                         const Padding(
                                           padding: EdgeInsets.symmetric(
-                                              vertical: 20.0),
+                                              vertical: size20px),
                                           child: Center(
                                             child: Text(
                                               "Categories",
@@ -97,71 +96,51 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 50.0,
-                                          decoration: const BoxDecoration(
-                                              color: thirdColor1),
-                                          child: const Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 20.0, top: 16.0),
-                                            child: Text(
-                                              "Gum Rosin",
-                                              style: body1Medium,
-                                            ),
-                                          ),
-                                        ),
                                         SizedBox(
+                                          height:
+                                              MediaQuery.of(context).size.width,
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          height: 50.0,
-                                          child: const Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 20.0, top: 16.0),
-                                            child: Text(
-                                              "Gum Rosin Derivative",
-                                              style: body1Medium,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 50.0,
-                                          child: const Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 20.0, top: 16.0),
-                                            child: Text(
-                                              "Gum Turpentine Derivative",
-                                              style: body1Medium,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 50.0,
-                                          child: const Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 20.0, top: 16.0),
-                                            child: Text(
-                                              "Gum Turpentine Oil",
-                                              style: body1Medium,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 50.0,
-                                          child: const Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 20.0, top: 16.0),
-                                            child: Text(
-                                              "Gum Rosin",
-                                              style: body1Medium,
-                                            ),
+                                          child: ListView.builder(
+                                            itemCount: valueAllIndustry
+                                                .allIndustryList!
+                                                .detailIndustry[index]
+                                                .category
+                                                .length,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder:
+                                                (context, indexCategory) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: size24px / 4),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: size20px * 2.5,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: thirdColor1),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20.0,
+                                                            top: 16.0),
+                                                    child: Text(
+                                                      valueAllIndustry
+                                                          .allIndustryList!
+                                                          .detailIndustry[index]
+                                                          .category[
+                                                              indexCategory]
+                                                          .categoryName,
+                                                      style: body1Medium,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ),
                                       ],
@@ -198,8 +177,8 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                             ),
                             Expanded(
                               child: Text(
-                                valueAllIndustry
-                                    .allIndustryList[index].prodindName,
+                                valueAllIndustry.allIndustryList!
+                                    .detailIndustry[index].industryName,
                                 style: text10.copyWith(color: fontColor1),
                                 textAlign: TextAlign.center,
                               ),

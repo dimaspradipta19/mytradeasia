@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
-import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {

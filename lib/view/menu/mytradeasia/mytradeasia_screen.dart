@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/modelview/provider/faq_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
@@ -12,7 +13,7 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
@@ -217,8 +218,24 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                         return const FaqScreen();
                       },
                     ),
-                  );
+                  ).then((value) =>
+                      Provider.of<FaqProvider>(context, listen: false)
+                          .getFaqResult());
                 },
+                // onPressedFunction: () {
+                //   Provider.of<FaqProvider>(context, listen: false)
+                //       .getFaqResult()
+                //       .then(
+                //         (value) => Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //             builder: (context) {
+                //               return const FaqScreen();
+                //             },
+                //           ),
+                //         ),
+                //       );
+                // },
               ),
 
               // Version menu

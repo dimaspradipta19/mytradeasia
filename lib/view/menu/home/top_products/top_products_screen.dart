@@ -157,173 +157,29 @@ class AllTopProductsWidget extends StatelessWidget {
         builder: (context, TopProductsProvider valueTopProducts, child) {
           if (valueTopProducts.state == ResultState.loading) {
             return Shimmer.fromColors(
-                baseColor: greyColor3,
-                highlightColor: greyColor,
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 15,
-                      childAspectRatio: 0.72),
-                  itemCount: valueTopProducts.state == ResultState.loading
-                      ? 4
-                      : valueTopProducts.listResultTop.length,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Card(
-                      shadowColor: blackColor,
-                      elevation: 3.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: size20px * 5.5,
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.network(
-                              "$url${valueTopProducts.listResultTop[index].productimage}",
-                              fit: BoxFit.cover,
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                } else {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 116.0,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: primaryColor1,
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return const FlutterLogo(
-                                  size: size20px * 3,
-                                );
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5.0, horizontal: 10.0),
-                            child: Text(
-                              valueTopProducts.listResultTop[index].productname,
-                              style: text14,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("CAS Number :", style: text10),
-                                    Text("138 - 86 - 3",
-                                        style:
-                                            text10.copyWith(color: greyColor2)),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("HS Code :", style: text10),
-                                    Text("-",
-                                        style:
-                                            text10.copyWith(color: greyColor2)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10.0,
-                                right: 10.0,
-                                top: 10.0,
-                                bottom: 12.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 30,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(primaryColor1),
-                                            shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(7.0),
-                                              ),
-                                            ),
-                                            padding: MaterialStateProperty.all<
-                                                EdgeInsets>(EdgeInsets.zero)),
-                                        onPressed: () {
-                                          print("send inquiry");
-                                        },
-                                        child: Text(
-                                          "Send Inquiry",
-                                          style: text12.copyWith(
-                                            color: whiteColor,
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                                const SizedBox(width: 2),
-                                Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: const BoxDecoration(
-                                      color: secondaryColor1,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      print("cart icon");
-                                    },
-                                    icon: Image.asset(
-                                      "assets/images/icon_cart.png",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ));
+              baseColor: greyColor3,
+              highlightColor: greyColor,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 0.67),
+                itemCount: 4,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => const Card(),
+              ),
+            );
           } else {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                  childAspectRatio: 0.72),
-              itemCount: valueTopProducts.state == ResultState.loading
-                  ? 2
-                  : valueTopProducts.listResultTop.length,
+                  childAspectRatio: 0.67),
+              itemCount: valueTopProducts.listResultTop.length,
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
@@ -368,14 +224,16 @@ class AllTopProductsWidget extends StatelessWidget {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        child: Text(
-                          valueTopProducts.listResultTop[index].productname,
-                          style: text14,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 10.0),
+                          child: Text(
+                            valueTopProducts.listResultTop[index].productname,
+                            style: text14,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                       Padding(
@@ -386,7 +244,7 @@ class AllTopProductsWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text("CAS Number :", style: text10),
-                                Text("138 - 86 - 3",
+                                Text(valueTopProducts.listResultTop[index].casNumber,
                                     style: text10.copyWith(color: greyColor2)),
                               ],
                             ),
@@ -395,7 +253,7 @@ class AllTopProductsWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text("HS Code :", style: text10),
-                                Text("-",
+                                Text(valueTopProducts.listResultTop[index].hsCode,
                                     style: text10.copyWith(color: greyColor2)),
                               ],
                             ),
