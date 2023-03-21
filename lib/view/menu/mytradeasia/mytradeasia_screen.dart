@@ -218,24 +218,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                         return const FaqScreen();
                       },
                     ),
-                  ).then((value) =>
-                      Provider.of<FaqProvider>(context, listen: false)
-                          .getFaqResult());
+                  );
                 },
-                // onPressedFunction: () {
-                //   Provider.of<FaqProvider>(context, listen: false)
-                //       .getFaqResult()
-                //       .then(
-                //         (value) => Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //             builder: (context) {
-                //               return const FaqScreen();
-                //             },
-                //           ),
-                //         ),
-                //       );
-                // },
               ),
 
               // Version menu

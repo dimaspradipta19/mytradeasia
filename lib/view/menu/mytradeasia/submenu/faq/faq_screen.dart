@@ -7,33 +7,24 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../utils/theme.dart';
 
-class FaqScreen extends StatelessWidget {
+class FaqScreen extends StatefulWidget {
   const FaqScreen({super.key});
 
   @override
+  State<FaqScreen> createState() => _FaqScreenState();
+}
+
+class _FaqScreenState extends State<FaqScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<FaqProvider>(context, listen: false).getFaqResult();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List<List<String>> basicInformation = [
-      [
-        "BL No.",
-        "POR",
-        "FND",
-        "ETA",
-        "Vessel",
-        "POL",
-        "POD",
-        "COntainer Qty",
-      ],
-      [
-        "6890524180",
-        "Jakarta, Indonesia",
-        "Piraeus, Greece",
-        "2023-02-01 23:00",
-        "CTP MAKASSAR",
-        "Jakarta-JICT.1 (UTC-1)",
-        "Piraeus-Piraeus Container",
-        "20GP*1",
-      ],
-    ];
     return Scaffold(
       backgroundColor: greyColor4,
       appBar: AppBar(
@@ -59,22 +50,22 @@ class FaqScreen extends StatelessWidget {
       body: Consumer<FaqProvider>(
         builder: (context, FaqProvider valueFaq, child) {
           if (valueFaq.state == ResultState.loading) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(
-                backgroundColor: primaryColor1,
-              ),
-            );
-            // return Shimmer.fromColors(
-            //     baseColor: greyColor3,
-            //     highlightColor: greyColor,
-            //     child: ListView.builder(
-            //       shrinkWrap: true,
-            //       itemCount: valueFaq.faqResult.length,
-            //       physics: const BouncingScrollPhysics(),
-            //       itemBuilder: (context, index) {
-            //         return Column();
-            //       },
-            //     ));
+            return Shimmer.fromColors(
+                baseColor: greyColor3,
+                highlightColor: greyColor,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => Column(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: size20px / 2),
+                        child: GFAccordion(),
+                      ),
+                    ],
+                  ),
+                ));
           } else if (valueFaq.state == ResultState.hasData) {
             return ListView.builder(
               shrinkWrap: true,
@@ -118,7 +109,7 @@ class FaqScreen extends StatelessWidget {
               ),
             );
           } else {
-            return Container();
+            return const Center(child: Text("Error"));
           }
         },
       ),

@@ -723,7 +723,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                 ],
               );
             } else {
-              return const Text("Error");
+              return const Center(child: Text("Error"));
             }
           }),
         ),

@@ -18,7 +18,6 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../model/industry_model.dart';
-import '../../../modelview/provider/detail_product_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -282,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 15,
                                     mainAxisSpacing: 15,
-                                    childAspectRatio: 0.67),
+                                    childAspectRatio: 0.62),
                             itemCount: 4,
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
@@ -298,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 15,
-                                  childAspectRatio: 0.67),
+                                  childAspectRatio: 0.62),
                           itemCount:
                               valueTopProducts.listResultTop.isNotEmpty ? 4 : 0,
                           shrinkWrap: true,

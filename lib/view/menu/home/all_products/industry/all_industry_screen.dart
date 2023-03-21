@@ -109,7 +109,7 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                                 .length,
                                             shrinkWrap: true,
                                             physics:
-                                                const NeverScrollableScrollPhysics(),
+                                                const BouncingScrollPhysics(),
                                             itemBuilder:
                                                 (context, indexCategory) {
                                               return Padding(
@@ -120,9 +120,11 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                                       .size
                                                       .width,
                                                   height: size20px * 2.5,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          color: thirdColor1),
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          indexCategory.isEven
+                                                              ? thirdColor1
+                                                              : whiteColor),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
