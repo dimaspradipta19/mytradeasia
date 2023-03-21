@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../model/industry_model.dart';
+import '../../../modelview/provider/detail_product_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -227,9 +228,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /* 4 Menu Section */
                   const MenuGridWidget(),
+                  /* End 4 Menu Section */
 
-                  // OUR TOP PRODUCT Section
+                  /* Top Product Section */
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -264,7 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  // GRID TOP PRODUCT
                   Padding(
                     padding: const EdgeInsets.only(
                         bottom: size20px / 2, top: size20px),
@@ -297,7 +299,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 15,
                                   childAspectRatio: 0.67),
-                          itemCount: 4,
+                          itemCount:
+                              valueTopProducts.listResultTop.isNotEmpty ? 4 : 0,
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
@@ -306,7 +309,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return const ProductsDetailScreen();
+                                    return ProductsDetailScreen(
+                                      urlProduct: valueTopProducts
+                                          .listResultTop[index].seoUrl,
+                                    );
                                   },
                                 ));
                               },
@@ -323,8 +329,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Image.network(
                                         "$url${valueTopProducts.listResultTop[index].productimage}",
                                         fit: BoxFit.fill,
-                                        loadingBuilder:
-                                            (context, child, loadingProgress) {
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
                                           if (loadingProgress == null) {
                                             return child;
                                           } else {
@@ -350,11 +357,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             );
                                           }
                                         },
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return const FlutterLogo(
-                                            size: size20px * 3,
-                                          );
+                                        errorBuilder: (BuildContext context,
+                                            Object exception,
+                                            StackTrace? stackTrace) {
+                                          // return const FlutterLogo(
+                                          //   size: size20px * 3,
+                                          // );
+                                          return Text("Error: $exception");
                                         },
                                       ),
                                     ),
@@ -382,7 +391,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               const Text("CAS Number :",
                                                   style: text10),
-                                              Text(valueTopProducts.listResultTop[index].casNumber,
+                                              Text(
+                                                  valueTopProducts
+                                                      .listResultTop[index]
+                                                      .casNumber,
                                                   style: text10.copyWith(
                                                       color: greyColor2)),
                                             ],
@@ -394,7 +406,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               const Text("HS Code :",
                                                   style: text10),
-                                              Text(valueTopProducts.listResultTop[index].hsCode,
+                                              Text(
+                                                  valueTopProducts
+                                                      .listResultTop[index]
+                                                      .hsCode,
                                                   style: text10.copyWith(
                                                       color: greyColor2)),
                                             ],
@@ -481,13 +496,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     }),
                   ),
-                  // End of OUR TOP PRODUCT Section
+                  /* End Top Product Section */
 
-                  // INDUSTRY Section
+                  /* Industry Section */
                   const Padding(
                       padding: EdgeInsets.symmetric(vertical: size20px),
                       child: Text("Industry", style: text18)),
-                  // GRID INDUSTRY
                   GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -549,14 +563,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  // ENd of INDUSTRY Section
+                  /* End Industry Section */
 
-                  // Last Seen Section
+                  /* Lastseen Section */
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: Text("Last Seen Products", style: text18),
                   ),
-                  // Grid Last Seen Section
                   Padding(
                     padding: const EdgeInsets.only(bottom: size20px),
                     child: GridView.builder(
@@ -626,9 +639,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  // End of Last Seen Section
+                  /* End Lastseen Section */
 
-                  // Button See More
+                  /* Button See More */
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
@@ -654,6 +667,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  /* End Button See More */
                 ],
               ),
             )

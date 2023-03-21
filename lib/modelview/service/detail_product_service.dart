@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:mytradeasia/model/detail_product_model.dart';
 
 class DetailProductService {
-  Future<DetailProductModel> getDetailProduct() async {
+  Future<DetailProductModel> getDetailProduct(String seoUrl) async {
     DetailProductModel? resultAwal;
 
     try {
-      String url = "https://tradeasia.sg/en/dipentene";
+      String url = "https://tradeasia.sg$seoUrl";
 
       final response = await http.get(Uri.parse(url));
 

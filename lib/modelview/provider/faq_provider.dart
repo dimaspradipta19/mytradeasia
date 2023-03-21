@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -23,10 +24,20 @@ class FaqProvider with ChangeNotifier {
         notifyListeners();
       }
     } on SocketException {
+      state = ResultState.error;
       throw Exception("Gagal menyambung server");
+    } on HttpException {
+      state = ResultState.error;
+      throw Exception("Permintaan Gagal");
+    } on FormatException {
+      state = ResultState.error;
+      throw Exception("Format respon Salah");
+    } on TimeoutException {
+      state = ResultState.error;
+      throw Exception("Permintaan Timeout");
     } catch (e) {
-      print(e.toString());
-      rethrow;
+      state = ResultState.error;
+      throw Exception("Terjadi Kesalahan");
     }
   }
 }

@@ -5,7 +5,9 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
 
 class ProductsDetailScreen extends StatefulWidget {
-  const ProductsDetailScreen({super.key});
+  const ProductsDetailScreen({super.key, required this.urlProduct});
+
+  final String urlProduct;
 
   @override
   State<ProductsDetailScreen> createState() => _ProductsDetailScreenState();
@@ -19,7 +21,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<DetailProductProvider>(context, listen: false)
-          .getDetailProduct();
+          .getDetailProduct(widget.urlProduct);
     });
   }
 
@@ -44,39 +46,46 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                   Column(
                     children: [
                       Container(
-                        color: secondaryColor1,
+                        color: greyColor3,
                         width: MediaQuery.of(context).size.width,
                         height: size20px * 15.0,
-                        child: Image.network(
-                          "$url${valueDetailScreen.resultDetailProduct!.detailProduct.productimage}",
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: 116.0,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: primaryColor1,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            return const FlutterLogo(
-                              size: size20px * 3,
-                            );
-                          },
-                        ),
+                        child: valueDetailScreen.resultDetailProduct
+                                    ?.detailProduct?.productimage !=
+                                null
+                            ? Image.network(
+                                "$url${valueDetailScreen.resultDetailProduct?.detailProduct?.productimage}",
+                                fit: BoxFit.cover,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 116.0,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: primaryColor1,
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const FlutterLogo(
+                                    size: size20px * 3,
+                                  );
+                                },
+                              )
+                            : const FlutterLogo(),
                       ),
                     ],
                   ),
@@ -164,7 +173,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: size20px * 9.0,
                           width: size20px * 16.75,
                           child: Card(
                             shape: RoundedRectangleBorder(
@@ -180,12 +188,17 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        valueDetailScreen.resultDetailProduct!
-                                            .detailProduct.productname,
-                                        style: heading1,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      Expanded(
+                                        child: Text(
+                                          valueDetailScreen
+                                                  .resultDetailProduct
+                                                  ?.detailProduct
+                                                  ?.productname ??
+                                              "Error",
+                                          style: heading1,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                       Container(
                                         height: size20px + 10.0,
@@ -218,9 +231,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                               style: body1Medium),
                                           Text(
                                               valueDetailScreen
-                                                  .resultDetailProduct!
-                                                  .detailProduct
-                                                  .casNumber,
+                                                      .resultDetailProduct
+                                                      ?.detailProduct
+                                                      ?.casNumber ??
+                                                  "Error",
                                               style: body1Regular.copyWith(
                                                   color: greyColor2)),
                                         ],
@@ -233,9 +247,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                               style: body1Medium),
                                           Text(
                                               valueDetailScreen
-                                                  .resultDetailProduct!
-                                                  .detailProduct
-                                                  .hsCode,
+                                                      .resultDetailProduct
+                                                      ?.detailProduct
+                                                      ?.hsCode ??
+                                                  "Error",
                                               style: body1Regular.copyWith(
                                                   color: greyColor2)),
                                         ],
@@ -250,9 +265,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                             width: size20px * 5,
                                             child: Text(
                                                 valueDetailScreen
-                                                    .resultDetailProduct!
-                                                    .detailProduct
-                                                    .formula,
+                                                        .resultDetailProduct
+                                                        ?.detailProduct
+                                                        ?.formula ??
+                                                    "Error",
                                                 style: body1Regular.copyWith(
                                                     color: greyColor2,
                                                     overflow:
@@ -353,15 +369,17 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               List<List<String>> basicInformation = [
                                 [
                                   "IUPAC NAME",
-                                  (valueDetailScreen.resultDetailProduct!
-                                      .detailProduct.iupacName)
+                                  (valueDetailScreen.resultDetailProduct
+                                          ?.detailProduct?.iupacName ??
+                                      "Error")
                                 ],
                                 ["Appearance", "-"],
                                 ["Common Name", "-"],
                                 [
                                   "Packaging",
-                                  (valueDetailScreen.resultDetailProduct!
-                                      .detailProduct.packagingName)
+                                  (valueDetailScreen.resultDetailProduct
+                                          ?.detailProduct?.packagingName ??
+                                      "Error")
                                 ]
                               ];
                               return Container(
@@ -472,35 +490,18 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       top: size20px, bottom: size20px / 4.0),
-                                  //   child: Text("Brief Overview",
-                                  //       style:
-                                  //           text15.copyWith(color: fontColor1)),
-                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: size20px),
                                     child: Text(
-                                      valueDetailScreen.resultDetailProduct!
-                                          .detailProduct.description,
+                                      valueDetailScreen.resultDetailProduct
+                                              ?.detailProduct?.description ??
+                                          "Error",
                                       style: body1Regular,
                                       maxLines: 14,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       top: size20px / 2,
-                                  //       bottom: size20px / 4.0),
-                                  //   child: Text("Manufacturing Process",
-                                  //       style:
-                                  //           text15.copyWith(color: fontColor1)),
-                                  // ),
-                                  // const Text(
-                                  //     "Dipentene (also called D-Limonene), is a terpene liquid found in various volatile oils such as cardamon, mace, nutmeg , turpentine oil. Dipentene is mainly composed of Limonene, beta-Phellandrene, Myrcene and other terpenes.",
-                                  //     style: body1Regular),
                                   InkWell(
                                     onTap: () {
                                       print("see more");
@@ -520,19 +521,13 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       top: size20px, bottom: size20px / 4.0),
-                                  //   child: Text("Personal Care & Cosmetics",
-                                  //       style:
-                                  //           text15.copyWith(color: fontColor1)),
-                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: size20px),
                                     child: Text(
-                                      valueDetailScreen.resultDetailProduct!
-                                          .detailProduct.application,
+                                      valueDetailScreen.resultDetailProduct
+                                              ?.detailProduct?.application ??
+                                          "",
                                       style: body1Regular,
                                       maxLines: 14,
                                       overflow: TextOverflow.ellipsis,
@@ -576,15 +571,25 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               .resultDetailProduct!.relatedProducts.length,
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemBuilder: (context, indexRelated) {
                             return InkWell(
                               onTap: () {
-                                // Navigator.push(context, MaterialPageRoute(
-                                //   builder: (context) {
-                                //     return const ProductsDetailScreen();
-                                //   },
-                                // ));
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductsDetailScreen(
+                                      urlProduct: valueDetailScreen
+                                          .resultDetailProduct!
+                                          .relatedProducts[indexRelated]
+                                          .seoUrl,
+                                    );
+                                  },
+                                ));
+
+                                print(
+                                  valueDetailScreen.resultDetailProduct!
+                                      .relatedProducts[indexRelated].seoUrl,
+                                );
                               },
                               child: Card(
                                 shadowColor: blackColor,
@@ -597,47 +602,56 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         width:
                                             MediaQuery.of(context).size.width,
                                         height: size20px * 5.5,
-                                        child: Image.network(
-                                          url +
-                                              valueDetailScreen
-                                                  .resultDetailProduct!
-                                                  .relatedProducts[indexRelated]
-                                                  .productimage,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (context, child,
-                                              loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            } else {
-                                              return SizedBox(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 116.0,
-                                                child: Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: primaryColor1,
-                                                    value: loadingProgress
-                                                                .expectedTotalBytes !=
-                                                            null
-                                                        ? loadingProgress
-                                                                .cumulativeBytesLoaded /
-                                                            loadingProgress
-                                                                .expectedTotalBytes!
-                                                        : null,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                          },
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return const FlutterLogo(
-                                              size: size20px * 3,
-                                            );
-                                          },
-                                        ),
+                                        child: valueDetailScreen
+                                                    .resultDetailProduct
+                                                    ?.relatedProducts[
+                                                        indexRelated]
+                                                    .productimage !=
+                                                null
+                                            ? Image.network(
+                                                url +
+                                                    valueDetailScreen
+                                                        .resultDetailProduct!
+                                                        .relatedProducts[
+                                                            indexRelated]
+                                                        .productimage,
+                                                fit: BoxFit.fill,
+                                                loadingBuilder: (context, child,
+                                                    loadingProgress) {
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  } else {
+                                                    return SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      height: 116.0,
+                                                      child: Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: primaryColor1,
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes!
+                                                              : null,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return const FlutterLogo(
+                                                    size: size20px * 3,
+                                                  );
+                                                },
+                                              )
+                                            : FlutterLogo(),
                                       ),
                                     ),
                                     Expanded(
