@@ -21,119 +21,128 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
     const String url = "https://chemtradea.chemtradeasia.com/";
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: size20px),
-            child: Column(
-              children: [
-                const SizedBox(height: size20px - 12.0),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Provider.of<TopProductsProvider>(context, listen: false)
+              .getTopProducts();
+        },
+        edgeOffset: size20px * 3.5,
+        color: primaryColor1,
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: size20px),
+              child: Column(
+                children: [
+                  const SizedBox(height: size20px - 12.0),
 
-                // SearchBar
-                SizedBox(
-                  height: size20px + 30,
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Image.asset(
-                          "assets/images/icon_back.png",
-                          width: size20px + 4,
-                          height: size20px + 4,
+                  // SearchBar
+                  SizedBox(
+                    height: size20px + 30,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Image.asset(
+                            "assets/images/icon_back.png",
+                            width: size20px + 4,
+                            height: size20px + 4,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: size20px + 30,
-                        width: size20px * 12,
-                        child: Form(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: nameProd,
-                              hintStyle: body1Regular,
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(size20px / 2),
-                                child: Image.asset(
-                                    "assets/images/icon_search.png"),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: greyColor3),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(7.0),
+                        SizedBox(
+                          height: size20px + 30,
+                          width: size20px * 12,
+                          child: Form(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: nameProd,
+                                hintStyle: body1Regular,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(size20px / 2),
+                                  child: Image.asset(
+                                      "assets/images/icon_search.png"),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: greyColor3),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(7.0),
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: secondaryColor1),
                                 ),
                               ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: secondaryColor1),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: size20px + 30,
+                          height: size20px + 30,
+                          decoration: const BoxDecoration(
+                            color: secondaryColor1,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: size20px / 2,
+                                right: size20px / 2,
+                                bottom: size20px / 2,
+                                left: size20px - 12),
+                            child: Image.asset("assets/images/icon_cart.png"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  // banner top products
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: size20px),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(size20px - 10.0)),
+                          child: Image.asset(
+                            "assets/images/background_products.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: size20px + 17.0, horizontal: size20px),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Our Top Products",
+                                style: heading1.copyWith(color: whiteColor),
                               ),
-                            ),
+                              const SizedBox(
+                                height: size20px - 7,
+                              ),
+                              Text(
+                                "Lorem ipsum dolor sit amet consectetur. ligula.Lorem ipsum dolor sit amet consectetur.",
+                                style: body1Regular.copyWith(color: whiteColor),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Container(
-                        width: size20px + 30,
-                        height: size20px + 30,
-                        decoration: const BoxDecoration(
-                          color: secondaryColor1,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: size20px / 2,
-                              right: size20px / 2,
-                              bottom: size20px / 2,
-                              left: size20px - 12),
-                          child: Image.asset("assets/images/icon_cart.png"),
-                        ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // banner top products
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: size20px),
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(size20px - 10.0)),
-                        child: Image.asset(
-                          "assets/images/background_products.png",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: size20px + 17.0, horizontal: size20px),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Our Top Products",
-                              style: heading1.copyWith(color: whiteColor),
-                            ),
-                            const SizedBox(
-                              height: size20px - 7,
-                            ),
-                            Text(
-                              "Lorem ipsum dolor sit amet consectetur. ligula.Lorem ipsum dolor sit amet consectetur.",
-                              style: body1Regular.copyWith(color: whiteColor),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // main content
-                const AllTopProductsWidget(url: url),
-              ],
+                  // main content
+                  const AllTopProductsWidget(url: url),
+                ],
+              ),
             ),
           ),
         ),
@@ -179,7 +188,7 @@ class AllTopProductsWidget extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                  childAspectRatio: 0.62),
+                  childAspectRatio: 0.66),
               itemCount: valueTopProducts.listResultTop.isNotEmpty ? 8 : 0,
               shrinkWrap: true,
               padding: EdgeInsets.zero,

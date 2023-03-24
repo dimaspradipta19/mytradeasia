@@ -117,7 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             builder: (context) {
                               return ProductsDetailScreen(
                                 urlProduct:
-                                    valueSearch.searchProduct[index].seoUrl,
+                                    valueSearch.searchProduct[index].seoUrl ?? "/en/acrylic-acid",
                               );
                             },
                           )),

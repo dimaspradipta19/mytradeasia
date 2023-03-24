@@ -17,7 +17,7 @@ import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../model/industry_model.dart';
+import 'all_products/industry/all_industry_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -297,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 15,
-                                  childAspectRatio: 0.62),
+                                  childAspectRatio: 0.66),
                           itemCount:
                               valueTopProducts.listResultTop.isNotEmpty ? 4 : 0,
                           shrinkWrap: true,
@@ -321,61 +321,70 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // wrap image asset with hero for animation
-                                    SizedBox(
-                                      height: size20px * 5.5,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Image.network(
-                                        "$url${valueTopProducts.listResultTop[index].productimage}",
-                                        fit: BoxFit.fill,
-                                        loadingBuilder: (BuildContext context,
-                                            Widget child,
-                                            ImageChunkEvent? loadingProgress) {
-                                          if (loadingProgress == null) {
-                                            return child;
-                                          } else {
-                                            return SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 116.0,
-                                              child: Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: primaryColor1,
-                                                  value: loadingProgress
-                                                              .expectedTotalBytes !=
-                                                          null
-                                                      ? loadingProgress
-                                                              .cumulativeBytesLoaded /
-                                                          loadingProgress
-                                                              .expectedTotalBytes!
-                                                      : null,
+                                    Center(
+                                      child: SizedBox(
+                                        height: size20px * 5.5,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Image.network(
+                                          "$url${valueTopProducts.listResultTop[index].productimage}",
+                                          fit: BoxFit.fill,
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                                  loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            } else {
+                                              return SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 116.0,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: primaryColor1,
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                        errorBuilder: (BuildContext context,
-                                            Object exception,
-                                            StackTrace? stackTrace) {
-                                          // return const FlutterLogo(
-                                          //   size: size20px * 3,
-                                          // );
-                                          return Text("Error: $exception");
-                                        },
+                                              );
+                                            }
+                                          },
+                                          errorBuilder: (BuildContext context,
+                                              Object exception,
+                                              StackTrace? stackTrace) {
+                                            // return const FlutterLogo(
+                                            //   size: size20px * 3,
+                                            // );
+                                            return Text("Error: $exception");
+                                          },
+                                        ),
                                       ),
                                     ),
                                     Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5.0, horizontal: 10.0),
-                                        child: Text(
-                                          valueTopProducts
-                                              .listResultTop[index].productname,
-                                          style: text14,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
+                                      child: SizedBox(
+                                        height: size20px * 2.5,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0, horizontal: 10.0),
+                                          child: Text(
+                                            valueTopProducts
+                                                .listResultTop[index]
+                                                .productname,
+                                            style: text14,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -501,66 +510,64 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Padding(
                       padding: EdgeInsets.symmetric(vertical: size20px),
                       child: Text("Industry", style: text18)),
-                  GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5,
-                            childAspectRatio: 0.9),
-                    itemCount: iconModel.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Provider.of<AllIndustryProvider>(context,
-                                  listen: false)
-                              .getAllIndustry();
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return urlNavigator[index];
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.24,
+                    width: MediaQuery.of(context).size.width,
+                    child: GridView(
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                              childAspectRatio: 0.9),
+                      children: [
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_agri.png",
+                            onPressed: () {},
+                            topIndustryName: "Agriculture"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_animal.png",
+                            onPressed: () {},
+                            topIndustryName: "Animal Feed"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_beauty.png",
+                            onPressed: () {},
+                            topIndustryName: "Beauty & Personal Care"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_food.png",
+                            onPressed: () {},
+                            topIndustryName: "Food & Beverage"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_glass.png",
+                            onPressed: () {},
+                            topIndustryName: "Glass & Ceramic"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_leather.png",
+                            onPressed: () {},
+                            topIndustryName: "Leather"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_metal.png",
+                            onPressed: () {},
+                            topIndustryName: "Metal & Steel"),
+                        TopIndustryWidget(
+                            icon: "assets/images/icon_all_industry.png",
+                            onPressed: () {
+                              Provider.of<AllIndustryProvider>(context,
+                                      listen: false)
+                                  .getAllIndustry();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AllIndustryScreen(),
+                                  ));
                             },
-                          ));
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    color: thirdColor1,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                  ),
-                                ),
-                                Image.asset(
-                                  iconModel[index],
-                                  color: primaryColor1,
-                                  width: size24px,
-                                  height: size24px,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Expanded(
-                              child: Text(
-                                iconName[index],
-                                style: text10,
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
+                            topIndustryName: "All Industries"),
+                      ],
+                    ),
                   ),
                   /* End Industry Section */
 
@@ -672,6 +679,69 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TopIndustryWidget extends StatelessWidget {
+  const TopIndustryWidget({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    required this.topIndustryName,
+  });
+
+  final String icon;
+  final String topIndustryName;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      // onTap: () {
+      //   Provider.of<AllIndustryProvider>(context, listen: false)
+      //       .getAllIndustry();
+      //   Navigator.push(context, MaterialPageRoute(
+      //     builder: (context) {
+      //       return urlNavigator[0];
+      //     },
+      //   ));
+      // },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(
+                  color: thirdColor1,
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                ),
+              ),
+              Image.asset(
+                icon,
+                color: primaryColor1,
+                width: size24px,
+                height: size24px,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Expanded(
+            child: Text(
+              topIndustryName,
+              style: text10,
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
       ),
     );
   }

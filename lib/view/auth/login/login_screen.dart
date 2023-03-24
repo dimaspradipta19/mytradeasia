@@ -140,7 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          print("Forgot Password");
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -163,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: _emailController.text.isNotEmpty &&
                             _phoneNumberController.text.isNotEmpty
                         ? Consumer<AuthProvider>(
-                            builder: (context, value, child) => ElevatedButton(
+                            builder: (context, valueAuth, child) =>
+                                ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
@@ -175,37 +175,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              onPressed: () async {
+                              onPressed: () {
                                 valueLoading.isLoading;
                                 valueLoading.getStateLoading();
-                                Provider.of<AuthProvider>(context,
-                                        listen: false)
+                                valueAuth
                                     .loginWithEmail(_emailController.text,
                                         _phoneNumberController.text, context)
                                     .then((value) {
                                   valueLoading.isLoading;
                                   valueLoading.getStateLoading();
                                 });
-
-                                // try {
-                                //   await _auth.signInWithEmailAndPassword(
-                                //       email: _emailController.text,
-                                //       password: _phoneNumberController.text);
-                                //   Navigator.pushAndRemoveUntil(context,
-                                //       MaterialPageRoute(
-                                //     builder: (context) {
-                                //       return const NavigationBarWidget();
-                                //     },
-                                //   ), (route) => false);
-                                // } catch (e) {
-                                //   final snackbar =
-                                //       SnackBar(content: Text(e.toString()));
-                                //   ScaffoldMessenger.of(context)
-                                //       .showSnackBar(snackbar);
-                                // } finally {
-                                //   valueLoading.getStateLoading();
-                                //   valueLoading.isLoading;
-                                // }
                               },
                               child: Text(
                                 "Sign In",
@@ -231,23 +210,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                   ),
-                  const SizedBox(height: size20px),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Expanded(
-                        child: Divider(thickness: 2, color: greyColor3),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 31.0),
-                        child: Text("or sign in with", style: body1Regular),
-                      ),
-                      Expanded(
-                        child: Divider(thickness: 2, color: greyColor3),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: size20px),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Expanded(
+                          child: Divider(thickness: 2, color: greyColor3),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 31.0),
+                          child: Text("or sign in with", style: body1Regular),
+                        ),
+                        Expanded(
+                          child: Divider(thickness: 2, color: greyColor3),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: size20px),
                   Row(
                     children: [
                       Expanded(

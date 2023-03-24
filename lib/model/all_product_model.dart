@@ -11,14 +11,14 @@ class AllProductModel {
     String productimage;
     String hsCode;
     String casNumber;
-    String seoUrl;
+    String? seoUrl;
 
     factory AllProductModel.fromJson(Map<String, dynamic> json) => AllProductModel(
         productname: json["productname"],
         productimage: json["productimage"],
         hsCode: json["hs_code"],
         casNumber: json["cas_number"],
-        seoUrl: json["seo_url"],
+        seoUrl: json["seo_url"] ?? " ",
     );
 
     Map<String, dynamic> toJson() => {
