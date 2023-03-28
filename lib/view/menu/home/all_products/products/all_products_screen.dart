@@ -514,7 +514,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                 crossAxisCount: 2,
                                                 crossAxisSpacing: 15,
                                                 mainAxisSpacing: 15,
-                                                childAspectRatio: 0.63),
+                                                childAspectRatio: 0.62),
                                         itemCount: valueSearch.state ==
                                                 ResultState.loading
                                             ? 4

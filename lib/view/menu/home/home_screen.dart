@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
@@ -297,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 15,
-                                  childAspectRatio: 0.66),
+                                  childAspectRatio: 0.62),
                           itemCount:
                               valueTopProducts.listResultTop.isNotEmpty ? 4 : 0,
                           shrinkWrap: true,
@@ -655,13 +656,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(size20px * 5),
                       ),
                       child: InkWell(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return const TopProductsScreen();
-                            },
-                          ));
-                        },
+                        onTap: () {},
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: size20px / 2, vertical: size20px / 5),
@@ -700,15 +695,6 @@ class TopIndustryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      // onTap: () {
-      //   Provider.of<AllIndustryProvider>(context, listen: false)
-      //       .getAllIndustry();
-      //   Navigator.push(context, MaterialPageRoute(
-      //     builder: (context) {
-      //       return urlNavigator[0];
-      //     },
-      //   ));
-      // },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

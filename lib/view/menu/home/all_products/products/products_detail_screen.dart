@@ -70,48 +70,42 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     Column(
                       children: [
                         Container(
-                          color: greyColor3,
-                          width: MediaQuery.of(context).size.width,
-                          height: size20px * 15.0,
-                          child: valueDetailScreen.resultDetailProduct
-                                      ?.detailProduct?.productimage !=
-                                  null
-                              ? Image.network(
-                                  "$url${valueDetailScreen.resultDetailProduct?.detailProduct?.productimage}",
-                                  fit: BoxFit.cover,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 116.0,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            color: primaryColor1,
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const FlutterLogo(
-                                      size: size20px * 3,
-                                    );
-                                  },
-                                )
-                              : const FlutterLogo(),
-                        ),
+                            color: greyColor3,
+                            width: MediaQuery.of(context).size.width,
+                            height: size20px * 15.0,
+                            child: Image.network(
+                              "$url${valueDetailScreen.resultDetailProduct?.detailProduct?.productimage}",
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 116.0,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: primaryColor1,
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return const FlutterLogo(
+                                  size: size20px * 3,
+                                );
+                              },
+                            )),
                       ],
                     ),
                     Padding(
@@ -565,17 +559,18 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                 ?.detailProduct?.application ??
                                             "",
                                         style: body1Regular,
-                                        maxLines: 14,
-                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: isExpand ? null : 5,
                                       ),
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        print("see more");
+                                        setState(() {
+                                          isExpand = !isExpand;
+                                        });
                                       },
                                       child: Center(
                                         child: Text(
-                                          "See More",
+                                          isExpand ? "Show Less" : "See More",
                                           style: body1Regular.copyWith(
                                               color: secondaryColor1),
                                         ),
@@ -818,104 +813,108 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                       builder: (context) {
                         var value = Provider.of<DetailProductProvider>(context,
                             listen: false);
-                        return Wrap(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(size20px),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Image.asset(
-                                      "assets/images/icon_spacing.png",
-                                      width: 25.0,
-                                    ),
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              left: size20px, right: size20px, top: size20px),
+                          child: SizedBox(
+                            height: size20px * 17,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Image.asset(
+                                    "assets/images/icon_spacing.png",
+                                    width: 25.0,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                                height: size20px * 5,
-                                                width: size20px * 5,
-                                                child: Image.network(url +
-                                                    value
-                                                        .resultDetailProduct!
-                                                        .detailProduct!
-                                                        .productimage!)),
-                                            const SizedBox(width: size20px),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Text(
-                                                  "Dipentene",
-                                                  style: heading2,
-                                                ),
-                                                const SizedBox(height: 10.0),
-                                                Row(
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          "CAS Number",
-                                                          style: body1Medium,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 5.0),
-                                                        Text(
-                                                          value
-                                                                  .resultDetailProduct
-                                                                  ?.detailProduct
-                                                                  ?.casNumber ??
-                                                              "-",
-                                                          style: body1Regular
-                                                              .copyWith(
-                                                                  color:
-                                                                      greyColor2),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 30.0,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          "HS Code",
-                                                          style: body1Medium,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 5.0),
-                                                        Text(
-                                                          value
-                                                                  .resultDetailProduct
-                                                                  ?.detailProduct
-                                                                  ?.hsCode ??
-                                                              "-",
-                                                          style: body1Regular
-                                                              .copyWith(
-                                                                  color:
-                                                                      greyColor2),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: size20px),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                              height: size20px * 5,
+                                              width: size20px * 5,
+                                              child: Image.network(url +
+                                                  value
+                                                      .resultDetailProduct!
+                                                      .detailProduct!
+                                                      .productimage!)),
+                                          const SizedBox(width: size20px),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "Dipentene",
+                                                style: heading2,
+                                              ),
+                                              const SizedBox(height: 10.0),
+                                              Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "CAS Number",
+                                                        style: body1Medium,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5.0),
+                                                      Text(
+                                                        value
+                                                                .resultDetailProduct
+                                                                ?.detailProduct
+                                                                ?.casNumber ??
+                                                            "-",
+                                                        style: body1Regular
+                                                            .copyWith(
+                                                                color:
+                                                                    greyColor2),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 30.0,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "HS Code",
+                                                        style: body1Medium,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 5.0),
+                                                      Text(
+                                                        value
+                                                                .resultDetailProduct
+                                                                ?.detailProduct
+                                                                ?.hsCode ??
+                                                            "-",
+                                                        style: body1Regular
+                                                            .copyWith(
+                                                                color:
+                                                                    greyColor2),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: size20px * 2,
+                                            bottom: size20px * 1.5),
+                                        child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
@@ -929,7 +928,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                     "Quantity",
                                                     style: text14,
                                                   ),
-                                                  const SizedBox(height: 8.0),
+                                                  const SizedBox(
+                                                      height: size24px / 3),
                                                   SizedBox(
                                                     width: size20px * 8.0,
                                                     height: size20px + 30,
@@ -1044,15 +1044,36 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                             ),
                                           ],
                                         ),
-                                        ElevatedButton(
-                                            onPressed: () {}, child: Text("S"))
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        height: size20px * 2.75,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(primaryColor1),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          7.0),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () {},
+                                            child: Text("Add to Cart",
+                                                style: text16.copyWith(
+                                                    color: whiteColor))),
+                                      )
+                                    ],
                                   ),
-                                ],
-                              ),
-                            )
-                          ],
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                     );
