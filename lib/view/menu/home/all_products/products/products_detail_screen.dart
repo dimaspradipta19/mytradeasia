@@ -5,6 +5,8 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../widget/text_editing_widget.dart';
+
 class ProductsDetailScreen extends StatefulWidget {
   const ProductsDetailScreen({super.key, required this.urlProduct});
 
@@ -27,6 +29,12 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
   }
 
   final String url = "https://chemtradea.chemtradeasia.com/";
+
+  bool isExpand = false;
+  final TextEditingController _quantityController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  String? _selectedValueUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +60,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     height: size20px * 15.0,
                   ),
                 );
+              } else if (valueDetailScreen.resultDetailProduct?.detailProduct ==
+                  null) {
+                return const Center(
+                    child: Text("Cannot fetch data from the internet"));
               } else if (valueDetailScreen.state == ResultState.hasData) {
                 return Stack(
                   children: [
@@ -107,7 +119,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Search Bar
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: size20px * 2.0, bottom: size20px * 7.0),
@@ -120,7 +131,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pop(context);
+                                      Navigator.of(context).pop(true);
                                     },
                                     child: Image.asset(
                                       "assets/images/icon_back.png",
@@ -504,7 +515,9 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                           ),
                           // content
                           SizedBox(
-                            height: size20px * 16,
+                            height: isExpand
+                                ? MediaQuery.of(context).size.height
+                                : size20px * 7.5,
                             width: MediaQuery.of(context).size.width,
                             child: TabBarView(
                               children: [
@@ -520,17 +533,18 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                 ?.detailProduct?.description ??
                                             "Error",
                                         style: body1Regular,
-                                        maxLines: 14,
-                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: isExpand ? null : 5,
                                       ),
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        print("see more");
+                                        setState(() {
+                                          isExpand = !isExpand;
+                                        });
                                       },
                                       child: Center(
                                         child: Text(
-                                          "See More",
+                                          isExpand ? "Show Less" : "See More",
                                           style: body1Regular.copyWith(
                                               color: secondaryColor1),
                                         ),
@@ -607,11 +621,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                       );
                                     },
                                   ));
-
-                                  print(
-                                    valueDetailScreen.resultDetailProduct!
-                                        .relatedProducts[indexRelated].seoUrl,
-                                  );
                                 },
                                 child: Card(
                                   shadowColor: blackColor,
@@ -676,7 +685,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                     );
                                                   },
                                                 )
-                                              : FlutterLogo(),
+                                              : const FlutterLogo(),
                                         ),
                                       ),
                                       Expanded(
@@ -797,7 +806,257 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     ),
                     elevation: MaterialStateProperty.all<double>(0.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet<dynamic>(
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(40.0),
+                        ),
+                      ),
+                      context: context,
+                      builder: (context) {
+                        var value = Provider.of<DetailProductProvider>(context,
+                            listen: false);
+                        return Wrap(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(size20px),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Image.asset(
+                                      "assets/images/icon_spacing.png",
+                                      width: 25.0,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20.0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                                height: size20px * 5,
+                                                width: size20px * 5,
+                                                child: Image.network(url +
+                                                    value
+                                                        .resultDetailProduct!
+                                                        .detailProduct!
+                                                        .productimage!)),
+                                            const SizedBox(width: size20px),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Dipentene",
+                                                  style: heading2,
+                                                ),
+                                                const SizedBox(height: 10.0),
+                                                Row(
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        const Text(
+                                                          "CAS Number",
+                                                          style: body1Medium,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5.0),
+                                                        Text(
+                                                          value
+                                                                  .resultDetailProduct
+                                                                  ?.detailProduct
+                                                                  ?.casNumber ??
+                                                              "-",
+                                                          style: body1Regular
+                                                              .copyWith(
+                                                                  color:
+                                                                      greyColor2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 30.0,
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        const Text(
+                                                          "HS Code",
+                                                          style: body1Medium,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5.0),
+                                                        Text(
+                                                          value
+                                                                  .resultDetailProduct
+                                                                  ?.detailProduct
+                                                                  ?.hsCode ??
+                                                              "-",
+                                                          style: body1Regular
+                                                              .copyWith(
+                                                                  color:
+                                                                      greyColor2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              flex: 10,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    "Quantity",
+                                                    style: text14,
+                                                  ),
+                                                  const SizedBox(height: 8.0),
+                                                  SizedBox(
+                                                    width: size20px * 8.0,
+                                                    height: size20px + 30,
+                                                    child: TextEditingWidget(
+                                                      controller:
+                                                          _quantityController,
+                                                      hintText: "Quantity",
+                                                      readOnly: false,
+                                                      inputType:
+                                                          TextInputType.number,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                                flex: 1, child: Container()),
+                                            Expanded(
+                                              flex: 10,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    "Unit",
+                                                    style: text14,
+                                                  ),
+                                                  const SizedBox(height: 8.0),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: greyColor3),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(7.0)),
+                                                    width: size20px * 8.0,
+                                                    height: size20px + 28,
+                                                    // TexteditingController here
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        left: size20px,
+                                                      ),
+                                                      child:
+                                                          DropdownButtonFormField(
+                                                        icon: Image.asset(
+                                                            "assets/images/icon_bottom.png"),
+                                                        hint: Text(
+                                                          "Unit",
+                                                          style: body1Regular
+                                                              .copyWith(
+                                                                  color:
+                                                                      greyColor),
+                                                        ),
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              InputBorder.none,
+                                                        ),
+                                                        style: body1Regular,
+                                                        items: const [
+                                                          DropdownMenuItem(
+                                                            value: 'Tonne',
+                                                            child: Text('Tonne',
+                                                                style:
+                                                                    body1Regular),
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            value: '20” FCL',
+                                                            child: Text(
+                                                                '20” FCL',
+                                                                style:
+                                                                    body1Regular),
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            value: 'Litres',
+                                                            child: Text(
+                                                                'Litres',
+                                                                style:
+                                                                    body1Regular),
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            value:
+                                                                'Kilogram (Kg)',
+                                                            child: Text(
+                                                                'Kilogram (Kg)',
+                                                                style:
+                                                                    body1Regular),
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            value:
+                                                                'Metric Tonne (MT)',
+                                                            child: Text(
+                                                                'Metric Tonne (MT)',
+                                                                style:
+                                                                    body1Regular),
+                                                          ),
+                                                        ],
+                                                        value:
+                                                            _selectedValueUnit,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            _selectedValueUnit =
+                                                                value;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {}, child: Text("S"))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
                   child: Image.asset(
                     "assets/images/icon_cart.png",
                     width: size20px + 4.0,

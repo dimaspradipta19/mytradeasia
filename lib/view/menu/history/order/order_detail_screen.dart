@@ -4,10 +4,7 @@ import 'package:mytradeasia/utils/theme.dart';
 import '../../../../model/industry_model.dart';
 
 class OrderDetailScreen extends StatelessWidget {
-  // const OrderDetailScreen({super.key, required this.index});
   const OrderDetailScreen({super.key});
-
-  // final int index;
 
   @override
   Widget build(BuildContext context) {

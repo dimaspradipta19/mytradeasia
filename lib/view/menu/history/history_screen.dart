@@ -66,7 +66,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          print(index);
                           showModalBottomSheet<dynamic>(
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
