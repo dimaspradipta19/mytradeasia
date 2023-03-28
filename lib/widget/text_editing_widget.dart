@@ -42,6 +42,12 @@ class TextEditingWidget extends StatelessWidget {
                 ),
               ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
     );
   }
 }
@@ -85,7 +91,7 @@ class TextEditingWithIconSuffix extends StatelessWidget {
         ),
         suffixIcon: IconButton(
           onPressed: navigationPage,
-          
+
           // () {
           //   Navigator.push(context, MaterialPageRoute(
           //     builder: (context) {
@@ -128,7 +134,11 @@ class TextEditingWithPrefixFilled extends StatelessWidget {
         hintStyle: body1Regular,
         filled: true,
         fillColor: whiteColor,
-        prefixIcon: Image.asset("assets/images/icon_search.png", width: size20px + 4, height: size20px + 4,),
+        prefixIcon: Image.asset(
+          "assets/images/icon_search.png",
+          width: size20px + 4,
+          height: size20px + 4,
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: greyColor3),
           borderRadius: BorderRadius.all(

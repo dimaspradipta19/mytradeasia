@@ -846,11 +846,27 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              const Text(
-                                                "Dipentene",
-                                                style: heading2,
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                                height: size20px * 2.5,
+                                                child: Expanded(
+                                                  child: Text(
+                                                    value
+                                                        .resultDetailProduct!
+                                                        .detailProduct!
+                                                        .productname!,
+                                                    style: heading2,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
                                               ),
-                                              const SizedBox(height: 10.0),
+                                              const SizedBox(
+                                                  height: size20px / 2),
                                               Row(
                                                 children: [
                                                   Column(
@@ -1079,7 +1095,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     );
                   },
                   child: Image.asset(
-                    "assets/images/icon_cart.png",
+                    "assets/images/icon_cart_outlined.png",
                     width: size20px + 4.0,
                     color: primaryColor1,
                   ),
