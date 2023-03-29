@@ -60,10 +60,15 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     height: size20px * 15.0,
                   ),
                 );
-              } else if (valueDetailScreen.resultDetailProduct?.detailProduct ==
-                  null) {
-                return const Center(
-                    child: Text("Cannot fetch data from the internet"));
+              } else if (valueDetailScreen.resultDetailProduct?.detailProduct == null) {
+                return Center(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text("Cannot fetch data from the internet"),
+                  ],
+                ));
               } else if (valueDetailScreen.state == ResultState.hasData) {
                 return Stack(
                   children: [
@@ -216,7 +221,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                     .resultDetailProduct
                                                     ?.detailProduct
                                                     ?.productname ??
-                                                "Error",
+                                                "N/A",
                                             style: heading1,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -256,7 +261,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                         .resultDetailProduct
                                                         ?.detailProduct
                                                         ?.casNumber ??
-                                                    "Error",
+                                                    "N/A",
                                                 style: body1Regular.copyWith(
                                                     color: greyColor2)),
                                           ],
@@ -272,7 +277,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                         .resultDetailProduct
                                                         ?.detailProduct
                                                         ?.hsCode ??
-                                                    "Error",
+                                                    "N/A",
                                                 style: body1Regular.copyWith(
                                                     color: greyColor2)),
                                           ],
@@ -290,7 +295,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                           .resultDetailProduct
                                                           ?.detailProduct
                                                           ?.formula ??
-                                                      "Error",
+                                                      "N/A",
                                                   style: body1Regular.copyWith(
                                                       color: greyColor2,
                                                       overflow: TextOverflow
@@ -395,15 +400,15 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                     "IUPAC NAME",
                                     (valueDetailScreen.resultDetailProduct
                                             ?.detailProduct?.iupacName ??
-                                        "Error")
+                                        "N/A")
                                   ],
-                                  ["Appearance", "-"],
-                                  ["Common Name", "-"],
+                                  ["Appearance", "N/A"],
+                                  ["Common Name", "N/A"],
                                   [
                                     "Packaging",
                                     (valueDetailScreen.resultDetailProduct
                                             ?.detailProduct?.packagingName ??
-                                        "Error")
+                                        "N/A")
                                   ]
                                 ];
                                 return Container(
@@ -507,10 +512,11 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               ),
                             ],
                           ),
-                          // content
+                          
+                          /* Tabbar Content */
                           SizedBox(
                             height: isExpand
-                                ? MediaQuery.of(context).size.height
+                                ? MediaQuery.of(context).size.height 
                                 : size20px * 7.5,
                             width: MediaQuery.of(context).size.width,
                             child: TabBarView(
@@ -519,15 +525,17 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: size20px),
-                                      child: Text(
-                                        valueDetailScreen.resultDetailProduct
-                                                ?.detailProduct?.description ??
-                                            "Error",
-                                        style: body1Regular,
-                                        maxLines: isExpand ? null : 5,
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: size20px),
+                                        child: Text(
+                                          valueDetailScreen.resultDetailProduct
+                                                  ?.detailProduct?.description ??
+                                              "N/A",
+                                          style: body1Regular,
+                                          maxLines: isExpand ? null : 5,
+                                        ),
                                       ),
                                     ),
                                     InkWell(
@@ -752,7 +760,15 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                   ],
                 );
               } else {
-                return const Center(child: Text("Error"));
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Error"),
+                    ],
+                  ),
+                );
               }
             }),
           ),

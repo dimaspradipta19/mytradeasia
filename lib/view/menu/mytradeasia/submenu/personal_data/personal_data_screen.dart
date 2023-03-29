@@ -124,15 +124,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       style: text14,
                                     ),
                                     const SizedBox(height: size24px / 3),
-                                    SizedBox(
-                                      width: size20px * 8.0,
-                                      height: size20px + 30,
-                                      child: TextEditingWidget(
-                                          readOnly: false,
-                                          controller: _firstNameController,
-                                          hintText: streamSnapshot.data?.docs[0]
-                                              ["firstName"]),
-                                    ),
+                                    TextEditingWidget(
+                                        readOnly: false,
+                                        controller: _firstNameController,
+                                        hintText: streamSnapshot.data?.docs[0]
+                                            ["firstName"]),
                                   ],
                                 ),
                               ),
@@ -147,15 +143,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       style: text14,
                                     ),
                                     const SizedBox(height: 8.0),
-                                    SizedBox(
-                                      width: size20px * 8.0,
-                                      height: size20px + 30,
-                                      child: TextEditingWidget(
-                                          readOnly: false,
-                                          controller: _lastNameController,
-                                          hintText: streamSnapshot.data?.docs[0]
-                                              ["lastName"]),
-                                    ),
+                                    TextEditingWidget(
+                                        readOnly: false,
+                                        controller: _lastNameController,
+                                        hintText: streamSnapshot.data?.docs[0]
+                                            ["lastName"]),
                                   ],
                                 ),
                               ),
@@ -248,15 +240,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                   style: text14,
                                 ),
                               ),
-                              SizedBox(
-                                height: 50.0,
-                                width: MediaQuery.of(context).size.width,
-                                child: TextEditingWidget(
-                                    readOnly: false,
-                                    controller: _companyNameController,
-                                    hintText: streamSnapshot.data?.docs[0]
-                                        ["companyName"]),
-                              ),
+                              TextEditingWidget(
+                                  readOnly: false,
+                                  controller: _companyNameController,
+                                  hintText: streamSnapshot.data?.docs[0]
+                                      ["companyName"]),
                             ],
                           ),
                           // Email with suffix
@@ -335,7 +323,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           builder: (context) {
                             return DialogWidget(
                                 urlIcon: "assets/images/logo_email_change.png",
-                                title: "Email has been Change",
+                                title: "Personal Data has been Change",
                                 subtitle:
                                     "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                                 textForButton: "Back to My Tradeasia",

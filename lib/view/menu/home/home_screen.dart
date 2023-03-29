@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: size20px * 2.5,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: size20px),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -74,9 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text("Welcome Back,",
                                     style: text12.copyWith(color: whiteColor)),
+                                const SizedBox(height: size20px / 5),
                                 SizedBox(
-                                  height: 27,
-                                  width: 144,
+                                  height: 30,
+                                  width: size20px * 10,
                                   child: StreamBuilder(
                                     stream: _firestore
                                         .collection('biodata')
@@ -101,6 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: whiteColor,
                                                     fontWeight:
                                                         FontWeight.bold),
+                                                overflow: TextOverflow.ellipsis,
                                               );
                                             });
                                       } else {
@@ -163,9 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: size20px / 1.5),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: SizedBox(
