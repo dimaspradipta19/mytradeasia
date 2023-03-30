@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
@@ -73,18 +74,22 @@ class _MyAppState extends State<MyApp> {
               DetailProductProvider(service: DetailProductService()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'MyTradeasia',
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(color: whiteColor),
-          primaryColor: whiteColor,
-          bottomNavigationBarTheme:
-              const BottomNavigationBarThemeData(backgroundColor: whiteColor),
-          scaffoldBackgroundColor: whiteColor,
-          fontFamily: "Poppins",
+      child: StreamProvider<InternetConnectionStatus>(
+        initialData: InternetConnectionStatus.connected,
+        create: ((context) => InternetConnectionChecker().onStatusChange),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'MyTradeasia',
+          theme: ThemeData(
+            appBarTheme: const AppBarTheme(color: whiteColor),
+            primaryColor: whiteColor,
+            bottomNavigationBarTheme:
+                const BottomNavigationBarThemeData(backgroundColor: whiteColor),
+            scaffoldBackgroundColor: whiteColor,
+            fontFamily: "Poppins",
+          ),
+          home: const SplashScreen(),
         ),
-        home: const SplashScreen(),
       ),
     );
   }
