@@ -31,6 +31,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String url = "https://chemtradea.chemtradeasia.com/";
 
   @override
   void initState() {
@@ -42,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const String url = "https://chemtradea.chemtradeasia.com/";
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(

@@ -49,6 +49,7 @@ class DetailProductProvider with ChangeNotifier {
     try {
       state = ResultState.loading;
       resultDetailProduct = await service.getDetailProduct(seoUrl);
+      notifyListeners();
       if (resultDetailProduct != null) {
         state = ResultState.hasData;
       } else {
@@ -71,5 +72,6 @@ class DetailProductProvider with ChangeNotifier {
       print(e.toString());
       // throw Exception("Terjadi Kesalahan");
     }
+    notifyListeners();
   }
 }
