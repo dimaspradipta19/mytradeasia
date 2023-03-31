@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           itemBuilder:
                                                               (context, index) {
                                                             return Text(
-                                                              "${streamSnapshot.data?.docs[index]['firstName'] ?? " "} ${streamSnapshot.data!.docs[index]['lastName'] ?? " "}",
+                                                              "${streamSnapshot.data?.docs[index]['firstName']} ${streamSnapshot.data!.docs[index]['lastName']}",
                                                               style: text16.copyWith(
                                                                   color:
                                                                       whiteColor,
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             );
                                                           });
                                                     } else {
-                                                      return const Text(" ");
+                                                      return const Text("");
                                                     }
                                                   },
                                                 ),

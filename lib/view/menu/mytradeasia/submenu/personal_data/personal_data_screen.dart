@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
 
@@ -29,6 +28,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   final DocumentReference docRef = FirebaseFirestore.instance
       .collection('biodata')
       .doc(FirebaseAuth.instance.currentUser!.uid.toString());
+
+  Future<bool> checkIfDocumentExists() async {
+    final DocumentSnapshot snapshot =
+        await _firestore.doc(_auth.currentUser!.uid.toString()).get();
+    return snapshot.exists;
+  }
 
   @override
   void dispose() {
@@ -127,8 +132,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     TextEditingWidget(
                                         readOnly: false,
                                         controller: _firstNameController,
-                                        hintText: streamSnapshot.data?.docs[0]
-                                            ["firstName"]),
+                                        hintText:
+                                            streamSnapshot.data!.docs.isNotEmpty
+                                                ? streamSnapshot.data?.docs[0]
+                                                    ["firstName"]
+                                                : " "),
                                   ],
                                 ),
                               ),
@@ -146,8 +154,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     TextEditingWidget(
                                         readOnly: false,
                                         controller: _lastNameController,
-                                        hintText: streamSnapshot.data?.docs[0]
-                                            ["lastName"]),
+                                        hintText:
+                                            streamSnapshot.data!.docs.isNotEmpty
+                                                ? streamSnapshot.data?.docs[0]
+                                                    ["lastName"]
+                                                : ""),
                                   ],
                                 ),
                               ),
@@ -243,8 +254,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               TextEditingWidget(
                                   readOnly: false,
                                   controller: _companyNameController,
-                                  hintText: streamSnapshot.data?.docs[0]
-                                      ["companyName"]),
+                                  hintText: streamSnapshot.data!.docs.isNotEmpty
+                                      ? streamSnapshot.data?.docs[0]
+                                          ["companyName"]
+                                      : ""),
                             ],
                           ),
                           // Email with suffix
@@ -307,35 +320,127 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 ),
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                docRef
-                    .update({
+                docRef.get().then((docSnapshot) async {
+                  if (docSnapshot.exists) {
+                    // Document exists, update its fields
+                    docRef
+                        .update({
+                          'firstName': _firstNameController.text,
+                          'lastName': _lastNameController.text,
+                          'companyName': _companyNameController.text,
+                        })
+                        .then((value) => showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DialogWidget(
+                                    urlIcon:
+                                        "assets/images/logo_email_change.png",
+                                    title: "Personal Data has been Change",
+                                    subtitle:
+                                        "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                    textForButton: "Back to My Tradeasia",
+                                    navigatorFunction: () =>
+                                        Navigator.pushAndRemoveUntil(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const NavigationBarWidget();
+                                          },
+                                        ), (route) => false));
+                              },
+                            ))
+                        .catchError((error) => showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DialogWidget(
+                                    urlIcon:
+                                        "assets/images/logo_email_change.png",
+                                    title: "Error",
+                                    subtitle: "Something went wrong",
+                                    textForButton: "Back to My Tradeasia",
+                                    navigatorFunction: () =>
+                                        Navigator.pushAndRemoveUntil(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const NavigationBarWidget();
+                                          },
+                                        ), (route) => false));
+                              },
+                            ));
+                  } else {
+                    // Document does not exist, create it with the given data
+                    Map<String, dynamic> data = {
                       'firstName': _firstNameController.text,
                       'lastName': _lastNameController.text,
                       'companyName': _companyNameController.text,
-                    })
-                    .then((value) => print("Document updated successfully"))
-                    .catchError(
-                        (error) => print("Failed to update document: $error"))
-                    .then((value) => showDialog(
-                          context: context,
-                          builder: (context) {
-                            return DialogWidget(
-                                urlIcon: "assets/images/logo_email_change.png",
-                                title: "Personal Data has been Change",
-                                subtitle:
-                                    "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                                textForButton: "Back to My Tradeasia",
-                                navigatorFunction: () =>
-                                    Navigator.pushAndRemoveUntil(context,
-                                        MaterialPageRoute(
-                                      builder: (context) {
-                                        return const NavigationBarWidget();
-                                      },
-                                    ), (route) => false));
-                          },
-                        ));
+                      // 'country': _countryController.text,
+                      // 'password': _passwordController.text,
+                      'uid': _auth.currentUser!.uid.toString(),
+                    };
+
+                    await docRef
+                        .set(data)
+                        .then((value) => showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DialogWidget(
+                                    urlIcon:
+                                        "assets/images/logo_email_change.png",
+                                    title: "Personal Data has been Submitted",
+                                    subtitle:
+                                        "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                    textForButton: "Back to My Tradeasia",
+                                    navigatorFunction: () =>
+                                        Navigator.pushAndRemoveUntil(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const NavigationBarWidget();
+                                          },
+                                        ), (route) => false));
+                              },
+                            ))
+                        .catchError((error) => showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DialogWidget(
+                                    urlIcon:
+                                        "assets/images/logo_email_change.png",
+                                    title: "Cannot update your personal Data",
+                                    subtitle:
+                                        "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                    textForButton: "Back to My Tradeasia",
+                                    navigatorFunction: () =>
+                                        Navigator.pushAndRemoveUntil(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return const NavigationBarWidget();
+                                          },
+                                        ), (route) => false));
+                              },
+                            ));
+                  }
+                });
+                // if () {
+                //   String docsId = _auth.currentUser!.uid.toString();
+                //   Map<String, dynamic> data = {
+                //     'firstName': _firstNameController.text,
+                //     'lastName': _lastNameController.text,
+                //     'companyName': _companyNameController.text,
+                //     // 'country': _countryController.text,
+                //     // 'password': _passwordController.text,
+                //     'uid': _auth.currentUser!.uid.toString(),
+                //   };
+
+                //   // await FirebaseFirestore.instance
+                //   //     .collection('biodata')
+                //   //     .doc(docsId)
+                //   //     .set(data);
+
+                //   await docRef.set(data);
+
+                // } else {}
+
               }
             },
             child: Text(

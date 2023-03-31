@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../modelview/provider/loading_provider.dart';
 import '../../../utils/theme.dart';
+import '../../../widget/loading_overlay_widget.dart';
 import '../../menu/other/languages_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,7 +18,6 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool isChecked = false;
-  // bool isLoading = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -30,19 +30,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  // final _auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     var valueLoading = Provider.of<LoadingProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(size20px),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 30),
@@ -251,39 +249,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 valueLoading.isLoading;
                                 valueLoading.getStateLoading();
                               });
-
-                              // setState(() {
-                              //   isLoading = true;
-                              // });
-
-                              // try {
-                              //   await _auth.createUserWithEmailAndPassword(
-                              //       email: _emailController.text,
-                              //       password: _phoneNumberController.text);
-
-                              //   const snackbar = SnackBar(
-                              //       content: Text("Berhasil Registrasi"));
-                              //   ScaffoldMessenger.of(context)
-                              //       .showSnackBar(snackbar);
-
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) {
-                              //         return const BiodataScreen();
-                              //       },
-                              //     ),
-                              //   );
-                              // } catch (e) {
-                              //   final snackbar =
-                              //       SnackBar(content: Text(e.toString()));
-                              //   ScaffoldMessenger.of(context)
-                              //       .showSnackBar(snackbar);
-                              // } finally {
-                              //   setState(() {
-                              //     isLoading = false;
-                              //   });
-                              // }
                             },
                             child: Text(
                               "Sign Up",
@@ -309,7 +274,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: size20px
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -332,9 +297,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: size20px),
                   Row(
                     children: [
                       Expanded(
@@ -357,9 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               "assets/images/logo_google.png",
                               width: size20px + 4,
                             ),
-                            onPressed: () {
-                              print("Google");
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ),
@@ -384,17 +345,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               "assets/images/logo_facebook.png",
                               width: size20px + 4,
                             ),
-                            onPressed: () {
-                              print("Facebook");
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: size20px),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -421,12 +378,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              if (valueLoading.isLoading == true)
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
-            ],
-          ),
+            ),
+            if (valueLoading.isLoading)
+              SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                child: const LoadingOverlay(),
+              ),
+          ],
         ),
       ),
     );
