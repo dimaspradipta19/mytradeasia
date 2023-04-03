@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../view/auth/biodata/biodata_screen.dart';
 import '../../view/menu/other/navigation_bar.dart';
@@ -22,6 +23,11 @@ class AuthProvider with ChangeNotifier {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: phoneNumber);
 
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("email", email);
+      await prefs.setString("phoneNumber", phoneNumber);
+      await prefs.setBool("isLoggedIn", true);
+
       setUser(userCredential.user);
 
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
@@ -42,7 +48,6 @@ class AuthProvider with ChangeNotifier {
                 Navigator.pop(context);
               }),
         );
-        print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         showDialog(
           context: context,
@@ -73,7 +78,6 @@ class AuthProvider with ChangeNotifier {
         },
       ), (route) => false);
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
       if (e.code == "email-already-in-use") {
         showDialog(
           context: context,
@@ -91,7 +95,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isLoggedIn", false);
+    prefs.clear();
     await _auth.signOut();
-    setUser(null);
   }
 }

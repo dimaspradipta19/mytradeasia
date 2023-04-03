@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mytradeasia/model/detail_product_model.dart';
 
 class DetailProductService {
-  Future<DetailProductModel> getDetailProduct(String seoUrl) async {
+  Future<DetailProductModel?> getDetailProduct(String seoUrl) async {
     DetailProductModel? resultAwal;
 
     try {
@@ -25,6 +25,6 @@ class DetailProductService {
     } catch (e) {
       log(e.toString());
     }
-    return resultAwal!;
+    return null;
   }
 }

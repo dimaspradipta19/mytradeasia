@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
 import 'package:mytradeasia/modelview/service/detail_product_service.dart';
-import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -62,7 +61,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         height: size20px * 15.0,
                       ),
                     );
-                  } else if (snapshot.data!.detailProduct == null) {
+                    // } else if (snapshot.data!.detailProduct == null) {
+                  } else if (snapshot.data?.detailProduct == null) {
                     return Center(
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +81,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 height: size20px * 15.0,
                                 child: Image.network(
-                                  // "$url${valueDetailScreen.resultDetailProduct?.detailProduct?.productimage}",
                                   "$url${snapshot.data?.detailProduct?.productimage}",
                                   fit: BoxFit.cover,
                                   loadingBuilder:
@@ -582,11 +581,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                               snapshot.data?.detailProduct
                                                       ?.description ??
                                                   "N/A",
-                                              // valueDetailScreen
-                                              //         .resultDetailProduct
-                                              //         ?.detailProduct
-                                              //         ?.description ??
-                                              //     "N/A",
                                               style: body1Regular,
                                               maxLines: isExpand ? null : 5,
                                             ),
@@ -594,9 +588,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            setState(() {
-                                              isExpand = !isExpand;
-                                            });
+                                            print("Expanding");
+                                            // setState(() {
+                                            //   isExpand = !isExpand;
+                                            // });
                                           },
                                           child: Center(
                                             child: Text(
@@ -634,9 +629,9 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            setState(() {
-                                              isExpand = !isExpand;
-                                            });
+                                            // setState(() {
+                                            //   isExpand = !isExpand;
+                                            // });
                                           },
                                           child: Center(
                                             child: Text(
@@ -947,17 +942,15 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                         .width *
                                                     0.5,
                                                 height: size20px * 2.5,
-                                                child: Expanded(
-                                                  child: Text(
-                                                    value
-                                                        .resultDetailProduct!
-                                                        .detailProduct!
-                                                        .productname!,
-                                                    style: heading2,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
+                                                child: Text(
+                                                  value
+                                                      .resultDetailProduct!
+                                                      .detailProduct!
+                                                      .productname!,
+                                                  style: heading2,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                               const SizedBox(

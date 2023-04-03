@@ -182,7 +182,7 @@ class AllTopProductsWidget extends StatelessWidget {
                 itemBuilder: (context, index) => const Card(),
               ),
             );
-          } else {
+          } else if (valueTopProducts.state == ResultState.hasData) {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -349,6 +349,8 @@ class AllTopProductsWidget extends StatelessWidget {
                 );
               },
             );
+          } else {
+            return const Text("Error");
           }
         },
       ),

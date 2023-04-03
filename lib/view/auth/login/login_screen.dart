@@ -5,6 +5,7 @@ import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/theme.dart';
 import '../../../widget/loading_overlay_widget.dart';
@@ -27,8 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _phoneNumberController.dispose();
     super.dispose();
   }
-
-  // final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 valueLoading.isLoading;
                                 valueLoading.getStateLoading();
                                 valueAuth

@@ -14,6 +14,7 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotatio
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
@@ -291,7 +292,12 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               ),
                               TextButton(
                                 onPressed: () async {
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.clear();
+
                                   await _auth.signOut();
+
                                   Navigator.pushAndRemoveUntil(context,
                                       MaterialPageRoute(
                                     builder: (context) {

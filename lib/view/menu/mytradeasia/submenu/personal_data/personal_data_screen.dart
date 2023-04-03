@@ -421,26 +421,6 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                             ));
                   }
                 });
-                // if () {
-                //   String docsId = _auth.currentUser!.uid.toString();
-                //   Map<String, dynamic> data = {
-                //     'firstName': _firstNameController.text,
-                //     'lastName': _lastNameController.text,
-                //     'companyName': _companyNameController.text,
-                //     // 'country': _countryController.text,
-                //     // 'password': _passwordController.text,
-                //     'uid': _auth.currentUser!.uid.toString(),
-                //   };
-
-                //   // await FirebaseFirestore.instance
-                //   //     .collection('biodata')
-                //   //     .doc(docsId)
-                //   //     .set(data);
-
-                //   await docRef.set(data);
-
-                // } else {}
-
               }
             },
             child: Text(

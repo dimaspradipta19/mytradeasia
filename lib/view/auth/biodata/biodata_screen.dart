@@ -70,6 +70,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                         .collection('biodata')
                         .doc(docsId)
                         .set(data);
+                        
                     await showDialog(
                       barrierDismissible: false,
                       context: context,
