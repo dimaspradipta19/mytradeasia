@@ -43,9 +43,12 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
       child: Scaffold(
         body: RefreshIndicator(
           color: primaryColor1,
-          onRefresh: () =>
-              Provider.of<DetailProductProvider>(context, listen: false)
-                  .getDetailProduct(widget.urlProduct),
+          onRefresh: () {
+            setState(() {});
+            Provider.of<DetailProductProvider>(context, listen: false)
+                .getDetailProduct(widget.urlProduct);
+            return DetailProductService().getDetailProduct(widget.urlProduct);
+          },
           child: SingleChildScrollView(
             child: FutureBuilder(
                 future:
@@ -61,14 +64,17 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         height: size20px * 15.0,
                       ),
                     );
-                    // } else if (snapshot.data!.detailProduct == null) {
                   } else if (snapshot.data?.detailProduct == null) {
                     return Center(
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Text("Sorry there is no data for this products"),
+                        Padding(
+                          padding: EdgeInsets.only(top: size20px * 20),
+                          child:
+                              Text("Sorry there is no data for this products"),
+                        ),
                       ],
                     ));
                   } else if (snapshot.hasData) {
@@ -225,7 +231,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                 snapshot.data?.detailProduct
                                                         ?.productname ??
                                                     "N/A",
-                                                // snapshot.data.resultDetailProduct?.detailProduct?.productname ?? "N/A",
                                                 style: heading1,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
@@ -264,11 +269,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                     snapshot.data?.detailProduct
                                                             ?.casNumber ??
                                                         "N/A",
-                                                    // valueDetailScreen
-                                                    //         .resultDetailProduct
-                                                    //         ?.detailProduct
-                                                    //         ?.casNumber ??
-                                                    //     "N/A",
                                                     style:
                                                         body1Regular.copyWith(
                                                             color: greyColor2)),
@@ -284,11 +284,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                     snapshot.data?.detailProduct
                                                             ?.hsCode ??
                                                         "N/A",
-                                                    // valueDetailScreen
-                                                    //         .resultDetailProduct
-                                                    //         ?.detailProduct
-                                                    //         ?.hsCode ??
-                                                    //     "N/A",
                                                     style:
                                                         body1Regular.copyWith(
                                                             color: greyColor2)),
@@ -308,11 +303,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                               ?.detailProduct
                                                               ?.formula ??
                                                           "N/A",
-                                                      // valueDetailScreen
-                                                      //         .resultDetailProduct
-                                                      //         ?.detailProduct
-                                                      //         ?.formula ??
-                                                      //     "N/A",
                                                       style:
                                                           body1Regular.copyWith(
                                                               color: greyColor2,
@@ -350,9 +340,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                           ),
                                                         ),
                                                       ),
-                                                      onPressed: () {
-                                                        print("download TDS");
-                                                      },
+                                                      onPressed: () {},
                                                       child: Text(
                                                         "Download TDS",
                                                         style: body1Medium
@@ -427,11 +415,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         "IUPAC NAME",
                                         (snapshot.data?.detailProduct
                                                 ?.iupacName ??
-                                            "N/A"
-                                        // valueDetailScreen.resultDetailProduct
-                                        //       ?.detailProduct?.iupacName ??
-                                        //   "N/A"
-                                        )
+                                            "N/A")
                                       ],
                                       ["Appearance", "N/A"],
                                       ["Common Name", "N/A"],
@@ -439,13 +423,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         "Packaging",
                                         (snapshot.data?.detailProduct
                                                 ?.packagingName ??
-                                            "N/A"
-                                        // valueDetailScreen
-                                        //       .resultDetailProduct
-                                        //       ?.detailProduct
-                                        //       ?.packagingName ??
-                                        //   "N/A"
-                                        )
+                                            "N/A")
                                       ]
                                     ];
                                     return Container(
@@ -502,10 +480,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                   child: ListView.builder(
                                     itemCount:
                                         snapshot.data?.listIndustry.length,
-                                    // valueDetailScreen
-                                    //     .resultDetailProduct!
-                                    //     .listIndustry
-                                    //     .length,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     physics: const BouncingScrollPhysics(),
@@ -530,10 +504,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                           child: Text(
                                             snapshot.data!.listIndustry[index]
                                                 .industryName,
-                                            // valueDetailScreen
-                                            //     .resultDetailProduct!
-                                            //     .listIndustry[index]
-                                            //     .industryName,
                                             style: body1Regular,
                                           ),
                                         ),
@@ -618,11 +588,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                             snapshot.data?.detailProduct
                                                     ?.application ??
                                                 "N/A",
-                                            // valueDetailScreen
-                                            //         .resultDetailProduct
-                                            //         ?.detailProduct
-                                            //         ?.application ??
-                                            // "",
                                             style: body1Regular,
                                             maxLines: isExpand ? null : 5,
                                           ),
@@ -667,10 +632,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         childAspectRatio: 0.76),
                                 itemCount:
                                     snapshot.data!.relatedProducts.length,
-                                // valueDetailScreen
-                                //     .resultDetailProduct!
-                                //     .relatedProducts
-                                //     .length,
                                 shrinkWrap: true,
                                 padding: EdgeInsets.zero,
                                 physics: const BouncingScrollPhysics(),
@@ -686,10 +647,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                           indexRelated]
                                                       .seoUrl ??
                                                   "/en/acrylic-acid"
-                                              // valueDetailScreen
-                                              //     .resultDetailProduct!
-                                              //     .relatedProducts[indexRelated]
-                                              //     .seoUrl,
+                                              
                                               );
                                         },
                                       ));
@@ -759,7 +717,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                             );
                                                           },
                                                         )
-                                                      : const FlutterLogo(),
+                                                      : const CircularProgressIndicator.adaptive(),
                                             ),
                                           ),
                                           Expanded(
@@ -892,295 +850,307 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     elevation: MaterialStateProperty.all<double>(0.0),
                   ),
                   onPressed: () {
-                    showModalBottomSheet<dynamic>(
-                      isScrollControlled: true,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(40.0),
+                    var value = Provider.of<DetailProductProvider>(context,
+                        listen: false);
+                    if (value.resultDetailProduct?.detailProduct == null) {
+                      return print("detailProduct null");
+                    } else {
+                      showModalBottomSheet<dynamic>(
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(40.0),
+                          ),
                         ),
-                      ),
-                      context: context,
-                      builder: (context) {
-                        var value = Provider.of<DetailProductProvider>(context,
-                            listen: false);
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              left: size20px, right: size20px, top: size20px),
-                          child: SizedBox(
-                            height: size20px * 17,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: Image.asset(
-                                    "assets/images/icon_spacing.png",
-                                    width: 25.0,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                left: size20px, right: size20px, top: size20px),
+                            child: SizedBox(
+                              height: size20px * 17,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Image.asset(
+                                      "assets/images/icon_spacing.png",
+                                      width: 25.0,
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: size20px),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                              height: size20px * 5,
-                                              width: size20px * 5,
-                                              child: Image.network(url +
-                                                  value
-                                                      .resultDetailProduct!
-                                                      .detailProduct!
-                                                      .productimage!)),
-                                          const SizedBox(width: size20px),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.5,
-                                                height: size20px * 2.5,
-                                                child: Text(
-                                                  value
-                                                      .resultDetailProduct!
-                                                      .detailProduct!
-                                                      .productname!,
-                                                  style: heading2,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                  height: size20px / 2),
-                                              Row(
-                                                children: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const Text(
-                                                        "CAS Number",
-                                                        style: body1Medium,
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Text(
-                                                        value
-                                                                .resultDetailProduct
-                                                                ?.detailProduct
-                                                                ?.casNumber ??
-                                                            "-",
-                                                        style: body1Regular
-                                                            .copyWith(
-                                                                color:
-                                                                    greyColor2),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 30.0,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const Text(
-                                                        "HS Code",
-                                                        style: body1Medium,
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5.0),
-                                                      Text(
-                                                        value
-                                                                .resultDetailProduct
-                                                                ?.detailProduct
-                                                                ?.hsCode ??
-                                                            "-",
-                                                        style: body1Regular
-                                                            .copyWith(
-                                                                color:
-                                                                    greyColor2),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: size20px * 2,
-                                            bottom: size20px * 1.5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(top: size20px),
+                                    child: Column(
+                                      children: [
+                                        Row(
                                           children: [
-                                            Expanded(
-                                              flex: 10,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text(
-                                                    "Quantity",
-                                                    style: text14,
+                                            SizedBox(
+                                                height: size20px * 5,
+                                                width: size20px * 5,
+                                                child: Image.network(url +
+                                                    (value
+                                                            .resultDetailProduct
+                                                            ?.detailProduct
+                                                            ?.productimage ??
+                                                        ""))),
+                                            const SizedBox(width: size20px),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.5,
+                                                  height: size20px * 2.5,
+                                                  child: Text(
+                                                    value
+                                                            .resultDetailProduct
+                                                            ?.detailProduct
+                                                            ?.productname ??
+                                                        "N/A",
+                                                    style: heading2,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
-                                                  const SizedBox(
-                                                      height: size24px / 3),
-                                                  SizedBox(
-                                                    width: size20px * 8.0,
-                                                    height: size20px + 30,
-                                                    child: TextEditingWidget(
-                                                      controller:
-                                                          _quantityController,
-                                                      hintText: "Quantity",
-                                                      readOnly: false,
-                                                      inputType:
-                                                          TextInputType.number,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                                flex: 1, child: Container()),
-                                            Expanded(
-                                              flex: 10,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text(
-                                                    "Unit",
-                                                    style: text14,
-                                                  ),
-                                                  const SizedBox(height: 8.0),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: greyColor3),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7.0)),
-                                                    width: size20px * 8.0,
-                                                    height: size20px + 28,
-                                                    // TexteditingController here
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: size20px,
-                                                      ),
-                                                      child:
-                                                          DropdownButtonFormField(
-                                                        icon: Image.asset(
-                                                            "assets/images/icon_bottom.png"),
-                                                        hint: Text(
-                                                          "Unit",
+                                                ),
+                                                const SizedBox(
+                                                    height: size20px / 2),
+                                                Row(
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        const Text(
+                                                          "CAS Number",
+                                                          style: body1Medium,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5.0),
+                                                        Text(
+                                                          value
+                                                                  .resultDetailProduct
+                                                                  ?.detailProduct
+                                                                  ?.casNumber ??
+                                                              "N/A",
                                                           style: body1Regular
                                                               .copyWith(
                                                                   color:
-                                                                      greyColor),
+                                                                      greyColor2),
                                                         ),
-                                                        decoration:
-                                                            const InputDecoration(
-                                                          border:
-                                                              InputBorder.none,
-                                                        ),
-                                                        style: body1Regular,
-                                                        items: const [
-                                                          DropdownMenuItem(
-                                                            value: 'Tonne',
-                                                            child: Text('Tonne',
-                                                                style:
-                                                                    body1Regular),
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            value: '20” FCL',
-                                                            child: Text(
-                                                                '20” FCL',
-                                                                style:
-                                                                    body1Regular),
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            value: 'Litres',
-                                                            child: Text(
-                                                                'Litres',
-                                                                style:
-                                                                    body1Regular),
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            value:
-                                                                'Kilogram (Kg)',
-                                                            child: Text(
-                                                                'Kilogram (Kg)',
-                                                                style:
-                                                                    body1Regular),
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            value:
-                                                                'Metric Tonne (MT)',
-                                                            child: Text(
-                                                                'Metric Tonne (MT)',
-                                                                style:
-                                                                    body1Regular),
-                                                          ),
-                                                        ],
-                                                        value:
-                                                            _selectedValueUnit,
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            _selectedValueUnit =
-                                                                value;
-                                                          });
-                                                        },
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
+                                                    const SizedBox(
+                                                      width: 30.0,
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        const Text(
+                                                          "HS Code",
+                                                          style: body1Medium,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5.0),
+                                                        Text(
+                                                          value
+                                                                  .resultDetailProduct
+                                                                  ?.detailProduct
+                                                                  ?.hsCode ??
+                                                              "N/A",
+                                                          style: body1Regular
+                                                              .copyWith(
+                                                                  color:
+                                                                      greyColor2),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: size20px * 2.75,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                      Color>(primaryColor1),
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          7.0),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: size20px * 2,
+                                              bottom: size20px * 1.5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                flex: 10,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Quantity",
+                                                      style: text14,
+                                                    ),
+                                                    const SizedBox(
+                                                        height: size24px / 3),
+                                                    SizedBox(
+                                                      width: size20px * 8.0,
+                                                      height: size20px + 30,
+                                                      child: TextEditingWidget(
+                                                        controller:
+                                                            _quantityController,
+                                                        hintText: "Quantity",
+                                                        readOnly: false,
+                                                        inputType: TextInputType
+                                                            .number,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                            onPressed: () {},
-                                            child: Text("Add to Cart",
-                                                style: text16.copyWith(
-                                                    color: whiteColor))),
-                                      )
-                                    ],
+                                              Expanded(
+                                                  flex: 1, child: Container()),
+                                              Expanded(
+                                                flex: 10,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Unit",
+                                                      style: text14,
+                                                    ),
+                                                    const SizedBox(height: 8.0),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  greyColor3),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      7.0)),
+                                                      width: size20px * 8.0,
+                                                      height: size20px + 28,
+                                                      // TexteditingController here
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          left: size20px,
+                                                        ),
+                                                        child:
+                                                            DropdownButtonFormField(
+                                                          icon: Image.asset(
+                                                              "assets/images/icon_bottom.png"),
+                                                          hint: Text(
+                                                            "Unit",
+                                                            style: body1Regular
+                                                                .copyWith(
+                                                                    color:
+                                                                        greyColor),
+                                                          ),
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            border: InputBorder
+                                                                .none,
+                                                          ),
+                                                          style: body1Regular,
+                                                          items: const [
+                                                            DropdownMenuItem(
+                                                              value: 'Tonne',
+                                                              child: Text(
+                                                                  'Tonne',
+                                                                  style:
+                                                                      body1Regular),
+                                                            ),
+                                                            DropdownMenuItem(
+                                                              value: '20” FCL',
+                                                              child: Text(
+                                                                  '20” FCL',
+                                                                  style:
+                                                                      body1Regular),
+                                                            ),
+                                                            DropdownMenuItem(
+                                                              value: 'Litres',
+                                                              child: Text(
+                                                                  'Litres',
+                                                                  style:
+                                                                      body1Regular),
+                                                            ),
+                                                            DropdownMenuItem(
+                                                              value:
+                                                                  'Kilogram (Kg)',
+                                                              child: Text(
+                                                                  'Kilogram (Kg)',
+                                                                  style:
+                                                                      body1Regular),
+                                                            ),
+                                                            DropdownMenuItem(
+                                                              value:
+                                                                  'Metric Tonne (MT)',
+                                                              child: Text(
+                                                                  'Metric Tonne (MT)',
+                                                                  style:
+                                                                      body1Regular),
+                                                            ),
+                                                          ],
+                                                          value:
+                                                              _selectedValueUnit,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              _selectedValueUnit =
+                                                                  value;
+                                                            });
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: size20px * 2.75,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                        Color>(primaryColor1),
+                                                shape:
+                                                    MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: Text("Add to Cart",
+                                                  style: text16.copyWith(
+                                                      color: whiteColor))),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
+                          );
+                        },
+                      );
+                    }
                   },
                   child: Image.asset(
                     "assets/images/icon_cart_outlined.png",
