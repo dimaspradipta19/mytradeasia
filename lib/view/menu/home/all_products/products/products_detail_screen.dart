@@ -412,7 +412,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                   itemBuilder: (context, index) {
                                     List<List<String>> basicInformation = [
                                       [
-                                        "IUPAC NAME",
+                                        "IUPAC Name",
                                         (snapshot.data?.detailProduct
                                                 ?.iupacName ??
                                             "N/A")
