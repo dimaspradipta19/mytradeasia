@@ -11,6 +11,7 @@ import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
+import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/modelview/service/detail_product_service.dart';
 import 'package:mytradeasia/utils/theme.dart';
@@ -72,6 +73,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) =>
               DetailProductProvider(service: DetailProductService()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SeeMoreProvider(),
         ),
       ],
       child: StreamProvider<InternetConnectionStatus>(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/model/industry_model.dart';
 import 'package:mytradeasia/utils/theme.dart';
 
 class ContactUsScreen extends StatelessWidget {
@@ -30,14 +31,14 @@ class ContactUsScreen extends StatelessWidget {
           children: [
             Expanded(
                 child: ListView.builder(
-              itemCount: 5,
+              itemCount: contactUsData[0].length,
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Container(
-                    height: 180.0,
+                    height: size20px * 9,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       border: Border.all(color: greyColor3),
@@ -51,7 +52,7 @@ class ContactUsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            "Tradeasia International PTE LTD Headquarters",
+                            contactUsData[0][index],
                             style: text15.copyWith(color: secondaryColor1),
                           ),
                           const SizedBox(
@@ -67,10 +68,10 @@ class ContactUsScreen extends StatelessWidget {
                                       body1Regular.copyWith(color: greyColor2),
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
                                 child: Text(
-                                  "+65-62276365",
+                                  contactUsData[1][index],
                                   style: body1Regular,
                                 ),
                               ),
@@ -87,9 +88,9 @@ class ContactUsScreen extends StatelessWidget {
                                       body1Regular.copyWith(color: greyColor2),
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
-                                child: Text("singapore@chemtradeasia.com",
+                                child: Text(contactUsData[2][index],
                                     style: body1Regular),
                               ),
                             ],
@@ -105,11 +106,14 @@ class ContactUsScreen extends StatelessWidget {
                                     style: body1Regular.copyWith(
                                         color: greyColor2),
                                   )),
-                              const Expanded(
+                              Expanded(
                                 flex: 2,
                                 child: Text(
-                                    "133 Cecil Street#12-03 Keck Seng Tower, Singapore 069535",
-                                    style: body1Regular),
+                                  contactUsData[3][index],
+                                  style: body1Regular,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                ),
                               ),
                             ],
                           ),

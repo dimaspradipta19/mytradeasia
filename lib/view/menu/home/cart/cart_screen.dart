@@ -10,8 +10,26 @@ class CartScreen extends StatefulWidget {
   State<CartScreen> createState() => _CartScreenState();
 }
 
+bool isAllChecked = false;
+
+List<Map<String, dynamic>> cartItems = [
+  {
+    'name': 'Dipentene',
+    'image': "assets/images/products_square.png",
+    'casNumber': '138-86-3',
+    'hsCode': '-',
+    'isChecked': false,
+  },
+  {
+    'name': 'Product 2',
+    'image': "assets/images/products_square.png",
+    'casNumber': '123-45-6',
+    'hsCode': '1234',
+    'isChecked': false,
+  }
+];
+
 class _CartScreenState extends State<CartScreen> {
-  bool isCheckedAll = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +60,8 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               children: [
                 Checkbox(
-                  value: isCheckedAll,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isCheckedAll = value!;
-                    });
-                    print(isCheckedAll);
-                  },
+                  value: isAllChecked,
+                  onChanged: (bool? value) {},
                 ),
                 const Text(
                   "Choose All",
@@ -63,25 +76,29 @@ class _CartScreenState extends State<CartScreen> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
-              itemCount: 15,
+              itemCount: cartItems.length,
               itemBuilder: (context, index) {
+                Map<String, dynamic> item = cartItems[index];
                 return SizedBox(
                   height: size20px * 5.0,
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     children: [
                       Checkbox(
-                        value: isCheckedAll,
+                        value: item["isChecked"],
                         onChanged: (bool? value) {
                           setState(() {
-                            isCheckedAll = value!;
+                            // isAllChecked = value!;
+                            item['isChecked'] = value!;
+                            isAllChecked =
+                                cartItems.every((item) => item['isChecked']);
                           });
                         },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: size20px + 5.0),
                         child: Image.asset(
-                          "assets/images/products_square.png",
+                          item["image"],
                           width: size20px * 4.0,
                           height: size20px * 4.0 + 5.0,
                         ),
@@ -90,9 +107,10 @@ class _CartScreenState extends State<CartScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: size20px - 10.0),
-                            child: Text("Dipentene", style: heading3),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: size20px - 10.0),
+                            child: Text(item["name"], style: heading3),
                           ),
                           Row(
                             children: [
@@ -101,7 +119,7 @@ class _CartScreenState extends State<CartScreen> {
                                 children: [
                                   const Text("CAS Number :",
                                       style: body2Medium),
-                                  Text("138 - 86 - 3",
+                                  Text(item["casNumber"],
                                       style: body2Medium.copyWith(
                                           color: greyColor2)),
                                 ],
@@ -111,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text("HS Code :", style: body2Medium),
-                                  Text("-",
+                                  Text(item["hsCode"],
                                       style: body2Medium.copyWith(
                                           color: greyColor2)),
                                 ],
@@ -129,16 +147,15 @@ class _CartScreenState extends State<CartScreen> {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: size20px, vertical: size20px - 8.0),
-        child: isCheckedAll == false
-            ? const InactiveButton(
-                titleButton: "Send Inquiry",
-              )
-            : const ActiveButton(
-                titleButton: "Send Incquiry",
-                navigationPage: QuotationsScreen()),
-      ),
+          padding: const EdgeInsets.symmetric(
+              horizontal: size20px, vertical: size20px - 8.0),
+          child: isAllChecked
+              ? const ActiveButton(
+                  titleButton: "Send Incquiry",
+                  navigationPage: QuotationsScreen())
+              : const InactiveButton(
+                  titleButton: "Send Inquiry",
+                )),
     );
   }
 }

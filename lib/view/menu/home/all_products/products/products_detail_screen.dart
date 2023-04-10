@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
+import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/service/detail_product_service.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
@@ -531,86 +532,90 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               ),
 
                               /* Tabbar Content */
-                              SizedBox(
-                                height: isExpand
-                                    ? MediaQuery.of(context).size.height
-                                    : size20px * 7.5,
-                                width: MediaQuery.of(context).size.width,
-                                child: TabBarView(
-                                  children: [
-                                    // Description content
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: size20px),
-                                            child: Text(
-                                              snapshot.data?.detailProduct
-                                                      ?.description ??
-                                                  "N/A",
-                                              style: body1Regular,
-                                              maxLines: isExpand ? null : 5,
+                              Consumer<SeeMoreProvider>(
+                                builder: (context, valueSeeMore, _) => SizedBox(
+                                  height: valueSeeMore.isExpand
+                                      ? MediaQuery.of(context).size.height
+                                      : size20px * 7.5,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: TabBarView(
+                                    children: [
+                                      // Description content
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: size20px),
+                                              child: Text(
+                                                snapshot.data?.detailProduct
+                                                        ?.description ??
+                                                    "N/A",
+                                                style: body1Regular,
+                                                maxLines: valueSeeMore.isExpand
+                                                    ? null
+                                                    : 5,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            print("Expanding");
-                                            // setState(() {
-                                            //   isExpand = !isExpand;
-                                            // });
-                                          },
-                                          child: Center(
-                                            child: Text(
-                                              isExpand
-                                                  ? "Show Less"
-                                                  : "See More",
-                                              style: body1Regular.copyWith(
-                                                  color: secondaryColor1),
+                                          InkWell(
+                                            onTap: () {
+                                              valueSeeMore.getExpand();
+                                            },
+                                            child: Center(
+                                              child: Text(
+                                                valueSeeMore.isExpand
+                                                    ? "Show Less"
+                                                    : "See More",
+                                                style: body1Regular.copyWith(
+                                                    color: secondaryColor1),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),
 
-                                    // Application content
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: size20px),
-                                          child: Text(
-                                            snapshot.data?.detailProduct
-                                                    ?.application ??
-                                                "N/A",
-                                            style: body1Regular,
-                                            maxLines: isExpand ? null : 5,
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            // setState(() {
-                                            //   isExpand = !isExpand;
-                                            // });
-                                          },
-                                          child: Center(
-                                            child: Text(
-                                              isExpand
-                                                  ? "Show Less"
-                                                  : "See More",
-                                              style: body1Regular.copyWith(
-                                                  color: secondaryColor1),
+                                      // Application content
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: size20px),
+                                              child: Text(
+                                                snapshot.data?.detailProduct
+                                                        ?.application ??
+                                                    "N/A",
+                                                style: body1Regular,
+                                                maxLines: valueSeeMore.isExpand
+                                                    ? null
+                                                    : 5,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          InkWell(
+                                            onTap: () {
+                                              valueSeeMore.getExpand();
+                                            },
+                                            child: Center(
+                                              child: Text(
+                                                valueSeeMore.isExpand
+                                                    ? "Show Less"
+                                                    : "See More",
+                                                style: body1Regular.copyWith(
+                                                    color: secondaryColor1),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
 
@@ -646,9 +651,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                       ?.relatedProducts[
                                                           indexRelated]
                                                       .seoUrl ??
-                                                  "/en/acrylic-acid"
-                                              
-                                              );
+                                                  "/en/acrylic-acid");
                                         },
                                       ));
                                     },
@@ -665,59 +668,61 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                   .size
                                                   .width,
                                               height: size20px * 5.5,
-                                              child:
-                                                  snapshot
-                                                              .data
-                                                              ?.relatedProducts[
+                                              child: snapshot
+                                                          .data
+                                                          ?.relatedProducts[
+                                                              indexRelated]
+                                                          .productimage !=
+                                                      null
+                                                  ? Image.network(
+                                                      url +
+                                                          snapshot
+                                                              .data!
+                                                              .relatedProducts[
                                                                   indexRelated]
-                                                              .productimage !=
-                                                          null
-                                                      ? Image.network(
-                                                          url +
-                                                              snapshot
-                                                                  .data!
-                                                                  .relatedProducts[
-                                                                      indexRelated]
-                                                                  .productimage,
-                                                          fit: BoxFit.fill,
-                                                          loadingBuilder: (context,
-                                                              child,
-                                                              loadingProgress) {
-                                                            if (loadingProgress ==
-                                                                null) {
-                                                              return child;
-                                                            } else {
-                                                              return SizedBox(
-                                                                width: MediaQuery.of(
+                                                              .productimage,
+                                                      fit: BoxFit.fill,
+                                                      loadingBuilder: (context,
+                                                          child,
+                                                          loadingProgress) {
+                                                        if (loadingProgress ==
+                                                            null) {
+                                                          return child;
+                                                        } else {
+                                                          return SizedBox(
+                                                            width:
+                                                                MediaQuery.of(
                                                                         context)
                                                                     .size
                                                                     .width,
-                                                                height: 116.0,
-                                                                child: Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color:
-                                                                        primaryColor1,
-                                                                    value: loadingProgress.expectedTotalBytes !=
-                                                                            null
-                                                                        ? loadingProgress.cumulativeBytesLoaded /
-                                                                            loadingProgress.expectedTotalBytes!
-                                                                        : null,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
-                                                          errorBuilder:
-                                                              (context, error,
-                                                                  stackTrace) {
-                                                            return const FlutterLogo(
-                                                              size:
-                                                                  size20px * 3,
-                                                            );
-                                                          },
-                                                        )
-                                                      : const CircularProgressIndicator.adaptive(),
+                                                            height: 116.0,
+                                                            child: Center(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                color:
+                                                                    primaryColor1,
+                                                                value: loadingProgress
+                                                                            .expectedTotalBytes !=
+                                                                        null
+                                                                    ? loadingProgress
+                                                                            .cumulativeBytesLoaded /
+                                                                        loadingProgress
+                                                                            .expectedTotalBytes!
+                                                                    : null,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return const FlutterLogo(
+                                                          size: size20px * 3,
+                                                        );
+                                                      },
+                                                    )
+                                                  : const CircularProgressIndicator
+                                                      .adaptive(),
                                             ),
                                           ),
                                           Expanded(

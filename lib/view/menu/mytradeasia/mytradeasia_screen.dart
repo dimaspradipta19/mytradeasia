@@ -15,6 +15,7 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_scre
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
@@ -61,53 +62,65 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                       ),
                     ),
                     // First, Last, Company Name
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          width: 144,
-                          child: StreamBuilder(
-                            stream: _firestore
-                                .collection('biodata')
-                                .where('uid',
-                                    isEqualTo:
-                                        _auth.currentUser!.uid.toString())
-                                .snapshots(),
-                            builder: (context,
-                                AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                              if (streamSnapshot.hasData) {
-                                return ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  itemCount: streamSnapshot.data!.docs.length,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${streamSnapshot.data?.docs[index]['firstName'] ?? ""} ${streamSnapshot.data!.docs[index]['lastName'] ?? ""}",
-                                          style: text16,
-                                        ),
-                                        Text(
-                                          streamSnapshot.data?.docs[index]
-                                                  ['companyName'] ??
-                                              "",
-                                          style: text15.copyWith(
-                                              fontWeight: FontWeight.w400,
-                                              color: greyColor2),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                return const Text("");
-                              }
-                            },
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: size20px * 2.5,
+                            width: MediaQuery.of(context).size.width,
+                            child: StreamBuilder(
+                              stream: _firestore
+                                  .collection('biodata')
+                                  .where('uid',
+                                      isEqualTo:
+                                          _auth.currentUser!.uid.toString())
+                                  .snapshots(),
+                              builder: (context,
+                                  AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                                if (streamSnapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Shimmer.fromColors(
+                                    baseColor: greyColor3,
+                                    highlightColor: greyColor,
+                                    child: const SizedBox(
+                                      height: size20px * 2.5,
+                                      width: size20px * 5,
+                                    ),
+                                  );
+                                } else if (streamSnapshot.hasData) {
+                                  return ListView.builder(
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    padding: EdgeInsets.zero,
+                                    itemCount: streamSnapshot.data!.docs.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${streamSnapshot.data?.docs[index]['firstName'] ?? ""} ${streamSnapshot.data!.docs[index]['lastName'] ?? ""}",
+                                            style: text16,
+                                          ),
+                                          Text(
+                                            streamSnapshot.data?.docs[index]
+                                                    ['companyName'] ??
+                                                "",
+                                            style: text15.copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                color: greyColor2),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  return const Text("");
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 ),
