@@ -10,9 +10,9 @@ class RoleUserScreen extends StatefulWidget {
 }
 
 class _RoleUserScreenState extends State<RoleUserScreen> {
-  bool isCustomer = false;
-  bool isAgent = false;
-  bool isSales = false;
+  // bool isCustomer = false;
+  // bool isAgent = false;
+  // bool isSales = false;
 
   List<Modeluser> roleUser = [
     Modeluser(
@@ -151,12 +151,33 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
               ),
               onPressed: roleUser.any((role) => role.isSelected == true)
                   ? () {
+                      var selectedRole = roleUser
+                          .firstWhere((role) => role.isSelected == true);
+                      if (selectedRole.role == "Customer") {
+                        print("Customer");
                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
-                        ),
-                      );
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterScreen(),
+                          ),
+                        );
+                      } else if (selectedRole.role == "Agent") {
+                        print("Agent");
+                        //   Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const RegisterScreen(),
+                        //   ),
+                        // );
+                      } else if (selectedRole.role == "Sales") {
+                        print("Sales");
+                        //   Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const RegisterScreen(),
+                        //   ),
+                        // );
+                      }
                     }
                   : null,
               child: Text("Choose Role",

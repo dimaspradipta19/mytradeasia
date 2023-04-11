@@ -10,7 +10,7 @@ class CartScreen extends StatefulWidget {
   State<CartScreen> createState() => _CartScreenState();
 }
 
-bool isAllChecked = false;
+// bool isAllChecked = false;
 
 List<Map<String, dynamic>> cartItems = [
   {
@@ -18,6 +18,13 @@ List<Map<String, dynamic>> cartItems = [
     'image': "assets/images/products_square.png",
     'casNumber': '138-86-3',
     'hsCode': '-',
+    'isChecked': false,
+  },
+  {
+    'name': 'Product 2',
+    'image': "assets/images/products_square.png",
+    'casNumber': '123-45-6',
+    'hsCode': '1234',
     'isChecked': false,
   },
   {
@@ -60,8 +67,14 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               children: [
                 Checkbox(
-                  value: isAllChecked,
-                  onChanged: (bool? value) {},
+                  value: cartItems.every((item) => item["isChecked"]),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      for (var item in cartItems) {
+                        item["isChecked"] = value;
+                      }
+                    });
+                  },
                 ),
                 const Text(
                   "Choose All",
@@ -88,10 +101,7 @@ class _CartScreenState extends State<CartScreen> {
                         value: item["isChecked"],
                         onChanged: (bool? value) {
                           setState(() {
-                            // isAllChecked = value!;
-                            item['isChecked'] = value!;
-                            isAllChecked =
-                                cartItems.every((item) => item['isChecked']);
+                            cartItems[index]["isChecked"] = value;
                           });
                         },
                       ),
@@ -149,7 +159,7 @@ class _CartScreenState extends State<CartScreen> {
       bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: size20px, vertical: size20px - 8.0),
-          child: isAllChecked
+          child: cartItems.every((item) => item["isChecked"])
               ? const ActiveButton(
                   titleButton: "Send Incquiry",
                   navigationPage: QuotationsScreen())
