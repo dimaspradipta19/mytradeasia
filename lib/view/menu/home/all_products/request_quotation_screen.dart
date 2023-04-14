@@ -17,6 +17,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _incotermController = TextEditingController();
@@ -28,6 +29,8 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   String? _selectedValueUnit;
   String? _selectedValueIncoterm;
 
+  final bool isAgent = true;
+
   @override
   void dispose() {
     super.dispose();
@@ -35,6 +38,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
     _lastNameController.dispose();
     _phoneNumberController.dispose();
     _countryController.dispose();
+    _companyNameController.dispose();
     _productNameController.dispose();
     _quantityController.dispose();
     _incotermController.dispose();
@@ -237,7 +241,59 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                             ],
                           ),
 
-                          // Product Name
+                          // Company Name
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: size20px - 5.0,
+                                    bottom: size20px - 12.0),
+                                child: Text(
+                                  "Company Name",
+                                  style: text14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: TextEditingWidget(
+                                  readOnly: true,
+                                  controller: _companyNameController,
+                                  hintText: "tradeasia",
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // Customer Name
+                          isAgent == true
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                          top: size20px - 5.0,
+                                          bottom: size20px - 12.0),
+                                      child: Text(
+                                        "End Customer Name",
+                                        style: text14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 50.0,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: TextEditingWidget(
+                                        readOnly: true,
+                                        controller: _productNameController,
+                                        hintText: "",
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+
+                          // Product Names
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -254,7 +310,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                 height: 50.0,
                                 width: MediaQuery.of(context).size.width,
                                 child: TextEditingWidget(
-                                  readOnly: true,
+                                  readOnly: false,
                                   controller: _productNameController,
                                   hintText: "Dipentene",
                                 ),

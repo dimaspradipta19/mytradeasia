@@ -7,10 +7,12 @@ class DetailedShipmentProductsScreen extends StatefulWidget {
   const DetailedShipmentProductsScreen({super.key});
 
   @override
-  State<DetailedShipmentProductsScreen> createState() => _DetailedShipmentProductsScreenState();
+  State<DetailedShipmentProductsScreen> createState() =>
+      _DetailedShipmentProductsScreenState();
 }
 
-class _DetailedShipmentProductsScreenState extends State<DetailedShipmentProductsScreen> {
+class _DetailedShipmentProductsScreenState
+    extends State<DetailedShipmentProductsScreen> {
   List<List<String>> basicInformation = [
     [
       "BL No.",
@@ -161,8 +163,73 @@ class _DetailedShipmentProductsScreenState extends State<DetailedShipmentProduct
                   child: Column(
                     children: [
                       Image.asset("assets/images/dummy_map.png"),
-                      
-                      // const WidgetScheduleDetail(),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: listProcessCard.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: <Widget>[
+                              /* Icon */
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    width: 2,
+                                    height: size20px,
+                                    color: secondaryColor1,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: secondaryColor1,
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: const Icon(
+                                      Icons.place_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 2,
+                                    height: size20px,
+                                    color: secondaryColor1,
+                                  ),
+                                ],
+                              ),
+                              /* Content */
+                              Expanded(
+                                  child: Container(
+                                margin:
+                                    const EdgeInsets.only(left: size20px / 2),
+                                height: size20px * 2.5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(listProcessCard[index].nama ?? "",
+                                            style: text15),
+                                        Text(
+                                          listProcessCard[index].tanggalWaktu ??
+                                              "",
+                                          style: body2Medium,
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: size20px / 4,
+                                    ),
+                                    Text(listProcessCard[index].subtitle ?? "",
+                                        style: body1Regular),
+                                  ],
+                                ),
+                              ))
+                            ],
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -304,42 +371,16 @@ class _DetailedShipmentProductsScreenState extends State<DetailedShipmentProduct
               ),
               expandedTitleBackgroundColor: whiteColor,
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
-class WidgetScheduleDetail extends StatelessWidget {
-  const WidgetScheduleDetail({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: size20px),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: size20px * 2.5,
-        child: Row(
-          children: [
-            const FlutterLogo(),
-            const SizedBox(width: size20px / 2),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: const [
-                    Text("Lorem Ipsum", style: text15),
-                    Text("Tanggal/Waktu", style: body2Medium)
-                  ],
+            /* No more data */
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: size20px),
+              child: Center(
+                child: Text(
+                  "No more data",
+                  style: body1Medium.copyWith(color: greyColor2),
                 ),
-                const Text("Lorem ipsum dolor sit amet consectetur. Nibh.",
-                    style: body1Regular),
-              ],
+              ),
             ),
           ],
         ),
@@ -347,3 +388,27 @@ class WidgetScheduleDetail extends StatelessWidget {
     );
   }
 }
+
+class ProcessCard {
+  String? nama;
+  String? subtitle;
+  String? tanggalWaktu;
+
+  ProcessCard(
+      {required this.nama, required this.subtitle, required this.tanggalWaktu});
+}
+
+List<ProcessCard> listProcessCard = [
+  ProcessCard(
+      nama: "Dimas",
+      subtitle: "Lorem ipsum dolor sit amet consectetur. Nibh.",
+      tanggalWaktu: "testest"),
+  ProcessCard(
+      nama: "Dimas",
+      subtitle: "Lorem ipsum dolor sit amet consectetur. Nibh.",
+      tanggalWaktu: "testest"),
+  ProcessCard(
+      nama: "Dimas",
+      subtitle: "Lorem ipsum dolor sit amet consectetur. Nibh.",
+      tanggalWaktu: "testest"),
+];

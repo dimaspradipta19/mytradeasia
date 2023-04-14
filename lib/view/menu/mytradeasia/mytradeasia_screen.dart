@@ -26,6 +26,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  final bool isRoleSales = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +89,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                   );
                                 } else if (streamSnapshot.hasData) {
                                   return ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     padding: EdgeInsets.zero,
                                     itemCount: streamSnapshot.data!.docs.length,
                                     itemBuilder: (context, index) {
@@ -176,16 +179,18 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                   }),
 
               // my cart menu
-              MyTradeAsiaWidget(
-                  nama: "My Cart",
-                  urlIcon: "assets/images/icon_mycart.png",
-                  onPressedFunction: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CartScreen(),
-                        ));
-                  }),
+              isRoleSales
+                  ? Container()
+                  : MyTradeAsiaWidget(
+                      nama: "My Cart",
+                      urlIcon: "assets/images/icon_mycart.png",
+                      onPressedFunction: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CartScreen(),
+                            ));
+                      }),
 
               // quotations menu
               MyTradeAsiaWidget(
@@ -196,7 +201,11 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const QuotationsScreen();
+                          if (isRoleSales) {
+                            return const SalesQuotationsScreen();
+                          } else {
+                            return const QuotationsScreen();
+                          }
                         },
                       ),
                     );

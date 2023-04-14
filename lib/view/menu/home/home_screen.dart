@@ -41,6 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  final bool isRoleUser = true;
+  final bool isRoleSales = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,31 +180,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               const SizedBox(
                                                   width: size20px / 2),
-                                              Container(
-                                                height: 40.0,
-                                                width: 40.0,
-                                                decoration: const BoxDecoration(
-                                                  color: secondaryColor1,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(5.0)),
-                                                ),
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(
-                                                      builder: (context) {
-                                                        return const CartScreen();
-                                                      },
-                                                    ));
-                                                  },
-                                                  icon: Image.asset(
-                                                    "assets/images/icon_cart.png",
-                                                    width: 24,
-                                                    height: 24,
-                                                  ),
-                                                ),
-                                              )
+                                              isRoleSales
+                                                  ? Container()
+                                                  : Container(
+                                                      height: 40.0,
+                                                      width: 40.0,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: secondaryColor1,
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    5.0)),
+                                                      ),
+                                                      child: IconButton(
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                            builder: (context) {
+                                                              return const CartScreen();
+                                                            },
+                                                          ));
+                                                        },
+                                                        icon: Image.asset(
+                                                          "assets/images/icon_cart.png",
+                                                          width: size24px,
+                                                          height: size24px,
+                                                        ),
+                                                      ),
+                                                    )
                                             ],
                                           )
                                         ],
@@ -277,7 +285,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 /* 4 Menu Section */
-                                const MenuGridWidget(),
+                                (isRoleUser == true)
+                                    ? const MenuGridWidget()
+                                    : const MenuGridWidgetSales(),
                                 /* End 4 Menu Section */
 
                                 /* Top Product Section */
@@ -910,6 +920,202 @@ class MenuGridWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 15.0),
+            // TRACKINGDOC
+            Expanded(
+              flex: 5,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const TrackingDocumentScreen();
+                    },
+                  ));
+                },
+                child: Container(
+                  height: 60,
+                  width: 160,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [trackingDocMuda, trackingDocTua]),
+                  ),
+                  child: Stack(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, top: 12.0, bottom: 12.0),
+                      child: Text("Tracking \nDocument",
+                          style: text12.copyWith(
+                              color: whiteColor, fontWeight: FontWeight.w600)),
+                    ),
+                    Positioned(
+                        bottom: 0.0,
+                        right: 0.0,
+                        child: Image.asset(
+                          "assets/images/icon_docs.png",
+                          color: whiteColor,
+                          width: size20px * 3,
+                        )),
+                  ]),
+                ),
+              ),
+            )
+          ],
+        ),
+        // Tracking Ship & All Products menu baris 2
+        Padding(
+          padding:
+              const EdgeInsets.only(top: size20px * 0.75, bottom: size20px),
+          child: Row(
+            children: [
+              // TRACKINGSHIP
+              Expanded(
+                flex: 5,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const TrackingShipmentScreen();
+                      },
+                    ));
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 160,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [trackingShipMuda, trackingShipTua]),
+                    ),
+                    child: Stack(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, top: 12.0, bottom: 12.0),
+                        child: Text("Tracking \nShipment",
+                            style: text12.copyWith(
+                                color: whiteColor,
+                                fontWeight: FontWeight.w600)),
+                      ),
+                      Positioned(
+                          bottom: 0.0,
+                          right: 0.0,
+                          child: Image.asset(
+                            "assets/images/icon_boat.png",
+                            color: whiteColor,
+                            width: size20px * 3,
+                          )),
+                    ]),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 15.0),
+              // ALL PRODUCTS
+              Expanded(
+                flex: 5,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const AllProductsScreen();
+                      },
+                    ));
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 160,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [allProductsMuda, allProductsTua]),
+                    ),
+                    child: Stack(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, top: 12.0, bottom: 12.0),
+                        child: Text("All \nProducts",
+                            style: text12.copyWith(
+                                color: whiteColor,
+                                fontWeight: FontWeight.w600)),
+                      ),
+                      Positioned(
+                          bottom: 0.0,
+                          right: 0.0,
+                          child: Image.asset(
+                            "assets/images/icon_box.png",
+                            color: whiteColor,
+                            width: size20px * 3,
+                          )),
+                    ]),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MenuGridWidgetSales extends StatelessWidget {
+  const MenuGridWidgetSales({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // RFQ & Tracking Doc menu baris 1
+        Row(
+          children: [
+            // RFQ
+            // Expanded(
+            //   flex: 5,
+            //   child: InkWell(
+            //     onTap: () {
+            //       Navigator.push(context, MaterialPageRoute(
+            //         builder: (context) {
+            //           return const RequestQuotationScreen();
+            //         },
+            //       ));
+            //     },
+            //     child: Container(
+            //       height: 60,
+            //       width: 160,
+            //       decoration: const BoxDecoration(
+            //         borderRadius: BorderRadius.all(Radius.circular(10)),
+            //         gradient: LinearGradient(
+            //             begin: Alignment.centerLeft,
+            //             end: Alignment.centerRight,
+            //             colors: [rfqMuda, rfqTua]),
+            //       ),
+            //       child: Stack(children: [
+            //         Padding(
+            //           padding: const EdgeInsets.only(
+            //               left: 20.0, top: 12.0, bottom: 12.0),
+            //           child: Text("Request for \nQuotation",
+            //               style: text12.copyWith(
+            //                   color: whiteColor, fontWeight: FontWeight.w600)),
+            //         ),
+            //         Positioned(
+            //             bottom: 0.0,
+            //             right: 0.0,
+            //             child: Image.asset(
+            //               "assets/images/icon_target.png",
+            //               color: whiteColor,
+            //               width: size20px * 3,
+            //             )),
+            //       ]),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(width: 15.0),
             // TRACKINGDOC
             Expanded(
               flex: 5,

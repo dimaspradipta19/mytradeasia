@@ -4,9 +4,10 @@ import 'package:mytradeasia/model/industry_model.dart';
 import '../../../../../utils/theme.dart';
 
 class QuotationDetailScreen extends StatelessWidget {
-  const QuotationDetailScreen({super.key, required this.status});
+  const QuotationDetailScreen({super.key, required this.status, this.isSales});
 
   final String status;
+  final bool? isSales;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +39,17 @@ class QuotationDetailScreen extends StatelessWidget {
                     width: size20px + 4,
                     color: greyColor2,
                   ))
-              : IconButton(
-                  onPressed: () {
-                    print("edit");
-                  },
-                  icon: Image.asset(
-                    "assets/images/icon_edit.png",
-                    width: size20px + 4,
-                  ))
+              : isSales == false
+                  ? IconButton(
+                      onPressed: () {
+                        print("edit");
+                      },
+                      icon: Image.asset(
+                        "assets/images/icon_edit.png",
+                        width: size20px + 4,
+                      ),
+                    )
+                  : Container(),
         ],
       ),
       body: Padding(
@@ -53,99 +57,106 @@ class QuotationDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             // status
-            Container(
-              margin: const EdgeInsets.only(top: size20px),
-              width: MediaQuery.of(context).size.width,
-              height: size20px * 3.0,
-              decoration: BoxDecoration(
-                  color: status == "submitted"
-                      ? yellowColor2
-                      : status == "rejected"
-                          ? redColor2
-                          : greenColor2,
-                  borderRadius: BorderRadius.circular(size20px / 2)),
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: size20px, vertical: size20px - 12.0),
-                  child: status == "submitted"
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Submitted",
-                              style: text15.copyWith(color: yellowColor),
-                            ),
-                            Text(
-                              "Lorem ipsum dolor sit amet consectetur.",
-                              style: body1Medium.copyWith(color: yellowColor),
-                            ),
-                          ],
-                        )
-                      : status == "rejected"
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Rejected",
-                                  style: text15.copyWith(color: redColor1),
-                                ),
-                                Text(
-                                  "Lorem ipsum dolor sit amet consectetur.",
-                                  style: body1Medium.copyWith(color: redColor1),
-                                ),
-                              ],
-                            )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "approved",
-                                  style: text15.copyWith(color: greenColor1),
-                                ),
-                                Text(
-                                  "Lorem ipsum dolor sit amet consectetur.",
-                                  style:
-                                      body1Medium.copyWith(color: greenColor1),
-                                ),
-                              ],
-                            )),
-            ),
+            isSales == false
+                ? Container(
+                    margin: const EdgeInsets.only(top: size20px),
+                    width: MediaQuery.of(context).size.width,
+                    height: size20px * 3.0,
+                    decoration: BoxDecoration(
+                        color: status == "submitted"
+                            ? yellowColor2
+                            : status == "rejected"
+                                ? redColor2
+                                : greenColor2,
+                        borderRadius: BorderRadius.circular(size20px / 2)),
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: size20px, vertical: size20px - 12.0),
+                        child: status == "submitted"
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Submitted",
+                                    style: text15.copyWith(color: yellowColor),
+                                  ),
+                                  Text(
+                                    "Lorem ipsum dolor sit amet consectetur.",
+                                    style: body1Medium.copyWith(
+                                        color: yellowColor),
+                                  ),
+                                ],
+                              )
+                            : status == "rejected"
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Rejected",
+                                        style:
+                                            text15.copyWith(color: redColor1),
+                                      ),
+                                      Text(
+                                        "Lorem ipsum dolor sit amet consectetur.",
+                                        style: body1Medium.copyWith(
+                                            color: redColor1),
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "approved",
+                                        style:
+                                            text15.copyWith(color: greenColor1),
+                                      ),
+                                      Text(
+                                        "Lorem ipsum dolor sit amet consectetur.",
+                                        style: body1Medium.copyWith(
+                                            color: greenColor1),
+                                      ),
+                                    ],
+                                  )),
+                  )
+                : Container(),
 
             // main content quotations
-            SizedBox(
-              height: size20px * 16.9,
-              child: ListView.builder(
-                itemCount: detailQuotations[0].length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: size20px / 2),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: size20px * 4.0,
-                          child: Text(detailQuotations[0][index],
-                              style: body2Medium.copyWith(color: greyColor2)),
+            ListView.builder(
+              itemCount: detailQuotations[0].length,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: size20px / 2),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: size20px * 4.0,
+                        child: Text(detailQuotations[0][index],
+                            style: body2Medium.copyWith(color: greyColor2)),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: size20px),
+                        child: Text(" : ",
+                            style: body2Medium.copyWith(color: greyColor2)),
+                      ),
+                      Expanded(
+                        child: Text(
+                          detailQuotations[1][index],
+                          style: body1Medium,
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: size20px),
-                          child: Text(" : ",
-                              style: body2Medium.copyWith(color: greyColor2)),
-                        ),
-                        Expanded(
-                          child: Text(
-                            detailQuotations[1][index],
-                            style: body1Medium,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
 
             // quotations
@@ -254,104 +265,117 @@ class QuotationDetailScreen extends StatelessWidget {
               )
             : status == "rejected"
                 ? SizedBox(
-                  width: size20px * 9.75,
-                  height: size20px * 2.75,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print("make offer");
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(primaryColor1),
-                      elevation: MaterialStateProperty.all<double>(0.0),
-                      shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                      )),
-                    ),
-                    child: Text(
-                      "Make another RFQ",
-                      style: text16.copyWith(color: whiteColor),
-                    ),
-                  ),
-                )
-                : Row(
-                    children: [
-                      SizedBox(
-                          width: size20px * 2.75,
-                          height: size20px * 2.75,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(redColor2),
-                              elevation: MaterialStateProperty.all<double>(0.0),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(7.0),
-                                      side:
-                                          const BorderSide(color: redColor1))),
-                            ),
-                            onPressed: (){},
-                            child: const Icon(
-                              Icons.close,
-                              color: redColor1,
-                            ),
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: size20px * 0.75),
-                        child: SizedBox(
-                            width: size20px * 2.75,
-                            height: size20px * 2.75,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        greenColor2),
-                                elevation:
-                                    MaterialStateProperty.all<double>(0.0),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(7.0),
-                                        side: const BorderSide(
-                                            color: greenColor1))),
-                              ),
-                              onPressed: (){},
-                              child: const Icon(
-                                Icons.check,
-                                color: greenColor1,
-                              ),
-                            )),
+                    width: size20px * 9.75,
+                    height: size20px * 2.75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        print("rejected");
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(primaryColor1),
+                        elevation: MaterialStateProperty.all<double>(0.0),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                        )),
                       ),
-                      Expanded(
-                        child: SizedBox(
-                          width: size20px * 9.75,
-                          height: size20px * 2.75,
-                          child: ElevatedButton(
-                            onPressed: (){},
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(primaryColor1),
-                              elevation: MaterialStateProperty.all<double>(0.0),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7.0),
+                      child: Text(
+                        "Make another RFQ",
+                        style: text16.copyWith(color: whiteColor),
+                      ),
+                    ),
+                  )
+                : isSales == true
+                    ? Row(
+                        children: [
+                          SizedBox(
+                              width: size20px * 2.75,
+                              height: size20px * 2.75,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          redColor2),
+                                  elevation:
+                                      MaterialStateProperty.all<double>(0.0),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(7.0),
+                                          side: const BorderSide(
+                                              color: redColor1))),
+                                ),
+                                onPressed: () {
+                                  print("decline");
+                                },
+                                child: const Icon(
+                                  Icons.close,
+                                  color: redColor1,
+                                ),
                               )),
-                            ),
-                            child: Text(
-                              "Make Offer",
-                              style: text16.copyWith(color: whiteColor),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: size20px * 0.75),
+                            child: SizedBox(
+                                width: size20px * 2.75,
+                                height: size20px * 2.75,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            greenColor2),
+                                    elevation:
+                                        MaterialStateProperty.all<double>(0.0),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.0),
+                                            side: const BorderSide(
+                                                color: greenColor1))),
+                                  ),
+                                  onPressed: () {
+                                    print("check");
+                                  },
+                                  child: const Icon(
+                                    Icons.check,
+                                    color: greenColor1,
+                                  ),
+                                )),
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              width: size20px * 9.75,
+                              height: size20px * 2.75,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  print("Reply QUot");
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          primaryColor1),
+                                  elevation:
+                                      MaterialStateProperty.all<double>(0.0),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                  )),
+                                ),
+                                child: Text(
+                                  "Reply Quotation",
+                                  style: text16.copyWith(color: whiteColor),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
+                        ],
+                      )
+                    : Container(),
       ),
     );
   }

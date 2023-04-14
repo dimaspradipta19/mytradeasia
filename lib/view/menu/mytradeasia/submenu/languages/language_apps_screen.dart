@@ -7,14 +7,35 @@ class LanguageAppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> listCountryName = [
-      "Arabic",
-      "Chinese",
-      "English(United States)",
-      "Korean",
-      "Portuguese",
-      "Spanish",
-      "Vietnames",
+    List<Map<String, dynamic>> listCountryName = [
+      {
+        "name": "Arabic",
+        "images": "assets/images/saudi_arabia.png",
+      },
+      {
+        "name": "Chinese",
+        "images": "assets/images/china.png",
+      },
+      {
+        "name": "English(United States)",
+        "images": "assets/images/unitedstates.png"
+      },
+      {
+        "name": "Korean",
+        "images": "assets/images/southkorea.png",
+      },
+      {
+        "name": "Portuguese",
+        "images": "assets/images/portugal.png",
+      },
+      {
+        "name": "Spanish",
+        "images": "assets/images/spain.png",
+      },
+      {
+        "name": "Vietnames",
+        "images": "assets/images/vietnam.png",
+      },
     ];
     return Scaffold(
       appBar: AppBar(
@@ -50,12 +71,15 @@ class LanguageAppsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.asset(
-                      "assets/images/logo_indonesia.png",
+                      listCountryName[index]["images"],
+                      width: size24px + 6,
+                      height: size24px + 6,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
                           left: size20px + 3.0, right: size20px / 5),
-                      child: Text(listCountryName[index], style: body1Regular),
+                      child: Text(listCountryName[index]["name"],
+                          style: body1Regular),
                     ),
                     Text("(+62)",
                         style: body1Regular.copyWith(color: greyColor2)),

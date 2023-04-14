@@ -10,8 +10,6 @@ class CartScreen extends StatefulWidget {
   State<CartScreen> createState() => _CartScreenState();
 }
 
-// bool isAllChecked = false;
-
 List<Map<String, dynamic>> cartItems = [
   {
     'name': 'Dipentene',
@@ -79,12 +77,32 @@ class _CartScreenState extends State<CartScreen> {
                 const Text(
                   "Choose All",
                   style: body1Regular,
-                )
+                ),
+                Expanded(child: Container()),
+                InkWell(
+                  onTap: () => print("A"),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: thirdColor1,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(size20px))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: size20px / 2, vertical: size20px / 4),
+                      child: Text(
+                        "Delete",
+                        style: body1Regular.copyWith(color: secondaryColor1),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: size20px),
               ],
             ),
           ),
           const SizedBox(height: size20px / 4.0),
-          // list of product in cart
+
+          /* Cart */
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
