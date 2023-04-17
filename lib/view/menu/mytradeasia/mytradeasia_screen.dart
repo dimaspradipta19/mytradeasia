@@ -11,6 +11,7 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/languages/language_app
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
+import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -295,40 +296,63 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog(
-                            title: const Text(
-                              'Are you sure want to log out?',
-                              style: heading3,
-                            ),
-                            content: Text(
-                              'You need to insert Email and Password again',
-                              style: body1Medium.copyWith(color: greyColor2),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Cancel'),
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  final SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.clear();
+                          return DialogWidgetYesNo(
+                              urlIcon: "assets/images/china.png",
+                              title: "Are you sure want to log out?",
+                              subtitle:
+                                  'You need to insert Email and Password again',
+                              textForButtonYes: "Yes",
+                              textForButtonNo: "No",
+                              navigatorFunctionNo: () => Navigator.pop(context),
+                              navigatorFunctionYes: () async {
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.clear();
 
-                                  await _auth.signOut();
+                                await _auth.signOut();
 
-                                  Navigator.pushAndRemoveUntil(context,
-                                      MaterialPageRoute(
-                                    builder: (context) {
-                                      return const RoleUserScreen();
-                                    },
-                                  ), (route) => false);
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(
+                                  builder: (context) {
+                                    return const RoleUserScreen();
+                                  },
+                                ), (route) => false);
+                              });
+
+                          // AlertDialog(
+                          //   title: const Text(
+                          //     'Are you sure want to log out?',
+                          //     style: heading3,
+                          //   ),
+                          //   content: Text(
+                          //     'You need to insert Email and Password again',
+                          //     style: body1Medium.copyWith(color: greyColor2),
+                          //   ),
+                          //   actions: <Widget>[
+                          //     TextButton(
+                          //       onPressed: () =>
+                          //           Navigator.pop(context, 'Cancel'),
+                          //       child: const Text('Cancel'),
+                          //     ),
+                          //     TextButton(
+                          //       onPressed: () async {
+                          // final SharedPreferences prefs =
+                          //     await SharedPreferences.getInstance();
+                          // prefs.clear();
+
+                          // await _auth.signOut();
+
+                          // Navigator.pushAndRemoveUntil(context,
+                          //     MaterialPageRoute(
+                          //   builder: (context) {
+                          //     return const RoleUserScreen();
+                          //   },
+                          // ), (route) => false);
+                          //       },
+                          //       child: const Text('OK'),
+                          //     ),
+                          //   ],
+                          // );
                         },
                       );
                     },

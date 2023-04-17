@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
@@ -8,6 +9,7 @@ import '../../view/menu/other/navigation_bar.dart';
 
 class AuthProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   User? _user;
 
@@ -30,11 +32,36 @@ class AuthProvider with ChangeNotifier {
 
       setUser(userCredential.user);
 
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-        builder: (context) {
-          return const NavigationBarWidget();
-        },
-      ), (route) => false);
+      _firestore
+          .collection("biodata")
+          .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+          .get()
+          .then((docs) {
+        if (docs.docs[0].exists) {
+          if (docs.docs[0].data()["role"] == "customer") {
+            print("Customer");
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context) {
+                return const NavigationBarWidget();
+              },
+            ), (route) => false);
+          } else if (docs.docs[0].data()["role"] == "agent") {
+            print("agent");
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context) {
+                return const NavigationBarWidget();
+              },
+            ), (route) => false);
+          } else if (docs.docs[0].data()["role"] == "sales") {
+            print("sales");
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context) {
+                return const NavigationBarWidget();
+              },
+            ), (route) => false);
+          }
+        }
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         showDialog(
@@ -61,6 +88,7 @@ class AuthProvider with ChangeNotifier {
               }),
         );
       }
+      notifyListeners();
     }
   }
 
@@ -91,6 +119,7 @@ class AuthProvider with ChangeNotifier {
               }),
         );
       }
+      notifyListeners();
     }
   }
 
@@ -99,5 +128,7 @@ class AuthProvider with ChangeNotifier {
     prefs.setBool("isLoggedIn", false);
     prefs.clear();
     await _auth.signOut();
+    setUser(null);
+    notifyListeners();
   }
 }
