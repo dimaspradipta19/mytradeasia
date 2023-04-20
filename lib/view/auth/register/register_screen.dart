@@ -1,8 +1,11 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../modelview/provider/loading_provider.dart';
 import '../../../utils/theme.dart';
@@ -242,9 +245,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               valueLoading.isLoading;
                               valueLoading.getStateLoading();
 
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+
                               Provider.of<AuthProvider>(context, listen: false)
-                                  .registerWithEmail(_emailController.text,
-                                      _phoneNumberController.text, context)
+                                  .registerWithEmail(
+                                      _emailController.text,
+                                      _phoneNumberController.text,
+                                      prefs.getString("role") ?? "",
+                                      context)
                                   .then((value) {
                                 valueLoading.isLoading;
                                 valueLoading.getStateLoading();
@@ -273,9 +282,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                   ),
-                  const SizedBox(
-                    height: size20px
-                  ),
+                  const SizedBox(height: size20px),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -320,7 +327,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               "assets/images/logo_google.png",
                               width: size20px + 4,
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              var value = prefs.getString("role") ?? "";
+
+                              print(value);
+                            },
                           ),
                         ),
                       ),

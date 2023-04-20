@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RoleUserScreen extends StatefulWidget {
   const RoleUserScreen({super.key});
@@ -150,11 +151,16 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
                 ),
               ),
               onPressed: roleUser.any((role) => role.isSelected == true)
-                  ? () {
+                  ? () async {
                       var selectedRole = roleUser
                           .firstWhere((role) => role.isSelected == true);
+
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
                       if (selectedRole.role == "Customer") {
-                        print("Customer");
+                        await prefs.setString("role", selectedRole.role);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -162,21 +168,21 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
                           ),
                         );
                       } else if (selectedRole.role == "Agent") {
-                        print("Agent");
-                        //   Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const RegisterScreen(),
-                        //   ),
-                        // );
+                        await prefs.setString("role", selectedRole.role);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterScreen(),
+                          ),
+                        );
                       } else if (selectedRole.role == "Sales") {
-                        print("Sales");
-                        //   Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const RegisterScreen(),
-                        //   ),
-                        // );
+                        await prefs.setString("role", selectedRole.role);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterScreen(),
+                          ),
+                        );
                       }
                     }
                   : null,

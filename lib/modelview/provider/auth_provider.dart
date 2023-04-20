@@ -20,6 +20,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+/* Login */
   Future<void> loginWithEmail(String email, String phoneNumber, context) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -31,37 +32,42 @@ class AuthProvider with ChangeNotifier {
       await prefs.setBool("isLoggedIn", true);
 
       setUser(userCredential.user);
-
-      _firestore
-          .collection("biodata")
-          .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
-          .get()
-          .then((docs) {
-        if (docs.docs[0].exists) {
-          if (docs.docs[0].data()["role"] == "customer") {
-            print("Customer");
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) {
-                return const NavigationBarWidget();
-              },
-            ), (route) => false);
-          } else if (docs.docs[0].data()["role"] == "agent") {
-            print("agent");
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) {
-                return const NavigationBarWidget();
-              },
-            ), (route) => false);
-          } else if (docs.docs[0].data()["role"] == "sales") {
-            print("sales");
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-              builder: (context) {
-                return const NavigationBarWidget();
-              },
-            ), (route) => false);
-          }
-        }
-      });
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+        builder: (context) {
+          return const NavigationBarWidget();
+        },
+      ), (route) => false);
+      
+      // _firestore
+      //     .collection("biodata")
+      //     .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+      //     .get()
+      //     .then((docs) {
+      //   if (docs.docs[0].exists) {
+      //     if (docs.docs[0].data()["role"] == "Customer") {
+      //       print("Customer");
+      //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      //         builder: (context) {
+      //           return const NavigationBarWidget();
+      //         },
+      //       ), (route) => false);
+      //     } else if (docs.docs[0].data()["role"] == "Agent") {
+      //       print("agent");
+      //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      //         builder: (context) {
+      //           return const NavigationBarWidget();
+      //         },
+      //       ), (route) => false);
+      //     } else if (docs.docs[0].data()["role"] == "Sales") {
+      //       print("sales");
+      //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      //         builder: (context) {
+      //           return const NavigationBarWidget();
+      //         },
+      //       ), (route) => false);
+      //     }
+      //   }
+      // });
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         showDialog(
@@ -92,13 +98,20 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+/* Register */
   Future<void> registerWithEmail(
-      String email, String phoneNumber, context) async {
+      String email, String phoneNumber, String role, context) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: phoneNumber);
 
       setUser(userCredential.user);
+
+      String docsId = FirebaseAuth.instance.currentUser!.uid.toString();
+      Map<String, dynamic> data = {
+        'role': role,
+      };
+      FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
 
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {

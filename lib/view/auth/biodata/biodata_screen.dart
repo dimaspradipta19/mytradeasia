@@ -69,8 +69,8 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     await FirebaseFirestore.instance
                         .collection('biodata')
                         .doc(docsId)
-                        .set(data);
-                        
+                        .update(data);
+
                     await showDialog(
                       barrierDismissible: false,
                       context: context,
@@ -83,14 +83,20 @@ class _BiodataScreenState extends State<BiodataScreen> {
                                 "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                             textForButton: "Go to Home",
                             navigatorFunction: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const LoginScreen();
-                                  },
-                                ),
-                              );
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                  (route) => false);
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return ;
+                              //     },
+                              //   ),
+                              // );
                             });
                       },
                     );

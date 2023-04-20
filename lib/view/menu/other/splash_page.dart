@@ -17,8 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void splashScreenTime() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    // final String? email = prefs.getString('email');
-    // final String? phoneNumber = prefs.getString('phoneNumber');
 
     await Future.delayed(const Duration(seconds: 4));
 
