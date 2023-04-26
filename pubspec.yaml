@@ -48,6 +48,8 @@ dependencies:
   getwidget: ^3.0.1
   shared_preferences: ^2.0.18
   internet_connection_checker: ^1.0.0+1
+  flag: ^6.0.0
+  country_code_picker: ^3.0.0
 
 dev_dependencies:
   flutter_test:
