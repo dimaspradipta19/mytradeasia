@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -482,44 +483,63 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             context)
                                                                         .size
                                                                         .width,
-                                                                    child: Image
-                                                                        .network(
-                                                                      "$url${valueTopProducts.listResultTop[index].productimage}",
+                                                                    child:
+                                                                        CachedNetworkImage(
+                                                                      imageUrl:
+                                                                          "$url${valueTopProducts.listResultTop[index].productimage}",
                                                                       fit: BoxFit
                                                                           .fill,
-                                                                      loadingBuilder: (BuildContext context,
-                                                                          Widget
-                                                                              child,
-                                                                          ImageChunkEvent?
-                                                                              loadingProgress) {
-                                                                        if (loadingProgress ==
-                                                                            null) {
-                                                                          return child;
-                                                                        } else {
-                                                                          return SizedBox(
-                                                                            width:
-                                                                                MediaQuery.of(context).size.width,
-                                                                            height:
-                                                                                116.0,
-                                                                            child:
-                                                                                Center(
-                                                                              child: CircularProgressIndicator(
-                                                                                color: primaryColor1,
-                                                                                value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        }
-                                                                      },
-                                                                      errorBuilder: (BuildContext context,
-                                                                          Object
-                                                                              exception,
-                                                                          StackTrace?
-                                                                              stackTrace) {
-                                                                        return Text(
-                                                                            "Error: $exception");
-                                                                      },
+                                                                      placeholder:
+                                                                          (context, url) =>
+                                                                              const Center(
+                                                                        child: CircularProgressIndicator(
+                                                                            color:
+                                                                                primaryColor1),
+                                                                      ),
+                                                                      errorWidget: (context,
+                                                                              url,
+                                                                              error) =>
+                                                                          const Icon(
+                                                                              Icons.error),
                                                                     ),
+                                                                    // Image
+                                                                    //     .network(
+                                                                    //   "$url${valueTopProducts.listResultTop[index].productimage}",
+                                                                    //   fit: BoxFit
+                                                                    //       .fill,
+                                                                    //   loadingBuilder: (BuildContext context,
+                                                                    //       Widget
+                                                                    //           child,
+                                                                    //       ImageChunkEvent?
+                                                                    //           loadingProgress) {
+                                                                    //     if (loadingProgress ==
+                                                                    //         null) {
+                                                                    //       return child;
+                                                                    //     } else {
+                                                                    //       return SizedBox(
+                                                                    //         width:
+                                                                    //             MediaQuery.of(context).size.width,
+                                                                    //         height:
+                                                                    //             116.0,
+                                                                    //         child:
+                                                                    //             Center(
+                                                                    //           child: CircularProgressIndicator(
+                                                                    //             color: primaryColor1,
+                                                                    //             value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                                                                    //           ),
+                                                                    //         ),
+                                                                    //       );
+                                                                    //     }
+                                                                    //   },
+                                                                    //   errorBuilder: (BuildContext context,
+                                                                    //       Object
+                                                                    //           exception,
+                                                                    //       StackTrace?
+                                                                    //           stackTrace) {
+                                                                    //     return Text(
+                                                                    //         "Error: $exception");
+                                                                    //   },
+                                                                    // ),
                                                                   ),
                                                                 ),
                                                                 Expanded(

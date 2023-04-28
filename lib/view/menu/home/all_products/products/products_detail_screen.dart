@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
@@ -84,43 +87,21 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         Column(
                           children: [
                             Container(
-                                color: greyColor3,
-                                width: MediaQuery.of(context).size.width,
-                                height: size20px * 15.0,
-                                child: Image.network(
-                                  "$url${snapshot.data?.detailProduct?.productimage}",
-                                  fit: BoxFit.cover,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 116.0,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            color: primaryColor1,
-                                            value: loadingProgress
-                                                        .expectedTotalBytes !=
-                                                    null
-                                                ? loadingProgress
-                                                        .cumulativeBytesLoaded /
-                                                    loadingProgress
-                                                        .expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const FlutterLogo(
-                                      size: size20px * 3,
-                                    );
-                                  },
-                                )),
+                              color: greyColor3,
+                              width: MediaQuery.of(context).size.width,
+                              height: size20px * 15.0,
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "$url${snapshot.data?.detailProduct?.productimage}",
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                      color: primaryColor1),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            ),
                           ],
                         ),
                         Padding(
@@ -585,8 +566,9 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: size20px),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: size20px),
                                               child: Text(
                                                 snapshot.data?.detailProduct
                                                         ?.application ??
@@ -674,53 +656,74 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                               indexRelated]
                                                           .productimage !=
                                                       null
-                                                  ? Image.network(
-                                                      url +
+                                                  ? CachedNetworkImage(
+                                                      imageUrl: url +
                                                           snapshot
                                                               .data!
                                                               .relatedProducts[
                                                                   indexRelated]
                                                               .productimage,
                                                       fit: BoxFit.fill,
-                                                      loadingBuilder: (context,
-                                                          child,
-                                                          loadingProgress) {
-                                                        if (loadingProgress ==
-                                                            null) {
-                                                          return child;
-                                                        } else {
-                                                          return SizedBox(
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                            height: 116.0,
-                                                            child: Center(
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                color:
-                                                                    primaryColor1,
-                                                                value: loadingProgress
-                                                                            .expectedTotalBytes !=
-                                                                        null
-                                                                    ? loadingProgress
-                                                                            .cumulativeBytesLoaded /
-                                                                        loadingProgress
-                                                                            .expectedTotalBytes!
-                                                                    : null,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                      },
-                                                      errorBuilder: (context,
-                                                          error, stackTrace) {
-                                                        return const FlutterLogo(
-                                                          size: size20px * 3,
-                                                        );
-                                                      },
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              const Center(
+                                                        child: CircularProgressIndicator(
+                                                            color:
+                                                                primaryColor1),
+                                                      ),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error),
                                                     )
+
+                                                  //       Image.network(
+                                                  //           url +
+                                                  //               snapshot
+                                                  //                   .data!
+                                                  //                   .relatedProducts[
+                                                  //                       indexRelated]
+                                                  //                   .productimage,
+                                                  //           fit: BoxFit.fill,
+                                                  //           loadingBuilder: (context,
+                                                  //               child,
+                                                  //               loadingProgress) {
+                                                  //             if (loadingProgress ==
+                                                  //                 null) {
+                                                  //               return child;
+                                                  //             } else {
+                                                  //               return SizedBox(
+                                                  //                 width:
+                                                  //                     MediaQuery.of(
+                                                  //                             context)
+                                                  //                         .size
+                                                  //                         .width,
+                                                  //                 height: 116.0,
+                                                  //                 child: Center(
+                                                  //                   child:
+                                                  //                       CircularProgressIndicator(
+                                                  //                     color:
+                                                  //                         primaryColor1,
+                                                  //                     value: loadingProgress
+                                                  //                                 .expectedTotalBytes !=
+                                                  //                             null
+                                                  //                         ? loadingProgress
+                                                  //                                 .cumulativeBytesLoaded /
+                                                  //                             loadingProgress
+                                                  //                                 .expectedTotalBytes!
+                                                  //                         : null,
+                                                  //                   ),
+                                                  //                 ),
+                                                  //               );
+                                                  //             }
+                                                  //           },
+                                                  //           errorBuilder: (context,
+                                                  //               error, stackTrace) {
+                                                  //             return const FlutterLogo(
+                                                  //               size: size20px * 3,
+                                                  //             );
+                                                  //           },
+                                                  //         )
                                                   : const CircularProgressIndicator
                                                       .adaptive(),
                                             ),
@@ -843,324 +846,353 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
               SizedBox(
                 height: size20px * 2.75,
                 width: size20px * 2.75,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(whiteColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(color: greyColor3)),
+                child: FutureBuilder(
+                  future: DetailProductService()
+                      .getDetailProduct(widget.urlProduct),
+                  builder: (context, snapshot) => ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(whiteColor),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: greyColor3)),
+                      ),
+                      elevation: MaterialStateProperty.all<double>(0.0),
                     ),
-                    elevation: MaterialStateProperty.all<double>(0.0),
-                  ),
-                  onPressed: () {
-                    var value = Provider.of<DetailProductProvider>(context,
-                        listen: false);
-                    if (value.resultDetailProduct?.detailProduct == null) {
-                      return print("detailProduct null");
-                    } else {
-                      showModalBottomSheet<dynamic>(
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(40.0),
+                    onPressed: () {
+                      if (snapshot.data?.detailProduct == null) {
+                        return log("detailProduct null");
+                      } else {
+                        showModalBottomSheet<dynamic>(
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(40.0),
+                            ),
                           ),
-                        ),
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: size20px, right: size20px, top: size20px),
-                            child: SizedBox(
-                              height: size20px * 17,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Image.asset(
-                                      "assets/images/icon_spacing.png",
-                                      width: 25.0,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  left: size20px,
+                                  right: size20px,
+                                  top: size20px),
+                              child: SizedBox(
+                                height: size20px * 17,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        "assets/images/icon_spacing.png",
+                                        width: 25.0,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: size20px),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(top: size20px),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SizedBox(
                                                 height: size20px * 5,
                                                 width: size20px * 5,
-                                                child: Image.network(url +
-                                                    (value
-                                                            .resultDetailProduct
-                                                            ?.detailProduct
-                                                            ?.productimage ??
-                                                        ""))),
-                                            const SizedBox(width: size20px),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.5,
-                                                  height: size20px * 2.5,
-                                                  child: Text(
-                                                    value
-                                                            .resultDetailProduct
-                                                            ?.detailProduct
-                                                            ?.productname ??
-                                                        "N/A",
-                                                    style: heading2,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: url +
+                                                      (snapshot
+                                                              .data
+                                                              ?.detailProduct
+                                                              ?.productimage ??
+                                                          ""),
+                                                  fit: BoxFit.fill,
+                                                  placeholder: (context, url) =>
+                                                      const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color:
+                                                                primaryColor1),
                                                   ),
-                                                ),
-                                                const SizedBox(
-                                                    height: size20px / 2),
-                                                Row(
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          "CAS Number",
-                                                          style: body1Medium,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 5.0),
-                                                        Text(
-                                                          value
-                                                                  .resultDetailProduct
-                                                                  ?.detailProduct
-                                                                  ?.casNumber ??
-                                                              "N/A",
-                                                          style: body1Regular
-                                                              .copyWith(
-                                                                  color:
-                                                                      greyColor2),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 30.0,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          "HS Code",
-                                                          style: body1Medium,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 5.0),
-                                                        Text(
-                                                          value
-                                                                  .resultDetailProduct
-                                                                  ?.detailProduct
-                                                                  ?.hsCode ??
-                                                              "N/A",
-                                                          style: body1Regular
-                                                              .copyWith(
-                                                                  color:
-                                                                      greyColor2),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: size20px * 2,
-                                              bottom: size20px * 1.5),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                flex: 10,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      "Quantity",
-                                                      style: text14,
-                                                    ),
-                                                    const SizedBox(
-                                                        height: size24px / 3),
-                                                    SizedBox(
-                                                      width: size20px * 8.0,
-                                                      height: size20px + 30,
-                                                      child: TextEditingWidget(
-                                                        controller:
-                                                            _quantityController,
-                                                        hintText: "Quantity",
-                                                        readOnly: false,
-                                                        inputType: TextInputType
-                                                            .number,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
                                                 ),
                                               ),
-                                              Expanded(
-                                                  flex: 1, child: Container()),
-                                              Expanded(
-                                                flex: 10,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      "Unit",
-                                                      style: text14,
+                                              const SizedBox(width: size20px),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.5,
+                                                    height: size20px * 2.5,
+                                                    child: Text(
+                                                      snapshot
+                                                              .data
+                                                              ?.detailProduct
+                                                              ?.productname ??
+                                                          "N/A",
+                                                      style: heading2,
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    const SizedBox(height: 8.0),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(
-                                                              color:
-                                                                  greyColor3),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      7.0)),
-                                                      width: size20px * 8.0,
-                                                      height: size20px + 28,
-                                                      // TexteditingController here
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                          left: size20px,
-                                                        ),
-                                                        child:
-                                                            DropdownButtonFormField(
-                                                          icon: Image.asset(
-                                                              "assets/images/icon_bottom.png"),
-                                                          hint: Text(
-                                                            "Unit",
+                                                  ),
+                                                  const SizedBox(
+                                                      height: size20px / 2),
+                                                  Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const Text(
+                                                            "CAS Number",
+                                                            style: body1Medium,
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 5.0),
+                                                          Text(
+                                                            snapshot
+                                                                    .data
+                                                                    ?.detailProduct
+                                                                    ?.casNumber ??
+                                                                "N/A",
                                                             style: body1Regular
                                                                 .copyWith(
                                                                     color:
-                                                                        greyColor),
+                                                                        greyColor2),
                                                           ),
-                                                          decoration:
-                                                              const InputDecoration(
-                                                            border: InputBorder
-                                                                .none,
-                                                          ),
-                                                          style: body1Regular,
-                                                          items: const [
-                                                            DropdownMenuItem(
-                                                              value: 'Tonne',
-                                                              child: Text(
-                                                                  'Tonne',
-                                                                  style:
-                                                                      body1Regular),
-                                                            ),
-                                                            DropdownMenuItem(
-                                                              value: '20” FCL',
-                                                              child: Text(
-                                                                  '20” FCL',
-                                                                  style:
-                                                                      body1Regular),
-                                                            ),
-                                                            DropdownMenuItem(
-                                                              value: 'Litres',
-                                                              child: Text(
-                                                                  'Litres',
-                                                                  style:
-                                                                      body1Regular),
-                                                            ),
-                                                            DropdownMenuItem(
-                                                              value:
-                                                                  'Kilogram (Kg)',
-                                                              child: Text(
-                                                                  'Kilogram (Kg)',
-                                                                  style:
-                                                                      body1Regular),
-                                                            ),
-                                                            DropdownMenuItem(
-                                                              value:
-                                                                  'Metric Tonne (MT)',
-                                                              child: Text(
-                                                                  'Metric Tonne (MT)',
-                                                                  style:
-                                                                      body1Regular),
-                                                            ),
-                                                          ],
-                                                          value:
-                                                              _selectedValueUnit,
-                                                          onChanged: (value) {
-                                                            setState(() {
-                                                              _selectedValueUnit =
-                                                                  value;
-                                                            });
-                                                          },
-                                                        ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
+                                                      const SizedBox(
+                                                        width: 30.0,
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const Text(
+                                                            "HS Code",
+                                                            style: body1Medium,
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 5.0),
+                                                          Text(
+                                                            snapshot
+                                                                    .data
+                                                                    ?.detailProduct
+                                                                    ?.hsCode ??
+                                                                "N/A",
+                                                            style: body1Regular
+                                                                .copyWith(
+                                                                    color:
+                                                                        greyColor2),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: size20px * 2.75,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all<
-                                                        Color>(primaryColor1),
-                                                shape:
-                                                    MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7.0),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: size20px * 2,
+                                                bottom: size20px * 1.5),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  flex: 10,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "Quantity",
+                                                        style: text14,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: size24px / 3),
+                                                      SizedBox(
+                                                        width: size20px * 8.0,
+                                                        height: size20px + 30,
+                                                        child:
+                                                            TextEditingWidget(
+                                                          controller:
+                                                              _quantityController,
+                                                          hintText: "Quantity",
+                                                          readOnly: false,
+                                                          inputType:
+                                                              TextInputType
+                                                                  .number,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                              onPressed: () {},
-                                              child: Text("Add to Cart",
-                                                  style: text16.copyWith(
-                                                      color: whiteColor))),
-                                        )
-                                      ],
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Container()),
+                                                Expanded(
+                                                  flex: 10,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        "Unit",
+                                                        style: text14,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                color:
+                                                                    greyColor3),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        7.0)),
+                                                        width: size20px * 8.0,
+                                                        height: size20px + 28,
+                                                        // TexteditingController here
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            left: size20px,
+                                                          ),
+                                                          child:
+                                                              DropdownButtonFormField(
+                                                            icon: Image.asset(
+                                                                "assets/images/icon_bottom.png"),
+                                                            hint: Text(
+                                                              "Unit",
+                                                              style: body1Regular
+                                                                  .copyWith(
+                                                                      color:
+                                                                          greyColor),
+                                                            ),
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
+                                                            ),
+                                                            style: body1Regular,
+                                                            items: const [
+                                                              DropdownMenuItem(
+                                                                value: 'Tonne',
+                                                                child: Text(
+                                                                    'Tonne',
+                                                                    style:
+                                                                        body1Regular),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value:
+                                                                    '20” FCL',
+                                                                child: Text(
+                                                                    '20” FCL',
+                                                                    style:
+                                                                        body1Regular),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value: 'Litres',
+                                                                child: Text(
+                                                                    'Litres',
+                                                                    style:
+                                                                        body1Regular),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value:
+                                                                    'Kilogram (Kg)',
+                                                                child: Text(
+                                                                    'Kilogram (Kg)',
+                                                                    style:
+                                                                        body1Regular),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value:
+                                                                    'Metric Tonne (MT)',
+                                                                child: Text(
+                                                                    'Metric Tonne (MT)',
+                                                                    style:
+                                                                        body1Regular),
+                                                              ),
+                                                            ],
+                                                            value:
+                                                                _selectedValueUnit,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                _selectedValueUnit =
+                                                                    value;
+                                                              });
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: size20px * 2.75,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(primaryColor1),
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              7.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                onPressed: () {},
+                                                child: Text("Add to Cart",
+                                                    style: text16.copyWith(
+                                                        color: whiteColor))),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Image.asset(
-                    "assets/images/icon_cart_outlined.png",
-                    width: size20px + 4.0,
-                    color: primaryColor1,
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Image.asset(
+                      "assets/images/icon_cart_outlined.png",
+                      width: size20px + 4.0,
+                      color: primaryColor1,
+                    ),
                   ),
                 ),
               ),
