@@ -174,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              onPressed: () async {
+                              onPressed: () {
                                 valueLoading.isLoading;
                                 valueLoading.getStateLoading();
                                 valueAuth

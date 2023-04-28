@@ -1,4 +1,4 @@
-// import 'package:country_code_picker/country_code_picker.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/theme.dart';
@@ -425,20 +425,20 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
             ),
 
             /**Optional Flag Picker */
-            // const CountryCodePicker(
-            //   onChanged: print,
-            //   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-            //   initialSelection: 'ID',
-            //   favorite: ['+62', 'ID'],
-            //   // optional. Shows only country name and flag
-            //   showCountryOnly: false,
-            //   // optional. Shows only country name and flag when popup is closed.
-            //   showOnlyCountryWhenClosed: false,
-            //   // optional. aligns the flag and the Text left
-            //   alignLeft: false,
-            // ),
+            const CountryCodePicker(
+              onChanged: print,
+              // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+              initialSelection: 'ID',
+              favorite: ['+62', 'ID'],
+              // optional. Shows only country name and flag
+              showCountryOnly: false,
+              // optional. Shows only country name and flag when popup is closed.
+              showOnlyCountryWhenClosed: true,
+              // optional. aligns the flag and the Text left
+              alignLeft: false,
+            ),
 
-            // A
+            /* List  */
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -478,8 +478,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
                                           text: countryList[index]["name"],
                                           style: body1Regular),
                                       const TextSpan(
-                                          text: "   ",
-                                          style: body1Regular),
+                                          text: "   ", style: body1Regular),
                                       TextSpan(
                                           text: countryList[index]["dial_code"],
                                           style: body1Regular.copyWith(

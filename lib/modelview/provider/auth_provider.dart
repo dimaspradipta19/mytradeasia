@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../view/auth/biodata/biodata_screen.dart';
+import '../../view/auth/choose_role/role_user_screen.dart';
 import '../../view/menu/other/navigation_bar.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -37,37 +40,7 @@ class AuthProvider with ChangeNotifier {
           return const NavigationBarWidget();
         },
       ), (route) => false);
-      
-      // _firestore
-      //     .collection("biodata")
-      //     .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
-      //     .get()
-      //     .then((docs) {
-      //   if (docs.docs[0].exists) {
-      //     if (docs.docs[0].data()["role"] == "Customer") {
-      //       print("Customer");
-      //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-      //         builder: (context) {
-      //           return const NavigationBarWidget();
-      //         },
-      //       ), (route) => false);
-      //     } else if (docs.docs[0].data()["role"] == "Agent") {
-      //       print("agent");
-      //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-      //         builder: (context) {
-      //           return const NavigationBarWidget();
-      //         },
-      //       ), (route) => false);
-      //     } else if (docs.docs[0].data()["role"] == "Sales") {
-      //       print("sales");
-      //       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-      //         builder: (context) {
-      //           return const NavigationBarWidget();
-      //         },
-      //       ), (route) => false);
-      //     }
-      //   }
-      // });
+
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         showDialog(
@@ -110,6 +83,12 @@ class AuthProvider with ChangeNotifier {
       String docsId = FirebaseAuth.instance.currentUser!.uid.toString();
       Map<String, dynamic> data = {
         'role': role,
+        "companyName" : "",
+        "country" : "",
+        "firstName" : "",
+        "lastName" : "",
+        "password" : "",
+        "uid" : "",
       };
       FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
 
@@ -136,7 +115,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("isLoggedIn", false);
     prefs.clear();

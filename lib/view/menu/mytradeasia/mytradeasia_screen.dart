@@ -16,6 +16,9 @@ import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../modelview/provider/loading_provider.dart';
+import '../../../widget/loading_overlay_widget.dart';
 // import 'package:shimmer/shimmer.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
@@ -31,6 +34,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var providerOut = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -89,13 +93,11 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "${streamSnapshot.data?.docs[0]['firstName'] ?? ""} ${streamSnapshot.data?.docs[0]['lastName'] ?? ""}",
+                                                  "${streamSnapshot.data?.docs[0]['firstName'] == "" ? "new" : streamSnapshot.data?.docs[0]['firstName']} ${streamSnapshot.data?.docs[0]['lastName'] == "" ? "user" : streamSnapshot.data?.docs[0]['lastName']}",
                                                   style: text16,
                                                 ),
                                                 Text(
-                                                  streamSnapshot.data?.docs[0]
-                                                          ['companyName'] ??
-                                                      "",
+                                                  streamSnapshot.data?.docs[0]['companyName'] ?? "",
                                                   style: text15.copyWith(
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -289,7 +291,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                       context: context,
                                       builder: (context) {
                                         return DialogWidgetYesNo(
-                                            urlIcon: "assets/images/china.png",
+                                            urlIcon: "assets/images/logo_logout.png",
                                             title:
                                                 "Are you sure want to log out?",
                                             subtitle:
@@ -299,11 +301,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                             navigatorFunctionNo: () =>
                                                 Navigator.pop(context),
                                             navigatorFunctionYes: () {
-                                              var providerOut =
-                                                  Provider.of<AuthProvider>(
-                                                      context,
-                                                      listen: false);
-                                              providerOut.logout();
+                                              providerOut.logout(context);
 
                                               Navigator.pushAndRemoveUntil(
                                                   context, MaterialPageRoute(

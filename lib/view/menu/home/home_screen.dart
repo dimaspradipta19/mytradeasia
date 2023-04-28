@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+// import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
@@ -41,8 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final bool isRoleSales = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,12 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
               child: StreamBuilder(
                   stream: _firestore
                       .collection('biodata')
-                      .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+                      .where('uid',
+                          isEqualTo: _auth.currentUser!.uid.toString())
                       .snapshots(),
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                    return streamSnapshot.hasData
-                        ? Column(
+                    return streamSnapshot.connectionState ==
+                            ConnectionState.waiting
+                        ? const CircularProgressIndicator.adaptive(
+                            backgroundColor: primaryColor1,
+                          )
+                        : Column(
                             children: [
                               Visibility(
                                 visible: Provider.of<InternetConnectionStatus>(
@@ -110,30 +114,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Text("Welcome Back,",
+                                                            Text(
+                                                                "Welcome Back,",
                                                                 style: text12
                                                                     .copyWith(
                                                                         color:
                                                                             whiteColor)),
                                                             const SizedBox(
                                                                 height:
-                                                                    size20px / 5),
+                                                                    size20px /
+                                                                        5),
                                                             SizedBox(
-                                                                height: 30,
-                                                                width:
-                                                                    size20px * 10,
-                                                                child: Text(
-                                                                  "${streamSnapshot.data?.docs[0]['firstName']} ${streamSnapshot.data!.docs[0]['lastName']}",
-                                                                  style: text16.copyWith(
-                                                                      color:
-                                                                          whiteColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                )),
+                                                              height: 30,
+                                                              width:
+                                                                  size20px * 10,
+                                                              child: Text(
+                                                                "${streamSnapshot.data?.docs[0]['firstName'] == "" ? "new" : streamSnapshot.data?.docs[0]['firstName']} ${streamSnapshot.data?.docs[0]['lastName'] == "" ? "user" : streamSnapshot.data?.docs[0]['lastName']}",
+                                                                style: text16.copyWith(
+                                                                    color:
+                                                                        whiteColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
                                                           ],
                                                         ),
                                                         Row(
@@ -144,9 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               decoration: const BoxDecoration(
                                                                   color:
                                                                       secondaryColor1,
-                                                                  borderRadius: BorderRadius
-                                                                      .all(Radius
-                                                                          .circular(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
                                                                               5.0))),
                                                               child: IconButton(
                                                                 onPressed: () {
@@ -167,47 +174,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                             const SizedBox(
                                                                 width:
-                                                                    size20px / 2),
-                                                            streamSnapshot.data!
-                                                                            .docs[0]
-                                                                        [
-                                                                        'role'] ==
-                                                                    "Sales"
-                                                                ? Container()
-                                                                : Container(
-                                                                    height: 40.0,
-                                                                    width: 40.0,
-                                                                    decoration:
-                                                                        const BoxDecoration(
-                                                                      color:
-                                                                          secondaryColor1,
-                                                                      borderRadius:
-                                                                          BorderRadius.all(
-                                                                              Radius.circular(5.0)),
-                                                                    ),
-                                                                    child:
-                                                                        IconButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                          builder:
-                                                                              (context) {
-                                                                            return const CartScreen();
-                                                                          },
-                                                                        ));
-                                                                      },
-                                                                      icon: Image
-                                                                          .asset(
-                                                                        "assets/images/icon_cart.png",
-                                                                        width:
-                                                                            size24px,
+                                                                    size20px /
+                                                                        2),
+                                                            streamSnapshot
+                                                                    .data!
+                                                                    .docs
+                                                                    .isNotEmpty
+                                                                ? streamSnapshot
+                                                                            .data
+                                                                            ?.docs[0]['role'] ==
+                                                                        "Sales"
+                                                                    ? Container(
                                                                         height:
-                                                                            size24px,
-                                                                      ),
-                                                                    ),
-                                                                  )
+                                                                            40.0,
+                                                                        width:
+                                                                            40.0,
+                                                                        decoration:
+                                                                            const BoxDecoration(
+                                                                          color:
+                                                                              secondaryColor1,
+                                                                          borderRadius:
+                                                                              BorderRadius.all(Radius.circular(5.0)),
+                                                                        ),
+                                                                        child:
+                                                                            IconButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.push(context,
+                                                                                MaterialPageRoute(
+                                                                              builder: (context) {
+                                                                                return const CartScreen();
+                                                                              },
+                                                                            ));
+                                                                          },
+                                                                          icon:
+                                                                              Image.asset(
+                                                                            "assets/images/icon_cart.png",
+                                                                            width:
+                                                                                size24px,
+                                                                            height:
+                                                                                size24px,
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                    : Container()
+                                                                : Container()
                                                           ],
                                                         )
                                                       ],
@@ -238,34 +249,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           )),
                                                           decoration:
                                                               InputDecoration(
-                                                            border:
-                                                                InputBorder.none,
+                                                            border: InputBorder
+                                                                .none,
                                                             enabledBorder:
                                                                 const OutlineInputBorder(
-                                                              borderSide: BorderSide(
-                                                                  color:
-                                                                      greyColor3),
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          greyColor3),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .all(
                                                                 Radius.circular(
-                                                                    size20px / 2),
+                                                                    size20px /
+                                                                        2),
                                                               ),
                                                             ),
                                                             focusedBorder:
                                                                 const OutlineInputBorder(
-                                                              borderSide: BorderSide(
-                                                                  color:
-                                                                      greyColor3),
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          greyColor3),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .all(
                                                                 Radius.circular(
-                                                                    size20px / 2),
+                                                                    size20px /
+                                                                        2),
                                                               ),
                                                             ),
                                                             filled: true,
-                                                            fillColor: whiteColor,
+                                                            fillColor:
+                                                                whiteColor,
                                                             prefixIcon: Padding(
                                                               padding:
                                                                   const EdgeInsets
@@ -273,7 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       left: 20,
                                                                       right:
                                                                           15.0),
-                                                              child: Image.asset(
+                                                              child:
+                                                                  Image.asset(
                                                                 "assets/images/icon_search.png",
                                                                 width: 24.0,
                                                                 height: 24.0,
@@ -307,11 +324,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               /* 4 Menu Section */
-                                              streamSnapshot.data!.docs[0]
-                                                          ['role'] ==
-                                                      "Sales"
-                                                  ? const MenuGridWidgetSales()
-                                                  : const MenuGridWidget(),
+                                              streamSnapshot.data != null &&
+                                                      streamSnapshot
+                                                          .data!.docs.isNotEmpty
+                                                  ? streamSnapshot.data!.docs[0]
+                                                              ['role'] ==
+                                                          "Sales"
+                                                      ? const MenuGridWidgetSales()
+                                                      : const MenuGridWidget()
+                                                  : Container(),
                                               /* End 4 Menu Section */
 
                                               /* Top Product Section */
@@ -344,12 +365,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ));
                                                       },
                                                       child: Padding(
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal:
-                                                                size20px / 2,
-                                                            vertical:
-                                                                size20px / 5),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    size20px /
+                                                                        2,
+                                                                vertical:
+                                                                    size20px /
+                                                                        5),
                                                         child: Text(
                                                           "See More",
                                                           style: text12.copyWith(
@@ -365,12 +389,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding: const EdgeInsets.only(
                                                     bottom: size20px / 2,
                                                     top: size20px),
-                                                child:
-                                                    Consumer<TopProductsProvider>(
-                                                        builder: (context,
-                                                            TopProductsProvider
-                                                                valueTopProducts,
-                                                            _) {
+                                                child: Consumer<
+                                                        TopProductsProvider>(
+                                                    builder: (context,
+                                                        TopProductsProvider
+                                                            valueTopProducts,
+                                                        _) {
                                                   if (valueTopProducts.state ==
                                                       ResultState.loading) {
                                                     return Shimmer.fromColors(
@@ -379,7 +403,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       child: GridView.builder(
                                                         gridDelegate:
                                                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                crossAxisCount: 2,
+                                                                crossAxisCount:
+                                                                    2,
                                                                 crossAxisSpacing:
                                                                     15,
                                                                 mainAxisSpacing:
@@ -388,7 +413,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     0.62),
                                                         itemCount: 4,
                                                         shrinkWrap: true,
-                                                        padding: EdgeInsets.zero,
+                                                        padding:
+                                                            EdgeInsets.zero,
                                                         physics:
                                                             const NeverScrollableScrollPhysics(),
                                                         itemBuilder:
@@ -405,14 +431,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               crossAxisCount: 2,
                                                               crossAxisSpacing:
                                                                   15,
-                                                              mainAxisSpacing: 15,
+                                                              mainAxisSpacing:
+                                                                  15,
                                                               childAspectRatio:
                                                                   0.62),
-                                                      itemCount: valueTopProducts
-                                                              .listResultTop
-                                                              .isNotEmpty
-                                                          ? 4
-                                                          : 0,
+                                                      itemCount:
+                                                          valueTopProducts
+                                                                  .listResultTop
+                                                                  .isNotEmpty
+                                                              ? 4
+                                                              : 0,
                                                       shrinkWrap: true,
                                                       padding: EdgeInsets.zero,
                                                       physics:
@@ -424,13 +452,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                              builder: (context) {
+                                                              builder:
+                                                                  (context) {
                                                                 return ProductsDetailScreen(
-                                                                  urlProduct:
-                                                                      valueTopProducts
-                                                                          .listResultTop[
-                                                                              index]
-                                                                          .seoUrl,
+                                                                  urlProduct: valueTopProducts
+                                                                      .listResultTop[
+                                                                          index]
+                                                                      .seoUrl,
                                                                 );
                                                               },
                                                             ));
@@ -445,7 +473,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       .start,
                                                               children: [
                                                                 Center(
-                                                                  child: SizedBox(
+                                                                  child:
+                                                                      SizedBox(
                                                                     height:
                                                                         size20px *
                                                                             5.5,
@@ -458,8 +487,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       "$url${valueTopProducts.listResultTop[index].productimage}",
                                                                       fit: BoxFit
                                                                           .fill,
-                                                                      loadingBuilder: (BuildContext
-                                                                              context,
+                                                                      loadingBuilder: (BuildContext context,
                                                                           Widget
                                                                               child,
                                                                           ImageChunkEvent?
@@ -469,15 +497,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           return child;
                                                                         } else {
                                                                           return SizedBox(
-                                                                            width: MediaQuery.of(context)
-                                                                                .size
-                                                                                .width,
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width,
                                                                             height:
                                                                                 116.0,
                                                                             child:
                                                                                 Center(
-                                                                              child:
-                                                                                  CircularProgressIndicator(
+                                                                              child: CircularProgressIndicator(
                                                                                 color: primaryColor1,
                                                                                 value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
                                                                               ),
@@ -485,15 +511,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           );
                                                                         }
                                                                       },
-                                                                      errorBuilder: (BuildContext
-                                                                              context,
+                                                                      errorBuilder: (BuildContext context,
                                                                           Object
                                                                               exception,
                                                                           StackTrace?
                                                                               stackTrace) {
-                                                                        // return const FlutterLogo(
-                                                                        //   size: size20px * 3,
-                                                                        // );
                                                                         return Text(
                                                                             "Error: $exception");
                                                                       },
@@ -501,7 +523,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   ),
                                                                 ),
                                                                 Expanded(
-                                                                  child: SizedBox(
+                                                                  child:
+                                                                      SizedBox(
                                                                     height:
                                                                         size20px *
                                                                             2.5,
@@ -517,18 +540,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               5.0,
                                                                           horizontal:
                                                                               10.0),
-                                                                      child: Text(
+                                                                      child:
+                                                                          Text(
                                                                         valueTopProducts
-                                                                            .listResultTop[
-                                                                                index]
+                                                                            .listResultTop[index]
                                                                             .productname,
                                                                         style:
                                                                             text14,
                                                                         maxLines:
                                                                             2,
                                                                         overflow:
-                                                                            TextOverflow
-                                                                                .ellipsis,
+                                                                            TextOverflow.ellipsis,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -542,13 +564,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     children: [
                                                                       Column(
                                                                         crossAxisAlignment:
-                                                                            CrossAxisAlignment
-                                                                                .start,
+                                                                            CrossAxisAlignment.start,
                                                                         children: [
                                                                           const Text(
                                                                               "CAS Number :",
-                                                                              style:
-                                                                                  text10),
+                                                                              style: text10),
                                                                           Text(
                                                                               valueTopProducts.listResultTop[index].casNumber,
                                                                               style: text10.copyWith(color: greyColor2)),
@@ -557,13 +577,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       const Spacer(),
                                                                       Column(
                                                                         crossAxisAlignment:
-                                                                            CrossAxisAlignment
-                                                                                .start,
+                                                                            CrossAxisAlignment.start,
                                                                         children: [
                                                                           const Text(
                                                                               "HS Code :",
-                                                                              style:
-                                                                                  text10),
+                                                                              style: text10),
                                                                           Text(
                                                                               valueTopProducts.listResultTop[index].hsCode,
                                                                               style: text10.copyWith(color: greyColor2)),
@@ -575,8 +593,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      left: 10.0,
-                                                                      right: 10.0,
+                                                                      left:
+                                                                          10.0,
+                                                                      right:
+                                                                          10.0,
                                                                       top: 10.0,
                                                                       bottom:
                                                                           12.0),
@@ -614,7 +634,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       Container(
                                                                         height:
                                                                             30,
-                                                                        width: 30,
+                                                                        width:
+                                                                            30,
                                                                         decoration: const BoxDecoration(
                                                                             color:
                                                                                 secondaryColor1,
@@ -624,8 +645,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             IconButton(
                                                                           onPressed:
                                                                               () {},
-                                                                          icon: Image
-                                                                              .asset(
+                                                                          icon:
+                                                                              Image.asset(
                                                                             "assets/images/icon_cart.png",
                                                                           ),
                                                                         ),
@@ -643,8 +664,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     return Center(
                                                       child: Text(
                                                         "Error",
-                                                        style: heading1.copyWith(
-                                                            color: redColor1),
+                                                        style:
+                                                            heading1.copyWith(
+                                                                color:
+                                                                    redColor1),
                                                       ),
                                                     );
                                                   }
@@ -676,7 +699,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           crossAxisCount: 4,
                                                           crossAxisSpacing: 5,
                                                           mainAxisSpacing: 5,
-                                                          childAspectRatio: 0.9),
+                                                          childAspectRatio:
+                                                              0.9),
                                                   children: [
                                                     TopIndustryWidget(
                                                         icon:
@@ -731,8 +755,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    const AllIndustryScreen(),
+                                                                builder:
+                                                                    (context) =>
+                                                                        const AllIndustryScreen(),
                                                               ));
                                                         },
                                                         topIndustryName:
@@ -746,7 +771,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               const Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 8.0),
-                                                child: Text("Last Seen Products",
+                                                child: Text(
+                                                    "Last Seen Products",
                                                     style: text18),
                                               ),
                                               Padding(
@@ -758,13 +784,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           crossAxisCount: 2,
                                                           crossAxisSpacing: 15,
                                                           mainAxisSpacing: 15,
-                                                          childAspectRatio: 0.8),
+                                                          childAspectRatio:
+                                                              0.8),
                                                   itemCount: 6,
                                                   shrinkWrap: true,
                                                   padding: EdgeInsets.zero,
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
-                                                  itemBuilder: (context, index) {
+                                                  itemBuilder:
+                                                      (context, index) {
                                                     return Card(
                                                       shadowColor: blackColor,
                                                       elevation: 3.0,
@@ -774,17 +802,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 .start,
                                                         children: [
                                                           Center(
-                                                              child: Image.asset(
+                                                              child:
+                                                                  Image.asset(
                                                             "assets/images/products.png",
-                                                            width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width,
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
                                                           )),
                                                           const Padding(
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                    vertical: 5.0,
+                                                                    vertical:
+                                                                        5.0,
                                                                     horizontal:
                                                                         10.0),
                                                             child: Text(
@@ -859,7 +890,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .symmetric(
                                                           horizontal:
                                                               size20px / 2,
-                                                          vertical: size20px / 5),
+                                                          vertical:
+                                                              size20px / 5),
                                                       child: Text(
                                                         "See More",
                                                         style: text12.copyWith(
@@ -878,9 +910,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                             ],
-                          )
-                        : const CircularProgressIndicator.adaptive(
-                        backgroundColor: primaryColor1,
                           );
                   }),
             ),

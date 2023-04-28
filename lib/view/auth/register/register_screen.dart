@@ -244,6 +244,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressed: () async {
                               valueLoading.isLoading;
                               valueLoading.getStateLoading();
+                              final FirebaseAuth auth = FirebaseAuth.instance;
 
                               final SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
@@ -257,7 +258,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .then((value) {
                                 valueLoading.isLoading;
                                 valueLoading.getStateLoading();
-                              });
+                              }).then((value) {
+                                prefs.setString(
+                                    "uid", auth.currentUser!.uid.toString());
+                                prefs.setString(
+                                    "password", _phoneNumberController.text);
+                              }).then(
+                                (value) {
+                                  String docsId = FirebaseAuth
+                                      .instance.currentUser!.uid
+                                      .toString();
+                                  Map<String, dynamic> data = {
+                                    "uid": prefs.getString("uid") ?? "",
+                                    "password": prefs.getString("password") ?? "",
+                                  };
+                                  FirebaseFirestore.instance
+                                      .collection('biodata')
+                                      .doc(docsId)
+                                      .update(data);
+                                },
+                              );
                             },
                             child: Text(
                               "Sign Up",
