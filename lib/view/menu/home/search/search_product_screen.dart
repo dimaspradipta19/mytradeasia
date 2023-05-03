@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
@@ -117,7 +118,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             builder: (context) {
                               return ProductsDetailScreen(
                                 urlProduct:
-                                    valueSearch.searchProduct[index].seoUrl ?? "/en/acrylic-acid",
+                                    valueSearch.searchProduct[index].seoUrl ??
+                                        "/en/acrylic-acid",
                               );
                             },
                           )),
@@ -131,42 +133,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                   child: SizedBox(
                                     height: size20px * 5.5,
                                     width: MediaQuery.of(context).size.width,
-                                    child: Image.network(
-                                      "$url${valueSearch.searchProduct[index].productimage}",
-                                      fit: BoxFit.fill,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        } else {
-                                          return SizedBox(
-                                            width: 148.0,
-                                            height: 116.0,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                color: primaryColor1,
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
+                                    child: CachedNetworkImage(
+                                        imageUrl:
+                                            "$url${valueSearch.searchProduct[index].productimage}",
+                                        fit: BoxFit.fill,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                              child: CircularProgressIndicator
+                                                  .adaptive(),
                                             ),
-                                          );
-                                        }
-                                      },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const FlutterLogo(
-                                          size: size20px * 3,
-                                        );
-                                      },
-                                      width: 148.0,
-                                      height: 116.0,
-                                    ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error)),
                                   ),
                                 ),
                                 Expanded(

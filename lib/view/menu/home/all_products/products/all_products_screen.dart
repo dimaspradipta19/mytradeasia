@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
@@ -312,48 +313,23 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                             .size
                                                             .width,
                                                         height: size20px * 5.5,
-                                                        child: Image.network(
-                                                          "$url${valueAllProduct.listAllProduct[index].productimage}",
-                                                          fit: BoxFit.fill,
-                                                          loadingBuilder: (context,
-                                                              child,
-                                                              loadingProgress) {
-                                                            if (loadingProgress ==
-                                                                null) {
-                                                              return child;
-                                                            } else {
-                                                              return SizedBox(
-                                                                width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                                height: 116.0,
-                                                                child: Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color:
-                                                                        primaryColor1,
-                                                                    value: loadingProgress.expectedTotalBytes !=
-                                                                            null
-                                                                        ? loadingProgress.cumulativeBytesLoaded /
-                                                                            loadingProgress.expectedTotalBytes!
-                                                                        : null,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
-                                                          errorBuilder:
-                                                              (context, error,
-                                                                  stackTrace) {
-                                                            // return const FlutterLogo(
-                                                            //   size: size20px * 3,
-                                                            // );
-                                                            return const Placeholder();
-                                                          },
-                                                          width: 148.0,
-                                                          height: 116.0,
-                                                        ),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                imageUrl:
+                                                                    "$url${valueAllProduct.listAllProduct[index].productimage}",
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    const Center(
+                                                                      child: CircularProgressIndicator
+                                                                          .adaptive(),
+                                                                    ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    const Icon(Icons
+                                                                        .error)),
                                                       ),
                                                     ),
                                                     Expanded(
@@ -555,52 +531,28 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     SizedBox(
-                                                      height: size20px * 5.5,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      child: Image.network(
-                                                        "$url${valueSearch.searchProduct[index].productimage}",
-                                                        fit: BoxFit.fill,
-                                                        loadingBuilder: (context,
-                                                            child,
-                                                            loadingProgress) {
-                                                          if (loadingProgress ==
-                                                              null) {
-                                                            return child;
-                                                          } else {
-                                                            return SizedBox(
-                                                              width: 148.0,
-                                                              height: 116.0,
-                                                              child: Center(
-                                                                child:
-                                                                    CircularProgressIndicator(
-                                                                  color:
-                                                                      primaryColor1,
-                                                                  value: loadingProgress
-                                                                              .expectedTotalBytes !=
-                                                                          null
-                                                                      ? loadingProgress
-                                                                              .cumulativeBytesLoaded /
-                                                                          loadingProgress
-                                                                              .expectedTotalBytes!
-                                                                      : null,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }
-                                                        },
-                                                        errorBuilder: (context,
-                                                            error, stackTrace) {
-                                                          return const FlutterLogo(
-                                                            size: size20px * 3,
-                                                          );
-                                                        },
-                                                        width: 148.0,
-                                                        height: 116.0,
-                                                      ),
-                                                    ),
+                                                        height: size20px * 5.5,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                imageUrl:
+                                                                    "$url${valueSearch.searchProduct[index].productimage}",
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    const Center(
+                                                                      child: CircularProgressIndicator
+                                                                          .adaptive(),
+                                                                    ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    const Icon(Icons
+                                                                        .error))),
                                                     Expanded(
                                                       child: Padding(
                                                         padding:

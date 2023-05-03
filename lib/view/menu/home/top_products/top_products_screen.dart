@@ -225,8 +225,10 @@ class AllTopProductsWidget extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width,
                                   height: 116.0,
                                   child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: primaryColor1,
+                                    child: 
+                                    
+                                    CircularProgressIndicator.adaptive(
+                                      // color: primaryColor1,
                                       value:
                                           loadingProgress.expectedTotalBytes !=
                                                   null

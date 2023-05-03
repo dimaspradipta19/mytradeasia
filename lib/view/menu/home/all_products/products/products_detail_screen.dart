@@ -73,11 +73,35 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Padding(
-                          padding: EdgeInsets.only(top: size20px * 20),
-                          child:
-                              Text("Sorry there is no data for this products"),
+                          padding: const EdgeInsets.only(top: size20px * 20),
+                          child: Column(
+                            children: [
+                              const Text(
+                                  "Sorry there is no data for this products"),
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            primaryColor1),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          side: const BorderSide(
+                                              color: greyColor3)),
+                                    ),
+                                    elevation:
+                                        MaterialStateProperty.all<double>(0.0),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
+                                  child: const Text("Refresh"))
+                            ],
+                          ),
                         ),
                       ],
                     ));
@@ -95,8 +119,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                     "$url${snapshot.data?.detailProduct?.productimage}",
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                      color: primaryColor1),
+                                  child: CircularProgressIndicator.adaptive(),
                                 ),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
@@ -667,63 +690,15 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                       placeholder:
                                                           (context, url) =>
                                                               const Center(
-                                                        child: CircularProgressIndicator(
-                                                            color:
-                                                                primaryColor1),
+                                                        child:
+                                                            CircularProgressIndicator
+                                                                .adaptive(),
                                                       ),
                                                       errorWidget: (context,
                                                               url, error) =>
                                                           const Icon(
                                                               Icons.error),
                                                     )
-
-                                                  //       Image.network(
-                                                  //           url +
-                                                  //               snapshot
-                                                  //                   .data!
-                                                  //                   .relatedProducts[
-                                                  //                       indexRelated]
-                                                  //                   .productimage,
-                                                  //           fit: BoxFit.fill,
-                                                  //           loadingBuilder: (context,
-                                                  //               child,
-                                                  //               loadingProgress) {
-                                                  //             if (loadingProgress ==
-                                                  //                 null) {
-                                                  //               return child;
-                                                  //             } else {
-                                                  //               return SizedBox(
-                                                  //                 width:
-                                                  //                     MediaQuery.of(
-                                                  //                             context)
-                                                  //                         .size
-                                                  //                         .width,
-                                                  //                 height: 116.0,
-                                                  //                 child: Center(
-                                                  //                   child:
-                                                  //                       CircularProgressIndicator(
-                                                  //                     color:
-                                                  //                         primaryColor1,
-                                                  //                     value: loadingProgress
-                                                  //                                 .expectedTotalBytes !=
-                                                  //                             null
-                                                  //                         ? loadingProgress
-                                                  //                                 .cumulativeBytesLoaded /
-                                                  //                             loadingProgress
-                                                  //                                 .expectedTotalBytes!
-                                                  //                         : null,
-                                                  //                   ),
-                                                  //                 ),
-                                                  //               );
-                                                  //             }
-                                                  //           },
-                                                  //           errorBuilder: (context,
-                                                  //               error, stackTrace) {
-                                                  //             return const FlutterLogo(
-                                                  //               size: size20px * 3,
-                                                  //             );
-                                                  //           },
-                                                  //         )
                                                   : const CircularProgressIndicator
                                                       .adaptive(),
                                             ),
@@ -910,9 +885,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                   placeholder: (context, url) =>
                                                       const Center(
                                                     child:
-                                                        CircularProgressIndicator(
-                                                            color:
-                                                                primaryColor1),
+                                                        CircularProgressIndicator
+                                                            .adaptive(),
                                                   ),
                                                   errorWidget: (context, url,
                                                           error) =>

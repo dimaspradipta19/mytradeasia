@@ -177,48 +177,54 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 width:
                                                                     size20px /
                                                                         2),
-                                                            streamSnapshot
-                                                                    .data!
-                                                                    .docs
-                                                                    .isNotEmpty
-                                                                ? streamSnapshot
+                                                            // streamSnapshot
+                                                            //         .data!
+                                                            //         .docs
+                                                            //         .isNotEmpty
+                                                            //     ?
+                                                            streamSnapshot.data?.docs[0]
+                                                                            [
+                                                                            'role'] ==
+                                                                        "Agent" ||
+                                                                    streamSnapshot
                                                                             .data
                                                                             ?.docs[0]['role'] ==
-                                                                        "Sales"
-                                                                    ? Container(
-                                                                        height:
-                                                                            40.0,
-                                                                        width:
-                                                                            40.0,
-                                                                        decoration:
-                                                                            const BoxDecoration(
-                                                                          color:
-                                                                              secondaryColor1,
-                                                                          borderRadius:
-                                                                              BorderRadius.all(Radius.circular(5.0)),
-                                                                        ),
-                                                                        child:
-                                                                            IconButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.push(context,
-                                                                                MaterialPageRoute(
-                                                                              builder: (context) {
-                                                                                return const CartScreen();
-                                                                              },
-                                                                            ));
+                                                                        "Customer"
+                                                                ? Container(
+                                                                    height:
+                                                                        40.0,
+                                                                    width: 40.0,
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                      color:
+                                                                          secondaryColor1,
+                                                                      borderRadius:
+                                                                          BorderRadius.all(
+                                                                              Radius.circular(5.0)),
+                                                                    ),
+                                                                    child:
+                                                                        IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) {
+                                                                            return const CartScreen();
                                                                           },
-                                                                          icon:
-                                                                              Image.asset(
-                                                                            "assets/images/icon_cart.png",
-                                                                            width:
-                                                                                size24px,
-                                                                            height:
-                                                                                size24px,
-                                                                          ),
-                                                                        ),
-                                                                      )
-                                                                    : Container()
+                                                                        ));
+                                                                      },
+                                                                      icon: Image
+                                                                          .asset(
+                                                                        "assets/images/icon_cart.png",
+                                                                        width:
+                                                                            size24px,
+                                                                        height:
+                                                                            size24px,
+                                                                      ),
+                                                                    ),
+                                                                  )
                                                                 : Container()
                                                           ],
                                                         )
@@ -492,9 +498,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       placeholder:
                                                                           (context, url) =>
                                                                               const Center(
-                                                                        child: CircularProgressIndicator(
-                                                                            color:
-                                                                                primaryColor1),
+                                                                        child: CircularProgressIndicator
+                                                                            .adaptive(),
                                                                       ),
                                                                       errorWidget: (context,
                                                                               url,
@@ -502,44 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           const Icon(
                                                                               Icons.error),
                                                                     ),
-                                                                    // Image
-                                                                    //     .network(
-                                                                    //   "$url${valueTopProducts.listResultTop[index].productimage}",
-                                                                    //   fit: BoxFit
-                                                                    //       .fill,
-                                                                    //   loadingBuilder: (BuildContext context,
-                                                                    //       Widget
-                                                                    //           child,
-                                                                    //       ImageChunkEvent?
-                                                                    //           loadingProgress) {
-                                                                    //     if (loadingProgress ==
-                                                                    //         null) {
-                                                                    //       return child;
-                                                                    //     } else {
-                                                                    //       return SizedBox(
-                                                                    //         width:
-                                                                    //             MediaQuery.of(context).size.width,
-                                                                    //         height:
-                                                                    //             116.0,
-                                                                    //         child:
-                                                                    //             Center(
-                                                                    //           child: CircularProgressIndicator(
-                                                                    //             color: primaryColor1,
-                                                                    //             value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                                                                    //           ),
-                                                                    //         ),
-                                                                    //       );
-                                                                    //     }
-                                                                    //   },
-                                                                    //   errorBuilder: (BuildContext context,
-                                                                    //       Object
-                                                                    //           exception,
-                                                                    //       StackTrace?
-                                                                    //           stackTrace) {
-                                                                    //     return Text(
-                                                                    //         "Error: $exception");
-                                                                    //   },
-                                                                    // ),
+                                                                    
                                                                   ),
                                                                 ),
                                                                 Expanded(
@@ -787,7 +755,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               /* End Industry Section */
 
-                                              /* Lastseen Section */
+                                              /* Last seen Section */
                                               const Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 8.0),
@@ -806,7 +774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           mainAxisSpacing: 15,
                                                           childAspectRatio:
                                                               0.8),
-                                                  itemCount: 6,
+                                                  itemCount: 1,
                                                   shrinkWrap: true,
                                                   padding: EdgeInsets.zero,
                                                   physics:

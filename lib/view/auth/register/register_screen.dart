@@ -1,5 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
@@ -116,35 +117,50 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 1,
-                              child: InkWell(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LanguagesScreen(),
-                                    )),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: greyColor3),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(7.0),
-                                    ),
-                                  ),
-                                  width: 60,
-                                  height: 50,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(size20px / 2),
-                                    child: Image.asset(
-                                      "assets/images/logo_indonesia.png",
-                                    ),
-                                  ),
-                                ),
+                              child: CountryCodePicker(
+                                onChanged: print,
+                                // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                                initialSelection: 'ID',
+                                favorite: ['ID', 'UK'],
+                                // optional. Shows only country name and flag
+                                showCountryOnly: false,
+                                showFlag: true,
+                                hideMainText: true,
+                                // optional. Shows only country name and flag when popup is closed.
+                                showOnlyCountryWhenClosed: false,
+                                // optional. aligns the flag and the Text left
+                                // alignLeft: false,
+                                padding: EdgeInsets.zero,
                               ),
+                              // InkWell(
+                              //   onTap: () => Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             const LanguagesScreen(),
+                              //       )),
+                              //   child: Container(
+                              //     decoration: BoxDecoration(
+                              //       border: Border.all(color: greyColor3),
+                              //       borderRadius: const BorderRadius.all(
+                              //         Radius.circular(7.0),
+                              //       ),
+                              //     ),
+                              //     width: 60,
+                              //     height: 50,
+                              //     child: Padding(
+                              //       padding: const EdgeInsets.all(size20px / 2),
+                              //       child: Image.asset(
+                              //         "assets/images/logo_indonesia.png",
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: size20px / 2,
                             ),
                             Expanded(
                               flex: 5,
@@ -270,7 +286,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .toString();
                                   Map<String, dynamic> data = {
                                     "uid": prefs.getString("uid") ?? "",
-                                    "password": prefs.getString("password") ?? "",
+                                    "password":
+                                        prefs.getString("password") ?? "",
                                   };
                                   FirebaseFirestore.instance
                                       .collection('biodata')

@@ -5,7 +5,7 @@ import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/theme.dart';
 import '../../../widget/loading_overlay_widget.dart';
@@ -158,9 +158,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 55.0,
-                    child: _emailController.text.isNotEmpty &&
+                    child: 
+                    _emailController.text.isNotEmpty &&
                             _phoneNumberController.text.isNotEmpty
-                        ? Consumer<AuthProvider>(
+                        ? 
+                        Consumer<AuthProvider>(
                             builder: (context, valueAuth, child) =>
                                 ElevatedButton(
                               style: ButtonStyle(
