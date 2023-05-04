@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {

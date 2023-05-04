@@ -1,18 +1,15 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../view/auth/biodata/biodata_screen.dart';
-import '../../view/auth/choose_role/role_user_screen.dart';
 import '../../view/menu/other/navigation_bar.dart';
 
 class AuthProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   User? _user;
 

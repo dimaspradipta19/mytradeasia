@@ -7,11 +7,9 @@ import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../modelview/provider/loading_provider.dart';
 import '../../../utils/theme.dart';
 import '../../../widget/loading_overlay_widget.dart';
-import '../../menu/other/languages_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

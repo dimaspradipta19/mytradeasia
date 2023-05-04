@@ -349,7 +349,7 @@ class PopularSearchWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: size20px / 2,
         ),
         Row(

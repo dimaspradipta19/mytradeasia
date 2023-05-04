@@ -15,11 +15,6 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_scre
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../modelview/provider/loading_provider.dart';
-import '../../../widget/loading_overlay_widget.dart';
-// import 'package:shimmer/shimmer.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
