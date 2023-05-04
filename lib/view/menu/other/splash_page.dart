@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       MaterialPageRoute(
         builder: (context) {
           if (isLoggedIn) {
-            return NavigationBarWidget();
+            return const NavigationBarWidget();
           } else {
             return const RoleUserScreen();
           }

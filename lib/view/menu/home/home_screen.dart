@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       .snapshots(),
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                      // var docsData = streamSnapshot.data?.docs[0].data()as Map<String, dynamic>;
                     return streamSnapshot.connectionState ==
                             ConnectionState.waiting
                         ? const CircularProgressIndicator.adaptive(
@@ -177,11 +178,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 width:
                                                                     size20px /
                                                                         2),
-                                                            // streamSnapshot
-                                                            //         .data!
-                                                            //         .docs
-                                                            //         .isNotEmpty
-                                                            //     ?
                                                             streamSnapshot.data?.docs[0]
                                                                             [
                                                                             'role'] ==
@@ -507,7 +503,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           const Icon(
                                                                               Icons.error),
                                                                     ),
-                                                                    
                                                                   ),
                                                                 ),
                                                                 Expanded(
@@ -756,110 +751,130 @@ class _HomeScreenState extends State<HomeScreen> {
                                               /* End Industry Section */
 
                                               /* Last seen Section */
-                                              const Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 8.0),
-                                                child: Text(
-                                                    "Last Seen Products",
-                                                    style: text18),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: size20px),
-                                                child: GridView.builder(
-                                                  gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 2,
-                                                          crossAxisSpacing: 15,
-                                                          mainAxisSpacing: 15,
-                                                          childAspectRatio:
-                                                              0.8),
-                                                  itemCount: 1,
-                                                  shrinkWrap: true,
-                                                  padding: EdgeInsets.zero,
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Card(
-                                                      shadowColor: blackColor,
-                                                      elevation: 3.0,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Center(
-                                                              child:
-                                                                  Image.asset(
-                                                            "assets/images/products.png",
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                          )),
-                                                          const Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    vertical:
-                                                                        5.0,
-                                                                    horizontal:
-                                                                        10.0),
-                                                            child: Text(
-                                                              "Dipentene",
-                                                              style: text14,
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        10.0),
-                                                            child: Row(
-                                                              children: [
-                                                                Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    const Text(
-                                                                        "CAS Number :",
-                                                                        style:
-                                                                            text10),
-                                                                    Text(
-                                                                        "138 - 86 - 3",
-                                                                        style: text10.copyWith(
-                                                                            color:
-                                                                                greyColor2)),
-                                                                  ],
-                                                                ),
-                                                                const Spacer(),
-                                                                Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    const Text(
-                                                                        "HS Code :",
-                                                                        style:
-                                                                            text10),
-                                                                    Text("-",
-                                                                        style: text10.copyWith(
-                                                                            color:
-                                                                                greyColor2)),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
+                                              // const Padding(
+                                              //   padding: EdgeInsets.symmetric(
+                                              //       vertical: 8.0),
+                                              //   child: Text(
+                                              //       "Last Seen Products",
+                                              //       style: text18),
+                                              // ),
+                                              // docsData.containsKey("recentlySeen")
+                                              //     ? Container()
+                                              //     : Padding(
+                                              //         padding:
+                                              //             const EdgeInsets.only(
+                                              //                 bottom: size20px),
+                                              //         child: GridView.builder(
+                                              //           gridDelegate:
+                                              //               const SliverGridDelegateWithFixedCrossAxisCount(
+                                              //                   crossAxisCount:
+                                              //                       2,
+                                              //                   crossAxisSpacing:
+                                              //                       15,
+                                              //                   mainAxisSpacing:
+                                              //                       15,
+                                              //                   childAspectRatio:
+                                              //                       0.8),
+                                              //           itemCount: docsData.containsKey("recentlySeen") ? docsData[0]["recentlySeen"] : 2,
+                                              //           // itemCount: 2,
+                                              //           shrinkWrap: true,
+                                              //           padding:
+                                              //               EdgeInsets.zero,
+                                              //           physics:
+                                              //               const NeverScrollableScrollPhysics(),
+                                              //           itemBuilder:
+                                              //               (context, index) {
+                                              //             return Card(
+                                              //               shadowColor:
+                                              //                   blackColor,
+                                              //               elevation: 3.0,
+                                              //               child: Column(
+                                              //                 crossAxisAlignment:
+                                              //                     CrossAxisAlignment
+                                              //                         .start,
+                                              //                 children: [
+                                              //                   SizedBox(
+                                              //                     height:
+                                              //                         size20px *
+                                              //                             5.5,
+                                              //                     width: MediaQuery.of(
+                                              //                             context)
+                                              //                         .size
+                                              //                         .width,
+                                              //                     child:
+                                              //                         CachedNetworkImage(
+                                              //                       imageUrl:
+                                              //                           "$url${"/images/product/2-ethylhexanol.webp"}",
+                                              //                       fit: BoxFit
+                                              //                           .fill,
+                                              //                       placeholder:
+                                              //                           (context,
+                                              //                                   url) =>
+                                              //                               const Center(
+                                              //                         child: CircularProgressIndicator
+                                              //                             .adaptive(),
+                                              //                       ),
+                                              //                       errorWidget: (context,
+                                              //                               url,
+                                              //                               error) =>
+                                              //                           const Icon(
+                                              //                               Icons.error),
+                                              //                     ),
+                                              //                   ),
+                                              //                   Padding(
+                                              //                     padding: const EdgeInsets
+                                              //                             .symmetric(
+                                              //                         vertical:
+                                              //                             5.0,
+                                              //                         horizontal:
+                                              //                             10.0),
+                                              //                     child: Text(
+                                              //                       docsData.containsKey("recentlySeen") ? docsData[index]["recentlySeen"] : "",
+                                              //                       style:
+                                              //                           text14,
+                                              //                     ),
+                                              //                   ),
+                                              //                   Padding(
+                                              //                     padding: const EdgeInsets
+                                              //                             .symmetric(
+                                              //                         horizontal:
+                                              //                             10.0),
+                                              //                     child: Row(
+                                              //                       children: [
+                                              //                         Column(
+                                              //                           crossAxisAlignment:
+                                              //                               CrossAxisAlignment.start,
+                                              //                           children: [
+                                              //                             const Text(
+                                              //                                 "CAS Number :",
+                                              //                                 style: text10),
+                                              //                             Text(
+                                              //                                 streamSnapshot.data?.docs[0].exists == true ? streamSnapshot.data?.docs[0]['recentlySeen'][index]["casNumber"] : "",
+                                              //                                 style: text10.copyWith(color: greyColor2)),
+                                              //                           ],
+                                              //                         ),
+                                              //                         const Spacer(),
+                                              //                         Column(
+                                              //                           crossAxisAlignment:
+                                              //                               CrossAxisAlignment.start,
+                                              //                           children: [
+                                              //                             const Text(
+                                              //                                 "HS Code :",
+                                              //                                 style: text10),
+                                              //                             Text(
+                                              //                                 streamSnapshot.data?.docs[0].exists == true ? streamSnapshot.data?.docs[0]['recentlySeen'][index]["hsCode"] : "",
+                                              //                                 style: text10.copyWith(color: greyColor2)),
+                                              //                           ],
+                                              //                         ),
+                                              //                       ],
+                                              //                     ),
+                                              //                   ),
+                                              //                 ],
+                                              //               ),
+                                              //             );
+                                              //           },
+                                              //         ),
+                                              //       ),
                                               /* End Lastseen Section */
 
                                               /* Button See More */

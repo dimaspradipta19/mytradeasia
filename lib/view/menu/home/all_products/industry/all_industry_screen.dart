@@ -46,7 +46,8 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                   (context, AllIndustryProvider valueAllIndustry, child) {
                 if (valueAllIndustry.state == ResultState.loading) {
                   return const Center(
-                    child: CircularProgressIndicator(color: primaryColor1),
+                    child: CircularProgressIndicator.adaptive(
+                        backgroundColor: primaryColor1),
                   );
                 } else {
                   return GridView.builder(
