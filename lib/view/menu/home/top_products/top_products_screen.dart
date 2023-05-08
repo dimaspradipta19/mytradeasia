@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
@@ -14,12 +16,13 @@ class TopProductsScreen extends StatefulWidget {
   State<TopProductsScreen> createState() => _TopProductsScreenState();
 }
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+const String nameProd = "Dipentene";
+const String url = "https://chemtradea.chemtradeasia.com/";
+
 class _TopProductsScreenState extends State<TopProductsScreen> {
   @override
   Widget build(BuildContext context) {
-    const String nameProd = "Dipentene";
-    const String url = "https://chemtradea.chemtradeasia.com/";
-
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () {
@@ -195,7 +198,7 @@ class AllTopProductsWidget extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () {
+                  onTap: () async {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
                         return ProductsDetailScreen(
@@ -204,6 +207,25 @@ class AllTopProductsWidget extends StatelessWidget {
                         );
                       },
                     ));
+
+                    String docsId = _auth.currentUser!.uid.toString();
+                    Map<String, dynamic> data = {
+                      "productName":
+                          valueTopProducts.listResultTop[index].productname,
+                      "seo_url": valueTopProducts.listResultTop[index].seoUrl,
+                      "casNumber":
+                          valueTopProducts.listResultTop[index].casNumber,
+                      "hsCode": valueTopProducts.listResultTop[index].hsCode,
+                      "productImage":
+                          valueTopProducts.listResultTop[index].productimage
+                    };
+
+                    await FirebaseFirestore.instance
+                        .collection('biodata')
+                        .doc(docsId)
+                        .update({
+                      "recentlySeen": FieldValue.arrayUnion([data])
+                    });
                   },
                   child: Card(
                     shadowColor: blackColor,
@@ -225,9 +247,7 @@ class AllTopProductsWidget extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width,
                                   height: 116.0,
                                   child: Center(
-                                    child: 
-                                    
-                                    CircularProgressIndicator.adaptive(
+                                    child: CircularProgressIndicator.adaptive(
                                       // color: primaryColor1,
                                       value:
                                           loadingProgress.expectedTotalBytes !=

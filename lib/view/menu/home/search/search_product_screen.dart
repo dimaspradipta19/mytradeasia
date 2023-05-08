@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
@@ -18,9 +20,12 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchProductController =
       TextEditingController();
 
+  Timer? debouncerTime;
+
   @override
   void dispose() {
     _searchProductController.dispose();
+    debouncerTime?.cancel();
     super.dispose();
   }
 
@@ -63,9 +68,16 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Form(
                         child: TextFormField(
                           onChanged: (value) {
-                            Provider.of<SearchProductProvider>(context,
-                                    listen: false)
-                                .getListProduct(_searchProductController.text);
+                            if (debouncerTime?.isActive ?? false)debouncerTime?.cancel();
+
+                            debouncerTime =
+                                Timer(const Duration(milliseconds: 700), () {
+                              Provider.of<SearchProductProvider>(context,
+                                      listen: false)
+                                  .getListProduct(
+                                      _searchProductController.text);
+                            });
+                            
                           },
                           controller: _searchProductController,
                           autofocus: true,

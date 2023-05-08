@@ -7,7 +7,6 @@ class SearchProductService {
   List<SearchProductModel> resultAwal = [];
 
   Future<List<SearchProductModel>> getSearchProduct(String productName) async {
-    // String url = "https://www.chemtradeasia.com/en/product-list?productname=";
     String url = "http://tradeasia.sg/en/list-product?productname=$productName";
     try {
       final response = await http.get(Uri.parse(url));

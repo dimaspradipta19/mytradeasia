@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-// import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
@@ -34,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String url = "https://chemtradea.chemtradeasia.com/";
+  final bool showAll = false;
 
   @override
   void initState() {
@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (streamSnapshot.hasData) {
                       var docsData = streamSnapshot.data!.docs[0].data()
                           as Map<String, dynamic>?;
-                      // return Text("Error ${docsData!["recentlySeen"][0]["productName"]}");
                       return Column(
                         children: [
                           Visibility(
@@ -434,7 +433,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   itemBuilder:
                                                       (context, index) {
                                                     return InkWell(
-                                                      onTap: () {
+                                                      onTap: () async {
                                                         Navigator.push(context,
                                                             MaterialPageRoute(
                                                           builder: (context) {
@@ -447,6 +446,50 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             );
                                                           },
                                                         ));
+
+                                                        String docsId = _auth
+                                                            .currentUser!.uid
+                                                            .toString();
+                                                        Map<String, dynamic>
+                                                            data = {
+                                                          "productName":
+                                                              valueTopProducts
+                                                                  .listResultTop[
+                                                                      index]
+                                                                  .productname,
+                                                          "seo_url":
+                                                              valueTopProducts
+                                                                  .listResultTop[
+                                                                      index]
+                                                                  .seoUrl,
+                                                          "casNumber":
+                                                              valueTopProducts
+                                                                  .listResultTop[
+                                                                      index]
+                                                                  .casNumber,
+                                                          "hsCode":
+                                                              valueTopProducts
+                                                                  .listResultTop[
+                                                                      index]
+                                                                  .hsCode,
+                                                          "productImage":
+                                                              valueTopProducts
+                                                                  .listResultTop[
+                                                                      index]
+                                                                  .productimage
+                                                        };
+
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'biodata')
+                                                            .doc(docsId)
+                                                            .update({
+                                                          "recentlySeen":
+                                                              FieldValue
+                                                                  .arrayUnion(
+                                                                      [data])
+                                                        });
                                                       },
                                                       child: Card(
                                                         shadowColor: blackColor,
@@ -743,153 +786,181 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Text("Last Seen Products",
                                                 style: text18),
                                           ),
-                                          docsData!["recentlySeen"] == null
-                                              ? Container()
-                                              :
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: size20px),
-                                            child: GridView.builder(
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 2,
-                                                      crossAxisSpacing: 15,
-                                                      mainAxisSpacing: 15,
-                                                      childAspectRatio: 0.8),
-                                              itemCount: docsData["recentlySeen"].length,
-                                              shrinkWrap: true,
-                                              padding: EdgeInsets.zero,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemBuilder: (context, index) {
-                                                return Card(
-                                                  shadowColor: blackColor,
-                                                  elevation: 3.0,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: size20px * 5.5,
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          imageUrl:
-                                                              "$url${"/images/product/2-ethylhexanol.webp"}",
-                                                          fit: BoxFit.fill,
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  const Center(
-                                                            child:
-                                                                CircularProgressIndicator
-                                                                    .adaptive(),
+                                          docsData!["recentlySeen"] == null ||
+                                                  docsData["recentlySeen"]
+                                                          .length ==
+                                                      0
+                                              ? const Center(
+                                                  child:
+                                                      Text("Tidak ada product"))
+                                              : Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: size20px),
+                                                      child: GridView.builder(
+                                                        gridDelegate:
+                                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                crossAxisCount:
+                                                                    2,
+                                                                crossAxisSpacing:
+                                                                    15,
+                                                                mainAxisSpacing:
+                                                                    15,
+                                                                childAspectRatio:
+                                                                    0.8),
+                                                        itemCount: docsData[
+                                                                "recentlySeen"]
+                                                            .length,
+                                                        shrinkWrap: true,
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Card(
+                                                            shadowColor:
+                                                                blackColor,
+                                                            elevation: 3.0,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                SizedBox(
+                                                                  height:
+                                                                      size20px *
+                                                                          5.5,
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    imageUrl:
+                                                                        "$url${docsData["recentlySeen"][index]["productImage"]}",
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    placeholder:
+                                                                        (context,
+                                                                                url) =>
+                                                                            const Center(
+                                                                      child: CircularProgressIndicator
+                                                                          .adaptive(),
+                                                                    ),
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        const Icon(
+                                                                            Icons.error),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          5.0,
+                                                                      horizontal:
+                                                                          10.0),
+                                                                  child: Text(
+                                                                    docsData["recentlySeen"]
+                                                                            [
+                                                                            index]
+                                                                        [
+                                                                        "productName"],
+                                                                    // "",
+                                                                    style:
+                                                                        text14,
+                                                                    maxLines: 2,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          10.0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          const Text(
+                                                                              "CAS Number :",
+                                                                              style: text10),
+                                                                          Text(
+                                                                              docsData["recentlySeen"][index]["casNumber"],
+                                                                              // "",
+                                                                              style: text10.copyWith(color: greyColor2)),
+                                                                        ],
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          const Text(
+                                                                              "HS Code :",
+                                                                              style: text10),
+                                                                          Text(
+                                                                              docsData["recentlySeen"][index]["hsCode"],
+                                                                              // "",
+                                                                              style: text10.copyWith(color: greyColor2)),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    /* Button See More */
+                                                    Center(
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              secondaryColor5,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      size20px *
+                                                                          5),
+                                                        ),
+                                                        child: InkWell(
+                                                          onTap: () {},
+                                                          child: Padding(
+                                                            padding: const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    size20px /
+                                                                        2,
+                                                                vertical:
+                                                                    size20px /
+                                                                        5),
+                                                            child: Text(
+                                                              "See More",
+                                                              style: text12
+                                                                  .copyWith(
+                                                                      color:
+                                                                          secondaryColor1),
+                                                            ),
                                                           ),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              const Icon(
-                                                                  Icons.error),
                                                         ),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 5.0,
-                                                                horizontal:
-                                                                    10.0),
-                                                        child: Text(
-                                                          docsData[
-                                                              "recentlySeen"][index]["productName"],
-                                                          // "",
-                                                          style: text14,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal:
-                                                                    10.0),
-                                                        child: Row(
-                                                          children: [
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                const Text(
-                                                                    "CAS Number :",
-                                                                    style:
-                                                                        text10),
-                                                                Text(
-                                                                  docsData["recentlySeen"][index]["casNumber"],
-                                                                  // "",
-                                                                    style: text10
-                                                                        .copyWith(
-                                                                            color:
-                                                                                greyColor2)),
-                                                              ],
-                                                            ),
-                                                            const Spacer(),
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                const Text(
-                                                                    "HS Code :",
-                                                                    style:
-                                                                        text10),
-                                                                Text(
-                                                                  docsData["recentlySeen"][index]["hsCode"],
-                                                                  // "",
-                                                                    style: text10
-                                                                        .copyWith(
-                                                                            color:
-                                                                                greyColor2)),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          /* End Lastseen Section */
-
-                                          /* Button See More */
-                                          Center(
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: secondaryColor5,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        size20px * 5),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {},
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: size20px / 2,
-                                                      vertical: size20px / 5),
-                                                  child: Text(
-                                                    "See More",
-                                                    style: text12.copyWith(
-                                                        color: secondaryColor1),
-                                                  ),
+                                                    ),
+                                                    /* End Button See More */
+                                                  ],
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          /* End Button See More */
+                                          /* End Lastseen Section */
                                         ],
                                       ),
                                     )
