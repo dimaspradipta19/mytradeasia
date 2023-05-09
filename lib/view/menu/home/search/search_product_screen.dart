@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/theme.dart';
@@ -21,6 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
       TextEditingController();
 
   Timer? debouncerTime;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -68,7 +71,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Form(
                         child: TextFormField(
                           onChanged: (value) {
-                            if (debouncerTime?.isActive ?? false)debouncerTime?.cancel();
+                            if (debouncerTime?.isActive ?? false)
+                              debouncerTime?.cancel();
 
                             debouncerTime =
                                 Timer(const Duration(milliseconds: 700), () {
@@ -77,7 +81,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   .getListProduct(
                                       _searchProductController.text);
                             });
-                            
                           },
                           controller: _searchProductController,
                           autofocus: true,
@@ -125,16 +128,39 @@ class _SearchScreenState extends State<SearchScreen> {
                       itemBuilder: (context, index) {
                         String url = "https://chemtradea.chemtradeasia.com/";
                         return InkWell(
-                          onTap: () =>
-                              Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return ProductsDetailScreen(
-                                urlProduct:
-                                    valueSearch.searchProduct[index].seoUrl ??
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ProductsDetailScreen(
+                                    urlProduct: valueSearch
+                                            .searchProduct[index].seoUrl ??
                                         "/en/acrylic-acid",
-                              );
-                            },
-                          )),
+                                  );
+                                },
+                              ),
+                            );
+                            String docsId = _auth.currentUser!.uid.toString();
+                            Map<String, dynamic> data = {
+                              "productName":
+                                  valueSearch.searchProduct[index].productname,
+                              "seo_url":
+                                  valueSearch.searchProduct[index].seoUrl,
+                              "casNumber":
+                                  valueSearch.searchProduct[index].casNumber,
+                              "hsCode": valueSearch.searchProduct[index].hsCode,
+                              "productImage":
+                                  valueSearch.searchProduct[index].productimage
+                            };
+
+                            await FirebaseFirestore.instance
+                                .collection('biodata')
+                                .doc(docsId)
+                                .update({
+                              "recentlySeen": FieldValue.arrayUnion([data])
+                            });
+                          },
                           child: Card(
                             shadowColor: blackColor,
                             elevation: 3.0,
@@ -396,78 +422,149 @@ class PopularSearchWidget extends StatelessWidget {
   }
 }
 
-class RecentlySeenWidget extends StatelessWidget {
+class RecentlySeenWidget extends StatefulWidget {
   const RecentlySeenWidget({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<RecentlySeenWidget> createState() => _RecentlySeenWidgetState();
+}
+
+class _RecentlySeenWidgetState extends State<RecentlySeenWidget> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String url = "https://chemtradea.chemtradeasia.com/";
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: size20px - 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return StreamBuilder(
+      stream: _firestore
+          .collection('biodata')
+          .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator.adaptive();
+        } else if (snapshot.hasError) {
+          return const Text("Error");
+        } else if (snapshot.hasData) {
+          var docsData = snapshot.data!.docs[0].data() as Map<String, dynamic>?;
+          return Column(
             children: [
-              const Text(
-                "Recently Seen",
-                style: heading2,
-              ),
-              InkWell(
-                onTap: () => print("Delete"),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: secondaryColor5,
-                      borderRadius: BorderRadius.circular(size20px / 2)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: size20px / 2, vertical: 3.0),
-                    child: Text(
-                      "Delete",
-                      style: body1Regular.copyWith(color: secondaryColor1),
+              Padding(
+                padding: const EdgeInsets.only(bottom: size20px - 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Recently Seen",
+                      style: heading2,
                     ),
-                  ),
+                    InkWell(
+                      onTap: () => print("Delete"),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: secondaryColor5,
+                            borderRadius: BorderRadius.circular(size20px / 2)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: size20px / 2, vertical: 3.0),
+                          child: Text(
+                            "Delete",
+                            style:
+                                body1Regular.copyWith(color: secondaryColor1),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              )
+              ),
+              SizedBox(
+                  height: 120,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: docsData!["recentlySeen"].length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(7.0)),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "$url${docsData["recentlySeen"][index]["productImage"]}",
+                                  height: 76,
+                                  width: 76,
+                                  fit: BoxFit.fill,
+                                )
+                                // Image.asset(
+                                //   "assets/images/products.png",
+                                //   fit: BoxFit.cover,
+                                //   height: 76,
+                                //   width: 76,
+                                // ),
+                                ),
+                            Container(
+                              width: 76,
+                              child: Text(
+                                  "${docsData["recentlySeen"][index]["productName"]}",
+                                  maxLines: 2,
+                                  style: body1Medium),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+
+                  // GridView.builder(
+                  //   physics: const NeverScrollableScrollPhysics(),
+                  //   padding: EdgeInsets.zero,
+                  //   itemCount: 4,
+                  //   // itemCount: docsData!["recentlySeen"].length,
+                  //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  //       crossAxisCount: 4,
+                  //       crossAxisSpacing: 10.0,
+                  //       childAspectRatio: 0.7),
+                  //   itemBuilder: (context, index) {
+                  //     return Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         ClipRRect(
+                  //           borderRadius:
+                  //               const BorderRadius.all(Radius.circular(7.0)),
+                  //           child: Image.asset(
+                  //             "assets/images/products.png",
+                  //             fit: BoxFit.cover,
+                  //             height: 76,
+                  //             width: 76,
+                  //           ),
+                  //         ),
+                  //         const SizedBox(height: 5.0),
+                  //         Text(
+                  //           // docsData["recentlySeen"][index]["productName"]
+                  //           "dipenteneeeeeee",
+                  //           maxLines: 2,
+                  //           style: body1Medium,
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // ),
+                  ),
             ],
-          ),
-        ),
-        SizedBox(
-          height: 100,
-          width: double.infinity,
-          child: GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: 4,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 10.0,
-                childAspectRatio: 0.7),
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(7.0)),
-                    child: Image.asset(
-                      "assets/images/products.png",
-                      fit: BoxFit.cover,
-                      height: 76,
-                      width: 76,
-                    ),
-                  ),
-                  const SizedBox(height: 5.0),
-                  const Text(
-                    "Dipentine",
-                    style: body1Medium,
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }
