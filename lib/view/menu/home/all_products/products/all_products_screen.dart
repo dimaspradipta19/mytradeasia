@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/model/all_industry_model.dart';
+import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
@@ -80,16 +82,16 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                           child: TextFormField(
                             controller: _searchProductController,
                             onChanged: ((value) {
+                              if (debouncerTime?.isActive ?? false)
+                                debouncerTime?.cancel();
 
-                              if (debouncerTime?.isActive ?? false) debouncerTime?.cancel();
-
-                              debouncerTime = Timer(const Duration(milliseconds: 700), () { 
+                              debouncerTime =
+                                  Timer(const Duration(milliseconds: 700), () {
                                 Provider.of<SearchProductProvider>(context,
-                                      listen: false)
-                                  .getListProduct(
-                                      _searchProductController.text);
+                                        listen: false)
+                                    .getListProduct(
+                                        _searchProductController.text);
                               });
-                              
                             }),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -159,6 +161,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                       const Text("All Products", style: text18),
                       InkWell(
                         onTap: () {
+                          Provider.of<AllIndustryProvider>(context,
+                                  listen: false)
+                              .getAllIndustry();
+
                           showModalBottomSheet<dynamic>(
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
@@ -188,49 +194,63 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             style: heading2,
                                           ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                width: size20px * 8,
-                                                height: 50.0,
-                                                decoration: const BoxDecoration(
-                                                    color: thirdColor1,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                size20px / 4))),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Gum Rosin",
-                                                    style: body1Medium,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                                width: size20px * 0.75),
-                                            Expanded(
-                                              child: Container(
-                                                width: size20px * 8,
-                                                height: 50.0,
-                                                decoration: const BoxDecoration(
-                                                    color: thirdColor1,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                size20px / 4))),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Gum Rosin",
-                                                    style: body1Medium,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        Consumer<AllIndustryProvider>(
+                                          builder: (context, value, child) =>
+                                              value.state == ResultState.loading
+                                                  ? const Center(
+                                                      child:
+                                                          CircularProgressIndicator
+                                                              .adaptive(),
+                                                    )
+                                                  : value.state ==
+                                                          ResultState.noData
+                                                      ? Container()
+                                                      : GridView.builder(
+                                                          gridDelegate:
+                                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                  crossAxisCount:
+                                                                      2,
+                                                                  crossAxisSpacing:
+                                                                      size20px -
+                                                                          5,
+                                                                  mainAxisSpacing:
+                                                                      size20px -
+                                                                          5,
+                                                                  childAspectRatio:
+                                                                      3.5),
+                                                          itemCount: value
+                                                              .allIndustryList!
+                                                              .detailIndustry
+                                                              .length,
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return Container(
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color:
+                                                                    thirdColor1,
+                                                                borderRadius: BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        size20px /
+                                                                            4)),
+                                                              ),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  value
+                                                                      .allIndustryList!
+                                                                      .detailIndustry[
+                                                                          index]
+                                                                      .industryName,
+                                                                  style:
+                                                                      body1Medium,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
                                         ),
                                       ],
                                     ),

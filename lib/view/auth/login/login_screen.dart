@@ -84,13 +84,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderSide: BorderSide(color: secondaryColor1),
                             ),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Email is empty";
+                            }
+                            if (!RegExp(
+                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                .hasMatch(value)) {
+                              return "Please enter valid email";
+                            }
+                            return null;
+                          },
                         ),
                         const Padding(
                           padding: EdgeInsets.only(
                               top: size20px * 0.75, bottom: size20px - 12.0),
                           child: Text("Password", style: heading3),
                         ),
-                        // phone nuber
+                        // phone number
                         Consumer<ObscureTextProvider>(
                           builder: (context, ObscureTextProvider valueObsecure,
                                   child) =>
@@ -98,6 +109,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: valueObsecure.obscureText,
                             keyboardType: TextInputType.number,
                             controller: _phoneNumberController,
+                            validator: (valuePassword) {
+                              if (valuePassword!.isEmpty ||
+                                  valuePassword.length < 6) {
+                                return "Password must be filled";
+                              }
+
+                              return null;
+                            },
                             decoration: InputDecoration(
                               hintText: "Enter your password",
                               hintStyle:
@@ -158,11 +177,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 55.0,
-                    child: 
-                    _emailController.text.isNotEmpty &&
+                    child: _emailController.text.isNotEmpty &&
                             _phoneNumberController.text.isNotEmpty
-                        ? 
-                        Consumer<AuthProvider>(
+                        ? Consumer<AuthProvider>(
                             builder: (context, valueAuth, child) =>
                                 ElevatedButton(
                               style: ButtonStyle(
@@ -177,15 +194,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               onPressed: () {
-                                valueLoading.isLoading;
-                                valueLoading.getStateLoading();
-                                valueAuth
-                                    .loginWithEmail(_emailController.text,
-                                        _phoneNumberController.text, context)
-                                    .then((value) {
+                                if (_formKey.currentState!.validate()) {
                                   valueLoading.isLoading;
                                   valueLoading.getStateLoading();
-                                });
+                                  valueAuth
+                                      .loginWithEmail(_emailController.text,
+                                          _phoneNumberController.text, context)
+                                      .then((value) {
+                                    valueLoading.isLoading;
+                                    valueLoading.getStateLoading();
+                                  });
+                                }
                               },
                               child: Text(
                                 "Sign In",

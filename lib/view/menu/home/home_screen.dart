@@ -446,7 +446,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             );
                                                           },
                                                         ));
-                                                        
+
                                                         String docsId = _auth
                                                             .currentUser!.uid
                                                             .toString();
@@ -811,8 +811,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 childAspectRatio:
                                                                     0.8),
                                                         itemCount: docsData[
-                                                                "recentlySeen"]
-                                                            .length,
+                                                                        "recentlySeen"]
+                                                                    .length <
+                                                                4
+                                                            ? docsData[
+                                                                    "recentlySeen"]
+                                                                .length
+                                                            : 4,
                                                         shrinkWrap: true,
                                                         padding:
                                                             EdgeInsets.zero,

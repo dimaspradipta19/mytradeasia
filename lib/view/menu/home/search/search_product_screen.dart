@@ -450,6 +450,7 @@ class _RecentlySeenWidgetState extends State<RecentlySeenWidget> {
           return const Text("Error");
         } else if (snapshot.hasData) {
           var docsData = snapshot.data!.docs[0].data() as Map<String, dynamic>?;
+
           return Column(
             children: [
               Padding(
@@ -462,7 +463,16 @@ class _RecentlySeenWidgetState extends State<RecentlySeenWidget> {
                       style: heading2,
                     ),
                     InkWell(
-                      onTap: () => print("Delete"),
+                      onTap: () async {
+                        print(docsData);
+                        String docsId = _auth.currentUser!.uid.toString();
+                        await FirebaseFirestore.instance
+                            .collection('biodata')
+                            .doc(docsId)
+                            .update(
+                          {"recentlySeen": FieldValue.delete()},
+                        );
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             color: secondaryColor5,
@@ -481,84 +491,47 @@ class _RecentlySeenWidgetState extends State<RecentlySeenWidget> {
                   ],
                 ),
               ),
-              SizedBox(
-                  height: 120,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: docsData!["recentlySeen"].length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(7.0)),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      "$url${docsData["recentlySeen"][index]["productImage"]}",
-                                  height: 76,
+              docsData!["recentlySeen"] == null
+                  ? const Text("Tidak ada product")
+                  : SizedBox(
+                      height: 120,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: docsData["recentlySeen"].length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(7.0)),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          "$url${docsData["recentlySeen"][index]["productImage"]}",
+                                      height: 76,
+                                      width: 76,
+                                      fit: BoxFit.fill,
+                                    )),
+                                const SizedBox(height: size20px / 4),
+                                SizedBox(
                                   width: 76,
-                                  fit: BoxFit.fill,
-                                )
-                                // Image.asset(
-                                //   "assets/images/products.png",
-                                //   fit: BoxFit.cover,
-                                //   height: 76,
-                                //   width: 76,
-                                // ),
+                                  child: Text(
+                                    "${docsData["recentlySeen"][index]["productName"]}",
+                                    maxLines: 2,
+                                    style: body1Medium,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                            Container(
-                              width: 76,
-                              child: Text(
-                                  "${docsData["recentlySeen"][index]["productName"]}",
-                                  maxLines: 2,
-                                  style: body1Medium),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  )
-
-                  // GridView.builder(
-                  //   physics: const NeverScrollableScrollPhysics(),
-                  //   padding: EdgeInsets.zero,
-                  //   itemCount: 4,
-                  //   // itemCount: docsData!["recentlySeen"].length,
-                  //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //       crossAxisCount: 4,
-                  //       crossAxisSpacing: 10.0,
-                  //       childAspectRatio: 0.7),
-                  //   itemBuilder: (context, index) {
-                  //     return Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         ClipRRect(
-                  //           borderRadius:
-                  //               const BorderRadius.all(Radius.circular(7.0)),
-                  //           child: Image.asset(
-                  //             "assets/images/products.png",
-                  //             fit: BoxFit.cover,
-                  //             height: 76,
-                  //             width: 76,
-                  //           ),
-                  //         ),
-                  //         const SizedBox(height: 5.0),
-                  //         Text(
-                  //           // docsData["recentlySeen"][index]["productName"]
-                  //           "dipenteneeeeeee",
-                  //           maxLines: 2,
-                  //           style: body1Medium,
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // ),
-                  ),
+                          );
+                        },
+                      ),
+                    ),
             ],
           );
         } else {
