@@ -65,9 +65,10 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
                                 hintText: nameProd,
                                 hintStyle: body1Regular,
                                 prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(size20px / 2),
+                                  padding: const EdgeInsets.all(size20px / 1.5),
                                   child: Image.asset(
-                                      "assets/images/icon_search.png"),
+                                    "assets/images/icon_search.png",
+                                  ),
                                 ),
                                 enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: greyColor3),
@@ -93,11 +94,7 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: size20px / 2,
-                                right: size20px / 2,
-                                bottom: size20px / 2,
-                                left: size20px - 12),
+                            padding: const EdgeInsets.all(size20px / 1.5),
                             child: Image.asset("assets/images/icon_cart.png"),
                           ),
                         )
@@ -191,7 +188,7 @@ class AllTopProductsWidget extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                  childAspectRatio: 0.62),
+                  childAspectRatio: 0.67),
               itemCount: valueTopProducts.listResultTop.isNotEmpty ? 8 : 0,
               shrinkWrap: true,
               padding: EdgeInsets.zero,

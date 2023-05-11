@@ -195,62 +195,99 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                           ),
                                         ),
                                         Consumer<AllIndustryProvider>(
-                                          builder: (context, value, child) =>
-                                              value.state == ResultState.loading
-                                                  ? const Center(
-                                                      child:
-                                                          CircularProgressIndicator
-                                                              .adaptive(),
-                                                    )
-                                                  : value.state ==
-                                                          ResultState.noData
-                                                      ? Container()
-                                                      : GridView.builder(
-                                                          gridDelegate:
-                                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount:
-                                                                      2,
-                                                                  crossAxisSpacing:
-                                                                      size20px -
-                                                                          5,
-                                                                  mainAxisSpacing:
-                                                                      size20px -
-                                                                          5,
-                                                                  childAspectRatio:
-                                                                      3.5),
-                                                          itemCount: value
-                                                              .allIndustryList!
-                                                              .detailIndustry
-                                                              .length,
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return Container(
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                color:
-                                                                    thirdColor1,
-                                                                borderRadius: BorderRadius.all(
-                                                                    Radius.circular(
-                                                                        size20px /
-                                                                            4)),
-                                                              ),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  value
+                                          builder:
+                                              (context, value, child) =>
+                                                  value.state ==
+                                                          ResultState.loading
+                                                      ? const Center(
+                                                          child:
+                                                              CircularProgressIndicator
+                                                                  .adaptive(),
+                                                        )
+                                                      : value.state ==
+                                                              ResultState.noData
+                                                          ? Container()
+                                                          : Column(
+                                                              children: [
+                                                                GridView
+                                                                    .builder(
+                                                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                      crossAxisCount:
+                                                                          2,
+                                                                      crossAxisSpacing:
+                                                                          size20px -
+                                                                              5,
+                                                                      mainAxisSpacing:
+                                                                          size20px -
+                                                                              5,
+                                                                      childAspectRatio:
+                                                                          3.5),
+                                                                  itemCount: value
                                                                       .allIndustryList!
-                                                                      .detailIndustry[
-                                                                          index]
-                                                                      .industryName,
-                                                                  style:
-                                                                      body1Medium,
+                                                                      .detailIndustry
+                                                                      .length,
+                                                                  shrinkWrap:
+                                                                      true,
+                                                                  physics:
+                                                                      const NeverScrollableScrollPhysics(),
+                                                                  itemBuilder:
+                                                                      (context,
+                                                                          index) {
+                                                                    return Container(
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        color:
+                                                                            thirdColor1,
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(size20px /
+                                                                                4)),
+                                                                      ),
+                                                                      child:
+                                                                          Center(
+                                                                        child:
+                                                                            Text(
+                                                                          value
+                                                                              .allIndustryList!
+                                                                              .detailIndustry[index]
+                                                                              .industryName,
+                                                                          style:
+                                                                              body1Medium,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
                                                                 ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
+                                                                SizedBox(
+                                                                  height:
+                                                                      size20px +
+                                                                          35,
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  child:
+                                                                      ElevatedButton(
+                                                                    style: ButtonStyle(
+                                                                        backgroundColor: MaterialStateProperty.all<Color>(primaryColor1),
+                                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                          RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(7.0),
+                                                                          ),
+                                                                        ),
+                                                                        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
+                                                                    onPressed:
+                                                                        () {},
+                                                                    child: Text(
+                                                                      "See Result",
+                                                                      style: text16.copyWith(
+                                                                          color:
+                                                                              whiteColor),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
                                         ),
                                       ],
                                     ),

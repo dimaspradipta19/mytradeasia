@@ -874,23 +874,30 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                               SizedBox(
                                                 height: size20px * 5,
                                                 width: size20px * 5,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: url +
-                                                      (snapshot
-                                                              .data
-                                                              ?.detailProduct
-                                                              ?.productimage ??
-                                                          ""),
-                                                  fit: BoxFit.fill,
-                                                  placeholder: (context, url) =>
-                                                      const Center(
-                                                    child:
-                                                        CircularProgressIndicator
-                                                            .adaptive(),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(
+                                                              size20px / 4)),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: url +
+                                                        (snapshot
+                                                                .data
+                                                                ?.detailProduct
+                                                                ?.productimage ??
+                                                            ""),
+                                                    fit: BoxFit.fill,
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            const Center(
+                                                      child:
+                                                          CircularProgressIndicator
+                                                              .adaptive(),
+                                                    ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   ),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      const Icon(Icons.error),
                                                 ),
                                               ),
                                               const SizedBox(width: size20px),
