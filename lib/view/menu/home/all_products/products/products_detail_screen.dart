@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/model/detail_product_model.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/service/detail_product_service.dart';
@@ -9,6 +10,8 @@ import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../widget/tabbar_content/tabbar_detail_content_widget.dart';
+import '../../../../../widget/tabbar_content/tabbar_detail_description_widget.dart';
 import '../../../../../widget/text_editing_widget.dart';
 
 class ProductsDetailScreen extends StatefulWidget {
@@ -539,86 +542,19 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               Consumer<SeeMoreProvider>(
                                 builder: (context, valueSeeMore, _) => SizedBox(
                                   height: valueSeeMore.isExpand
-                                      ? MediaQuery.of(context).size.height
+                                      ? MediaQuery.of(context).size.height *
+                                          0.75
                                       : size20px * 7.5,
                                   width: MediaQuery.of(context).size.width,
                                   child: TabBarView(
                                     children: [
                                       // Description content
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: size20px),
-                                              child: Text(
-                                                snapshot.data?.detailProduct
-                                                        ?.description ??
-                                                    "N/A",
-                                                style: body1Regular,
-                                                maxLines: valueSeeMore.isExpand
-                                                    ? null
-                                                    : 5,
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              valueSeeMore.getExpand();
-                                            },
-                                            child: Center(
-                                              child: Text(
-                                                valueSeeMore.isExpand
-                                                    ? "Show Less"
-                                                    : "See More",
-                                                style: body1Regular.copyWith(
-                                                    color: secondaryColor1),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      descriptionContent(
+                                          snapshot, valueSeeMore),
 
                                       // Application content
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: size20px),
-                                              child: Text(
-                                                snapshot.data?.detailProduct
-                                                        ?.application ??
-                                                    "N/A",
-                                                style: body1Regular,
-                                                maxLines: valueSeeMore.isExpand
-                                                    ? null
-                                                    : 5,
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              valueSeeMore.getExpand();
-                                            },
-                                            child: Center(
-                                              child: Text(
-                                                valueSeeMore.isExpand
-                                                    ? "Show Less"
-                                                    : "See More",
-                                                style: body1Regular.copyWith(
-                                                    color: secondaryColor1),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      applicationContent(
+                                          snapshot, valueSeeMore),
                                     ],
                                   ),
                                 ),
@@ -667,40 +603,48 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Center(
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: size20px * 5.5,
-                                              child: snapshot
-                                                          .data
-                                                          ?.relatedProducts[
-                                                              indexRelated]
-                                                          .productimage !=
-                                                      null
-                                                  ? CachedNetworkImage(
-                                                      imageUrl: url +
-                                                          snapshot
-                                                              .data!
-                                                              .relatedProducts[
-                                                                  indexRelated]
-                                                              .productimage,
-                                                      fit: BoxFit.fill,
-                                                      placeholder:
-                                                          (context, url) =>
-                                                              const Center(
-                                                        child:
-                                                            CircularProgressIndicator
-                                                                .adaptive(),
-                                                      ),
-                                                      errorWidget: (context,
-                                                              url, error) =>
-                                                          const Icon(
-                                                              Icons.error),
-                                                    )
-                                                  : const CircularProgressIndicator
-                                                      .adaptive(),
+                                          Padding(
+                                            padding: const EdgeInsets.all(
+                                                size24px / 4),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(
+                                                          size20px / 2)),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: size20px * 5.5,
+                                                child: snapshot
+                                                            .data
+                                                            ?.relatedProducts[
+                                                                indexRelated]
+                                                            .productimage !=
+                                                        null
+                                                    ? CachedNetworkImage(
+                                                        imageUrl: url +
+                                                            snapshot
+                                                                .data!
+                                                                .relatedProducts[
+                                                                    indexRelated]
+                                                                .productimage,
+                                                        fit: BoxFit.fill,
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                const Center(
+                                                          child:
+                                                              CircularProgressIndicator
+                                                                  .adaptive(),
+                                                        ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            const Icon(
+                                                                Icons.error),
+                                                      )
+                                                    : const CircularProgressIndicator
+                                                        .adaptive(),
+                                              ),
                                             ),
                                           ),
                                           Expanded(

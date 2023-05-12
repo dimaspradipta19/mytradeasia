@@ -434,18 +434,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       (context, index) {
                                                     return InkWell(
                                                       onTap: () async {
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(
-                                                          builder: (context) {
-                                                            return ProductsDetailScreen(
-                                                              urlProduct:
-                                                                  valueTopProducts
-                                                                      .listResultTop[
-                                                                          index]
-                                                                      .seoUrl,
-                                                            );
-                                                          },
-                                                        ));
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) {
+                                                              return ProductsDetailScreen(
+                                                                urlProduct:
+                                                                    valueTopProducts
+                                                                        .listResultTop[
+                                                                            index]
+                                                                        .seoUrl,
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+
+                                                        print(valueTopProducts
+                                                            .listResultTop[
+                                                                index]
+                                                            .seoUrl);
 
                                                         String docsId = _auth
                                                             .currentUser!.uid
@@ -499,64 +506,73 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Center(
-                                                              child: SizedBox(
-                                                                height:
-                                                                    size20px *
-                                                                        5.5,
-                                                                width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                                child:
-                                                                    CachedNetworkImage(
-                                                                  imageUrl:
-                                                                      "$url${valueTopProducts.listResultTop[index].productimage}",
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      const Center(
-                                                                    child: CircularProgressIndicator
-                                                                        .adaptive(),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(
+                                                                  left:
+                                                                      size24px /
+                                                                          4,
+                                                                  right:
+                                                                      size24px /
+                                                                          4,
+                                                                  top:
+                                                                      size24px /
+                                                                          4),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .all(
+                                                                  Radius.circular(
+                                                                      size20px /
+                                                                          2),
+                                                                ),
+                                                                child: SizedBox(
+                                                                  height:
+                                                                      size20px *
+                                                                          5.5,
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    imageUrl:
+                                                                        "$url${valueTopProducts.listResultTop[index].productimage}",
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    placeholder:
+                                                                        (context,
+                                                                                url) =>
+                                                                            const Center(
+                                                                      child: CircularProgressIndicator
+                                                                          .adaptive(),
+                                                                    ),
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        const Icon(
+                                                                            Icons.error),
                                                                   ),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      const Icon(
-                                                                          Icons
-                                                                              .error),
                                                                 ),
                                                               ),
                                                             ),
                                                             Expanded(
-                                                              child: SizedBox(
-                                                                height:
-                                                                    size20px *
-                                                                        2.5,
-                                                                width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .symmetric(
-                                                                      vertical:
-                                                                          5.0,
-                                                                      horizontal:
-                                                                          10.0),
-                                                                  child: Text(
-                                                                    valueTopProducts
-                                                                        .listResultTop[
-                                                                            index]
-                                                                        .productname,
-                                                                    style:
-                                                                        text14,
-                                                                    maxLines: 2,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                  ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        5.0,
+                                                                    horizontal:
+                                                                        10.0),
+                                                                child: Text(
+                                                                  valueTopProducts
+                                                                      .listResultTop[
+                                                                          index]
+                                                                      .productname,
+                                                                  style: text14,
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                 ),
                                                               ),
                                                             ),
@@ -809,7 +825,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 mainAxisSpacing:
                                                                     15,
                                                                 childAspectRatio:
-                                                                    0.8),
+                                                                    0.79),
                                                         itemCount: docsData[
                                                                         "recentlySeen"]
                                                                     .length <
@@ -834,61 +850,85 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                SizedBox(
-                                                                  height:
-                                                                      size20px *
-                                                                          5.5,
-                                                                  width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(
+                                                                      left:
+                                                                          size24px /
+                                                                              4,
+                                                                      right:
+                                                                          size24px /
+                                                                              4,
+                                                                      top: size24px /
+                                                                          4),
                                                                   child:
-                                                                      CachedNetworkImage(
-                                                                    imageUrl:
-                                                                        "$url${docsData["recentlySeen"][index]["productImage"]}",
-                                                                    fit: BoxFit
-                                                                        .fill,
-                                                                    placeholder:
-                                                                        (context,
-                                                                                url) =>
-                                                                            const Center(
-                                                                      child: CircularProgressIndicator
-                                                                          .adaptive(),
+                                                                      ClipRRect(
+                                                                    borderRadius: const BorderRadius
+                                                                            .all(
+                                                                        Radius.circular(size20px /
+                                                                            2)),
+                                                                    child:
+                                                                        SizedBox(
+                                                                      height:
+                                                                          size20px *
+                                                                              5.5,
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child:
+                                                                          CachedNetworkImage(
+                                                                        imageUrl:
+                                                                            "$url${docsData["recentlySeen"][index]["productImage"]}",
+                                                                        fit: BoxFit
+                                                                            .fill,
+                                                                        placeholder:
+                                                                            (context, url) =>
+                                                                                const Center(
+                                                                          child:
+                                                                              CircularProgressIndicator.adaptive(),
+                                                                        ),
+                                                                        errorWidget: (context,
+                                                                                url,
+                                                                                error) =>
+                                                                            const Icon(Icons.error),
+                                                                      ),
                                                                     ),
-                                                                    errorWidget: (context,
-                                                                            url,
-                                                                            error) =>
-                                                                        const Icon(
-                                                                            Icons.error),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        vertical:
+                                                                            5.0,
+                                                                        horizontal:
+                                                                            10.0),
+                                                                    child: Text(
+                                                                      docsData["recentlySeen"]
+                                                                              [
+                                                                              index]
+                                                                          [
+                                                                          "productName"],
+                                                                      // "",
+                                                                      style:
+                                                                          text14,
+                                                                      maxLines:
+                                                                          2,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets
                                                                           .symmetric(
+                                                                      horizontal:
+                                                                          10.0,
                                                                       vertical:
-                                                                          5.0,
-                                                                      horizontal:
-                                                                          10.0),
-                                                                  child: Text(
-                                                                    docsData["recentlySeen"]
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "productName"],
-                                                                    // "",
-                                                                    style:
-                                                                        text14,
-                                                                    maxLines: 2,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .symmetric(
-                                                                      horizontal:
-                                                                          10.0),
+                                                                          size20px /
+                                                                              4),
                                                                   child: Row(
                                                                     children: [
                                                                       Column(
@@ -952,7 +992,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     size20px /
                                                                         5),
                                                             child: Text(
-                                                              "See More",
+                                                              "Load More",
                                                               style: text12
                                                                   .copyWith(
                                                                       color:

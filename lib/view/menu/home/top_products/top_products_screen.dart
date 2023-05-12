@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../utils/theme.dart';
+import '../../../../widget/banner_top_products_widget.dart';
 import '../all_products/products/products_detail_screen.dart';
 
 class TopProductsScreen extends StatefulWidget {
@@ -103,41 +105,7 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
                   ),
 
                   // banner top products
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: size20px),
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(size20px - 10.0)),
-                          child: Image.asset(
-                            "assets/images/background_products.png",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: size20px + 17.0, horizontal: size20px),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Our Top Products",
-                                style: heading1.copyWith(color: whiteColor),
-                              ),
-                              const SizedBox(
-                                height: size20px - 7,
-                              ),
-                              Text(
-                                "Lorem ipsum dolor sit amet consectetur. ligula.Lorem ipsum dolor sit amet consectetur.",
-                                style: body1Regular.copyWith(color: whiteColor),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const BannerTopProducts(),
 
                   // main content
                   const AllTopProductsWidget(url: url),
@@ -188,7 +156,7 @@ class AllTopProductsWidget extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                  childAspectRatio: 0.67),
+                  childAspectRatio: 0.66),
               itemCount: valueTopProducts.listResultTop.isNotEmpty ? 8 : 0,
               shrinkWrap: true,
               padding: EdgeInsets.zero,
@@ -196,6 +164,9 @@ class AllTopProductsWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () async {
+                    print(
+                      valueTopProducts.listResultTop[index].seoUrl,
+                    );
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
                         return ProductsDetailScreen(
@@ -230,40 +201,28 @@ class AllTopProductsWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: size20px * 5.5,
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.network(
-                            "$url${valueTopProducts.listResultTop[index].productimage}",
-                            fit: BoxFit.cover,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 116.0,
-                                  child: Center(
-                                    child: CircularProgressIndicator.adaptive(
-                                      // color: primaryColor1,
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return const FlutterLogo(
-                                size: size20px * 3,
-                              );
-                            },
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: size20px / 4,
+                              right: size20px / 4,
+                              top: size20px / 4),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(size20px / 4)),
+                            child: SizedBox(
+                              height: size20px * 5.5,
+                              width: MediaQuery.of(context).size.width,
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "$url${valueTopProducts.listResultTop[index].productimage}",
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator.adaptive(),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            ),
                           ),
                         ),
                         Expanded(

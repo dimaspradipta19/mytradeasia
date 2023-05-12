@@ -338,7 +338,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 15,
                                             mainAxisSpacing: 15,
-                                            childAspectRatio: 0.62),
+                                            childAspectRatio: 0.64),
                                     itemCount: valueAllProduct.state ==
                                             ResultState.loading
                                         ? 6
@@ -401,27 +401,35 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Center(
-                                                  child: SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height: size20px * 5.5,
-                                                    child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            "$url${valueAllProduct.listAllProduct[index].productimage}",
-                                                        fit: BoxFit.fill,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                const Center(
-                                                                  child: CircularProgressIndicator
-                                                                      .adaptive(),
-                                                                ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            const Icon(
-                                                                Icons.error)),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      size24px / 4),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                size20px / 2)),
+                                                    child: SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      height: size20px * 5.5,
+                                                      child: CachedNetworkImage(
+                                                          imageUrl:
+                                                              "$url${valueAllProduct.listAllProduct[index].productimage}",
+                                                          fit: BoxFit.fill,
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  const Center(
+                                                                    child: CircularProgressIndicator
+                                                                        .adaptive(),
+                                                                  ),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              const Icon(
+                                                                  Icons.error)),
+                                                    ),
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -496,10 +504,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 10.0,
-                                                          right: 10.0,
-                                                          top: 10.0,
-                                                          bottom: 12.0),
+                                                    left: 10.0,
+                                                    right: 10.0,
+                                                    top: 10.0,
+                                                  ),
                                                   child: Row(
                                                     children: [
                                                       Expanded(
@@ -578,7 +586,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 15,
                                             mainAxisSpacing: 15,
-                                            childAspectRatio: 0.62),
+                                            childAspectRatio: 0.64),
                                     itemCount:
                                         valueSearch.state == ResultState.loading
                                             ? 4
@@ -644,26 +652,39 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                SizedBox(
-                                                    height: size20px * 5.5,
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      size24px / 4),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                size20px / 2)),
+                                                    child: SizedBox(
+                                                        height: size20px * 5.5,
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            "$url${valueSearch.searchProduct[index].productimage}",
-                                                        fit: BoxFit.fill,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                const Center(
-                                                                  child: CircularProgressIndicator
-                                                                      .adaptive(),
-                                                                ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            const Icon(
-                                                                Icons.error))),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                imageUrl:
+                                                                    "$url${valueSearch.searchProduct[index].productimage}",
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    const Center(
+                                                                      child: CircularProgressIndicator
+                                                                          .adaptive(),
+                                                                    ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    const Icon(Icons
+                                                                        .error))),
+                                                  ),
+                                                ),
                                                 Expanded(
                                                   child: Padding(
                                                     padding: const EdgeInsets
@@ -735,7 +756,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                           left: 10.0,
                                                           right: 10.0,
                                                           top: 10.0,
-                                                          bottom: 12.0),
+                                                          bottom: size20px/2),
                                                   child: Row(
                                                     children: [
                                                       Expanded(
