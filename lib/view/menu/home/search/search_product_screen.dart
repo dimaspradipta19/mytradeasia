@@ -215,23 +215,34 @@ class _SearchScreenState extends State<SearchScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Center(
-                                        child: SizedBox(
-                                          height: size20px * 5.5,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "$url${valueSearch.searchProduct[index].productimage}",
-                                              fit: BoxFit.fill,
-                                              placeholder: (context, url) =>
-                                                  const Center(
-                                                    child:
-                                                        CircularProgressIndicator
-                                                            .adaptive(),
-                                                  ),
-                                              errorWidget:
-                                                  (context, url, error) =>
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              size20px / 4),
+                                          child: SizedBox(
+                                            height: size20px * 5.5,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(
+                                                          size20px / 2)),
+                                              child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      "$url${valueSearch.searchProduct[index].productimage}",
+                                                  fit: BoxFit.fill,
+                                                  placeholder: (context, url) =>
+                                                      const Center(
+                                                        child:
+                                                            CircularProgressIndicator
+                                                                .adaptive(),
+                                                      ),
+                                                  errorWidget: (context, url,
+                                                          error) =>
                                                       const Icon(Icons.error)),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Expanded(
