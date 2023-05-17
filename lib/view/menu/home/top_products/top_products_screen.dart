@@ -156,7 +156,7 @@ class AllTopProductsWidget extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                  childAspectRatio: 0.66),
+                  childAspectRatio: 0.6),
               itemCount: valueTopProducts.listResultTop.isNotEmpty ? 8 : 0,
               shrinkWrap: true,
               padding: EdgeInsets.zero,

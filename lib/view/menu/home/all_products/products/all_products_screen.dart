@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/model/all_industry_model.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
@@ -82,8 +81,9 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                           child: TextFormField(
                             controller: _searchProductController,
                             onChanged: ((value) {
-                              if (debouncerTime?.isActive ?? false)
+                              if (debouncerTime?.isActive ?? false) {
                                 debouncerTime?.cancel();
+                              }
 
                               debouncerTime =
                                   Timer(const Duration(milliseconds: 700), () {
@@ -338,7 +338,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 15,
                                             mainAxisSpacing: 15,
-                                            childAspectRatio: 0.64),
+                                            childAspectRatio: 0.6),
                                     itemCount: valueAllProduct.state ==
                                             ResultState.loading
                                         ? 6
@@ -403,7 +403,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                               children: [
                                                 Padding(
                                                   padding: const EdgeInsets.all(
-                                                      size24px / 4),
+                                                      size20px / 4),
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         const BorderRadius.all(
@@ -432,15 +432,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: size20px * 2.5,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
+                                                Expanded(
                                                   child: Padding(
                                                     padding: const EdgeInsets
                                                             .symmetric(
-                                                        vertical: 5.0,
                                                         horizontal: 10.0),
                                                     child: Text(
                                                       valueAllProduct
@@ -502,12 +497,8 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 10.0,
-                                                    right: 10.0,
-                                                    top: 10.0,
-                                                  ),
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
                                                   child: Row(
                                                     children: [
                                                       Expanded(
@@ -586,7 +577,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 15,
                                             mainAxisSpacing: 15,
-                                            childAspectRatio: 0.64),
+                                            childAspectRatio: 0.6),
                                     itemCount:
                                         valueSearch.state == ResultState.loading
                                             ? 4
@@ -751,12 +742,8 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10.0,
-                                                          right: 10.0,
-                                                          top: 10.0,
-                                                          bottom: size20px/2),
+                                                  padding: const EdgeInsets.all(
+                                                      size20px / 2),
                                                   child: Row(
                                                     children: [
                                                       Expanded(

@@ -159,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 15,
                                     mainAxisSpacing: 15,
-                                    childAspectRatio: 0.63),
+                                    childAspectRatio: 0.6),
                             itemCount: valueSearch.state == ResultState.loading
                                 ? 4
                                 : valueSearch.searchProduct.length,
@@ -217,7 +217,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       Center(
                                         child: Padding(
                                           padding: const EdgeInsets.all(
-                                              size20px / 4),
+                                              size24px / 4),
                                           child: SizedBox(
                                             height: size20px * 5.5,
                                             width: MediaQuery.of(context)
@@ -248,7 +248,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       Expanded(
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              vertical: 5.0, horizontal: 10.0),
+                                              horizontal: 10.0),
                                           child: Text(
                                             valueSearch.searchProduct[index]
                                                 .productname,

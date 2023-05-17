@@ -420,7 +420,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           crossAxisSpacing: 15,
                                                           mainAxisSpacing: 15,
                                                           childAspectRatio:
-                                                              0.62),
+                                                              0.6),
                                                   itemCount: valueTopProducts
                                                           .listResultTop
                                                           .isNotEmpty
@@ -626,14 +626,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             Padding(
                                                               padding:
                                                                   const EdgeInsets
-                                                                          .only(
-                                                                      left:
-                                                                          10.0,
-                                                                      right:
-                                                                          10.0,
-                                                                      top: 10.0,
-                                                                      bottom:
-                                                                          12.0),
+                                                                          .all(
+                                                                      10.0),
                                                               child: Row(
                                                                 children: [
                                                                   Expanded(
@@ -825,7 +819,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 mainAxisSpacing:
                                                                     15,
                                                                 childAspectRatio:
-                                                                    0.79),
+                                                                    0.7),
                                                         itemCount: docsData[
                                                                         "recentlySeen"]
                                                                     .length <
@@ -910,7 +904,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               index]
                                                                           [
                                                                           "productName"],
-                                                                      // "",
                                                                       style:
                                                                           text14,
                                                                       maxLines:

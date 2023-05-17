@@ -575,7 +575,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 15,
                                         mainAxisSpacing: 15,
-                                        childAspectRatio: 0.76),
+                                        childAspectRatio: 0.7),
                                 itemCount:
                                     snapshot.data!.relatedProducts.length,
                                 shrinkWrap: true,
