@@ -88,10 +88,11 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
             children: [
               Expanded(
                 child: StreamBuilder(
-                    // stream: FirebaseFirestore.instance.collection('messages').doc("R5PUnrdvgJhZ1D1llRIH").collection("Messages").snapshots(),
-                    stream: messagesCollection
-                        .orderBy(FieldPath.documentId)
-                        .limit(1)
+                    stream: FirebaseFirestore.instance
+                        .collection('messages')
+                        .doc("R5PUnrdvgJhZ1D1llRIH")
+                        .collection("Messages")
+                        .orderBy("timestamp", descending: true)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
@@ -105,13 +106,33 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
 
                       final dataSnapshot = snapshot.data!;
 
-                      return ElevatedButton(
-                          onPressed: () {
-                            print(snapshot.data!.docs[0]);
-                          },
-                          child: Text("Testing"));
+                      return ListView(
+                        reverse: true,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 16.0,
+                        ),
+                        children: snapshot.data!.docs.map((document) {
+                          final data = document.data();
+                          final String messageContent = data['content'];
+                          final String messageSender = data['sender'];
+                          return Column(
+                            children: [
+                              Column(
+                                children: [
+                                  _auth == messageSender
+                                      ? UserBubleChat(message: messageContent)
+                                      : SalesBubleChat(
+                                          isFirstMessage: false,
+                                          message: messageContent),
+                                ],
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      );
 
-                      // ListView.builder(
+                      // return ListView.builder(
                       //   physics: const BouncingScrollPhysics(),
                       //   shrinkWrap: true,
                       //   itemCount: 1,
@@ -200,6 +221,17 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                       ),
                       child: IconButton(
                         onPressed: () {
+                          _firestore
+                              .collection('messages')
+                              .doc("R5PUnrdvgJhZ1D1llRIH")
+                              .collection("Messages")
+                              .add({
+                            'content': _message.text,
+                            'sender': _auth,
+                            // "chatID": chatsCollection,
+                            'timestamp': Timestamp.now(),
+                          });
+                          _message.clear();
                           log(_message.text);
                           _message.clear();
                         },
