@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/model/detail_product_model.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/service/detail_product_service.dart';
@@ -32,6 +31,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<DetailProductProvider>(context, listen: false)
           .getDetailProduct(widget.urlProduct);
+      // print(
+      //     "Test ${Provider.of<DetailProductProvider>(context, listen: false).resultDetailProduct!.detailProduct!.casNumber}");
     });
   }
 
@@ -108,7 +109,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         ),
                       ],
                     ));
-                  } else if (snapshot.hasData) {
+                  } else if (snapshot.connectionState == ConnectionState.done ||
+                      snapshot.hasData) {
                     return Stack(
                       children: [
                         Column(

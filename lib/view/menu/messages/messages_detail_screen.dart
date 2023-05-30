@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/widget/text_editing_widget.dart';
@@ -6,7 +10,15 @@ import '../../../widget/sales_bubble_chat_widget.dart';
 import '../../../widget/user_bubble_chat_widget.dart';
 
 class MessagesDetailScreen extends StatefulWidget {
-  const MessagesDetailScreen({super.key});
+  const MessagesDetailScreen(
+      {super.key,
+      required this.otherUserId,
+      required this.currentUserId,
+      required this.chatId});
+
+  final String chatId; // ID percakapan
+  final String currentUserId; // UID pengguna saat ini
+  final String otherUserId; // UID pengguna lain
 
   @override
   State<MessagesDetailScreen> createState() => _MessagesDetailScreenState();
@@ -14,6 +26,21 @@ class MessagesDetailScreen extends StatefulWidget {
 
 class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
   final TextEditingController _message = TextEditingController();
+
+  final _auth = FirebaseAuth.instance.currentUser!.uid.toString();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // Membuat atau mendapatkan referensi koleksi "biodata"
+  CollectionReference biodataCollection =
+      FirebaseFirestore.instance.collection('biodata');
+
+// Membuat atau mendapatkan referensi koleksi "Chats"
+  CollectionReference chatsCollection =
+      FirebaseFirestore.instance.collection('chats');
+
+// Membuat atau mendapatkan referensi koleksi "Messages"
+  CollectionReference messagesCollection =
+      FirebaseFirestore.instance.collection('messages');
 
   @override
   void dispose() {
@@ -42,8 +69,8 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Amelia Azzahra",
+            Text(
+              widget.otherUserId,
               style: text15,
             ),
             Text(
@@ -60,55 +87,80 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
           child: Column(
             children: [
               Expanded(
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: size20px + 10.0, top: size20px / 2),
-                      child: Center(
-                        child: Container(
-                          width: 52.0,
-                          height: 25.0,
-                          decoration: const BoxDecoration(
-                            color: secondaryColor1,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(size20px * 5),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Today",
-                              style: body2Medium.copyWith(color: whiteColor),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SalesBubleChat(
-                      message: "Hello amelia, what do you want to ask?",
-                      isFirstMessage: true,
-                    ),
-                    const UserBubleChat(
-                        isSeen: true,
-                        message: "I would like to know about the products"),
-                    const UserBubleChat(
-                        isSeen: true,
-                        message: "I would like to know about the products"),
-                    const SalesBubleChat(
-                      message: "Which product do you want to know more about?",
-                      isFirstMessage: false,
-                    ),
-                    const UserBubleChat(isSeen: true, message: "Dipentene"),
-                    const UserBubleChat(
-                        isSeen: true,
-                        message: "or any kind of product contains acid"),
-                    const SalesBubleChat(
-                      message: "...",
-                      isFirstMessage: false,
-                    ),
-                  ],
-                ),
+                child: StreamBuilder(
+                    // stream: FirebaseFirestore.instance.collection('messages').doc("R5PUnrdvgJhZ1D1llRIH").collection("Messages").snapshots(),
+                    stream: messagesCollection
+                        .orderBy(FieldPath.documentId)
+                        .limit(1)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                            child: CircularProgressIndicator.adaptive());
+                      }
+
+                      final dataSnapshot = snapshot.data!;
+
+                      return ElevatedButton(
+                          onPressed: () {
+                            print(snapshot.data!.docs[0]);
+                          },
+                          child: Text("Testing"));
+
+                      // ListView.builder(
+                      //   physics: const BouncingScrollPhysics(),
+                      //   shrinkWrap: true,
+                      //   itemCount: 1,
+                      //   itemBuilder: (context, index) {
+                      //     return Padding(
+                      //       padding: const EdgeInsets.only(
+                      //           bottom: size20px + 10.0, top: size20px / 2),
+                      //       child: Center(
+                      //         child: Container(
+                      //           width: 52.0,
+                      //           height: size24px + 1,
+                      //           decoration: const BoxDecoration(
+                      //             color: secondaryColor1,
+                      //             borderRadius: BorderRadius.all(
+                      //               Radius.circular(size20px * 5),
+                      //             ),
+                      //           ),
+                      //           child: Center(
+                      //             child: Text(
+                      //               "Today",
+                      //               style:
+                      //                   body2Medium.copyWith(color: whiteColor),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     );
+                      //     // const SalesBubleChat(
+                      //     //   message: "Hello amelia, what do you want to ask?",
+                      //     //   isFirstMessage: true,
+                      //     // ),
+                      //     // const UserBubleChat(
+                      //     //     isSeen: true,
+                      //     //     message: "I would like to know about the products"),
+                      //     // const SalesBubleChat(
+                      //     //   message: "Which product do you want to know more about?",
+                      //     //   isFirstMessage: false,
+                      //     // ),
+                      //     // const UserBubleChat(isSeen: true, message: "Dipentene"),
+                      //     // const UserBubleChat(
+                      //     //     isSeen: true,
+                      //     //     message: "or any kind of product contains acid"),
+                      //     // const SalesBubleChat(
+                      //     //   message: "...",
+                      //     //   isFirstMessage: false,
+                      //     // ),
+                      //   },
+                      // );
+                    }),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: size20px - 7.0),
@@ -148,7 +200,7 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                       ),
                       child: IconButton(
                         onPressed: () {
-                          print(_message.text);
+                          log(_message.text);
                           _message.clear();
                         },
                         icon: Image.asset(
