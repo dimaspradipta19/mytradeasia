@@ -66,19 +66,33 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
           ),
         ),
         backgroundColor: whiteColor,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.otherUserId,
-              style: text15,
-            ),
-            Text(
-              "Sales Associate",
-              style: body1Regular.copyWith(color: greyColor2),
-            )
-          ],
-        ),
+        centerTitle: false,
+        title: StreamBuilder(
+            stream: biodataCollection
+                .where("uid", isEqualTo: widget.otherUserId)
+                .snapshots(),
+            builder: (context, snapshotUser) {
+              if (snapshotUser.connectionState == ConnectionState.waiting) {
+                return Container();
+              }
+
+              if (snapshotUser.hasData) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${snapshotUser.data?.docs[0]["firstName"] + " " + snapshotUser.data?.docs[0]["lastName"]}",
+                      style: text15,
+                    ),
+                    Text(
+                      snapshotUser.data?.docs[0]["role"],
+                      style: body1Regular.copyWith(color: greyColor2),
+                    )
+                  ],
+                );
+              }
+              return Container();
+            }),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -108,6 +122,7 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
 
                       return ListView(
                         reverse: true,
+                        physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                           vertical: 16.0,
@@ -131,56 +146,6 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                           );
                         }).toList(),
                       );
-
-                      // return ListView.builder(
-                      //   physics: const BouncingScrollPhysics(),
-                      //   shrinkWrap: true,
-                      //   itemCount: 1,
-                      //   itemBuilder: (context, index) {
-                      //     return Padding(
-                      //       padding: const EdgeInsets.only(
-                      //           bottom: size20px + 10.0, top: size20px / 2),
-                      //       child: Center(
-                      //         child: Container(
-                      //           width: 52.0,
-                      //           height: size24px + 1,
-                      //           decoration: const BoxDecoration(
-                      //             color: secondaryColor1,
-                      //             borderRadius: BorderRadius.all(
-                      //               Radius.circular(size20px * 5),
-                      //             ),
-                      //           ),
-                      //           child: Center(
-                      //             child: Text(
-                      //               "Today",
-                      //               style:
-                      //                   body2Medium.copyWith(color: whiteColor),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     );
-                      //     // const SalesBubleChat(
-                      //     //   message: "Hello amelia, what do you want to ask?",
-                      //     //   isFirstMessage: true,
-                      //     // ),
-                      //     // const UserBubleChat(
-                      //     //     isSeen: true,
-                      //     //     message: "I would like to know about the products"),
-                      //     // const SalesBubleChat(
-                      //     //   message: "Which product do you want to know more about?",
-                      //     //   isFirstMessage: false,
-                      //     // ),
-                      //     // const UserBubleChat(isSeen: true, message: "Dipentene"),
-                      //     // const UserBubleChat(
-                      //     //     isSeen: true,
-                      //     //     message: "or any kind of product contains acid"),
-                      //     // const SalesBubleChat(
-                      //     //   message: "...",
-                      //     //   isFirstMessage: false,
-                      //     // ),
-                      //   },
-                      // );
                     }),
               ),
               Padding(
@@ -231,8 +196,6 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                             // "chatID": chatsCollection,
                             'timestamp': Timestamp.now(),
                           });
-                          _message.clear();
-                          log(_message.text);
                           _message.clear();
                         },
                         icon: Image.asset(

@@ -14,7 +14,7 @@ class MessageScreen extends StatefulWidget {
 
 class _MessageScreenState extends State<MessageScreen> {
   final String _currentUser = FirebaseAuth.instance.currentUser!.uid.toString();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Membuat atau mendapatkan referensi koleksi "biodata"
   CollectionReference biodataCollection =
@@ -142,136 +142,149 @@ class _MessageScreenState extends State<MessageScreen> {
 
                           return InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return MessagesDetailScreen(
-                                    otherUserId: otherUser,
-                                    currentUserId: _currentUser,
-                                    chatId: chatId.toString(),
-                                  );
-                                },
-                              ));
-
-                              print(otherUserName);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return MessagesDetailScreen(
+                                      otherUserId: otherUser,
+                                      currentUserId: _currentUser,
+                                      chatId: chatId.toString(),
+                                    );
+                                  },
+                                ),
+                              );
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 7.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(size20px * 5)),
-                                      child: Image.asset(
-                                        "assets/images/profile_picture.png",
-                                        height: size20px + 34.0,
-                                        width: size20px + 34.0,
-                                      ),
-                                    ),
-                                    const SizedBox(width: size20px),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                            child: StreamBuilder(
+                                stream: biodataCollection
+                                    .where("uid", isEqualTo: otherUser)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 7.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  otherUser,
-                                                  style: heading3.copyWith(
-                                                    color: blackColor,
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                  width: size20px / 2),
-                                              index.isEven
-                                                  ? Container(
-                                                      width: size20px * 3.5,
-                                                      height: 20,
-                                                      decoration: const BoxDecoration(
-                                                          color: redColor2,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      size20px *
-                                                                          5))),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Complaint",
-                                                          style: body2Medium
-                                                              .copyWith(
-                                                                  color:
-                                                                      redColor1),
+                                          ClipRRect(
+                                            borderRadius: const BorderRadius
+                                                    .all(
+                                                Radius.circular(size20px * 5)),
+                                            child: Image.asset(
+                                              "assets/images/profile_picture.png",
+                                              height: size20px + 34.0,
+                                              width: size20px + 34.0,
+                                            ),
+                                          ),
+                                          const SizedBox(width: size20px),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        snapshot.data?.docs[index]["firstName"] ?? "",
+                                                        style:
+                                                            heading3.copyWith(
+                                                          color: blackColor,
                                                         ),
-                                                      ),
-                                                    )
-                                                  : Container(
-                                                      width: size20px * 3,
-                                                      height: 20,
-                                                      decoration: const BoxDecoration(
-                                                          color: greenColor2,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      size20px *
-                                                                          5))),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Products",
-                                                          style: body2Medium
-                                                              .copyWith(
-                                                                  color:
-                                                                      greenColor1),
-                                                        ),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                     ),
+                                                    const SizedBox(
+                                                        width: size20px / 2),
+                                                    index.isEven
+                                                        ? Container(
+                                                            width:
+                                                                size20px * 3.5,
+                                                            height: 20,
+                                                            decoration: const BoxDecoration(
+                                                                color:
+                                                                    redColor2,
+                                                                borderRadius: BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        size20px *
+                                                                            5))),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Complaint",
+                                                                style: body2Medium
+                                                                    .copyWith(
+                                                                        color:
+                                                                            redColor1),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            width: size20px * 3,
+                                                            height: 20,
+                                                            decoration: const BoxDecoration(
+                                                                color:
+                                                                    greenColor2,
+                                                                borderRadius: BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        size20px *
+                                                                            5))),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Products",
+                                                                style: body2Medium
+                                                                    .copyWith(
+                                                                        color:
+                                                                            greenColor1),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                    height: size20px / 4),
+                                                Text(
+                                                  dataSnapshot[index]
+                                                          ["lastMessage"] ??
+                                                      "No Message",
+                                                  style: text10.copyWith(
+                                                      color: greyColor2),
+                                                  maxLines: 2,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(width: size20px),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "$hour:$minute",
+                                                style: text10.copyWith(
+                                                    color: greyColor2),
+                                              ),
+                                              const SizedBox(
+                                                  height: size20px / 4),
+                                              CircleAvatar(
+                                                maxRadius: 12,
+                                                backgroundColor:
+                                                    secondaryColor1,
+                                                child: Text(
+                                                  "$index",
+                                                  style: body1Regular.copyWith(
+                                                      color: whiteColor),
+                                                ),
+                                              )
                                             ],
-                                          ),
-                                          const SizedBox(height: size20px / 4),
-                                          Text(
-                                            dataSnapshot[index]
-                                                    ["lastMessage"] ??
-                                                "No Message",
-                                            style: text10.copyWith(
-                                                color: greyColor2),
-                                            maxLines: 2,
-                                          ),
+                                          )
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(width: size20px),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "$hour:$minute",
-                                          style: text10.copyWith(
-                                              color: greyColor2),
-                                        ),
-                                        const SizedBox(height: size20px / 4),
-                                        CircleAvatar(
-                                          maxRadius: 12,
-                                          backgroundColor: secondaryColor1,
-                                          child: Text(
-                                            "$index",
-                                            style: body1Regular.copyWith(
-                                                color: whiteColor),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+                                  );
+                                }),
                           );
                         },
                       );
