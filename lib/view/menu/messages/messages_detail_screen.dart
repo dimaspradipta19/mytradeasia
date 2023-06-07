@@ -186,8 +186,7 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                       ),
                       child: IconButton(
                         onPressed: () {
-                          _firestore
-                              .collection('messages')
+                          messagesCollection
                               .doc("R5PUnrdvgJhZ1D1llRIH")
                               .collection("Messages")
                               .add({
@@ -195,6 +194,10 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                             'sender': _auth,
                             // "chatID": chatsCollection,
                             'timestamp': Timestamp.now(),
+                          });
+                          chatsCollection.doc("mYNCZMwNXsfoB59gDVtT").update({
+                            "lastMessage": _message.text,
+                            "timestamp": DateTime.now(),
                           });
                           _message.clear();
                         },
