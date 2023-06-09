@@ -42,6 +42,10 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
   CollectionReference messagesCollection =
       FirebaseFirestore.instance.collection('messages');
 
+// Membuat atau mendapatkan referensi koleksi "Messages"
+  CollectionReference pesanCollection =
+      FirebaseFirestore.instance.collection('pesan');
+
   @override
   void dispose() {
     _message.dispose();
@@ -195,7 +199,8 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                             // "chatID": chatsCollection,
                             'timestamp': Timestamp.now(),
                           });
-                          chatsCollection.doc("mYNCZMwNXsfoB59gDVtT").update({
+                          // pesanCollection.where("users", arrayContains: _auth).get();
+                          pesanCollection.doc("FTnKQIi7zsPphQjQWN6h").update({
                             "lastMessage": _message.text,
                             "timestamp": DateTime.now(),
                           });

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 
@@ -48,7 +50,7 @@ class _DetailedShipmentProductsScreenState
           IconButton(
               padding: const EdgeInsets.only(right: size20px),
               onPressed: () {
-                print("share");
+                log("share");
               },
               icon: Image.asset(
                 "assets/images/icon_share.png",
@@ -163,70 +165,52 @@ class _DetailedShipmentProductsScreenState
                   child: Column(
                     children: [
                       Image.asset("assets/images/dummy_map.png"),
+                      const SizedBox(height: size20px),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: listProcessCard.length,
                         itemBuilder: (context, index) {
-                          return Row(
-                            children: <Widget>[
-                              /* Icon */
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    width: 2,
-                                    height: size20px,
-                                    color: secondaryColor1,
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: secondaryColor1,
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: const Icon(
-                                      Icons.place_outlined,
-                                      color: Colors.white,
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 34),
+                            child: Row(
+                              children: [
+                                index == 0
+                                    ? Image.asset(
+                                        "assets/images/icon_shipment_active.png",
+                                        height: 36,
+                                      )
+                                    : Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      child: Image.asset(
+                                          "assets/images/icon_shipment_inactive.png",
+                                          height: 28,
+                                        ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 2,
-                                    height: size20px,
-                                    color: secondaryColor1,
-                                  ),
-                                ],
-                              ),
-                              /* Content */
-                              Expanded(
-                                  child: Container(
-                                margin:
-                                    const EdgeInsets.only(left: size20px / 2),
-                                height: size20px * 2.5,
-                                child: Column(
+                                const Expanded(
+                                    child: SizedBox(width: size20px / 2)),
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
+                                  children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(listProcessCard[index].nama ?? "",
-                                            style: text15),
+                                      children: const [
+                                        Text("Lorem Ipsum", style: text15),
+                                        SizedBox(width: 20 * 5),
                                         Text(
-                                          listProcessCard[index].tanggalWaktu ??
-                                              "",
-                                          style: body2Medium,
-                                        )
+                                          "Tanggal/Waktu",
+                                          style: text10,
+                                        ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: size20px / 4,
-                                    ),
-                                    Text(listProcessCard[index].subtitle ?? "",
-                                        style: body1Regular),
+                                    const SizedBox(height: size20px / 4),
+                                    const Text(
+                                      "Lorem ipsum dolor sit amet consectetur. Nibh.",
+                                      style: body1Regular,
+                                    )
                                   ],
                                 ),
-                              ))
-                            ],
+                              ],
+                            ),
                           );
                         },
                       )
@@ -399,6 +383,10 @@ class ProcessCard {
 }
 
 List<ProcessCard> listProcessCard = [
+  ProcessCard(
+      nama: "Dimas",
+      subtitle: "Lorem ipsum dolor sit amet consectetur. Nibh.",
+      tanggalWaktu: "testest"),
   ProcessCard(
       nama: "Dimas",
       subtitle: "Lorem ipsum dolor sit amet consectetur. Nibh.",

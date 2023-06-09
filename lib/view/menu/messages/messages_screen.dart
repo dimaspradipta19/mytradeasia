@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/messages/messages_detail_screen.dart';
-import 'package:path/path.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -27,6 +26,10 @@ class _MessageScreenState extends State<MessageScreen> {
 // Membuat atau mendapatkan referensi koleksi "Messages"
   CollectionReference messagesCollection =
       FirebaseFirestore.instance.collection('messages');
+
+// Membuat atau mendapatkan referensi koleksi "Messages"
+  CollectionReference pesanCollection =
+      FirebaseFirestore.instance.collection('pesan');
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
                 // List of chat
                 StreamBuilder(
-                    stream: chatsCollection
+                    stream: pesanCollection
                         .where("users", arrayContains: _currentUser)
                         .snapshots(),
                     builder: (context, snapshot) {
@@ -198,7 +201,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                                     children: [
                                                       Expanded(
                                                         child: Text(
-                                                          "${snapshot.data!.docs[index]["firstName"]} ${snapshot.data!.docs[index]["lastName"]}",
+                                                          "${snapshot.data!.docs[0]["firstName"]} ${snapshot.data!.docs[0]["lastName"]}",
                                                           style:
                                                               heading3.copyWith(
                                                             color: blackColor,

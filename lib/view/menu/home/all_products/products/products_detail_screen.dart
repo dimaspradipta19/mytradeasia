@@ -73,6 +73,11 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                       ),
                     );
                   } else if (snapshot.data?.detailProduct == null) {
+                    
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pop(context);
+                    });
+
                     return Center(
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
