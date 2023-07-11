@@ -27,7 +27,7 @@ class MessagesDetailScreen extends StatefulWidget {
 class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
   final TextEditingController _message = TextEditingController();
 
-  final _auth = FirebaseAuth.instance.currentUser!.uid.toString();
+  final _currentUser = FirebaseAuth.instance.currentUser!.uid.toString();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Membuat atau mendapatkan referensi koleksi "biodata"
@@ -43,6 +43,10 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
       FirebaseFirestore.instance.collection('messages');
 
 // Membuat atau mendapatkan referensi koleksi "Messages"
+  CollectionReference messageCollection =
+      FirebaseFirestore.instance.collection('message');
+
+// Membuat atau mendapatkan referensi koleksi "Messages"
   CollectionReference pesanCollection =
       FirebaseFirestore.instance.collection('pesan');
 
@@ -54,6 +58,18 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // var user1 = FirebaseFirestore.instance
+    //     .collection('messages')
+    //     .doc("${widget.currentUserId}_${widget.otherUserId}")
+    //     .collection("Message")
+    //     .orderBy("timestamp", descending: true)
+    //     .snapshots();
+    // var user2 = FirebaseFirestore.instance
+    //     .collection('messages')
+    //     .doc("${widget.otherUserId}_${widget.currentUserId}")
+    //     .collection("Message")
+    //     .orderBy("timestamp", descending: true)
+    //     .snapshots();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -106,12 +122,13 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
             children: [
               Expanded(
                 child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('messages')
-                        .doc("R5PUnrdvgJhZ1D1llRIH")
-                        .collection("Messages")
+                    stream: messagesCollection
+                        .doc(
+                            "rZl7GBrXeOZadvoh4SwTZnFCnEJ2_4bgyPjXoiae5dXGYbvJSuDyVNuy1")
+                        .collection("Message")
                         .orderBy("timestamp", descending: true)
                         .snapshots(),
+                    // stream: messagesCollection.where("users", arrayContains: _currentUser).snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
@@ -124,32 +141,50 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
 
                       final dataSnapshot = snapshot.data!;
 
-                      return ListView(
-                        reverse: true,
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 16.0,
-                        ),
-                        children: snapshot.data!.docs.map((document) {
-                          final data = document.data();
-                          final String messageContent = data['content'];
-                          final String messageSender = data['sender'];
-                          return Column(
-                            children: [
-                              Column(
-                                children: [
-                                  _auth == messageSender
-                                      ? UserBubleChat(message: messageContent)
-                                      : SalesBubleChat(
-                                          isFirstMessage: false,
-                                          message: messageContent),
-                                ],
-                              ),
-                            ],
-                          );
-                        }).toList(),
+                      return StreamBuilder(
+                        stream: null,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator.adaptive());
+                          }
+
+                          return ListView();
+                        },
                       );
+                      // return ListView(
+                      //   reverse: true,
+                      //   physics: const BouncingScrollPhysics(),
+                      //   padding: const EdgeInsets.symmetric(
+                      //     horizontal: 8.0,
+                      //     vertical: 16.0,
+                      //   ),
+                      //   children: dataSnapshot.docs.map(
+                      //     (document) {
+                      //       final data = document.data();
+                      //       final String messageContent = data['content'];
+                      //       final String messageSender = data['sender'];
+                      //       return Column(
+                      //         children: [
+                      //           Column(
+                      //             children: [
+                      //               _currentUser == messageSender
+                      //                   ? UserBubleChat(message: messageContent)
+                      //                   : SalesBubleChat(
+                      //                       isFirstMessage: false,
+                      //                       message: messageContent),
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       );
+                      //     },
+                      //   ).toList(),
+                      // );
                     }),
               ),
               Padding(
@@ -190,20 +225,35 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                       ),
                       child: IconButton(
                         onPressed: () {
+                          // messagesCollection
+                          //     .doc(
+                          //         "${widget.currentUserId}_${widget.otherUserId}")
+                          //     .collection("Message")
+                          //     .add({
+                          //   'content': _message.text,
+                          //   'sender': _auth,
+                          //   'timestamp': Timestamp.now(),
+                          // });
+
                           messagesCollection
-                              .doc("R5PUnrdvgJhZ1D1llRIH")
-                              .collection("Messages")
+                              .doc(
+                                  "rZl7GBrXeOZadvoh4SwTZnFCnEJ2_4bgyPjXoiae5dXGYbvJSuDyVNuy1")
+                              .collection("Message")
                               .add({
-                            'content': _message.text,
-                            'sender': _auth,
-                            // "chatID": chatsCollection,
-                            'timestamp': Timestamp.now(),
+                            "content": _message.text,
+                            "timestamp": Timestamp.now(),
+                            "sender": _currentUser
                           });
-                          // pesanCollection.where("users", arrayContains: _auth).get();
-                          pesanCollection.doc("FTnKQIi7zsPphQjQWN6h").update({
+
+                          messagesCollection
+                              .doc(
+                                  "rZl7GBrXeOZadvoh4SwTZnFCnEJ2_4bgyPjXoiae5dXGYbvJSuDyVNuy1")
+                              .update({
                             "lastMessage": _message.text,
                             "timestamp": DateTime.now(),
                           });
+
+                          log(_message.text);
                           _message.clear();
                         },
                         icon: Image.asset(

@@ -31,8 +31,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<DetailProductProvider>(context, listen: false)
           .getDetailProduct(widget.urlProduct);
-      // print(
-      //     "Test ${Provider.of<DetailProductProvider>(context, listen: false).resultDetailProduct!.detailProduct!.casNumber}");
     });
   }
 
@@ -73,7 +71,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                       ),
                     );
                   } else if (snapshot.data?.detailProduct == null) {
-                    
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.pop(context);
                     });
@@ -160,7 +157,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                         },
                                         child: Image.asset(
                                           "assets/images/icon_back.png",
-                                          color: whiteColor,
+                                          color: greyColor3,
                                           width: size20px + 4,
                                           height: size20px + 4,
                                         ),

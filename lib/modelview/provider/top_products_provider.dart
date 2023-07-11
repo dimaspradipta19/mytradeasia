@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -28,7 +29,7 @@ class TopProductsProvider with ChangeNotifier {
     } on SocketException {
       throw Exception("Gagal menyambung server");
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       rethrow;
     }
   }

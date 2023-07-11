@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:mytradeasia/model/top_products_model.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,7 @@ class TopProductsService {
         throw Exception('Unexpected error occured!');
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     return resultAwal;
   }

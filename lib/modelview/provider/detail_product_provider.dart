@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -69,7 +70,7 @@ class DetailProductProvider with ChangeNotifier {
       throw Exception("Permintaan Timeout");
     } catch (e) {
       state = ResultState.error;
-      print(e.toString());
+      log(e.toString());
       // throw Exception("Terjadi Kesalahan");
     }
     notifyListeners();

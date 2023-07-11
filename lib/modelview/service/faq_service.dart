@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:mytradeasia/model/faq_model.dart';
@@ -19,7 +20,7 @@ class FaqService {
         throw Exception('Unexpected error occured!');
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     return resultKosong;
   }

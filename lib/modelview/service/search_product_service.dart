@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import '../../model/search_product_model.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,7 @@ class SearchProductService {
         throw Exception('Unexpected error occured!');
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     return resultAwal;
   }

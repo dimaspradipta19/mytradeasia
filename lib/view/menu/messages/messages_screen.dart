@@ -20,16 +20,16 @@ class _MessageScreenState extends State<MessageScreen> {
       FirebaseFirestore.instance.collection('biodata');
 
 // Membuat atau mendapatkan referensi koleksi "Chats"
-  CollectionReference chatsCollection =
-      FirebaseFirestore.instance.collection('chats');
+  // CollectionReference chatsCollection =
+  //     FirebaseFirestore.instance.collection('chats');
 
 // Membuat atau mendapatkan referensi koleksi "Messages"
   CollectionReference messagesCollection =
       FirebaseFirestore.instance.collection('messages');
 
 // Membuat atau mendapatkan referensi koleksi "Messages"
-  CollectionReference pesanCollection =
-      FirebaseFirestore.instance.collection('pesan');
+  // CollectionReference pesanCollection =
+  //     FirebaseFirestore.instance.collection('pesan');
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
                 // List of chat
                 StreamBuilder(
-                    stream: pesanCollection
+                    stream: messagesCollection
                         .where("users", arrayContains: _currentUser)
                         .snapshots(),
                     builder: (context, snapshot) {
