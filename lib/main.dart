@@ -6,6 +6,7 @@ import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
+import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
 import 'package:mytradeasia/modelview/provider/faq_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
@@ -76,6 +77,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => SeeMoreProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DhlShipmentProvider(),
         ),
       ],
       child: StreamProvider<InternetConnectionStatus>(

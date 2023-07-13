@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
+import 'package:mytradeasia/utils/result_state.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../modelview/provider/dhl_shipment_provider.dart';
 import '../../../../utils/theme.dart';
 
 class DetailedShipmentProductsScreen extends StatefulWidget {
@@ -37,6 +40,16 @@ class _DetailedShipmentProductsScreenState
       "20GP*1",
     ],
   ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<DhlShipmentProvider>(context, listen: false)
+          .getDhlShipment("4995568406");
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,298 +88,338 @@ class _DetailedShipmentProductsScreenState
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            // Worldwide images + text
-            Stack(
-              children: [
-                Container(
-                  color: whiteColor,
-                  child: Image.asset(
-                    "assets/images/worldwide.png",
-                    color: secondaryColor4,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: size20px, left: size20px, right: size20px),
-                  child: Column(
+        child: Consumer<DhlShipmentProvider>(
+          builder: (context, DhlShipmentProvider valueShipment, child) {
+            if (valueShipment.state == ResultState.loading) {
+              return const CircularProgressIndicator.adaptive();
+            } else if (valueShipment.state == ResultState.hasData) {
+              var shipment = valueShipment.resultShipment!.shipments[0];
+              return Column(
+                children: [
+                  // Worldwide images + text
+                  Stack(
                     children: [
-                      Text(
-                        "BOOKING No.6890524180",
-                        style: heading2.copyWith(color: secondaryColor1),
+                      Container(
+                        color: whiteColor,
+                        child: Image.asset(
+                          "assets/images/worldwide.png",
+                          color: secondaryColor4,
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: size20px + 19.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        padding: const EdgeInsets.only(
+                            top: size20px, left: size20px, right: size20px),
+                        child: Column(
                           children: [
-                            Column(
-                              children: const [
-                                Text(
-                                  "Jakarta",
-                                  style: heading1,
-                                ),
-                                Text(
-                                  "Indonesia",
-                                  style: body1Regular,
-                                ),
-                              ],
+                            Text(
+                              "BOOKING No. ${shipment.id}",
+                              style: heading2.copyWith(color: secondaryColor1),
                             ),
-                            Image.asset(
-                              "assets/images/icon_shipping.png",
-                              width: 104.0,
-                              height: size20px + 8.0,
-                            ),
-                            Column(
-                              children: const [
-                                Text(
-                                  "Piraeus",
-                                  style: heading1,
-                                ),
-                                Text(
-                                  "Greece",
-                                  style: body1Regular,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            // Schedule Detail
-            Padding(
-              padding: const EdgeInsets.only(top: size20px / 4),
-              child: GFAccordion(
-                margin: EdgeInsets.zero,
-                titleChild: Padding(
-                  padding: const EdgeInsets.only(left: size20px),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/icon_schedule.png",
-                        width: size20px * 2,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: size20px - 5.0),
-                        child: Text("Schedule Detail", style: body1Medium),
-                      )
-                    ],
-                  ),
-                ),
-                contentChild: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: size20px),
-                  child: Column(
-                    children: [
-                      Image.asset("assets/images/dummy_map.png"),
-                      const SizedBox(height: size20px),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: listProcessCard.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 34),
-                            child: Row(
-                              children: [
-                                index == 0
-                                    ? Image.asset(
-                                        "assets/images/icon_shipment_active.png",
-                                        height: 36,
-                                      )
-                                    : Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                                      child: Image.asset(
-                                          "assets/images/icon_shipment_inactive.png",
-                                          height: 28,
-                                        ),
-                                    ),
-                                const Expanded(
-                                    child: SizedBox(width: size20px / 2)),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: const [
-                                        Text("Lorem Ipsum", style: text15),
-                                        SizedBox(width: 20 * 5),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: size20px + 19.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      children: [
                                         Text(
-                                          "Tanggal/Waktu",
-                                          style: text10,
+                                          shipment
+                                              .origin.address.addressLocality,
+                                          style: heading3,
+                                        ),
+                                        const Text(
+                                          "Indonesia",
+                                          style: body1Regular,
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: size20px / 4),
-                                    const Text(
-                                      "Lorem ipsum dolor sit amet consectetur. Nibh.",
-                                      style: body1Regular,
-                                    )
+                                  ),
+                                  Expanded(
+                                    child: Image.asset(
+                                      "assets/images/icon_shipping.png",
+                                      width: 104.0,
+                                      height: size20px + 8.0,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          shipment.destination.address
+                                              .addressLocality,
+                                          style: heading3,
+                                        ),
+                                        const Text(
+                                          "Greece",
+                                          style: body1Regular,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Schedule Detail
+                  Padding(
+                    padding: const EdgeInsets.only(top: size20px / 4),
+                    child: GFAccordion(
+                      margin: EdgeInsets.zero,
+                      titleChild: Padding(
+                        padding: const EdgeInsets.only(left: size20px),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/icon_schedule.png",
+                              width: size20px * 2,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: size20px - 5.0),
+                              child:
+                                  Text("Schedule Detail", style: body1Medium),
+                            )
+                          ],
+                        ),
+                      ),
+                      contentChild: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: size20px),
+                        child: Column(
+                          children: [
+                            Image.asset("assets/images/dummy_map.png"),
+                            const SizedBox(height: size20px),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: shipment.events.length,
+                              reverse: true,
+                              itemBuilder: (context, index) {
+                                var events = shipment.events[index];
+
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 34),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4),
+                                        child: Image.asset(
+                                          "assets/images/icon_shipment_inactive.png",
+                                          height: 28,
+                                        ),
+                                      ),
+                                      const SizedBox(width: size20px / 2),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    events.location.address
+                                                        .addressLocality,
+                                                    style: text15),
+                                                Expanded(child: Container()),
+                                                Text(
+                                                  "${events.timestamp.day} - ${events.timestamp.month} - ${events.timestamp.year}"
+                                                      .toString(),
+                                                  style: text10,
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                                height: size20px / 4),
+                                            Text(
+                                              events.description,
+                                              style: body1Regular,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      collapsedIcon: Padding(
+                        padding: const EdgeInsets.only(right: size20px),
+                        child: Image.asset("assets/images/icon_bottom.png",
+                            width: size20px + 4, color: greyColor2),
+                      ),
+                      expandedIcon: Padding(
+                        padding: const EdgeInsets.only(right: size20px),
+                        child: Image.asset("assets/images/icon_up.png",
+                            width: size20px + 4, color: greyColor2),
+                      ),
+                      expandedTitleBackgroundColor: whiteColor,
+                      showAccordion: false,
+                    ),
+                  ),
+
+                  // Latest Status
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: size20px / 4),
+                    child: GFAccordion(
+                      margin: EdgeInsets.zero,
+                      titleChild: Padding(
+                        padding: const EdgeInsets.only(left: size20px),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/icon_speaker.png",
+                              width: size20px * 2,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: size20px - 5.0),
+                              child: Text("Latest Status", style: body1Medium),
+                            )
+                          ],
+                        ),
+                      ),
+                      contentChild: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: size20px),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                valueShipment.resultShipment!.shipments[0]
+                                    .events[0].description,
+                                style: text15),
+                            const SizedBox(height: size20px / 4),
+                            const Text(
+                                "Lorem ipsum dolor sit amet consectetur. Nibh.",
+                                style: body1Regular)
+                          ],
+                        ),
+                      ),
+                      collapsedIcon: Padding(
+                        padding: const EdgeInsets.only(right: size20px),
+                        child: Image.asset("assets/images/icon_bottom.png",
+                            width: size20px + 4, color: greyColor2),
+                      ),
+                      expandedIcon: Padding(
+                        padding: const EdgeInsets.only(right: size20px),
+                        child: Image.asset("assets/images/icon_up.png",
+                            width: size20px + 4, color: greyColor2),
+                      ),
+                      expandedTitleBackgroundColor: whiteColor,
+                    ),
+                  ),
+
+                  // Basic Info
+                  GFAccordion(
+                    margin: EdgeInsets.zero,
+                    titleChild: Padding(
+                      padding: const EdgeInsets.only(left: size20px),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: size20px),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/icon_schedule.png",
+                              width: size20px * 2,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: size20px - 5.0),
+                              child:
+                                  Text("Basic Information", style: body1Medium),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    contentChild: SizedBox(
+                      height: size20px * 23,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: basicInformation[0].length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: size20px),
+                            child: Container(
+                              height: size20px * 2.5,
+                              decoration: BoxDecoration(
+                                  color: index.isOdd ? whiteColor : greyColor4,
+                                  borderRadius:
+                                      BorderRadius.circular(size20px / 2)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: size20px),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(basicInformation[0][index],
+                                          style: body1Regular),
+                                    ),
+                                    const Expanded(
+                                        child:
+                                            Text(" : ", style: body1Regular)),
+                                    Expanded(
+                                      flex: 5,
+                                      child: Text(basicInformation[1][index],
+                                          style: body1Regular),
+                                    ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                collapsedIcon: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Image.asset("assets/images/icon_bottom.png",
-                      width: size20px + 4, color: greyColor2),
-                ),
-                expandedIcon: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Image.asset("assets/images/icon_up.png",
-                      width: size20px + 4, color: greyColor2),
-                ),
-                expandedTitleBackgroundColor: whiteColor,
-                showAccordion: false,
-              ),
-            ),
-
-            // Latest Status
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: size20px / 4),
-              child: GFAccordion(
-                margin: EdgeInsets.zero,
-                titleChild: Padding(
-                  padding: const EdgeInsets.only(left: size20px),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/icon_speaker.png",
-                        width: size20px * 2,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: size20px - 5.0),
-                        child: Text("Latest Status", style: body1Medium),
-                      )
-                    ],
-                  ),
-                ),
-                contentChild: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: size20px),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("Lorem ipsum", style: text15),
-                      SizedBox(height: size20px / 4),
-                      Text("Lorem ipsum dolor sit amet consectetur. Nibh.",
-                          style: body1Regular)
-                    ],
-                  ),
-                ),
-                collapsedIcon: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Image.asset("assets/images/icon_bottom.png",
-                      width: size20px + 4, color: greyColor2),
-                ),
-                expandedIcon: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Image.asset("assets/images/icon_up.png",
-                      width: size20px + 4, color: greyColor2),
-                ),
-                expandedTitleBackgroundColor: whiteColor,
-              ),
-            ),
-
-            // Basic Info
-            GFAccordion(
-              margin: EdgeInsets.zero,
-              titleChild: Padding(
-                padding: const EdgeInsets.only(left: size20px),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: size20px),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/icon_schedule.png",
-                        width: size20px * 2,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: size20px - 5.0),
-                        child: Text("Basic Information", style: body1Medium),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              contentChild: SizedBox(
-                height: size20px * 23,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: basicInformation[0].length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: size20px),
-                      child: Container(
-                        height: size20px * 2.5,
-                        decoration: BoxDecoration(
-                            color: index.isOdd ? whiteColor : greyColor4,
-                            borderRadius: BorderRadius.circular(size20px / 2)),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: size20px),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: Text(basicInformation[0][index],
-                                    style: body1Regular),
-                              ),
-                              const Expanded(
-                                  child: Text(" : ", style: body1Regular)),
-                              Expanded(
-                                flex: 5,
-                                child: Text(basicInformation[1][index],
-                                    style: body1Regular),
-                              ),
-                            ],
                           ),
                         ),
                       ),
                     ),
+                    collapsedIcon: Padding(
+                      padding: const EdgeInsets.only(right: size20px),
+                      child: Image.asset(
+                        "assets/images/icon_bottom.png",
+                        width: size20px + 4,
+                        color: greyColor2,
+                      ),
+                    ),
+                    expandedIcon: Padding(
+                      padding: const EdgeInsets.only(right: size20px),
+                      child: Image.asset("assets/images/icon_up.png",
+                          width: size20px + 4, color: greyColor2),
+                    ),
+                    expandedTitleBackgroundColor: whiteColor,
                   ),
-                ),
-              ),
-              collapsedIcon: Padding(
-                padding: const EdgeInsets.only(right: size20px),
-                child: Image.asset(
-                  "assets/images/icon_bottom.png",
-                  width: size20px + 4,
-                  color: greyColor2,
-                ),
-              ),
-              expandedIcon: Padding(
-                padding: const EdgeInsets.only(right: size20px),
-                child: Image.asset("assets/images/icon_up.png",
-                    width: size20px + 4, color: greyColor2),
-              ),
-              expandedTitleBackgroundColor: whiteColor,
-            ),
 
-            /* No more data */
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: size20px),
-              child: Center(
-                child: Text(
-                  "No more data",
-                  style: body1Medium.copyWith(color: greyColor2),
-                ),
-              ),
-            ),
-          ],
+                  /* No more data */
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: size20px),
+                    child: Center(
+                      child: Text(
+                        "No more data",
+                        style: body1Medium.copyWith(color: greyColor2),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );
