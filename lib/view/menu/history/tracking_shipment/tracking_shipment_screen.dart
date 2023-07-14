@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/model/dhl_shipment_model.dart';
 import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';

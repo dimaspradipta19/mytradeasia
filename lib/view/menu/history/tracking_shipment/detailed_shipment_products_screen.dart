@@ -91,7 +91,7 @@ class _DetailedShipmentProductsScreenState
         child: Consumer<DhlShipmentProvider>(
           builder: (context, DhlShipmentProvider valueShipment, child) {
             if (valueShipment.state == ResultState.loading) {
-              return const CircularProgressIndicator.adaptive();
+              return const Center(child: CircularProgressIndicator.adaptive());
             } else if (valueShipment.state == ResultState.hasData) {
               var shipment = valueShipment.resultShipment!.shipments[0];
               return Column(
