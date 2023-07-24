@@ -20,7 +20,7 @@ class DhlShipmentService {
 
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
-        print(decodedJson);
+        log(decodedJson);
         return DhlShipmentModel.fromJson(decodedJson);
       } else {
         throw Exception("Unexpected error occured!");
