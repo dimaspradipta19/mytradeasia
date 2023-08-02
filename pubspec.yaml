@@ -52,6 +52,8 @@ dependencies:
   country_code_picker: ^3.0.0
   cached_network_image: ^3.2.3
   intl: ^0.18.1
+  flutter_map: ^4.0.0
+  latlong2: ^0.8.2
 
 dev_dependencies:
   flutter_test:

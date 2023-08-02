@@ -5,7 +5,6 @@ import 'package:mytradeasia/model/all_industry_model.dart';
 import 'package:http/http.dart' as http;
 
 class AllIndustryService {
-  // List<AllIndustryModel> resultAwal = [];
 
   Future<AllIndustryModel?> getAllIndustryList() async {
     AllIndustryModel? result;

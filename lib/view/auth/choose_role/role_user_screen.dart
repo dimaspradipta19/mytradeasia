@@ -11,10 +11,6 @@ class RoleUserScreen extends StatefulWidget {
 }
 
 class _RoleUserScreenState extends State<RoleUserScreen> {
-  // bool isCustomer = false;
-  // bool isAgent = false;
-  // bool isSales = false;
-
   List<Modeluser> roleUser = [
     Modeluser(
         isSelected: false,

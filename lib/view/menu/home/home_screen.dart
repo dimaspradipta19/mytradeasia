@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
+import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
+import 'package:mytradeasia/utils/sales_force_screen.dart';
+// import 'package:mytradeasia/utils/ship_go.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
@@ -40,6 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<TopProductsProvider>(context, listen: false).getTopProducts();
+
+      // provider for get token
+      Provider.of<SalesforceLoginProvider>(context, listen: false)
+          .postSalesforceLogin();
     });
   }
 
@@ -1170,7 +1177,7 @@ class MenuGridWidget extends StatelessWidget {
             )
           ],
         ),
-        // Tracking Ship & All Products menu baris 2
+        // Tracking Ship & All Products menu baris 1
         Padding(
           padding:
               const EdgeInsets.only(top: size20px * 0.75, bottom: size20px),
@@ -1286,9 +1293,18 @@ class MenuGridWidgetSales extends StatelessWidget {
               flex: 5,
               child: InkWell(
                 onTap: () {
+                  var accessTokenData = Provider.of<SalesforceLoginProvider>(
+                          context,
+                          listen: false)
+                      .results!
+                      .accessToken;
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return const TrackingShipmentScreen();
+                      // return const TrackingShipmentScreen();
+                      // return const ShipGoScreen();
+                      return SalesForceLoginScreen(
+                        token: accessTokenData,
+                      );
                     },
                   ));
                 },

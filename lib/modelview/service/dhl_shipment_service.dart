@@ -19,14 +19,14 @@ class DhlShipmentService {
       );
 
       if (response.statusCode == 200) {
-        var decodedJson = jsonDecode(response.body);
-        log(decodedJson);
+        Map<String, dynamic> decodedJson = jsonDecode(response.body);
+        log(decodedJson.toString());
         return DhlShipmentModel.fromJson(decodedJson);
       } else {
         throw Exception("Unexpected error occured!");
       }
     } catch (e) {
-      log(e.toString());
+      log("error in dhl_service with status ${e.toString()}");
     }
     return null;
   }
