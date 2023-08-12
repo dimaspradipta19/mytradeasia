@@ -131,8 +131,8 @@ class _MessageScreenState extends State<MessageScreen> {
                             (uid) => uid != _currentUser,
                           );
 
-                          final otherUserName =
-                              biodataCollection.doc(otherUser);
+                          // final otherUserName =
+                          //     biodataCollection.doc(otherUser);
 
                           // timestamp atau waktu
                           final dateTime = dataSnapshot[index]["timestamp"];

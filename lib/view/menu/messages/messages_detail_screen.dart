@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/widget/text_editing_widget.dart';
 
-import '../../../widget/sales_bubble_chat_widget.dart';
-import '../../../widget/user_bubble_chat_widget.dart';
-
 class MessagesDetailScreen extends StatefulWidget {
   const MessagesDetailScreen(
       {super.key,
@@ -28,7 +25,6 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
   final TextEditingController _message = TextEditingController();
 
   final _currentUser = FirebaseAuth.instance.currentUser!.uid.toString();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Membuat atau mendapatkan referensi koleksi "biodata"
   CollectionReference biodataCollection =
@@ -139,7 +135,7 @@ class _MessagesDetailScreenState extends State<MessagesDetailScreen> {
                             child: CircularProgressIndicator.adaptive());
                       }
 
-                      final dataSnapshot = snapshot.data!;
+                      // final dataSnapshot = snapshot.data!;
 
                       return StreamBuilder(
                         stream: null,

@@ -14,7 +14,7 @@ class SalesforceLoginProvider with ChangeNotifier {
     try {
       state = ResultState.loading;
       notifyListeners();
-      results = await service.PostSalesforce();
+      results = await service.postSalesforce();
       if (results != null) {
         state = ResultState.hasData;
         notifyListeners();

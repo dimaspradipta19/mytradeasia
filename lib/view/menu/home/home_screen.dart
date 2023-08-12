@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +10,6 @@ import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/sales_force_screen.dart';
-// import 'package:mytradeasia/utils/ship_go.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // provider for get top product
       Provider.of<TopProductsProvider>(context, listen: false).getTopProducts();
 
       // provider for get token
@@ -333,7 +335,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? streamSnapshot.data!.docs[0]
                                                           ['role'] ==
                                                       "Sales"
-                                                  ? const MenuGridWidgetSales()
+                                                  ? Consumer<
+                                                          SalesforceLoginProvider>(
+                                                      builder: (context,
+                                                          valueAccessToken,
+                                                          child) {
+                                                      if (valueAccessToken
+                                                              .state ==
+                                                          ResultState.loading) {
+                                                        return const Center(
+                                                          child:
+                                                              CircularProgressIndicator
+                                                                  .adaptive(),
+                                                        );
+                                                      }
+
+                                                      if (valueAccessToken
+                                                              .state ==
+                                                          ResultState.hasData) {
+                                                        return MenuGridWidgetSales(
+                                                          accessToken:
+                                                              valueAccessToken
+                                                                  .results!
+                                                                  .accessToken,
+                                                        );
+                                                      }
+
+                                                      return Container();
+                                                    })
                                                   : const MenuGridWidget()
                                               : Container(),
                                           /* End 4 Menu Section */
@@ -1277,9 +1306,10 @@ class MenuGridWidget extends StatelessWidget {
 }
 
 class MenuGridWidgetSales extends StatelessWidget {
-  const MenuGridWidgetSales({
-    Key? key,
-  }) : super(key: key);
+  const MenuGridWidgetSales({Key? key, required this.accessToken})
+      : super(key: key);
+
+  final String accessToken;
 
   @override
   Widget build(BuildContext context) {
@@ -1293,20 +1323,17 @@ class MenuGridWidgetSales extends StatelessWidget {
               flex: 5,
               child: InkWell(
                 onTap: () {
-                  var accessTokenData = Provider.of<SalesforceLoginProvider>(
-                          context,
-                          listen: false)
-                      .results!
-                      .accessToken;
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
                       // return const TrackingShipmentScreen();
                       // return const ShipGoScreen();
                       return SalesForceLoginScreen(
-                        token: accessTokenData,
+                        token: accessToken,
                       );
                     },
                   ));
+
+                  // log(accessTokenData);
                 },
                 child: Container(
                   height: 60,

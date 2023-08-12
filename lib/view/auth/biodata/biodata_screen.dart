@@ -89,14 +89,6 @@ class _BiodataScreenState extends State<BiodataScreen> {
                                     builder: (context) => const LoginScreen(),
                                   ),
                                   (route) => false);
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return ;
-                              //     },
-                              //   ),
-                              // );
                             });
                       },
                     );

@@ -155,6 +155,7 @@ class Details {
       };
 }
 
+// ignore: constant_identifier_names
 enum PieceId { JD014600011060944492 }
 
 final pieceIdValues =
