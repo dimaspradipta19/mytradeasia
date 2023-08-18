@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class SalesforceDataService {
   String url =
-      "https://tradeasia--newmind.sandbox.my.salesforce.com/services/data/v58.0/queryAll?q=Select Id, Name, Phone From Account Where Id = '0018G00000Ui09OQAR'";
+      "https://tradeasia--newmind.sandbox.my.salesforce.com/services/data/v58.0/queryAll?q=Select Id, Name, Phone From Account";
   Future<SalesforceDataModel?> getSampleData(String token) async {
     try {
       http.Response response = await http.get(

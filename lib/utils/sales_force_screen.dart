@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
@@ -49,13 +51,27 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
               if (valueData.state == ResultState.hasData) {
                 return Expanded(
                   child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
                     itemCount: valueData.salesforceDataModel!.records.length,
                     itemBuilder: (context, index) {
                       return ListTile(
+                        trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                        onTap: () {
+                          log(valueData.salesforceDataModel!.records[index].id);
+
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return DetailSalesforceDataScreen(
+                                  idData: valueData
+                                      .salesforceDataModel!.records[index].id);
+                            },
+                          ));
+                        },
                         title: Text(
                             valueData.salesforceDataModel!.records[index].name),
-                        subtitle: Text(valueData
-                            .salesforceDataModel!.records[index].phone),
+                        subtitle: Text(
+                            valueData.salesforceDataModel!.records[index].id),
                       );
                     },
                   ),
@@ -71,6 +87,25 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DetailSalesforceDataScreen extends StatelessWidget {
+  const DetailSalesforceDataScreen({super.key, required this.idData});
+
+  final String idData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          elevation: 0.5,
+          title: Text(
+            "Detail Salesforce Data",
+            style: text20,
+          )),
+      body: Center(child: Text(idData)),
     );
   }
 }

@@ -1,82 +1,109 @@
-// To parse this JSON data, do
-//
-//     final salesforceDataModel = salesforceDataModelFromJson(jsonString);
-
-// import 'package:meta/meta.dart';
-// import 'dart:convert';
-
-// SalesforceDataModel salesforceDataModelFromJson(String str) => SalesforceDataModel.fromJson(json.decode(str));
-
-// String salesforceDataModelToJson(SalesforceDataModel data) => json.encode(data.toJson());
+import 'dart:convert';
 
 class SalesforceDataModel {
-    final int totalSize;
-    final bool done;
-    final List<Record> records;
+  final int totalSize;
+  final bool done;
+  final String nextRecordsUrl;
+  final List<Record> records;
 
-    SalesforceDataModel({
-        required this.totalSize,
-        required this.done,
-        required this.records,
-    });
+  SalesforceDataModel({
+    required this.totalSize,
+    required this.done,
+    required this.nextRecordsUrl,
+    required this.records,
+  });
 
-    factory SalesforceDataModel.fromJson(Map<String, dynamic> json) => SalesforceDataModel(
+  factory SalesforceDataModel.fromRawJson(String str) =>
+      SalesforceDataModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory SalesforceDataModel.fromJson(Map<String, dynamic> json) =>
+      SalesforceDataModel(
         totalSize: json["totalSize"],
         done: json["done"],
-        records: List<Record>.from(json["records"].map((x) => Record.fromJson(x))),
-    );
+        nextRecordsUrl: json["nextRecordsUrl"],
+        records:
+            List<Record>.from(json["records"].map((x) => Record.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "totalSize": totalSize,
         "done": done,
+        "nextRecordsUrl": nextRecordsUrl,
         "records": List<dynamic>.from(records.map((x) => x.toJson())),
-    };
+      };
 }
 
 class Record {
-    final Attributes attributes;
-    final String id;
-    final String name;
-    final String phone;
+  final Attributes attributes;
+  final String id;
+  final String name;
+  final String? phone;
 
-    Record({
-        required this.attributes,
-        required this.id,
-        required this.name,
-        required this.phone,
-    });
+  Record({
+    required this.attributes,
+    required this.id,
+    required this.name,
+    required this.phone,
+  });
 
-    factory Record.fromJson(Map<String, dynamic> json) => Record(
+  factory Record.fromRawJson(String str) => Record.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Record.fromJson(Map<String, dynamic> json) => Record(
         attributes: Attributes.fromJson(json["attributes"]),
         id: json["Id"],
         name: json["Name"],
-        phone: json["Phone"],
-    );
+        phone: json["Phone"] ?? "Null",
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "attributes": attributes.toJson(),
         "Id": id,
         "Name": name,
         "Phone": phone,
-    };
+      };
 }
 
 class Attributes {
-    final String type;
-    final String url;
+  final Type type;
+  final String url;
 
-    Attributes({
-        required this.type,
-        required this.url,
-    });
+  Attributes({
+    required this.type,
+    required this.url,
+  });
 
-    factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
-        type: json["type"],
+  factory Attributes.fromRawJson(String str) =>
+      Attributes.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
+        type: typeValues.map[json["type"]]!,
         url: json["url"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
-        "type": type,
+  Map<String, dynamic> toJson() => {
+        "type": typeValues.reverse[type],
         "url": url,
-    };
+      };
+}
+
+enum Type { ACCOUNT }
+
+final typeValues = EnumValues({"Account": Type.ACCOUNT});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }
