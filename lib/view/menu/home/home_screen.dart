@@ -341,10 +341,79 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       if (valueAccessToken
                                                               .state ==
                                                           ResultState.loading) {
-                                                        return const Center(
-                                                          child:
-                                                              CircularProgressIndicator
-                                                                  .adaptive(),
+                                                        return Shimmer
+                                                            .fromColors(
+                                                          baseColor: greyColor,
+                                                          highlightColor:
+                                                              greyColor4,
+                                                          child: Column(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    flex: 5,
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          60,
+                                                                      width:
+                                                                          160,
+                                                                      decoration: const BoxDecoration(
+                                                                          borderRadius: BorderRadius.all(Radius.circular(
+                                                                              10)),
+                                                                          color:
+                                                                              whiteColor),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                      width:
+                                                                          15.0),
+                                                                  Expanded(
+                                                                    flex: 5,
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          60,
+                                                                      width:
+                                                                          160,
+                                                                      decoration: const BoxDecoration(
+                                                                          borderRadius: BorderRadius.all(Radius.circular(
+                                                                              10)),
+                                                                          color:
+                                                                              whiteColor),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                        .only(
+                                                                    top: size20px *
+                                                                        0.75,
+                                                                    bottom:
+                                                                        size20px),
+                                                                child: Row(
+                                                                  children: [
+                                                                    // ALL PRODUCTS
+                                                                    Expanded(
+                                                                      flex: 5,
+                                                                      child:
+                                                                          Container(
+                                                                        height:
+                                                                            60,
+                                                                        width:
+                                                                            160,
+                                                                        decoration: const BoxDecoration(
+                                                                            borderRadius:
+                                                                                BorderRadius.all(Radius.circular(10)),
+                                                                            color: whiteColor),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         );
                                                       }
 
@@ -1042,7 +1111,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       );
                     }
-
                     return Container();
                   }),
             ),

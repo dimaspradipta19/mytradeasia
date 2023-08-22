@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:mytradeasia/model/sales_force_data_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:mytradeasia/model/sales_force_detail_model.dart';
 
-class SalesforceDataService {
-  String url =
-      "https://tradeasia--newmind.sandbox.my.salesforce.com/services/data/v58.0/queryAll?q=Select Id, Name, Phone From Account";
-  Future<SalesforceDataModel?> getAllData(String token) async {
+class SalesforceDetailService {
+  Future<SalesforceDetailModel?> getSalesforceDetail(
+      String urlDetail, String token) async {
+    String url =
+        "https://tradeasia--newmind.sandbox.my.salesforce.com$urlDetail";
     try {
       http.Response response = await http.get(
         Uri.parse(url),
@@ -20,14 +20,13 @@ class SalesforceDataService {
       if (response.statusCode == 200) {
         Map<String, dynamic> decodedJson = jsonDecode(response.body);
 
-        var result = SalesforceDataModel.fromJson(decodedJson);
+        var result = SalesforceDetailModel.fromJson(decodedJson);
 
         return result;
       }
     } catch (e) {
-      log("error at salesforce sample data service or ${e.toString()}");
+      log("error at salesforce detail service or ${e.toString()}");
     }
-
     return null;
   }
 }

@@ -8,14 +8,14 @@ import 'package:mytradeasia/utils/result_state.dart';
 class SalesforceDataProvider with ChangeNotifier {
   SalesforceDataService service = SalesforceDataService();
   ResultState state = ResultState.noData;
-  SalesforceDataModel? salesforceDataModel;
+  SalesforceDataModel? resultDataModel;
 
-  Future<dynamic> getSampleData(String token) async {
+  Future<dynamic> getAllData(String token) async {
     try {
       state = ResultState.loading;
       notifyListeners();
-      salesforceDataModel = await service.getSampleData(token);
-      if (salesforceDataModel != null) {
+      resultDataModel = await service.getAllData(token);
+      if (resultDataModel != null) {
         state = ResultState.hasData;
         notifyListeners();
       } else {

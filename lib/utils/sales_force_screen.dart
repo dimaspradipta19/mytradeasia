@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
+import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/theme.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<SalesforceDataProvider>(context, listen: false)
-          .getSampleData(widget.token);
+          .getAllData(widget.token);
     });
   }
 
@@ -44,8 +45,9 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
           Consumer<SalesforceDataProvider>(
             builder: (context, valueData, child) {
               if (valueData.state == ResultState.loading) {
-                return const Center(
-                    child: CircularProgressIndicator.adaptive());
+                return const Expanded(
+                  child: Center(child: CircularProgressIndicator.adaptive()),
+                );
               }
 
               if (valueData.state == ResultState.hasData) {
@@ -53,25 +55,27 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: valueData.salesforceDataModel!.records.length,
+                    itemCount: valueData.resultDataModel!.records.length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         trailing: const Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
-                          log(valueData.salesforceDataModel!.records[index].id);
+                          log(valueData.resultDataModel!.records[index].id);
 
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return DetailSalesforceDataScreen(
-                                  idData: valueData
-                                      .salesforceDataModel!.records[index].id);
+                                urlDetail: valueData.resultDataModel!
+                                    .records[index].attributes.url,
+                                token: widget.token,
+                              );
                             },
                           ));
                         },
                         title: Text(
-                            valueData.salesforceDataModel!.records[index].name),
-                        subtitle: Text(
-                            valueData.salesforceDataModel!.records[index].id),
+                            valueData.resultDataModel!.records[index].name),
+                        subtitle:
+                            Text(valueData.resultDataModel!.records[index].id),
                       );
                     },
                   ),
@@ -91,21 +95,74 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
   }
 }
 
-class DetailSalesforceDataScreen extends StatelessWidget {
-  const DetailSalesforceDataScreen({super.key, required this.idData});
+class DetailSalesforceDataScreen extends StatefulWidget {
+  const DetailSalesforceDataScreen(
+      {super.key, required this.urlDetail, required this.token});
 
-  final String idData;
+  final String urlDetail;
+  final String token;
+
+  @override
+  State<DetailSalesforceDataScreen> createState() =>
+      _DetailSalesforceDataScreenState();
+}
+
+class _DetailSalesforceDataScreenState
+    extends State<DetailSalesforceDataScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      Provider.of<SalesforceDetailProvider>(context, listen: false)
+          .getSalesforceDetail(widget.token, widget.urlDetail);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: greyColor,
           elevation: 0.5,
-          title: Text(
+          title: const Text(
             "Detail Salesforce Data",
             style: text20,
           )),
-      body: Center(child: Text(idData)),
+      body: Center(
+        child: Consumer<SalesforceDetailProvider>(
+          builder: (context, valueSalesforceDetail, child) {
+            if (valueSalesforceDetail.state == ResultState.loading) {
+              return const CircularProgressIndicator.adaptive();
+            }
+
+            if (valueSalesforceDetail.state == ResultState.hasData) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("ID : ${valueSalesforceDetail.result!.id}"),
+                  Text("Name : ${valueSalesforceDetail.result!.name}"),
+                  Text("Type : ${valueSalesforceDetail.result!.type}"),
+                  Text(
+                      "Record Type ID : ${valueSalesforceDetail.result!.recordTypeId}"),
+                  Text(
+                      "Billing Street : ${valueSalesforceDetail.result!.billingStreet}"),
+                  Text(
+                      "Billing Country : ${valueSalesforceDetail.result!.billingCountry}"),
+                  Text(
+                      "Currency Iso Code : ${valueSalesforceDetail.result!.currencyIsoCode}"),
+                  Text(
+                      "Business Entity : ${valueSalesforceDetail.result!.businessEntityC}"),
+                  Text(
+                      "Insurance Company Name : ${valueSalesforceDetail.result!.insuranceCompanyNameC}"),
+                ],
+              );
+            }
+
+            return const Text("Error");
+          },
+        ),
+      ),
     );
   }
 }
