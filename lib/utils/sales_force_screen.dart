@@ -34,7 +34,7 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
       appBar: AppBar(
         backgroundColor: greyColor,
         title: const Text(
-          "Appbar salesforce",
+          "Data Perusahaan di salesforce",
           style: TextStyle(
             color: blackColor,
           ),
