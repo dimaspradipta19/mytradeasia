@@ -7,12 +7,13 @@ class SearchProductEntity extends Equatable {
   final String? casNumber;
   final String? seoUrl;
 
-  const SearchProductEntity(
-      {this.productname,
-      this.productimage,
-      this.hsCode,
-      this.casNumber,
-      this.seoUrl});
+  const SearchProductEntity({
+    this.productname,
+    this.productimage,
+    this.hsCode,
+    this.casNumber,
+    this.seoUrl,
+  });
 
   @override
   List<Object?> get props {

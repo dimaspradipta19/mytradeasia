@@ -8,7 +8,7 @@ class SalesforceLoginEntity extends Equatable {
   final String? issuedAt;
   final String? signature;
 
-  SalesforceLoginEntity({
+  const SalesforceLoginEntity({
     this.accessToken,
     this.instanceUrl,
     this.id,
