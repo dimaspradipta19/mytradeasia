@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/theme.dart';
+import '../config/themes/theme.dart';
 
 class UserBubleChat extends StatelessWidget {
   const UserBubleChat({Key? key, required this.message, this.isSeen = false})

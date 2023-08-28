@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/faq_service.dart';
 import 'package:mytradeasia/model/faq_model.dart';
-import 'package:mytradeasia/modelview/service/faq_service.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 
 class FaqProvider with ChangeNotifier {

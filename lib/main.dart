@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
@@ -17,8 +18,7 @@ import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
-import 'package:mytradeasia/modelview/service/detail_product_service.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/other/splash_page.dart';
 import 'package:provider/provider.dart';
 

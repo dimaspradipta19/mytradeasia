@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_detail.dart';
 
 class TrackingDocumentScreen extends StatelessWidget {

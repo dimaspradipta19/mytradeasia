@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../utils/theme.dart';
+import '../../../../config/themes/theme.dart';
 
 class TrackingDocumentDetail extends StatelessWidget {
   const TrackingDocumentDetail(

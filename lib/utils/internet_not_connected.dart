@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 
 class InternetNotAvailable extends StatelessWidget {
   const InternetNotAvailable({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/history/history_screen.dart';
 import 'package:mytradeasia/view/menu/messages/messages_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
@@ -8,7 +8,6 @@ import '../home/home_screen.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   const NavigationBarWidget({super.key});
-
 
   @override
   State<NavigationBarWidget> createState() => _NavigationBarWidgetState();

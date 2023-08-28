@@ -1,6 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/quotation_detail.dart';
 
 import '../../../../../widget/quotation_widget.dart';
@@ -306,7 +306,9 @@ class SalesQuotationsScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       const QuotationDetailScreen(
-                                          status: "sales", isSales: true,),
+                                    status: "sales",
+                                    isSales: true,
+                                  ),
                                 )))
                       ],
                     ),

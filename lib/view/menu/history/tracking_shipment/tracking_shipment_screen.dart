@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_detail_screen.dart';
 import 'package:provider/provider.dart';
 

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mytradeasia/modelview/service/detail_product_service.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
 
 import '../../model/detail_product_model.dart';
 import '../../utils/result_state.dart';

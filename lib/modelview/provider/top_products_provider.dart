@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mytradeasia/modelview/service/top_products_service.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/top_products_service.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 
 import '../../model/top_products_model.dart';
@@ -17,7 +17,7 @@ class TopProductsProvider with ChangeNotifier {
       state = ResultState.loading;
       notifyListeners();
       listResultTop = await service.getTopProducts();
-      
+
       if (listResultTop != []) {
         state = ResultState.hasData;
         notifyListeners();

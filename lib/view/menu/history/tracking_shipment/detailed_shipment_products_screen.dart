@@ -6,7 +6,7 @@ import 'package:mytradeasia/utils/result_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../modelview/provider/dhl_shipment_provider.dart';
-import '../../../../utils/theme.dart';
+import '../../../../config/themes/theme.dart';
 
 class DetailedShipmentProductsScreen extends StatefulWidget {
   const DetailedShipmentProductsScreen({super.key});

@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import '../../model/search_product_model.dart';
+import 'package:mytradeasia/model/search_product_model.dart';
+
 import 'package:http/http.dart' as http;
 
 class SearchProductService {

@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
-import 'package:mytradeasia/modelview/service/detail_product_service.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

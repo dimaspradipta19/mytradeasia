@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
@@ -92,7 +92,9 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                                   style: text16,
                                                 ),
                                                 Text(
-                                                  streamSnapshot.data?.docs[0]['companyName'] ?? "",
+                                                  streamSnapshot.data?.docs[0]
+                                                          ['companyName'] ??
+                                                      "",
                                                   style: text15.copyWith(
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -286,7 +288,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                       context: context,
                                       builder: (context) {
                                         return DialogWidgetYesNo(
-                                            urlIcon: "assets/images/logo_logout.png",
+                                            urlIcon:
+                                                "assets/images/logo_logout.png",
                                             title:
                                                 "Are you sure want to log out?",
                                             subtitle:

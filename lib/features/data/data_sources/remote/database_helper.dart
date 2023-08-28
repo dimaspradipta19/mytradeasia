@@ -1,7 +1,6 @@
+import 'package:mytradeasia/model/biodata_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../../model/biodata_model.dart';
 
 class DatabaseHelper {
   static DatabaseHelper? _databaseHelper;

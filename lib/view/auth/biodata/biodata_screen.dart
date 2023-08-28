@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../utils/theme.dart';
+import '../../../config/themes/theme.dart';
 import '../../../widget/dialog_sheet_widget.dart';
 import '../login/login_screen.dart';
 // import '../homescreen.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 
-import '../../../../utils/theme.dart';
+import '../../../../config/themes/theme.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

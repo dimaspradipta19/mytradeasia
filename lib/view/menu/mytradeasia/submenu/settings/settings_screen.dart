@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/languages/language_apps_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/notification_screen.dart';
 
-import '../../../../../utils/theme.dart';
+import '../../../../../config/themes/theme.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -12,7 +12,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
- final TextEditingController _verificationEmail = TextEditingController();
+  final TextEditingController _verificationEmail = TextEditingController();
   @override
   void dispose() {
     _verificationEmail.dispose();

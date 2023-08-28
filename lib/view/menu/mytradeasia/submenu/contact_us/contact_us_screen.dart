@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/model/industry_model.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});

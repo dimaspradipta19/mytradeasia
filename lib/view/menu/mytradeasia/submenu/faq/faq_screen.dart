@@ -5,7 +5,7 @@ import 'package:mytradeasia/utils/result_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../../utils/theme.dart';
+import '../../../../../config/themes/theme.dart';
 
 class FaqScreen extends StatefulWidget {
   const FaqScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/detailed_shipment_products_screen.dart';
 
-import '../../../../utils/theme.dart';
+import '../../../../config/themes/theme.dart';
 
 class TrackingShipmentDetailScreen extends StatelessWidget {
   const TrackingShipmentDetailScreen(

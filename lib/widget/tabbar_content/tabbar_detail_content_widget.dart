@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/detail_product_model.dart';
 import '../../modelview/provider/see_more_provider.dart';
-import '../../utils/theme.dart';
+import '../../config/themes/theme.dart';
 
 Widget applicationContent(
     AsyncSnapshot<DetailProductModel?> snapshot, SeeMoreProvider valueSeeMore) {

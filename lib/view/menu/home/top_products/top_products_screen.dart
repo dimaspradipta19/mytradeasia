@@ -7,7 +7,7 @@ import 'package:mytradeasia/utils/result_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../utils/theme.dart';
+import '../../../../config/themes/theme.dart';
 import '../../../../widget/banner_top_products_widget.dart';
 import '../all_products/products/products_detail_screen.dart';
 

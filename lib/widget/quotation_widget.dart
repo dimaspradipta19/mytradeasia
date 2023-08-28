@@ -1,7 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/theme.dart';
+import '../config/themes/theme.dart';
 
 class QuotationsWidget extends StatelessWidget {
   const QuotationsWidget(
@@ -123,6 +123,7 @@ class QuotationsWidget extends StatelessWidget {
     );
   }
 }
+
 class SalesQuotationsWidget extends StatelessWidget {
   const SalesQuotationsWidget(
       {Key? key,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/password_change_otp.dart';
 
-import '../../../../../utils/theme.dart';
+import '../../../../../config/themes/theme.dart';
 import '../../../../../widget/text_editing_widget.dart';
 
 class ChangePasswordScreen extends StatefulWidget {

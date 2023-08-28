@@ -8,7 +8,7 @@ import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../modelview/provider/loading_provider.dart';
-import '../../../utils/theme.dart';
+import '../../../config/themes/theme.dart';
 import '../../../widget/loading_overlay_widget.dart';
 
 class RegisterScreen extends StatefulWidget {

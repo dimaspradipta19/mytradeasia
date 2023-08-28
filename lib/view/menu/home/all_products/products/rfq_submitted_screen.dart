@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/utils/theme.dart';
+import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/home/all_products/request_quotation_screen.dart';
 
 class SubmittedRFQScreen extends StatelessWidget {

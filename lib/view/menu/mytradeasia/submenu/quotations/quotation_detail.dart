@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytradeasia/model/industry_model.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
-import '../../../../../utils/theme.dart';
+import '../../../../../config/themes/theme.dart';
 
 class QuotationDetailScreen extends StatelessWidget {
   const QuotationDetailScreen({super.key, required this.status, this.isSales});

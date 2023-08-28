@@ -1,24 +1,23 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/database_helper.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 
 import '../../model/biodata_model.dart';
-import '../service/database_helper.dart';
 
-
-class DbManager with ChangeNotifier{
+class DbManager with ChangeNotifier {
   List<BiodataModel> _biodataModel = [];
   late DatabaseHelper _dbHelper;
   ResultState state = ResultState.noData;
 
   List<BiodataModel> get biodataModel => _biodataModel;
 
-  DbManager(){
+  DbManager() {
     state = ResultState.loading;
     _dbHelper = DatabaseHelper();
     _getAllBiodata();
   }
 
-  void _getAllBiodata() async{
+  void _getAllBiodata() async {
     _biodataModel = await _dbHelper.getBiodata();
     state = ResultState.hasData;
     notifyListeners();
@@ -29,11 +28,11 @@ class DbManager with ChangeNotifier{
     _getAllBiodata();
   }
 
-  Future<BiodataModel> getBiodataById(int id)async{
+  Future<BiodataModel> getBiodataById(int id) async {
     return await _dbHelper.getBiodataById(id);
   }
 
-  Future<BiodataModel> getBiodataByUid(String uid)async{
+  Future<BiodataModel> getBiodataByUid(String uid) async {
     return await _dbHelper.getBiodataByUid(uid);
   }
 

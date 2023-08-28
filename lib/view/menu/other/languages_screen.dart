@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../utils/theme.dart';
+import '../../../config/themes/theme.dart';
 
 class LanguagesScreen extends StatefulWidget {
   const LanguagesScreen({super.key});
@@ -422,7 +422,6 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
               ],
             ),
 
- 
             /* List  */
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

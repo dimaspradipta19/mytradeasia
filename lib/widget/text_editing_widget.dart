@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/theme.dart';
+import '../config/themes/theme.dart';
 
 // Textfield
 class TextEditingWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../utils/theme.dart';
+import '../../../../../config/themes/theme.dart';
 
 class NotificationMenu extends StatefulWidget {
   const NotificationMenu({super.key});

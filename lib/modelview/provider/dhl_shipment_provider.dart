@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/dhl_shipment_service.dart';
 import 'package:mytradeasia/model/dhl_shipment_model.dart';
-import 'package:mytradeasia/modelview/service/dhl_shipment_service.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 
 class DhlShipmentProvider with ChangeNotifier {

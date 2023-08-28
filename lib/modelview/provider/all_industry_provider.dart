@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/all_industry_service.dart';
 import 'package:mytradeasia/model/all_industry_model.dart';
-import 'package:mytradeasia/modelview/service/all_industry_service.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 
 class AllIndustryProvider with ChangeNotifier {

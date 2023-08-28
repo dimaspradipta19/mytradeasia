@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/list_product_service.dart';
 import 'package:mytradeasia/model/all_product_model.dart';
-import 'package:mytradeasia/modelview/service/list_product_service.dart';
 import '../../utils/result_state.dart';
 
 class ListProductProvider with ChangeNotifier {
