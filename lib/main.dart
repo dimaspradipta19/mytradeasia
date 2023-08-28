@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:mytradeasia/config/routes/routes.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
@@ -19,7 +20,6 @@ import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/other/splash_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
       child: StreamProvider<InternetConnectionStatus>(
         initialData: InternetConnectionStatus.connected,
         create: ((context) => InternetConnectionChecker().onStatusChange),
-        child: MaterialApp(
+        child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'MyTradeasia',
           theme: ThemeData(
@@ -108,7 +108,8 @@ class _MyAppState extends State<MyApp> {
             scaffoldBackgroundColor: whiteColor,
             fontFamily: "Poppins",
           ),
-          home: const SplashScreen(),
+          routerConfig: Routes().router,
+          // home: const SplashScreen(),
         ),
       ),
     );

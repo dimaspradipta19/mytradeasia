@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoleUserScreen extends StatefulWidget {
@@ -157,28 +157,35 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
                       if (selectedRole.role == "Customer") {
                         await prefs.setString("role", selectedRole.role);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterScreen(),
-                          ),
-                        );
+                        /* With go_route */
+                        context.go("/auth/register");
+
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const RegisterScreen(),
+                        //   ),
+                        // );
                       } else if (selectedRole.role == "Agent") {
                         await prefs.setString("role", selectedRole.role);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterScreen(),
-                          ),
-                        );
+                        /* With go_route */
+                        context.go("/auth/register");
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const RegisterScreen(),
+                        //   ),
+                        // );
                       } else if (selectedRole.role == "Sales") {
                         await prefs.setString("role", selectedRole.role);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterScreen(),
-                          ),
-                        );
+                        /* With go_route */
+                        context.go("/auth/register");
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const RegisterScreen(),
+                        //   ),
+                        // );
                       }
                     }
                   : null,
