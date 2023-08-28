@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
-import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
-import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:provider/provider.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -158,14 +157,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const ForgotPasswordScreen();
-                              },
-                            ),
-                          );
+                          /* With go_route */
+                          context.go("/auth/login/forgot_password");
+
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return const ForgotPasswordScreen();
+                          //     },
+                          //   ),
+                          // );
                         },
                         child: Text(
                           "Forgot Password?",
@@ -327,14 +329,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const RegisterScreen();
-                              },
-                            ),
-                          );
+                          context.go("/auth/register");
+
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return const RegisterScreen();
+                          //     },
+                          //   ),
+                          // );
                         },
                         child: Text("Sign up here",
                             style:

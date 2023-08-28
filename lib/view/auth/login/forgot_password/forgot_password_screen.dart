@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/auth/login/login_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_screen.dart';
 
 import '../../../../config/themes/theme.dart';
@@ -104,6 +104,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         onPressed: () {
                           print(_emailController.text);
+
+                          /* With go_route */
+                          context.go("/auth/login/reset_password");
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -140,11 +144,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const Text("Remember Password?"),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const LoginScreen();
-                        },
-                      ), (route) => false);
+                      /* With go_route */
+                      context.go("/auth/login");
+                      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                      //   builder: (context) {
+                      //     return const LoginScreen();
+                      //   },
+                      // ), (route) => false);
                     },
                     child: const Text("Sign in here"),
                   ),
