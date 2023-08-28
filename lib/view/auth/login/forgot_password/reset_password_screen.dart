@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
-import '../../../../modelview/provider/db_manager.dart';
 import '../../../../config/themes/theme.dart';
 import '../login_screen.dart';
 
@@ -22,8 +21,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     _newPasswordController.dispose();
     super.dispose();
   }
-
-  DbManager manager = DbManager();
 
   bool obscureText = true;
   bool obscureTextConfirm = true;
