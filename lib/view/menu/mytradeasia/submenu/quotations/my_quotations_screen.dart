@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/quotation_detail.dart';
 
@@ -62,75 +63,62 @@ class QuotationsScreen extends StatelessWidget {
                     child: ListView(
                       children: [
                         QuotationsWidget(
-                          status: "Submitted",
-                          fontStatusColor: yellowColor,
-                          backgroundStatusColor: yellowColor2,
-                          navigationPage: () =>
+                            status: "Submitted",
+                            fontStatusColor: yellowColor,
+                            backgroundStatusColor: yellowColor2,
+                            navigationPage: () {
                               /* With go_router */
-                              context
-                                  .goNamed("detail_quotation", pathParameters: {
-                            'status':
-                                "submitted", // change to variable with dynamic data
-                            'issales':
-                                "test" // change to variable with dynamic data, then add .toString()
-                          })
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(status: 'submitted');
 
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const QuotationDetailScreen(
-                          //       status: "submitted",
-                          //     ),
-                          //   ),
-                          // )
-                          ,
-                        ),
+                              context.goNamed("detail_quotation", extra: param);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const QuotationDetailScreen(
+                              //       status: "submitted",
+                              //     ),
+                              //   ),
+                              // )
+                            }),
                         QuotationsWidget(
-                          status: "Approved",
-                          fontStatusColor: greenColor1,
-                          backgroundStatusColor: greenColor2,
-                          navigationPage: () =>
+                            status: "Approved",
+                            fontStatusColor: greenColor1,
+                            backgroundStatusColor: greenColor2,
+                            navigationPage: () {
                               /* With go_router */
-                              context
-                                  .goNamed("detail_quotation", pathParameters: {
-                            'status':
-                                "approved", // change to variable with dynamic data
-                            'issales':
-                                "test" // change to variable with dynamic data, then add .toString()
-                          })
-                          //     Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const QuotationDetailScreen(
-                          //       status: "approved",
-                          //     ),
-                          //   ),
-                          // )
-                          ,
-                        ),
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(status: 'approved');
+
+                              context.goNamed("detail_quotation", extra: param);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const QuotationDetailScreen(
+                              //       status: "approved",
+                              //     ),
+                              //   ),
+                              // )
+                            }),
                         QuotationsWidget(
-                          status: "Rejected",
-                          fontStatusColor: redColor1,
-                          backgroundStatusColor: redColor2,
-                          navigationPage: () =>
+                            status: "Rejected",
+                            fontStatusColor: redColor1,
+                            backgroundStatusColor: redColor2,
+                            navigationPage: () {
                               /* With go_router */
-                              context
-                                  .goNamed("detail_quotation", pathParameters: {
-                            'status':
-                                "rejected", // change to variable with dynamic data
-                            'issales':
-                                "false" // change to variable with dynamic data, then add .toString()
-                          })
-                          //     Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const QuotationDetailScreen(
-                          //       status: "rejected",
-                          //     ),
-                          //   ),
-                          // )
-                          ,
-                        ),
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(status: 'rejected');
+
+                              context.goNamed("detail_quotation", extra: param);
+                              //   Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const QuotationDetailScreen(
+                              //       status: "rejected",
+                              //     ),
+                              //   ),
+                              // )
+                            }),
                       ],
                     ),
                   ),

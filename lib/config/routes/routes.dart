@@ -63,20 +63,16 @@ class Routes {
                           builder: (context, state) => const QuotationsScreen(),
                           routes: [
                             GoRoute(
-                                path: "detail_quotation/:status/:issales",
+                                path: "detail_quotation",
                                 name: 'detail_quotation',
-                                builder: (context, state) =>
-                                    QuotationDetailScreen(
-                                      status: state.pathParameters['status']!,
-                                      isSales: state.pathParameters[
-                                                      'issales'] ==
-                                                  "true" ||
-                                              state.pathParameters['issales'] ==
-                                                  "false"
-                                          ? bool.parse(state.pathParameters[
-                                              'issales']!) // a little bit hacky, need to find a better solution
-                                          : false,
-                                    ))
+                                builder: (context, state) {
+                                  QuotationDetailParameter param =
+                                      state.extra as QuotationDetailParameter;
+                                  return QuotationDetailScreen(
+                                    status: param.status,
+                                    isSales: param.isSales,
+                                  );
+                                })
                           ])
                     ]),
                 GoRoute(
