@@ -12,8 +12,8 @@ class FaqEntity extends Equatable {
   @override
   List<Object?> get props {
     return [
-      this.faqQuestion,
-      this.faqAnswer,
+      faqQuestion,
+      faqAnswer,
     ];
   }
 }

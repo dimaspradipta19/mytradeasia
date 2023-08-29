@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class DetailProductModel extends Equatable {
-  DetailProductModel({
+class DetailProductEntity extends Equatable {
+  const DetailProductEntity({
     required this.detailProduct,
     required this.listIndustry,
     required this.listCategory,
@@ -14,7 +14,6 @@ class DetailProductModel extends Equatable {
   final List<RelatedProduct> relatedProducts;
 
   @override
-  // TODO: implement props
   List<Object?> get props {
     return [
       this.detailProduct,
@@ -26,7 +25,7 @@ class DetailProductModel extends Equatable {
 }
 
 class DetailProduct {
-  DetailProduct({
+  const DetailProduct({
     required this.productname,
     required this.productimage,
     required this.iupacName,
@@ -38,39 +37,39 @@ class DetailProduct {
     required this.packagingName,
   });
 
-  String? productname;
-  String? productimage;
-  String? iupacName;
-  String? casNumber;
-  String? hsCode;
-  String? formula;
-  String? description;
-  String? application;
-  String? packagingName;
+  final String? productname;
+  final String? productimage;
+  final String? iupacName;
+  final String? casNumber;
+  final String? hsCode;
+  final String? formula;
+  final String? description;
+  final String? application;
+  final String? packagingName;
 }
 
 class ListCategory {
-  ListCategory({
+  const ListCategory({
     required this.categoryUrl,
     required this.categoryName,
   });
 
-  String categoryUrl;
-  String categoryName;
+  final String categoryUrl;
+  final String categoryName;
 }
 
 class ListIndustry {
-  ListIndustry({
+  const ListIndustry({
     required this.industryUrl,
     required this.industryName,
   });
 
-  String industryUrl;
-  String industryName;
+  final String industryUrl;
+  final String industryName;
 }
 
 class RelatedProduct {
-  RelatedProduct({
+  const RelatedProduct({
     required this.productname,
     required this.productimage,
     required this.casNumber,
@@ -78,9 +77,9 @@ class RelatedProduct {
     required this.seoUrl,
   });
 
-  String productname;
-  String productimage;
-  String casNumber;
-  String hsCode;
-  String seoUrl;
+  final String productname;
+  final String productimage;
+  final String casNumber;
+  final String hsCode;
+  final String seoUrl;
 }

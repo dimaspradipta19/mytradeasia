@@ -126,7 +126,7 @@ class SalesforceDetailModel extends Equatable {
   // final bool sendEmailReminderC;
   // final dynamic workedBy2C;
 
-  SalesforceDetailModel({
+  const SalesforceDetailModel({
     required this.attributes,
     required this.id,
     required this.isDeleted,
@@ -255,14 +255,14 @@ class SalesforceDetailModel extends Equatable {
 
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class Attributes {
   final String type;
   final String url;
 
-  Attributes({
+  const Attributes({
     required this.type,
     required this.url,
   });
@@ -278,7 +278,7 @@ class BillingAddress {
   final dynamic state;
   final String street;
 
-  BillingAddress({
+  const BillingAddress({
     required this.city,
     required this.country,
     required this.geocodeAccuracy,

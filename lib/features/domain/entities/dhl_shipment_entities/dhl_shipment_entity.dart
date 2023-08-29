@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class DhlShipmentEntity extends Equatable {
   final List<Shipment> shipments;
 
-  DhlShipmentEntity({
+  const DhlShipmentEntity({
     required this.shipments,
   });
 
@@ -21,7 +21,7 @@ class Shipment {
   final Details details;
   final List<Event> events;
 
-  Shipment({
+  const Shipment({
     required this.id,
     required this.service,
     required this.origin,
@@ -36,7 +36,7 @@ class Destination {
   final Address address;
   final ServicePoint servicePoint;
 
-  Destination({
+  const Destination({
     required this.address,
     required this.servicePoint,
   });
@@ -45,7 +45,7 @@ class Destination {
 class Address {
   final String addressLocality;
 
-  Address({
+  const Address({
     required this.addressLocality,
   });
 }
@@ -54,7 +54,7 @@ class ServicePoint {
   final String url;
   final String label;
 
-  ServicePoint({
+  const ServicePoint({
     required this.url,
     required this.label,
   });
@@ -66,7 +66,7 @@ class Details {
   final int totalNumberOfPieces;
   final List<String> pieceIds;
 
-  Details({
+  const Details({
     required this.proofOfDelivery,
     required this.proofOfDeliverySignedAvailable,
     required this.totalNumberOfPieces,
@@ -79,7 +79,7 @@ class ProofOfDelivery {
   final String signatureUrl;
   final String documentUrl;
 
-  ProofOfDelivery({
+  const ProofOfDelivery({
     required this.timestamp,
     required this.signatureUrl,
     required this.documentUrl,
@@ -92,7 +92,7 @@ class Event {
   final String description;
   final List<String> pieceIds;
 
-  Event({
+  const Event({
     required this.timestamp,
     required this.location,
     required this.description,
@@ -103,7 +103,7 @@ class Event {
 class Location {
   final Address address;
 
-  Location({
+  const Location({
     required this.address,
   });
 }
@@ -115,7 +115,7 @@ class Status {
   final String status;
   final String description;
 
-  Status({
+  const Status({
     required this.timestamp,
     required this.location,
     required this.statusCode,
