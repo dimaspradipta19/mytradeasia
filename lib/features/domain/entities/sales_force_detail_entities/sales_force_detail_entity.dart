@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class SalesforceDetailModel extends Equatable {
+class SalesforceDetailEntity extends Equatable {
   final Attributes attributes;
   final String id;
   final bool isDeleted;
@@ -126,7 +126,7 @@ class SalesforceDetailModel extends Equatable {
   // final bool sendEmailReminderC;
   // final dynamic workedBy2C;
 
-  const SalesforceDetailModel({
+  const SalesforceDetailEntity({
     required this.attributes,
     required this.id,
     required this.isDeleted,
