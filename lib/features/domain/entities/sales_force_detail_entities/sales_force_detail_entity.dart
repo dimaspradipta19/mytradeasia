@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class SalesforceDetailEntity extends Equatable {
-  final Attributes attributes;
-  final String id;
-  final bool isDeleted;
+  final Attributes? attributes;
+  final String? id;
+  final bool? isDeleted;
   // final dynamic masterRecordId;
-  final String name;
-  final String type;
-  final String recordTypeId;
-  final String billingStreet;
-  final String billingCity;
+  final String? name;
+  final String? type;
+  final String? recordTypeId;
+  final String? billingStreet;
+  final String? billingCity;
   // final dynamic billingState;
   // final dynamic billingPostalCode;
-  final String billingCountry;
+  final String? billingCountry;
   // final dynamic billingLatitude;
   // final dynamic billingLongitude;
   // final dynamic billingGeocodeAccuracy;
@@ -29,18 +29,18 @@ class SalesforceDetailEntity extends Equatable {
   // final dynamic phone;
   // final dynamic fax;
   // final dynamic website;
-  final String photoUrl;
+  final String? photoUrl;
   // final dynamic industry;
   // final dynamic annualRevenue;
   // final dynamic numberOfEmployees;
   // final dynamic description;
-  final String currencyIsoCode;
-  final String ownerId;
-  final String createdDate;
-  final String createdById;
-  final String lastModifiedDate;
-  final String lastModifiedById;
-  final String systemModstamp;
+  final String? currencyIsoCode;
+  final String? ownerId;
+  final String? createdDate;
+  final String? createdById;
+  final String? lastModifiedDate;
+  final String? lastModifiedById;
+  final String? systemModstamp;
   // final dynamic lastActivityDate;
   final dynamic lastViewedDate;
   final dynamic lastReferencedDate;
@@ -88,9 +88,9 @@ class SalesforceDetailEntity extends Equatable {
   // final dynamic bankCurrencyC;
   // final dynamic bankPhoneC;
   // final dynamic bankFaxC;
-  final String businessEntityC;
+  final String? businessEntityC;
   // final dynamic uomC;
-  final String insuranceCompanyNameC;
+  final String? insuranceCompanyNameC;
   // final dynamic productNameC;
   // final dynamic ainNoC;
   // final dynamic binNoC;
@@ -259,8 +259,8 @@ class SalesforceDetailEntity extends Equatable {
 }
 
 class Attributes {
-  final String type;
-  final String url;
+  final String? type;
+  final String? url;
 
   const Attributes({
     required this.type,
@@ -269,14 +269,14 @@ class Attributes {
 }
 
 class BillingAddress {
-  final String city;
-  final String country;
+  final String? city;
+  final String? country;
   final dynamic geocodeAccuracy;
   final dynamic latitude;
   final dynamic longitude;
   final dynamic postalCode;
   final dynamic state;
-  final String street;
+  final String? street;
 
   const BillingAddress({
     required this.city,

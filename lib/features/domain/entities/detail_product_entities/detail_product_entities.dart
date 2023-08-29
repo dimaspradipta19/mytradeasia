@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class DetailProductEntity extends Equatable {
-  const DetailProductEntity({
+class DetailsProductEntity extends Equatable {
+  const DetailsProductEntity({
     required this.detailProduct,
     required this.listIndustry,
     required this.listCategory,
@@ -9,9 +9,9 @@ class DetailProductEntity extends Equatable {
   });
 
   final DetailProduct? detailProduct;
-  final List<ListIndustry> listIndustry;
-  final List<ListCategory> listCategory;
-  final List<RelatedProduct> relatedProducts;
+  final List<ListIndustry>? listIndustry;
+  final List<ListCategory>? listCategory;
+  final List<RelatedProduct>? relatedProducts;
 
   @override
   List<Object?> get props {
@@ -54,8 +54,8 @@ class ListCategory {
     required this.categoryName,
   });
 
-  final String categoryUrl;
-  final String categoryName;
+  final String? categoryUrl;
+  final String? categoryName;
 }
 
 class ListIndustry {
@@ -64,8 +64,8 @@ class ListIndustry {
     required this.industryName,
   });
 
-  final String industryUrl;
-  final String industryName;
+  final String? industryUrl;
+  final String? industryName;
 }
 
 class RelatedProduct {
@@ -77,9 +77,9 @@ class RelatedProduct {
     required this.seoUrl,
   });
 
-  final String productname;
-  final String productimage;
-  final String casNumber;
-  final String hsCode;
-  final String seoUrl;
+  final String? productname;
+  final String? productimage;
+  final String? casNumber;
+  final String? hsCode;
+  final String? seoUrl;
 }

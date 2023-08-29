@@ -19,10 +19,10 @@ class DetailIndustry {
     required this.category,
   });
 
-  final String industryUrl;
-  final String industryName;
-  final String industryImage;
-  final List<Category> category;
+  final String? industryUrl;
+  final String? industryName;
+  final String? industryImage;
+  final List<Category>? category;
 }
 
 class Category {
@@ -31,6 +31,6 @@ class Category {
     required this.seoUrl,
   });
 
-  final String categoryName;
-  final String seoUrl;
+  final String? categoryName;
+  final String? seoUrl;
 }
