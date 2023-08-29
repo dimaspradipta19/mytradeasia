@@ -7,7 +7,16 @@ import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_scree
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/history/history_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/industry/all_industry_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/request_quotation_screen.dart';
+import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/home_screen.dart';
+import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
+import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
+import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 import 'package:mytradeasia/view/menu/messages/messages_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
@@ -23,9 +32,6 @@ class Routes {
         path: "/",
         builder: (context, state) => const SplashScreen(),
         redirect: (context, state) => '/'),
-    // GoRoute(
-    //     path: "/home",
-    //     builder: (context, state) => const NavigationBarWidget()),
     ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) =>
@@ -36,7 +42,39 @@ class Routes {
           GoRoute(
               path: "/home",
               pageBuilder: (context, state) => NoTransitionPage(
-                  child: const HomeScreen(), key: state.pageKey)),
+                  child: const HomeScreen(), key: state.pageKey),
+              routes: [
+                GoRoute(
+                    path: "notification",
+                    builder: (context, state) => const NotificationScreen()),
+                GoRoute(
+                    path: "cart",
+                    builder: (context, state) => const CartScreen()),
+                GoRoute(
+                    path: "search",
+                    builder: (context, state) => const SearchScreen()),
+                GoRoute(
+                    path: "request_quotation",
+                    builder: (context, state) =>
+                        const RequestQuotationScreen()),
+                GoRoute(
+                    path: "tracking_document",
+                    builder: (context, state) =>
+                        const TrackingDocumentScreen()),
+                GoRoute(
+                    path: "tracking_shipment",
+                    builder: (context, state) =>
+                        const TrackingShipmentScreen()),
+                GoRoute(
+                    path: "all_products",
+                    builder: (context, state) => const AllProductsScreen()),
+                GoRoute(
+                    path: "top_products",
+                    builder: (context, state) => const TopProductsScreen()),
+                GoRoute(
+                    path: "all_industry",
+                    builder: (context, state) => const AllIndustryScreen()),
+              ]),
           GoRoute(
               path: "/message",
               pageBuilder: (context, state) => NoTransitionPage(
