@@ -131,8 +131,9 @@ class Routes {
                           })
                     ]),
                 GoRoute(
-                    path: "top_products",
-                    builder: (context, state) => const TopProductsScreen()),
+                  path: "top_products",
+                  builder: (context, state) => const TopProductsScreen(),
+                ),
                 GoRoute(
                     path: "all_industry",
                     builder: (context, state) => const AllIndustryScreen()),
