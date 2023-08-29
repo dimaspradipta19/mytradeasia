@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_screen.dart';
@@ -36,7 +37,12 @@ class Routes {
               ]),
           GoRoute(
               path: "register",
-              builder: (context, state) => const RegisterScreen()),
+              builder: (context, state) => const RegisterScreen(),
+              routes: [
+                GoRoute(
+                    path: "biodata",
+                    builder: (context, state) => const BiodataScreen())
+              ]),
         ]),
   ]);
 }

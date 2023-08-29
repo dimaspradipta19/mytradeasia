@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../view/auth/biodata/biodata_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../../view/menu/other/navigation_bar.dart';
 
@@ -73,8 +72,8 @@ class AuthProvider with ChangeNotifier {
   }
 
 /* Register */
-  Future<void> registerWithEmail(
-      String email, String phoneNumber, String role, context) async {
+  Future<void> registerWithEmail(String email, String phoneNumber, String role,
+      BuildContext context) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: phoneNumber);
@@ -93,11 +92,13 @@ class AuthProvider with ChangeNotifier {
       };
       FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
 
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-        builder: (context) {
-          return const BiodataScreen();
-        },
-      ), (route) => false);
+      context.go("/auth/register/biodata");
+
+      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      //   builder: (context) {
+      //     return const BiodataScreen();
+      //   },
+      // ), (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == "email-already-in-use") {
         showDialog(
