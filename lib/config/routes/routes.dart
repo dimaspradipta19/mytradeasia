@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
 import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
@@ -7,10 +8,14 @@ import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_scree
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/history/history_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_detail.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_detail_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/industry/all_industry_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
+import 'package:mytradeasia/view/menu/home/all_products/products/rfq_submitted_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/request_quotation_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/home/home_screen.dart';
@@ -19,6 +24,8 @@ import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 import 'package:mytradeasia/view/menu/messages/messages_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/quotation_detail.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:mytradeasia/view/menu/other/splash_page.dart';
 
@@ -49,25 +56,84 @@ class Routes {
                     builder: (context, state) => const NotificationScreen()),
                 GoRoute(
                     path: "cart",
-                    builder: (context, state) => const CartScreen()),
+                    builder: (context, state) => const CartScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "quotations",
+                          builder: (context, state) => const QuotationsScreen(),
+                          routes: [
+                            GoRoute(
+                                path: "detail_quotation/:status/:issales",
+                                name: 'detail_quotation',
+                                builder: (context, state) =>
+                                    QuotationDetailScreen(
+                                      status: state.pathParameters['status']!,
+                                      isSales: state.pathParameters[
+                                                      'issales'] ==
+                                                  "true" ||
+                                              state.pathParameters['issales'] ==
+                                                  "false"
+                                          ? bool.parse(state.pathParameters[
+                                              'issales']!) // a little bit hacky, need to find a better solution
+                                          : false,
+                                    ))
+                          ])
+                    ]),
                 GoRoute(
                     path: "search",
                     builder: (context, state) => const SearchScreen()),
                 GoRoute(
                     path: "request_quotation",
-                    builder: (context, state) =>
-                        const RequestQuotationScreen()),
+                    builder: (context, state) => const RequestQuotationScreen(),
+                    routes: [
+                      GoRoute(
+                          path: 'submitted_rfq',
+                          name: 'submitted_rfq',
+                          builder: (context, state) =>
+                              const SubmittedRFQScreen())
+                    ]),
                 GoRoute(
                     path: "tracking_document",
-                    builder: (context, state) =>
-                        const TrackingDocumentScreen()),
+                    builder: (context, state) => const TrackingDocumentScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "detail",
+                          name: "detail_tracking_document",
+                          builder: (context, state) {
+                            TrackingDocumentParameter param =
+                                state.extra as TrackingDocumentParameter;
+                            return TrackingDocumentDetail(
+                                product: param.product,
+                                indexProducts: param.indexProducts);
+                          })
+                    ]),
                 GoRoute(
                     path: "tracking_shipment",
-                    builder: (context, state) =>
-                        const TrackingShipmentScreen()),
+                    builder: (context, state) => const TrackingShipmentScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "detail",
+                          name: "detail_tracking_shipment",
+                          builder: (context, state) {
+                            TrackingShipmentParameter param =
+                                state.extra as TrackingShipmentParameter;
+                            return TrackingShipmentDetailScreen(
+                                product: param.product,
+                                indexProducts: param.indexProducts);
+                          })
+                    ]),
                 GoRoute(
                     path: "all_products",
-                    builder: (context, state) => const AllProductsScreen()),
+                    builder: (context, state) => const AllProductsScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "product/:url",
+                          name: 'product',
+                          builder: (context, state) {
+                            return ProductsDetailScreen(
+                                urlProduct: state.pathParameters['url']!);
+                          })
+                    ]),
                 GoRoute(
                     path: "top_products",
                     builder: (context, state) => const TopProductsScreen()),
