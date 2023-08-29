@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
 import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
@@ -301,12 +301,15 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                             navigatorFunctionYes: () {
                                               providerOut.logout(context);
 
-                                              Navigator.pushAndRemoveUntil(
-                                                  context, MaterialPageRoute(
-                                                builder: (context) {
-                                                  return const RoleUserScreen();
-                                                },
-                                              ), (route) => false);
+                                              /* With go_route */
+                                              context.go("/auth");
+
+                                              // Navigator.pushAndRemoveUntil(
+                                              //     context, MaterialPageRoute(
+                                              //   builder: (context) {
+                                              //     return const RoleUserScreen();
+                                              //   },
+                                              // ), (route) => false);
                                             });
                                       },
                                     );

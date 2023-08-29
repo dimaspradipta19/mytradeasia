@@ -1,10 +1,10 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../view/auth/biodata/biodata_screen.dart';
+import 'package:go_router/go_router.dart';
 import '../../view/menu/other/navigation_bar.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -21,7 +21,8 @@ class AuthProvider with ChangeNotifier {
   }
 
 /* Login */
-  Future<void> loginWithEmail(String email, String phoneNumber, context) async {
+  Future<void> loginWithEmail(
+      String email, String phoneNumber, BuildContext context) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: phoneNumber);
@@ -32,12 +33,15 @@ class AuthProvider with ChangeNotifier {
       await prefs.setBool("isLoggedIn", true);
 
       setUser(userCredential.user);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-        builder: (context) {
-          return const NavigationBarWidget();
-        },
-      ), (route) => false);
 
+      /* With go_route */
+      context.go("/home");
+
+      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      //   builder: (context) {
+      //     return const NavigationBarWidget();
+      //   },
+      // ), (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         showDialog(
@@ -80,12 +84,12 @@ class AuthProvider with ChangeNotifier {
       String docsId = FirebaseAuth.instance.currentUser!.uid.toString();
       Map<String, dynamic> data = {
         'role': role,
-        "companyName" : "",
-        "country" : "",
-        "firstName" : "",
-        "lastName" : "",
-        "password" : "",
-        "uid" : "",
+        "companyName": "",
+        "country": "",
+        "firstName": "",
+        "lastName": "",
+        "password": "",
+        "uid": "",
       };
       FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
 
