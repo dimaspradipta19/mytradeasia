@@ -39,7 +39,7 @@ class Record {
 }
 
 class Attributes {
-  final Type? type;
+  final String? type;
   final String? url;
 
   const Attributes({
