@@ -10,7 +10,7 @@ class AllIndustryService {
     AllIndustryModel? result;
 
     try {
-      const String url = "http://tradeasia.sg/en";
+      const String url = "https://tradeasia.sg/en";
       const String endPoint = "/list-industry";
       final response = await http.get(Uri.parse(url + endPoint));
 
