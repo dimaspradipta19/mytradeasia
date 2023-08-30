@@ -74,7 +74,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                       product: productName,
                                       indexProducts: index + 1);
 
-                              context.goNamed("detail_tracking_shipment",
+                              context.pushNamed("detail_tracking_shipment",
                                   extra: parameter);
 
                               // Navigator.push(context, MaterialPageRoute(

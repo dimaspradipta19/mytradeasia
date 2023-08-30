@@ -8,8 +8,10 @@ import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_scree
 import 'package:mytradeasia/view/auth/login/login_screen.dart';
 import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/history/history_screen.dart';
+import 'package:mytradeasia/view/menu/history/order/order_detail_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_detail.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
+import 'package:mytradeasia/view/menu/history/tracking_shipment/detailed_shipment_products_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_detail_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/industry/all_industry_screen.dart';
@@ -90,36 +92,6 @@ class Routes {
                               const SubmittedRFQScreen())
                     ]),
                 GoRoute(
-                    path: "tracking_document",
-                    builder: (context, state) => const TrackingDocumentScreen(),
-                    routes: [
-                      GoRoute(
-                          path: "detail",
-                          name: "detail_tracking_document",
-                          builder: (context, state) {
-                            TrackingDocumentParameter param =
-                                state.extra as TrackingDocumentParameter;
-                            return TrackingDocumentDetail(
-                                product: param.product,
-                                indexProducts: param.indexProducts);
-                          })
-                    ]),
-                GoRoute(
-                    path: "tracking_shipment",
-                    builder: (context, state) => const TrackingShipmentScreen(),
-                    routes: [
-                      GoRoute(
-                          path: "detail",
-                          name: "detail_tracking_shipment",
-                          builder: (context, state) {
-                            TrackingShipmentParameter param =
-                                state.extra as TrackingShipmentParameter;
-                            return TrackingShipmentDetailScreen(
-                                product: param.product,
-                                indexProducts: param.indexProducts);
-                          })
-                    ]),
-                GoRoute(
                     path: "all_products",
                     builder: (context, state) => const AllProductsScreen(),
                     routes: [
@@ -159,7 +131,52 @@ class Routes {
           GoRoute(
               path: "/history",
               pageBuilder: (context, state) => NoTransitionPage(
-                  child: const HistoryScreen(), key: state.pageKey)),
+                  child: const HistoryScreen(), key: state.pageKey),
+              routes: [
+                GoRoute(
+                    path: "order",
+                    builder: (context, state) {
+                      return const OrderDetailScreen();
+                    }),
+                GoRoute(
+                    path: "tracking_document",
+                    builder: (context, state) => const TrackingDocumentScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "detail",
+                          name: "detail_tracking_document",
+                          builder: (context, state) {
+                            TrackingDocumentParameter param =
+                                state.extra as TrackingDocumentParameter;
+                            return TrackingDocumentDetail(
+                                product: param.product,
+                                indexProducts: param.indexProducts);
+                          })
+                    ]),
+                GoRoute(
+                    path: "tracking_shipment",
+                    builder: (context, state) => const TrackingShipmentScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "detail",
+                          name: "detail_tracking_shipment",
+                          builder: (context, state) {
+                            TrackingShipmentParameter param =
+                                state.extra as TrackingShipmentParameter;
+                            return TrackingShipmentDetailScreen(
+                                product: param.product,
+                                indexProducts: param.indexProducts);
+                          },
+                          routes: [
+                            GoRoute(
+                                path: "shipment_product",
+                                name: "shipment_product",
+                                builder: (context, state) {
+                                  return const DetailedShipmentProductsScreen();
+                                })
+                          ])
+                    ]),
+              ]),
           GoRoute(
               path: "/mytradeasia",
               pageBuilder: (context, state) => NoTransitionPage(

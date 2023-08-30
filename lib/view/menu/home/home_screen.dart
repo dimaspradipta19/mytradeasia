@@ -1251,7 +1251,7 @@ class MenuGridWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   /* With go_router */
-                  context.go("/home/tracking_document");
+                  context.push("/history/tracking_document");
                   // Navigator.push(context, MaterialPageRoute(
                   //   builder: (context) {
                   //     return const TrackingDocumentScreen();
@@ -1302,7 +1302,7 @@ class MenuGridWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     /* With go_router */
-                    context.go("/home/tracking_shipment");
+                    context.push("/history/tracking_shipment");
 
                     // Navigator.push(context, MaterialPageRoute(
                     //   builder: (context) {
