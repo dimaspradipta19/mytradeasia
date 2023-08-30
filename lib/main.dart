@@ -14,6 +14,7 @@ import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
+import 'package:mytradeasia/modelview/provider/searates_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
@@ -92,6 +93,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => SalesforceDetailProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SearatesProvider(),
         ),
       ],
       child: StreamProvider<InternetConnectionStatus>(

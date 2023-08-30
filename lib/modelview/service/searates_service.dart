@@ -1,27 +1,28 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:mytradeasia/model/dhl_shipment_model.dart';
+import '../../model/searates_model.dart';
 import 'package:http/http.dart' as http;
 
-class DhlShipmentService {
-  Future<DhlShipmentModel?>? getDhlShipment(String trackingNumber) async {
-    final String url =
-        "https://api-eu.dhl.com/track/shipments?trackingNumber=$trackingNumber";
+class SearatesService {
+  Future<SearatesModel?> getSearatesData() async {
+    const String apiKey = "7CX5-1IW6-E2DL-3S8V-KNOF";
+    const String typeShipment = "CT";
+    String url =
+        "https://tracking.searates.com/tracking?api_key=$apiKey&number=CCLU7899374&sealine=auto&type=$typeShipment&force_update=false&route=false&ais=false";
 
-    const String apiKey = "YOKP9Adbs6cHwDVP6q6RWNXW0eEkdbIY";
     try {
       var response = await http.get(
         Uri.parse(url),
         headers: {
-          "DHL-API-Key": apiKey,
+          "Content-Type": "application/json",
         },
       );
 
       if (response.statusCode == 200) {
         Map<String, dynamic> decodedJson = jsonDecode(response.body);
         log(decodedJson.toString());
-        return DhlShipmentModel.fromJson(decodedJson);
+        return SearatesModel.fromJson(decodedJson);
       } else {
         throw Exception("Unexpected error occured!");
       }

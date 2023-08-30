@@ -1,16 +1,3 @@
-// To parse this JSON data, do
-//
-//     final dhlShipmentModel = dhlShipmentModelFromJson(jsonString);
-
-// import 'package:meta/meta.dart';
-// import 'dart:convert';
-
-// DhlShipmentModel dhlShipmentModelFromJson(String str) =>
-//     DhlShipmentModel.fromJson(json.decode(str));
-
-// String dhlShipmentModelToJson(DhlShipmentModel data) =>
-//     json.encode(data.toJson());
-
 class DhlShipmentModel {
   final List<Shipment> shipments;
 
