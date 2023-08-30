@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class SalesforceDataEntity extends Equatable {
-  final int totalSize;
-  final bool done;
-  final String nextRecordsUrl;
-  final List<Record> records;
+  final int? totalSize;
+  final bool? done;
+  final String? nextRecordsUrl;
+  final List<Record>? records;
 
   const SalesforceDataEntity({
     required this.totalSize,
@@ -25,9 +25,9 @@ class SalesforceDataEntity extends Equatable {
 }
 
 class Record {
-  final Attributes attributes;
-  final String id;
-  final String name;
+  final Attributes? attributes;
+  final String? id;
+  final String? name;
   final String? phone;
 
   const Record({
@@ -39,8 +39,8 @@ class Record {
 }
 
 class Attributes {
-  final Type type;
-  final String url;
+  final String? type;
+  final String? url;
 
   const Attributes({
     required this.type,

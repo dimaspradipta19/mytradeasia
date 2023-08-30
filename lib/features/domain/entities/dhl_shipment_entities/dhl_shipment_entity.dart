@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class DhlShipmentEntity extends Equatable {
-  final List<Shipment> shipments;
+  final List<Shipment>? shipments;
 
   const DhlShipmentEntity({
     required this.shipments,
@@ -13,13 +13,13 @@ class DhlShipmentEntity extends Equatable {
 }
 
 class Shipment {
-  final String id;
-  final String service;
-  final Destination origin;
-  final Destination destination;
-  final Status status;
-  final Details details;
-  final List<Event> events;
+  final String? id;
+  final String? service;
+  final Destination? origin;
+  final Destination? destination;
+  final Status? status;
+  final Details? details;
+  final List<Event>? events;
 
   const Shipment({
     required this.id,
@@ -33,8 +33,8 @@ class Shipment {
 }
 
 class Destination {
-  final Address address;
-  final ServicePoint servicePoint;
+  final Address? address;
+  final ServicePoint? servicePoint;
 
   const Destination({
     required this.address,
@@ -43,7 +43,7 @@ class Destination {
 }
 
 class Address {
-  final String addressLocality;
+  final String? addressLocality;
 
   const Address({
     required this.addressLocality,
@@ -51,8 +51,8 @@ class Address {
 }
 
 class ServicePoint {
-  final String url;
-  final String label;
+  final String? url;
+  final String? label;
 
   const ServicePoint({
     required this.url,
@@ -61,10 +61,10 @@ class ServicePoint {
 }
 
 class Details {
-  final ProofOfDelivery proofOfDelivery;
-  final bool proofOfDeliverySignedAvailable;
-  final int totalNumberOfPieces;
-  final List<String> pieceIds;
+  final ProofOfDelivery? proofOfDelivery;
+  final bool? proofOfDeliverySignedAvailable;
+  final int? totalNumberOfPieces;
+  final List<String>? pieceIds;
 
   const Details({
     required this.proofOfDelivery,
@@ -75,9 +75,9 @@ class Details {
 }
 
 class ProofOfDelivery {
-  final DateTime timestamp;
-  final String signatureUrl;
-  final String documentUrl;
+  final DateTime? timestamp;
+  final String? signatureUrl;
+  final String? documentUrl;
 
   const ProofOfDelivery({
     required this.timestamp,
@@ -87,10 +87,10 @@ class ProofOfDelivery {
 }
 
 class Event {
-  final DateTime timestamp;
-  final Location location;
-  final String description;
-  final List<String> pieceIds;
+  final DateTime? timestamp;
+  final Location? location;
+  final String? description;
+  final List<String>? pieceIds;
 
   const Event({
     required this.timestamp,
@@ -101,7 +101,7 @@ class Event {
 }
 
 class Location {
-  final Address address;
+  final Address? address;
 
   const Location({
     required this.address,
@@ -109,11 +109,11 @@ class Location {
 }
 
 class Status {
-  final DateTime timestamp;
-  final Location location;
-  final String statusCode;
-  final String status;
-  final String description;
+  final DateTime? timestamp;
+  final Location? location;
+  final String? statusCode;
+  final String? status;
+  final String? description;
 
   const Status({
     required this.timestamp,
