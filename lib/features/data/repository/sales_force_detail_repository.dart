@@ -12,7 +12,7 @@ class SalesforceDetailRepositoryImpl implements SalesForceDetailRepo {
   SalesforceDetailRepositoryImpl(this._salesforceDetailService);
 
   @override
-  Future<DataState<List<SalesforceDetailEntity>>> getSalesForceDetail(
+  Future<DataState<SalesforceDetailEntity>> getSalesForceDetail(
       Map<String, dynamic> detailData) async {
     try {
       final response =

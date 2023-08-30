@@ -5,14 +5,13 @@ import 'package:mytradeasia/features/domain/repository/sales_force_detail_reposi
 
 class GetSalesforceDetail
     implements
-        UseCase<DataState<List<SalesforceDetailEntity>>,
-            Map<String, dynamic>?> {
+        UseCase<DataState<SalesforceDetailEntity>, Map<String, dynamic>?> {
   final SalesForceDetailRepo _salesForceDetailRepo;
 
   GetSalesforceDetail(this._salesForceDetailRepo);
 
   @override
-  Future<DataState<List<SalesforceDetailEntity>>> call(
+  Future<DataState<SalesforceDetailEntity>> call(
       {Map<String, dynamic>? param}) {
     return _salesForceDetailRepo.getSalesForceDetail(param!);
   }

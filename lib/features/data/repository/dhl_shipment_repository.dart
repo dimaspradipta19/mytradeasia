@@ -12,7 +12,7 @@ class DhlShipmentRepositoryImpl implements DhlShipmentRepo {
   DhlShipmentRepositoryImpl(this._dhlShipmentService);
 
   @override
-  Future<DataState<List<DhlShipmentEntity>>> getDhlShipment(
+  Future<DataState<DhlShipmentEntity>> getDhlShipment(
       String trackingNumber) async {
     try {
       final response = await _dhlShipmentService.getDhlShipment(trackingNumber);

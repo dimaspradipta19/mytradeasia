@@ -12,7 +12,7 @@ class SalesforceDataRepositoryImpl implements SalesForceDataRepository {
   SalesforceDataRepositoryImpl(this._salesforceDataService);
 
   @override
-  Future<DataState<List<SalesforceDataEntity>>> getSalesForceData(
+  Future<DataState<SalesforceDataEntity>> getSalesForceData(
       String token) async {
     try {
       final response = await _salesforceDataService.getAllData(token);

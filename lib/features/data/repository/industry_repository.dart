@@ -12,7 +12,7 @@ class IndustryRepositoryImpl implements IndustryRepository {
   IndustryRepositoryImpl(this._allIndustryService);
 
   @override
-  Future<DataState<List<AllIndustryEntity>>> getAllIndustryData() async {
+  Future<DataState<AllIndustryEntity>> getAllIndustryData() async {
     try {
       final response = await _allIndustryService.getAllIndustryList();
       if (response.statusCode == HttpStatus.ok) {

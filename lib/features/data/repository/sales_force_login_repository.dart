@@ -12,7 +12,7 @@ class SalesforceLoginRepositoryImpl implements SalesforceLoginRepo {
   SalesforceLoginRepositoryImpl(this._salesforceLoginService);
 
   @override
-  Future<DataState<List<SalesforceLoginEntity>>> getSalesforceLogin() async {
+  Future<DataState<SalesforceLoginEntity>> getSalesforceLogin() async {
     try {
       final response = await _salesforceLoginService.postSalesforce();
       if (response!.statusCode == HttpStatus.ok) {

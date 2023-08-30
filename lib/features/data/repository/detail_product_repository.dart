@@ -12,7 +12,7 @@ class DetailProductRepositoryImpl implements DetailProductRepository {
   DetailProductRepositoryImpl(this._detailProductService);
 
   @override
-  Future<DataState<List<DetailsProductModel>>> getDetailProductRepo(
+  Future<DataState<DetailsProductModel>> getDetailProductRepo(
       String seoUrl) async {
     try {
       final response = await _detailProductService.getDetailProduct(seoUrl);
