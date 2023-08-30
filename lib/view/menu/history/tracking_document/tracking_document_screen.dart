@@ -51,7 +51,7 @@ class TrackingDocumentScreen extends StatelessWidget {
                             TrackingDocumentParameter(
                                 product: productName, indexProducts: index + 1);
 
-                        context.goNamed("detail_tracking_document",
+                        context.pushNamed("detail_tracking_document",
                             extra: parameter);
 
                         // Navigator.push(context, MaterialPageRoute(

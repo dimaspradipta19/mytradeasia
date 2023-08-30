@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/email_change_otp.dart';
 import 'package:mytradeasia/widget/text_editing_widget.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
@@ -114,11 +114,13 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return const EmailChangeOtpScreen();
-                  },
-                ));
+                context.go("/mytradeasia/personal_data/change_email/otp_email");
+
+                // Navigator.push(context, MaterialPageRoute(
+                //   builder: (context) {
+                //     return const EmailChangeOtpScreen();
+                //   },
+                // ));
               },
               child: Text(
                 "Verify",

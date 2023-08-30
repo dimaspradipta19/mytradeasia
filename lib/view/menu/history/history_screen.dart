@@ -1,9 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/view/menu/history/order/order_detail_screen.dart';
-import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
-
 import '../../../config/themes/theme.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -112,12 +110,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         const SizedBox(height: 10.0),
                                         InkWell(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return const TrackingShipmentScreen();
-                                              },
-                                            ));
+                                            context.go(
+                                                "/history/tracking_shipment");
+
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(
+                                            //   builder: (context) {
+                                            //     return const TrackingShipmentScreen();
+                                            //   },
+                                            // ));
                                           },
                                           child: Container(
                                             height: 110.0,
@@ -179,12 +180,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         const SizedBox(height: 10.0),
                                         InkWell(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return const TrackingDocumentScreen();
-                                              },
-                                            ));
+                                            context.go(
+                                                "/history/tracking_document");
+
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(
+                                            //   builder: (context) {
+                                            //     return const TrackingDocumentScreen();
+                                            //   },
+                                            // ));
                                           },
                                           child: Container(
                                             height: 110.0,
@@ -440,11 +444,13 @@ class BottomSheetHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return navigationPage;
-          },
-        ));
+        context.go("/history/order");
+
+        // Navigator.push(context, MaterialPageRoute(
+        //   builder: (context) {
+        //     return navigationPage;
+        //   },
+        // ));
       },
       child: Container(
         height: 110.0,

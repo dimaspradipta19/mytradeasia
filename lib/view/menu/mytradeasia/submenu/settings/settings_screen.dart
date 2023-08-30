@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/languages/language_apps_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/notification_screen.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../../../../config/themes/theme.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -65,11 +63,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LanguageAppsScreen(),
-                          ));
+                      context.push("/mytradeasia/language");
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => const LanguageAppsScreen(),
+                      //     ));
                     },
                     icon: Image.asset(
                       "assets/images/icon_forward.png",
@@ -100,11 +99,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NotificationMenu(),
-                          ));
+                      context.go("/mytradeasia/settings/notification_menu");
+
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => const NotificationMenu(),
+                      //     ));
                     },
                     icon: Image.asset(
                       "assets/images/icon_forward.png",
