@@ -1,33 +1,19 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:mytradeasia/model/dhl_shipment_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:mytradeasia/core/constants/constants.dart';
 
 class DhlShipmentService {
-  Future<DhlShipmentModel?>? getDhlShipment(String trackingNumber) async {
+  final dio = Dio();
+
+  Future<Response<dynamic>>? getDhlShipment(String trackingNumber) async {
     final String url =
         "https://api-eu.dhl.com/track/shipments?trackingNumber=$trackingNumber";
+    final response = await dio.get(
+      url,
+      options: Options(headers: {
+        "DHL-API-Key": dhlApiKey,
+      }),
+    );
 
-    const String apiKey = "YOKP9Adbs6cHwDVP6q6RWNXW0eEkdbIY";
-    try {
-      var response = await http.get(
-        Uri.parse(url),
-        headers: {
-          "DHL-API-Key": apiKey,
-        },
-      );
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = jsonDecode(response.body);
-        log(decodedJson.toString());
-        return DhlShipmentModel.fromJson(decodedJson);
-      } else {
-        throw Exception("Unexpected error occured!");
-      }
-    } catch (e) {
-      log("error in dhl_service with status ${e.toString()}");
-    }
-    return null;
+    return response;
   }
 }

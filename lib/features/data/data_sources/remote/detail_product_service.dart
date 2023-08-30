@@ -1,30 +1,13 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:http/http.dart' as http;
-import 'package:mytradeasia/model/detail_product_model.dart';
+import 'package:dio/dio.dart';
 
 class DetailProductService {
-  Future<DetailProductModel?> getDetailProduct(String seoUrl) async {
-    DetailProductModel? resultAwal;
+  final dio = Dio();
 
-    try {
-      String url = "https://tradeasia.sg$seoUrl";
+  Future<Response<dynamic>> getDetailProduct(String seoUrl) async {
+    String url = "https://tradeasia.sg$seoUrl";
 
-      final response = await http.get(Uri.parse(url));
+    final response = await dio.get(url);
 
-      if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = jsonDecode(response.body);
-        resultAwal = DetailProductModel.fromJson(decodedJson);
-
-        return resultAwal;
-      } else {
-        // log("Error");
-        throw Exception('Unexpected error occured!');
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-    return null;
+    return response;
   }
 }

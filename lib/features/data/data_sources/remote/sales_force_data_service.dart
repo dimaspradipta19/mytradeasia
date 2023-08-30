@@ -1,33 +1,19 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:mytradeasia/model/sales_force_data_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:mytradeasia/core/constants/constants.dart';
 
 class SalesforceDataService {
-  String url =
-      "https://tradeasia--newmind.sandbox.my.salesforce.com/services/data/v58.0/queryAll?q=Select Id, Name, Phone From Account";
-  Future<SalesforceDataModel?> getAllData(String token) async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(url),
+  final dio = Dio();
+
+  Future<Response<dynamic>> getAllData(String token) async {
+    final response = await dio.get(
+      salesforceDataApi,
+      options: Options(
         headers: {
           "Authorization": "Bearer $token",
           "Content-Type": "application/json"
         },
-      );
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = jsonDecode(response.body);
-
-        var result = SalesforceDataModel.fromJson(decodedJson);
-
-        return result;
-      }
-    } catch (e) {
-      log("error at salesforce sample data service or ${e.toString()}");
-    }
-
-    return null;
+      ),
+    );
+    return response;
   }
 }
