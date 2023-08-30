@@ -66,27 +66,6 @@ class Routes {
                 GoRoute(
                     path: "notification",
                     builder: (context, state) => const NotificationScreen()),
-                // GoRoute(
-                //     path: "cart",
-                //     builder: (context, state) => const CartScreen(),
-                //     routes: [
-                //       GoRoute(
-                //           path: "quotations",
-                //           builder: (context, state) => const QuotationsScreen(),
-                //           routes: [
-                //             GoRoute(
-                //                 path: "detail_quotation",
-                //                 name: 'detail_quotation',
-                //                 builder: (context, state) {
-                //                   QuotationDetailParameter param =
-                //                       state.extra as QuotationDetailParameter;
-                //                   return QuotationDetailScreen(
-                //                     status: param.status,
-                //                     isSales: param.isSales,
-                //                   );
-                //                 })
-                //           ])
-                //     ]),
                 GoRoute(
                     path: "search",
                     builder: (context, state) => const SearchScreen()),
