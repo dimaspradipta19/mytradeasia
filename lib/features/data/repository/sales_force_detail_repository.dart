@@ -13,10 +13,10 @@ class SalesforceDetailRepositoryImpl implements SalesForceDetailRepo {
 
   @override
   Future<DataState<List<SalesforceDetailEntity>>> getSalesForceDetail(
-      String urlDetail, String token) async {
+      Map<String, dynamic> detailData) async {
     try {
       final response =
-          await _salesforceDetailService.getSalesforceDetail(urlDetail, token);
+          await _salesforceDetailService.getSalesforceDetail(detailData);
       if (response.statusCode == HttpStatus.ok) {
         return DataSuccess(response.data);
       } else {

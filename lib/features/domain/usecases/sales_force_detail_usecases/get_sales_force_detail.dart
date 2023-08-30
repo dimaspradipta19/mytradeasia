@@ -4,13 +4,16 @@ import 'package:mytradeasia/features/domain/entities/sales_force_detail_entities
 import 'package:mytradeasia/features/domain/repository/sales_force_detail_repository.dart';
 
 class GetSalesforceDetail
-    implements UseCase<DataState<List<SalesforceDetailEntity>>, void> {
+    implements
+        UseCase<DataState<List<SalesforceDetailEntity>>,
+            Map<String, dynamic>?> {
   final SalesForceDetailRepo _salesForceDetailRepo;
 
   GetSalesforceDetail(this._salesForceDetailRepo);
 
   @override
-  Future<DataState<List<SalesforceDetailEntity>>> call({void param}) {
-    return _salesForceDetailRepo.getSalesForceDetail();
+  Future<DataState<List<SalesforceDetailEntity>>> call(
+      {Map<String, dynamic>? param}) {
+    return _salesForceDetailRepo.getSalesForceDetail(param!);
   }
 }

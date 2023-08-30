@@ -4,13 +4,13 @@ import 'package:mytradeasia/features/domain/entities/dhl_shipment_entities/dhl_s
 import 'package:mytradeasia/features/domain/repository/dhl_shipment_repository.dart';
 
 class GetDhlShipment
-    implements UseCase<DataState<List<DhlShipmentEntity>>, void> {
+    implements UseCase<DataState<List<DhlShipmentEntity>>, String> {
   final DhlShipmentRepo _dhlShipmentRepo;
 
   GetDhlShipment(this._dhlShipmentRepo);
 
   @override
-  Future<DataState<List<DhlShipmentEntity>>> call({void param}) {
-    return _dhlShipmentRepo.getDhlShipment();
+  Future<DataState<List<DhlShipmentEntity>>> call({String? param}) {
+    return _dhlShipmentRepo.getDhlShipment(param!);
   }
 }

@@ -3,5 +3,5 @@ import 'package:mytradeasia/features/domain/entities/sales_force_detail_entities
 
 abstract class SalesForceDetailRepo {
   Future<DataState<List<SalesforceDetailEntity>>> getSalesForceDetail(
-      String urlDetail, String token);
+      Map<String, dynamic> detailData);
 }
