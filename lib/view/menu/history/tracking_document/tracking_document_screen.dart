@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_detail.dart';
 
 class TrackingDocumentScreen extends StatelessWidget {
   const TrackingDocumentScreen({super.key});
@@ -46,14 +47,21 @@ class TrackingDocumentScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15.0),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return TrackingDocumentDetail(
-                              product: productName,
-                              indexProducts: index + 1,
-                            );
-                          },
-                        ));
+                        TrackingDocumentParameter parameter =
+                            TrackingDocumentParameter(
+                                product: productName, indexProducts: index + 1);
+
+                        context.goNamed("detail_tracking_document",
+                            extra: parameter);
+
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) {
+                        //     return TrackingDocumentDetail(
+                        //       product: productName,
+                        //       indexProducts: index + 1,
+                        //     );
+                        //   },
+                        // ));
                       },
                       child: Card(
                         margin: EdgeInsets.zero,

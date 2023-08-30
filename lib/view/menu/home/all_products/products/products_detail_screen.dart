@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
@@ -588,17 +589,27 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                 itemBuilder: (context, indexRelated) {
                                   return InkWell(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return ProductsDetailScreen(
-                                              urlProduct: snapshot
-                                                      .data
-                                                      ?.relatedProducts[
-                                                          indexRelated]
-                                                      .seoUrl ??
-                                                  "/en/acrylic-acid");
-                                        },
-                                      ));
+                                      /* With go_router */
+                                      context.pushNamed("product",
+                                          pathParameters: {
+                                            'url': snapshot
+                                                    .data
+                                                    ?.relatedProducts[
+                                                        indexRelated]
+                                                    .seoUrl ??
+                                                "/en/acrylic-acid"
+                                          });
+                                      // Navigator.push(context, MaterialPageRoute(
+                                      //   builder: (context) {
+                                      //     return ProductsDetailScreen(
+                                      //         urlProduct: snapshot
+                                      //                 .data
+                                      //                 ?.relatedProducts[
+                                      //                     indexRelated]
+                                      //                 .seoUrl ??
+                                      //             "/en/acrylic-acid");
+                                      //   },
+                                      // ));
                                     },
                                     child: Card(
                                       shadowColor: blackColor,

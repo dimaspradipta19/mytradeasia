@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../config/themes/theme.dart';
 import '../../../../../widget/dialog_sheet_widget.dart';
-import '../../../other/navigation_bar.dart';
 
 class PasswordChangeOtpScreen extends StatefulWidget {
   const PasswordChangeOtpScreen({super.key});
@@ -253,13 +253,17 @@ class _PasswordChangeOtpScreenState extends State<PasswordChangeOtpScreen> {
                                   subtitle:
                                       "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                                   textForButton: "Back to My Tradeasia",
-                                  navigatorFunction: () =>
-                                      Navigator.pushAndRemoveUntil(context,
-                                          MaterialPageRoute(
-                                        builder: (context) {
-                                          return const NavigationBarWidget();
-                                        },
-                                      ), (route) => false));
+                                  navigatorFunction: () {
+                                    /* With go_route */
+                                    context.go("/home");
+
+                                    // Navigator.pushAndRemoveUntil(context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) {
+                                    //         return const NavigationBarWidget();
+                                    //       },
+                                    //     ), (route) => false);
+                                  });
                             },
                           );
                         }

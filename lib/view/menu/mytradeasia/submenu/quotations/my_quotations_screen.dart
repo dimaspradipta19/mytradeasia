@@ -1,5 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/quotation_detail.dart';
 
@@ -61,44 +63,62 @@ class QuotationsScreen extends StatelessWidget {
                     child: ListView(
                       children: [
                         QuotationsWidget(
-                          status: "Submitted",
-                          fontStatusColor: yellowColor,
-                          backgroundStatusColor: yellowColor2,
-                          navigationPage: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const QuotationDetailScreen(
-                                status: "submitted",
-                              ),
-                            ),
-                          ),
-                        ),
+                            status: "Submitted",
+                            fontStatusColor: yellowColor,
+                            backgroundStatusColor: yellowColor2,
+                            navigationPage: () {
+                              /* With go_router */
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(status: 'submitted');
+
+                              context.goNamed("detail_quotation", extra: param);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const QuotationDetailScreen(
+                              //       status: "submitted",
+                              //     ),
+                              //   ),
+                              // )
+                            }),
                         QuotationsWidget(
-                          status: "Approved",
-                          fontStatusColor: greenColor1,
-                          backgroundStatusColor: greenColor2,
-                          navigationPage: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const QuotationDetailScreen(
-                                status: "approved",
-                              ),
-                            ),
-                          ),
-                        ),
+                            status: "Approved",
+                            fontStatusColor: greenColor1,
+                            backgroundStatusColor: greenColor2,
+                            navigationPage: () {
+                              /* With go_router */
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(status: 'approved');
+
+                              context.goNamed("detail_quotation", extra: param);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const QuotationDetailScreen(
+                              //       status: "approved",
+                              //     ),
+                              //   ),
+                              // )
+                            }),
                         QuotationsWidget(
-                          status: "Rejected",
-                          fontStatusColor: redColor1,
-                          backgroundStatusColor: redColor2,
-                          navigationPage: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const QuotationDetailScreen(
-                                status: "rejected",
-                              ),
-                            ),
-                          ),
-                        ),
+                            status: "Rejected",
+                            fontStatusColor: redColor1,
+                            backgroundStatusColor: redColor2,
+                            navigationPage: () {
+                              /* With go_router */
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(status: 'rejected');
+
+                              context.goNamed("detail_quotation", extra: param);
+                              //   Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const QuotationDetailScreen(
+                              //       status: "rejected",
+                              //     ),
+                              //   ),
+                              // )
+                            }),
                       ],
                     ),
                   ),

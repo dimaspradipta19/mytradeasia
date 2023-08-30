@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/home/all_products/products/rfq_submitted_screen.dart';
 import 'package:mytradeasia/view/menu/other/languages_screen.dart';
 
 import '../../../../widget/text_editing_widget.dart';
@@ -813,11 +813,15 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
               ),
               onPressed: () {
                 print(_messagesController.text);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return const SubmittedRFQScreen();
-                  },
-                ));
+
+                /* With go_router */
+                context.goNamed("submitted_rfq");
+
+                // Navigator.push(context, MaterialPageRoute(
+                //   builder: (context) {
+                //     return const SubmittedRFQScreen();
+                //   },
+                // ));
               },
               child: Text(
                 "Send",
