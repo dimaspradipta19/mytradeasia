@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/messages/messages_detail_screen.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -145,18 +146,26 @@ class _MessageScreenState extends State<MessageScreen> {
 
                           return InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return MessagesDetailScreen(
+                              /* With go_router */
+                              MessageDetailParameter param =
+                                  MessageDetailParameter(
                                       otherUserId: otherUser,
                                       currentUserId: _currentUser,
-                                      chatId: chatId.toString(),
-                                    );
-                                  },
-                                ),
-                              );
+                                      chatId: chatId.toString());
+
+                              context.goNamed("message", extra: param);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return MessagesDetailScreen(
+                              //         otherUserId: otherUser,
+                              //         currentUserId: _currentUser,
+                              //         chatId: chatId.toString(),
+                              //       );
+                              //     },
+                              //   ),
+                              // );
                             },
                             child: StreamBuilder(
                                 stream: biodataCollection

@@ -22,6 +22,7 @@ import 'package:mytradeasia/view/menu/home/home_screen.dart';
 import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
 import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
 import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
+import 'package:mytradeasia/view/menu/messages/messages_detail_screen.dart';
 import 'package:mytradeasia/view/menu/messages/messages_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
@@ -139,9 +140,22 @@ class Routes {
                     builder: (context, state) => const AllIndustryScreen()),
               ]),
           GoRoute(
-              path: "/message",
+              path: "/messages",
               pageBuilder: (context, state) => NoTransitionPage(
-                  child: const MessageScreen(), key: state.pageKey)),
+                  child: const MessageScreen(), key: state.pageKey),
+              routes: [
+                GoRoute(
+                    path: "detail",
+                    name: "message",
+                    builder: (context, state) {
+                      MessageDetailParameter param =
+                          state.extra as MessageDetailParameter;
+                      return MessagesDetailScreen(
+                          otherUserId: param.otherUserId,
+                          currentUserId: param.currentUserId,
+                          chatId: param.chatId);
+                    })
+              ]),
           GoRoute(
               path: "/history",
               pageBuilder: (context, state) => NoTransitionPage(

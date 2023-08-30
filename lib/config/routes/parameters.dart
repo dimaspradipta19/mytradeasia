@@ -17,3 +17,13 @@ class QuotationDetailParameter {
   bool? isSales;
   QuotationDetailParameter({required this.status, this.isSales});
 }
+
+class MessageDetailParameter {
+  String otherUserId;
+  String currentUserId;
+  String chatId;
+  MessageDetailParameter(
+      {required this.otherUserId,
+      required this.currentUserId,
+      required this.chatId});
+}

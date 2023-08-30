@@ -31,7 +31,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         GoRouter.of(context).go("/home");
         break;
       case 1:
-        GoRouter.of(context).go("/message");
+        GoRouter.of(context).go("/messages");
         break;
       case 2:
         GoRouter.of(context).go("/history");
