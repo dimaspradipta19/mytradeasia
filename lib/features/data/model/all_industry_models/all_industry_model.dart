@@ -2,23 +2,23 @@ import 'package:mytradeasia/features/domain/entities/all_industry_entities/all_i
 
 class AllIndustryModel extends AllIndustryEntity {
   const AllIndustryModel({
-    List<DetailIndustryModel>? detailIndustryModel,
+    List<_DetailIndustryModel>? detailIndustryModel,
   }) : super(detailIndustry: detailIndustryModel);
 
   factory AllIndustryModel.fromJson(Map<String, dynamic> json) =>
       AllIndustryModel(
-        detailIndustryModel: List<DetailIndustryModel>.from(
+        detailIndustryModel: List<_DetailIndustryModel>.from(
             json["detail-industry"]
-                .map((x) => DetailIndustryModel.fromJson(x))),
+                .map((x) => _DetailIndustryModel.fromJson(x))),
       );
 }
 
-class DetailIndustryModel extends DetailIndustry {
-  const DetailIndustryModel({
+class _DetailIndustryModel extends DetailIndustry {
+  const _DetailIndustryModel({
     String? industryUrl,
     String? industryName,
     String? industryImage,
-    List<CategoryModel>? category,
+    List<_CategoryModel>? category,
   }) : super(
           industryUrl: industryUrl,
           industryName: industryName,
@@ -26,23 +26,23 @@ class DetailIndustryModel extends DetailIndustry {
           category: category,
         );
 
-  factory DetailIndustryModel.fromJson(Map<String, dynamic> json) =>
-      DetailIndustryModel(
+  factory _DetailIndustryModel.fromJson(Map<String, dynamic> json) =>
+      _DetailIndustryModel(
         industryUrl: json["industry_url"],
         industryName: json["industry_name"],
         industryImage: json["industry_image"],
-        category: List<CategoryModel>.from(
-            json["category"].map((x) => CategoryModel.fromJson(x))),
+        category: List<_CategoryModel>.from(
+            json["category"].map((x) => _CategoryModel.fromJson(x))),
       );
 }
 
-class CategoryModel extends Category {
-  const CategoryModel({
+class _CategoryModel extends Category {
+  const _CategoryModel({
     String? categoryName,
     String? seoUrl,
   }) : super(categoryName: categoryName, seoUrl: seoUrl);
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+  factory _CategoryModel.fromJson(Map<String, dynamic> json) => _CategoryModel(
         categoryName: json["category_name"],
         seoUrl: json["seo_url"],
       );

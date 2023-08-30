@@ -2,10 +2,10 @@ import 'package:mytradeasia/features/domain/entities/detail_product_entities/det
 
 class DetailsProductModel extends DetailsProductEntity {
   const DetailsProductModel({
-    DetailProductModel? detailProduct,
-    List<ListIndustryModel>? listIndustry,
-    List<ListCategoryModel>? listCategory,
-    List<RelatedProductModel>? relatedProducts,
+    _DetailProductModel? detailProduct,
+    List<_ListIndustryModel>? listIndustry,
+    List<_ListCategoryModel>? listCategory,
+    List<_RelatedProductModel>? relatedProducts,
   }) : super(
           detailProduct: detailProduct,
           listIndustry: listIndustry,
@@ -17,19 +17,20 @@ class DetailsProductModel extends DetailsProductEntity {
       DetailsProductModel(
         // detailProduct: DetailProduct.fromJson(json["detail_product"]),
         detailProduct: json["detail_product"] != null
-            ? DetailProductModel.fromJson(json["detail_product"])
+            ? _DetailProductModel.fromJson(json["detail_product"])
             : null,
-        listIndustry: List<ListIndustryModel>.from(
-            json["list-industry"].map((x) => ListIndustryModel.fromJson(x))),
-        listCategory: List<ListCategoryModel>.from(
-            json["list-category"].map((x) => ListCategoryModel.fromJson(x))),
-        relatedProducts: List<RelatedProductModel>.from(json["related-products"]
-            .map((x) => RelatedProductModel.fromJson(x))),
+        listIndustry: List<_ListIndustryModel>.from(
+            json["list-industry"].map((x) => _ListIndustryModel.fromJson(x))),
+        listCategory: List<_ListCategoryModel>.from(
+            json["list-category"].map((x) => _ListCategoryModel.fromJson(x))),
+        relatedProducts: List<_RelatedProductModel>.from(
+            json["related-products"]
+                .map((x) => _RelatedProductModel.fromJson(x))),
       );
 }
 
-class DetailProductModel extends DetailProduct {
-  const DetailProductModel({
+class _DetailProductModel extends DetailProduct {
+  const _DetailProductModel({
     String? productname,
     String? productimage,
     String? iupacName,
@@ -51,8 +52,8 @@ class DetailProductModel extends DetailProduct {
           packagingName: packagingName,
         );
 
-  factory DetailProductModel.fromJson(Map<String, dynamic> json) =>
-      DetailProductModel(
+  factory _DetailProductModel.fromJson(Map<String, dynamic> json) =>
+      _DetailProductModel(
         productname: json["productname"] ?? "",
         productimage: json["productimage"] ?? "",
         iupacName: json["iupac_name"] ?? "",
@@ -65,21 +66,21 @@ class DetailProductModel extends DetailProduct {
       );
 }
 
-class ListCategoryModel extends ListCategory {
-  const ListCategoryModel({
+class _ListCategoryModel extends ListCategory {
+  const _ListCategoryModel({
     String? categoryUrl,
     String? categoryName,
   }) : super(categoryName: categoryName, categoryUrl: categoryUrl);
 
-  factory ListCategoryModel.fromJson(Map<String, dynamic> json) =>
-      ListCategoryModel(
+  factory _ListCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _ListCategoryModel(
         categoryUrl: json["category_url"],
         categoryName: json["category_name"],
       );
 }
 
-class ListIndustryModel extends ListIndustry {
-  const ListIndustryModel({
+class _ListIndustryModel extends ListIndustry {
+  const _ListIndustryModel({
     String? industryUrl,
     String? industryName,
   }) : super(
@@ -87,15 +88,15 @@ class ListIndustryModel extends ListIndustry {
           industryName: industryName,
         );
 
-  factory ListIndustryModel.fromJson(Map<String, dynamic> json) =>
-      ListIndustryModel(
+  factory _ListIndustryModel.fromJson(Map<String, dynamic> json) =>
+      _ListIndustryModel(
         industryUrl: json["industry_url"],
         industryName: json["industry_name"],
       );
 }
 
-class RelatedProductModel extends RelatedProduct {
-  const RelatedProductModel({
+class _RelatedProductModel extends RelatedProduct {
+  const _RelatedProductModel({
     String? productname,
     String? productimage,
     String? casNumber,
@@ -109,8 +110,8 @@ class RelatedProductModel extends RelatedProduct {
           seoUrl: seoUrl,
         );
 
-  factory RelatedProductModel.fromJson(Map<String, dynamic> json) =>
-      RelatedProductModel(
+  factory _RelatedProductModel.fromJson(Map<String, dynamic> json) =>
+      _RelatedProductModel(
         productname: json["productname"],
         productimage: json["productimage"],
         casNumber: json["cas_number"],

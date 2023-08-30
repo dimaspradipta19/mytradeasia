@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:mytradeasia/features/domain/entities/sales_force_detail_entities/sales_force_detail_entity.dart';
 
 class SalesforceDetailModel {
-  final AttributesModel attributes;
+  final _AttributesModel attributes;
   final String id;
   final bool isDeleted;
   // final dynamic masterRecordId;
@@ -259,7 +259,7 @@ class SalesforceDetailModel {
 
   factory SalesforceDetailModel.fromJson(Map<String, dynamic> json) =>
       SalesforceDetailModel(
-        attributes: AttributesModel.fromJson(json["attributes"]),
+        attributes: _AttributesModel.fromJson(json["attributes"]),
         id: json["Id"],
         isDeleted: json["IsDeleted"],
         // masterRecordId: json["MasterRecordId"],
@@ -386,24 +386,24 @@ class SalesforceDetailModel {
       );
 }
 
-class AttributesModel extends Attributes {
-  const AttributesModel({
+class _AttributesModel extends Attributes {
+  const _AttributesModel({
     String? type,
     String? url,
   }) : super(type: type, url: url);
 
-  factory AttributesModel.fromRawJson(String str) =>
-      AttributesModel.fromJson(json.decode(str));
+  factory _AttributesModel.fromRawJson(String str) =>
+      _AttributesModel.fromJson(json.decode(str));
 
-  factory AttributesModel.fromJson(Map<String, dynamic> json) =>
-      AttributesModel(
+  factory _AttributesModel.fromJson(Map<String, dynamic> json) =>
+      _AttributesModel(
         type: json["type"],
         url: json["url"],
       );
 }
 
-class BillingAddressModel extends BillingAddress {
-  const BillingAddressModel({
+class _BillingAddressModel extends BillingAddress {
+  const _BillingAddressModel({
     String? city,
     String? country,
     dynamic geocodeAccuracy,
@@ -423,11 +423,11 @@ class BillingAddressModel extends BillingAddress {
           street: street,
         );
 
-  factory BillingAddressModel.fromRawJson(String str) =>
-      BillingAddressModel.fromJson(json.decode(str));
+  factory _BillingAddressModel.fromRawJson(String str) =>
+      _BillingAddressModel.fromJson(json.decode(str));
 
-  factory BillingAddressModel.fromJson(Map<String, dynamic> json) =>
-      BillingAddressModel(
+  factory _BillingAddressModel.fromJson(Map<String, dynamic> json) =>
+      _BillingAddressModel(
         city: json["city"],
         country: json["country"],
         geocodeAccuracy: json["geocodeAccuracy"],

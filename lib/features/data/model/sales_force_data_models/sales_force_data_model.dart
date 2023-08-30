@@ -7,7 +7,7 @@ class SalesforceDataModel extends SalesforceDataEntity {
     int? totalSize,
     bool? done,
     String? nextRecordsUrl,
-    List<RecordModel>? records,
+    List<_RecordModel>? records,
   }) : super(
           totalSize: totalSize,
           done: done,
@@ -23,41 +23,41 @@ class SalesforceDataModel extends SalesforceDataEntity {
         totalSize: json["totalSize"],
         done: json["done"],
         nextRecordsUrl: json["nextRecordsUrl"],
-        records: List<RecordModel>.from(
-            json["records"].map((x) => RecordModel.fromJson(x))),
+        records: List<_RecordModel>.from(
+            json["records"].map((x) => _RecordModel.fromJson(x))),
       );
 }
 
-class RecordModel extends Record {
-  const RecordModel({
-    AttributesModel? attributes,
+class _RecordModel extends Record {
+  const _RecordModel({
+    _AttributesModel? attributes,
     String? id,
     String? name,
     String? phone,
   }) : super(id: id, attributes: attributes, name: name, phone: phone);
 
-  factory RecordModel.fromRawJson(String str) =>
-      RecordModel.fromJson(json.decode(str));
+  factory _RecordModel.fromRawJson(String str) =>
+      _RecordModel.fromJson(json.decode(str));
 
-  factory RecordModel.fromJson(Map<String, dynamic> json) => RecordModel(
-        attributes: AttributesModel.fromJson(json["attributes"]),
+  factory _RecordModel.fromJson(Map<String, dynamic> json) => _RecordModel(
+        attributes: _AttributesModel.fromJson(json["attributes"]),
         id: json["Id"],
         name: json["Name"],
         phone: json["Phone"] ?? "Null",
       );
 }
 
-class AttributesModel extends Attributes {
-  const AttributesModel({
+class _AttributesModel extends Attributes {
+  const _AttributesModel({
     String? type,
     String? url,
   }) : super(type: type, url: url);
 
-  factory AttributesModel.fromRawJson(String str) =>
-      AttributesModel.fromJson(json.decode(str));
+  factory _AttributesModel.fromRawJson(String str) =>
+      _AttributesModel.fromJson(json.decode(str));
 
-  factory AttributesModel.fromJson(Map<String, dynamic> json) =>
-      AttributesModel(
+  factory _AttributesModel.fromJson(Map<String, dynamic> json) =>
+      _AttributesModel(
         type: json["type"]!,
         url: json["url"],
       );

@@ -2,25 +2,25 @@ import 'package:mytradeasia/features/domain/entities/dhl_shipment_entities/dhl_s
 
 class DhlShipmentModel extends DhlShipmentEntity {
   const DhlShipmentModel({
-    List<ShipmentModel>? shipments,
+    List<_ShipmentModel>? shipments,
   }) : super(shipments: shipments);
 
   factory DhlShipmentModel.fromJson(Map<String, dynamic> json) =>
       DhlShipmentModel(
-        shipments: List<ShipmentModel>.from(
-            json["shipments"].map((x) => ShipmentModel.fromJson(x))),
+        shipments: List<_ShipmentModel>.from(
+            json["shipments"].map((x) => _ShipmentModel.fromJson(x))),
       );
 }
 
-class ShipmentModel extends Shipment {
-  const ShipmentModel({
+class _ShipmentModel extends Shipment {
+  const _ShipmentModel({
     String? id,
     String? service,
-    DestinationModel? origin,
-    DestinationModel? destination,
-    StatusModel? status,
-    DetailsModel? details,
-    List<EventModel>? events,
+    _DestinationModel? origin,
+    _DestinationModel? destination,
+    _StatusModel? status,
+    _DetailsModel? details,
+    List<_EventModel>? events,
   }) : super(
           id: id,
           service: service,
@@ -31,56 +31,56 @@ class ShipmentModel extends Shipment {
           events: events,
         );
 
-  factory ShipmentModel.fromJson(Map<String, dynamic> json) => ShipmentModel(
+  factory _ShipmentModel.fromJson(Map<String, dynamic> json) => _ShipmentModel(
         id: json["id"],
         service: json["service"],
-        origin: DestinationModel.fromJson(json["origin"]),
-        destination: DestinationModel.fromJson(json["destination"]),
-        status: StatusModel.fromJson(json["status"]),
-        details: DetailsModel.fromJson(json["details"]),
-        events: List<EventModel>.from(
-            json["events"].map((x) => EventModel.fromJson(x))),
+        origin: _DestinationModel.fromJson(json["origin"]),
+        destination: _DestinationModel.fromJson(json["destination"]),
+        status: _StatusModel.fromJson(json["status"]),
+        details: _DetailsModel.fromJson(json["details"]),
+        events: List<_EventModel>.from(
+            json["events"].map((x) => _EventModel.fromJson(x))),
       );
 }
 
-class DestinationModel extends Destination {
-  const DestinationModel({
-    AddressModel? address,
-    ServicePoint? servicePoint,
+class _DestinationModel extends Destination {
+  const _DestinationModel({
+    _AddressModel? address,
+    _ServicePointModel? servicePoint,
   }) : super(address: address, servicePoint: servicePoint);
 
-  factory DestinationModel.fromJson(Map<String, dynamic> json) =>
-      DestinationModel(
-        address: AddressModel.fromJson(json["address"]),
-        servicePoint: ServicePointModel.fromJson(json["servicePoint"]),
+  factory _DestinationModel.fromJson(Map<String, dynamic> json) =>
+      _DestinationModel(
+        address: _AddressModel.fromJson(json["address"]),
+        servicePoint: _ServicePointModel.fromJson(json["servicePoint"]),
       );
 }
 
-class AddressModel extends Address {
-  const AddressModel({String? addressLocality})
+class _AddressModel extends Address {
+  const _AddressModel({String? addressLocality})
       : super(addressLocality: addressLocality);
 
-  factory AddressModel.fromJson(Map<String, dynamic> json) => AddressModel(
+  factory _AddressModel.fromJson(Map<String, dynamic> json) => _AddressModel(
         addressLocality: json["addressLocality"],
       );
 }
 
-class ServicePointModel extends ServicePoint {
-  const ServicePointModel({
+class _ServicePointModel extends ServicePoint {
+  const _ServicePointModel({
     String? url,
     String? label,
   }) : super(url: url, label: label);
 
-  factory ServicePointModel.fromJson(Map<String, dynamic> json) =>
-      ServicePointModel(
+  factory _ServicePointModel.fromJson(Map<String, dynamic> json) =>
+      _ServicePointModel(
         url: json["url"],
         label: json["label"],
       );
 }
 
-class DetailsModel extends Details {
-  const DetailsModel(
-      {ProofOfDeliveryModel? proofOfDelivery,
+class _DetailsModel extends Details {
+  const _DetailsModel(
+      {_ProofOfDeliveryModel? proofOfDelivery,
       bool? proofOfDeliverySignedAvailable,
       int? totalNumberOfPieces,
       List<String>? pieceIds})
@@ -90,16 +90,17 @@ class DetailsModel extends Details {
             totalNumberOfPieces: totalNumberOfPieces,
             pieceIds: pieceIds);
 
-  factory DetailsModel.fromJson(Map<String, dynamic> json) => DetailsModel(
-        proofOfDelivery: ProofOfDeliveryModel.fromJson(json["proofOfDelivery"]),
+  factory _DetailsModel.fromJson(Map<String, dynamic> json) => _DetailsModel(
+        proofOfDelivery:
+            _ProofOfDeliveryModel.fromJson(json["proofOfDelivery"]),
         proofOfDeliverySignedAvailable: json["proofOfDeliverySignedAvailable"],
         totalNumberOfPieces: json["totalNumberOfPieces"],
         pieceIds: json["pieceIds"],
       );
 }
 
-class ProofOfDeliveryModel extends ProofOfDelivery {
-  const ProofOfDeliveryModel({
+class _ProofOfDeliveryModel extends ProofOfDelivery {
+  const _ProofOfDeliveryModel({
     DateTime? timestamp,
     String? signatureUrl,
     String? documentUrl,
@@ -109,18 +110,18 @@ class ProofOfDeliveryModel extends ProofOfDelivery {
           documentUrl: documentUrl,
         );
 
-  factory ProofOfDeliveryModel.fromJson(Map<String, dynamic> json) =>
-      ProofOfDeliveryModel(
+  factory _ProofOfDeliveryModel.fromJson(Map<String, dynamic> json) =>
+      _ProofOfDeliveryModel(
         timestamp: DateTime.parse(json["timestamp"]),
         signatureUrl: json["signatureUrl"],
         documentUrl: json["documentUrl"],
       );
 }
 
-class EventModel extends Event {
-  const EventModel({
+class _EventModel extends Event {
+  const _EventModel({
     DateTime? timestamp,
-    LocationModel? location,
+    _LocationModel? location,
     String? description,
     List<String>? pieceIds,
   }) : super(
@@ -129,28 +130,28 @@ class EventModel extends Event {
             description: description,
             pieceIds: pieceIds);
 
-  factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
+  factory _EventModel.fromJson(Map<String, dynamic> json) => _EventModel(
         timestamp: DateTime.parse(json["timestamp"]),
-        location: LocationModel.fromJson(json["location"]),
+        location: _LocationModel.fromJson(json["location"]),
         description: json["description"],
         pieceIds: json["pieceIds"],
       );
 }
 
-class LocationModel extends Location {
-  const LocationModel({
-    AddressModel? address,
+class _LocationModel extends Location {
+  const _LocationModel({
+    _AddressModel? address,
   }) : super(address: address);
 
-  factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
-        address: AddressModel.fromJson(json["address"]),
+  factory _LocationModel.fromJson(Map<String, dynamic> json) => _LocationModel(
+        address: _AddressModel.fromJson(json["address"]),
       );
 }
 
-class StatusModel extends Status {
-  const StatusModel({
+class _StatusModel extends Status {
+  const _StatusModel({
     DateTime? timestamp,
-    LocationModel? location,
+    _LocationModel? location,
     String? statusCode,
     String? status,
     String? description,
@@ -162,9 +163,9 @@ class StatusModel extends Status {
           description: description,
         );
 
-  factory StatusModel.fromJson(Map<String, dynamic> json) => StatusModel(
+  factory _StatusModel.fromJson(Map<String, dynamic> json) => _StatusModel(
         timestamp: DateTime.parse(json["timestamp"]),
-        location: LocationModel.fromJson(json["location"]),
+        location: _LocationModel.fromJson(json["location"]),
         statusCode: json["statusCode"],
         status: json["status"],
         description: json["description"],
