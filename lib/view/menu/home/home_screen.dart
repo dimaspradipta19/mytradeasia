@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
@@ -10,19 +11,12 @@ import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/utils/sales_force_screen.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
-import 'package:mytradeasia/view/menu/home/all_products/request_quotation_screen.dart';
-import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
-import 'package:mytradeasia/view/menu/home/notification/notification_screen.dart';
-import 'package:mytradeasia/view/menu/home/search/search_product_screen.dart';
-import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../utils/internet_not_connected.dart';
-import 'all_products/industry/all_industry_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -168,14 +162,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           5.0))),
                                                           child: IconButton(
                                                             onPressed: () {
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                builder:
-                                                                    (context) {
-                                                                  return const NotificationScreen();
-                                                                },
-                                                              ));
+                                                              /* With go_router */
+                                                              context.go(
+                                                                  "/home/notification");
+
+                                                              // Navigator.push(
+                                                              //     context,
+                                                              //     MaterialPageRoute(
+                                                              //   builder:
+                                                              //       (context) {
+                                                              //     return const NotificationScreen();
+                                                              //   },
+                                                              // ));
                                                             },
                                                             icon: Image.asset(
                                                                 "assets/images/icon_notification.png",
@@ -212,14 +210,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     IconButton(
                                                                   onPressed:
                                                                       () {
-                                                                    Navigator.push(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) {
-                                                                        return const CartScreen();
-                                                                      },
-                                                                    ));
+                                                                    /* With go_router */
+                                                                    context.go(
+                                                                        "/home/cart");
+                                                                    // Navigator.push(
+                                                                    //     context,
+                                                                    //     MaterialPageRoute(
+                                                                    //   builder:
+                                                                    //       (context) {
+                                                                    //     return const CartScreen();
+                                                                    //   },
+                                                                    // ));
                                                                   },
                                                                   icon: Image
                                                                       .asset(
@@ -252,13 +253,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     child: TextFormField(
                                                       readOnly: true,
                                                       onTap: () =>
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                        builder: (context) {
-                                                          return const SearchScreen();
-                                                        },
-                                                      )),
+                                                          /* With go_router */
+                                                          context.go(
+                                                              "/home/search")
+                                                      //     Navigator.push(
+                                                      //         context,
+                                                      //         MaterialPageRoute(
+                                                      //   builder: (context) {
+                                                      //     return const SearchScreen();
+                                                      //   },
+                                                      // ))
+                                                      ,
                                                       decoration:
                                                           InputDecoration(
                                                         border:
@@ -455,12 +460,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             listen: false)
                                                         .getTopProducts();
 
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(
-                                                      builder: (context) {
-                                                        return const TopProductsScreen();
-                                                      },
-                                                    ));
+                                                    /* With go_router */
+                                                    context.go(
+                                                        "/home/top_products");
+
+                                                    // Navigator.push(context,
+                                                    //     MaterialPageRoute(
+                                                    //   builder: (context) {
+                                                    //     return const TopProductsScreen();
+                                                    //   },
+                                                    // ));
                                                   },
                                                   child: Padding(
                                                     padding: const EdgeInsets
@@ -878,12 +887,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               context,
                                                               listen: false)
                                                           .getAllIndustry();
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const AllIndustryScreen(),
-                                                          ));
+
+                                                      /* With go_router */
+                                                      context.go(
+                                                          "/home/all_industry");
+
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     MaterialPageRoute(
+                                                      //       builder: (context) =>
+                                                      //           const AllIndustryScreen(),
+                                                      //     ));
                                                     },
                                                     topIndustryName:
                                                         "All Industries"),
@@ -1192,11 +1206,13 @@ class MenuGridWidget extends StatelessWidget {
               flex: 5,
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const RequestQuotationScreen();
-                    },
-                  ));
+                  /* With go_router */
+                  context.go("/home/request_quotation");
+                  // Navigator.push(context, MaterialPageRoute(
+                  //   builder: (context) {
+                  //     return const RequestQuotationScreen();
+                  //   },
+                  // ));
                 },
                 child: Container(
                   height: 60,
@@ -1234,11 +1250,13 @@ class MenuGridWidget extends StatelessWidget {
               flex: 5,
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const TrackingDocumentScreen();
-                    },
-                  ));
+                  /* With go_router */
+                  context.go("/home/tracking_document");
+                  // Navigator.push(context, MaterialPageRoute(
+                  //   builder: (context) {
+                  //     return const TrackingDocumentScreen();
+                  //   },
+                  // ));
                 },
                 child: Container(
                   height: 60,
@@ -1283,11 +1301,14 @@ class MenuGridWidget extends StatelessWidget {
                 flex: 5,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const TrackingShipmentScreen();
-                      },
-                    ));
+                    /* With go_router */
+                    context.go("/home/tracking_shipment");
+
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return const TrackingShipmentScreen();
+                    //   },
+                    // ));
                   },
                   child: Container(
                     height: 60,
@@ -1326,11 +1347,12 @@ class MenuGridWidget extends StatelessWidget {
                 flex: 5,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const AllProductsScreen();
-                      },
-                    ));
+                    context.go("/home/all_products");
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return const AllProductsScreen();
+                    //   },
+                    // ));
                   },
                   child: Container(
                     height: 60,

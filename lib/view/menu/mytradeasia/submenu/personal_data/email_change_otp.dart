@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
 class EmailChangeOtpScreen extends StatefulWidget {
@@ -242,12 +242,17 @@ class _EmailChangeOtpScreenState extends State<EmailChangeOtpScreen> {
                                 "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                             textForButton: "Back to My Tradeasia",
                             navigatorFunction: () =>
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return const NavigationBarWidget();
-                                  },
-                                ), (route) => false));
+
+                                /* With go_route */
+                                context.go("/home")
+
+                            // Navigator.pushAndRemoveUntil(context,
+                            //         MaterialPageRoute(
+                            //       builder: (context) {
+                            //         return const NavigationBarWidget();
+                            //       },
+                            //     ), (route) => false)
+                            );
                       },
                     );
                   },

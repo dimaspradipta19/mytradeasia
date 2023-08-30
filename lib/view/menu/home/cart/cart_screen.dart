@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 
 import '../../../../config/themes/theme.dart';
@@ -238,11 +239,12 @@ class ActiveButton extends StatelessWidget {
           ),
         ),
         onPressed: (() {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return navigationPage;
-            },
-          ));
+          context.go("/home/cart/quotations");
+          // Navigator.push(context, MaterialPageRoute(
+          //   builder: (context) {
+          //     return navigationPage;
+          //   },
+          // ));
         }),
         child: Text(
           titleButton,

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,6 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../config/themes/theme.dart';
 import '../../../../widget/banner_top_products_widget.dart';
-import '../all_products/products/products_detail_screen.dart';
 
 class TopProductsScreen extends StatefulWidget {
   const TopProductsScreen({super.key});
@@ -167,14 +167,20 @@ class AllTopProductsWidget extends StatelessWidget {
                     print(
                       valueTopProducts.listResultTop[index].seoUrl,
                     );
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return ProductsDetailScreen(
-                          urlProduct:
-                              valueTopProducts.listResultTop[index].seoUrl,
-                        );
-                      },
-                    ));
+
+                    /* With go_router */
+                    context.pushNamed("product", pathParameters: {
+                      'url': valueTopProducts.listResultTop[index].seoUrl
+                    });
+
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return ProductsDetailScreen(
+                    //       urlProduct:
+                    //           valueTopProducts.listResultTop[index].seoUrl,
+                    //     );
+                    //   },
+                    // ));
 
                     String docsId = _auth.currentUser!.uid.toString();
                     Map<String, dynamic> data = {

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
@@ -356,17 +357,25 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                       } else {
                                         return InkWell(
                                           onTap: () async {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return ProductsDetailScreen(
-                                                    urlProduct: valueAllProduct
-                                                            .listAllProduct[
-                                                                index]
-                                                            .seoUrl ??
-                                                        "/images/product/alum.webp");
-                                              },
-                                            ));
+                                            /* With go_router */
+                                            context.pushNamed("product",
+                                                pathParameters: {
+                                                  'url': valueAllProduct
+                                                          .listAllProduct[index]
+                                                          .seoUrl ??
+                                                      "/images/product/alum.webp"
+                                                });
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(
+                                            //   builder: (context) {
+                                            //     return ProductsDetailScreen(
+                                            //         urlProduct: valueAllProduct
+                                            //                 .listAllProduct[
+                                            //                     index]
+                                            //                 .seoUrl ??
+                                            //             "/images/product/alum.webp");
+                                            //   },
+                                            // ));
 
                                             String docsId = _auth
                                                 .currentUser!.uid

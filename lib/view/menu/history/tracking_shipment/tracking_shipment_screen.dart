@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/history/tracking_shipment/tracking_shipment_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class TrackingShipmentScreen extends StatefulWidget {
@@ -68,14 +69,22 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                           padding: const EdgeInsets.only(bottom: 15.0),
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return TrackingShipmentDetailScreen(
-                                    product: productName,
-                                    indexProducts: index + 1,
-                                  );
-                                },
-                              ));
+                              TrackingShipmentParameter parameter =
+                                  TrackingShipmentParameter(
+                                      product: productName,
+                                      indexProducts: index + 1);
+
+                              context.goNamed("detail_tracking_shipment",
+                                  extra: parameter);
+
+                              // Navigator.push(context, MaterialPageRoute(
+                              //   builder: (context) {
+                              //     return TrackingShipmentDetailScreen(
+                              //       product: productName,
+                              //       indexProducts: index + 1,
+                              //     );
+                              //   },
+                              // ));
                             },
                             child: Card(
                               margin: EdgeInsets.zero,

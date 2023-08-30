@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
 
 import '../../../../../widget/dialog_sheet_widget.dart';
 import '../../../../../widget/text_editing_widget.dart';
-import '../../../other/navigation_bar.dart';
 
 class PersonalDataScreen extends StatefulWidget {
   const PersonalDataScreen({super.key});
@@ -342,12 +342,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                         "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                                     textForButton: "Back to My Tradeasia",
                                     navigatorFunction: () =>
-                                        Navigator.pushAndRemoveUntil(context,
-                                            MaterialPageRoute(
-                                          builder: (context) {
-                                            return const NavigationBarWidget();
-                                          },
-                                        ), (route) => false));
+                                        /* With go_route */
+                                        context.go("/home")
+                                    // Navigator.pushAndRemoveUntil(context,
+                                    //     MaterialPageRoute(
+                                    //   builder: (context) {
+                                    //     return const NavigationBarWidget();
+                                    //   },
+                                    // ), (route) => false)
+                                    );
                               },
                             ))
                         .catchError((error) => showDialog(
@@ -360,12 +363,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                     subtitle: "Something went wrong",
                                     textForButton: "Back to My Tradeasia",
                                     navigatorFunction: () =>
-                                        Navigator.pushAndRemoveUntil(context,
-                                            MaterialPageRoute(
-                                          builder: (context) {
-                                            return const NavigationBarWidget();
-                                          },
-                                        ), (route) => false));
+                                        /* With go_route */
+                                        context.go("/home")
+                                    // Navigator.pushAndRemoveUntil(context,
+                                    //     MaterialPageRoute(
+                                    //   builder: (context) {
+                                    //     return const NavigationBarWidget();
+                                    //   },
+                                    // ), (route) => false)
+                                    );
                               },
                             ));
                   } else {
@@ -392,12 +398,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                         "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                                     textForButton: "Back to My Tradeasia",
                                     navigatorFunction: () =>
-                                        Navigator.pushAndRemoveUntil(context,
-                                            MaterialPageRoute(
-                                          builder: (context) {
-                                            return const NavigationBarWidget();
-                                          },
-                                        ), (route) => false));
+                                        /* With go_route */
+                                        context.go("/home")
+                                    // Navigator.pushAndRemoveUntil(context,
+                                    //     MaterialPageRoute(
+                                    //   builder: (context) {
+                                    //     return const NavigationBarWidget();
+                                    //   },
+                                    // ), (route) => false)
+                                    );
                               },
                             ))
                         .catchError((error) => showDialog(
@@ -411,12 +420,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                         "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
                                     textForButton: "Back to My Tradeasia",
                                     navigatorFunction: () =>
-                                        Navigator.pushAndRemoveUntil(context,
-                                            MaterialPageRoute(
-                                          builder: (context) {
-                                            return const NavigationBarWidget();
-                                          },
-                                        ), (route) => false));
+                                        /* With go_route */
+                                        context.go("/home")
+                                    // Navigator.pushAndRemoveUntil(context,
+                                    //     MaterialPageRoute(
+                                    //   builder: (context) {
+                                    //     return const NavigationBarWidget();
+                                    //   },
+                                    // ), (route) => false)
+                                    );
                               },
                             ));
                   }
