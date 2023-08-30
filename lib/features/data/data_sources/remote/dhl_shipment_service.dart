@@ -1,25 +1,28 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
+import 'package:mytradeasia/core/constants/constants.dart';
+
 import 'package:mytradeasia/model/dhl_shipment_model.dart';
-import 'package:http/http.dart' as http;
 
 class DhlShipmentService {
+  final dio = Dio();
+
   Future<DhlShipmentModel?>? getDhlShipment(String trackingNumber) async {
     final String url =
         "https://api-eu.dhl.com/track/shipments?trackingNumber=$trackingNumber";
 
-    const String apiKey = "YOKP9Adbs6cHwDVP6q6RWNXW0eEkdbIY";
     try {
-      var response = await http.get(
-        Uri.parse(url),
-        headers: {
-          "DHL-API-Key": apiKey,
-        },
+      var response = await dio.get(
+        url,
+        options: Options(headers: {
+          "DHL-API-Key": dhlApiKey,
+        }),
       );
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = jsonDecode(response.body);
+        Map<String, dynamic> decodedJson = jsonDecode(response.data);
         log(decodedJson.toString());
         return DhlShipmentModel.fromJson(decodedJson);
       } else {

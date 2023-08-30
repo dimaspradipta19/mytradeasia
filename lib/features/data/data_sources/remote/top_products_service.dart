@@ -1,20 +1,21 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:mytradeasia/model/top_products_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:mytradeasia/core/constants/constants.dart';
+import 'package:mytradeasia/features/data/model/top_products_models/top_product_model.dart';
 
 class TopProductsService {
   List<TopProductsModel> resultAwal = [];
+  final dio = Dio();
 
   Future<List<TopProductsModel>> getTopProducts() async {
     try {
-      const String url = "http://tradeasia.sg/en";
       const String endPoint = "/top-products";
-      var response = await http.get(Uri.parse(url + endPoint));
+      var response = await dio.get(tradeasiaApi + endPoint);
 
       if (response.statusCode == 200) {
-        List decodedJson = jsonDecode(response.body);
+        List decodedJson = jsonDecode(response.data);
 
         return decodedJson
             .map((data) => TopProductsModel.fromJson(data))

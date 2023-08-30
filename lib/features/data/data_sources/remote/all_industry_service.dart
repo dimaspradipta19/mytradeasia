@@ -2,19 +2,23 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:mytradeasia/core/constants/constants.dart';
-import 'package:mytradeasia/model/all_industry_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+
+import '../../model/all_industry_models/all_industry_model.dart';
 
 class AllIndustryService {
+  final dio = Dio();
+
   Future<AllIndustryModel?> getAllIndustryList() async {
     AllIndustryModel? result;
+    Response response;
 
     try {
       const String endPoint = "/list-industry";
-      final response = await http.get(Uri.parse(tradeasiaApi + endPoint));
+      response = await dio.get(tradeasiaApi + endPoint);
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = jsonDecode(response.body);
+        Map<String, dynamic> decodedJson = jsonDecode(response.data);
         result = AllIndustryModel.fromJson(decodedJson);
         return result;
       } else {

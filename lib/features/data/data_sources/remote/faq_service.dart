@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:http/http.dart' as http;
-import 'package:mytradeasia/model/faq_model.dart';
+import 'package:mytradeasia/core/constants/constants.dart';
+import 'package:mytradeasia/features/data/model/faq_models/faq_model.dart';
+import 'package:dio/dio.dart';
 
 class FaqService {
   List<FaqModel> resultKosong = [];
+  final dio = Dio();
 
   Future<List<FaqModel>> getFaq() async {
     try {
-      const String url = "https://tradeasia.sg/en/faq";
-
-      final response = await http.get(Uri.parse(url));
+      final response = await dio.get(faqApi);
 
       if (response.statusCode == 200) {
-        List decodedJson = jsonDecode(response.body);
+        List decodedJson = jsonDecode(response.data);
         return decodedJson.map((data) => FaqModel.fromJson(data)).toList();
       } else {
         throw Exception('Unexpected error occured!');
