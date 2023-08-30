@@ -4,14 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/home/cart/cart_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/faq/faq_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/languages/language_apps_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
 import 'package:provider/provider.dart';
@@ -114,14 +106,16 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 nama: "Personal data",
                                 urlIcon: "assets/images/icon_profile.png",
                                 onPressedFunction: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return const PersonalDataScreen();
-                                      },
-                                    ),
-                                  );
+                                  context.go("/mytradeasia/personal_data");
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) {
+                                  //       return const PersonalDataScreen();
+                                  //     },
+                                  //   ),
+                                  // );
                                 }),
 
                             // change password menu
@@ -129,25 +123,30 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 nama: "Change Password",
                                 urlIcon: "assets/images/icon_password.png",
                                 onPressedFunction: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ChangePasswordScreen(),
-                                    ),
-                                  );
+                                  context.go("/mytradeasia/change_password");
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         const ChangePasswordScreen(),
+                                  //   ),
+                                  // );
                                 }),
 
                             // settings menu
                             MyTradeAsiaWidget(
                               nama: "Settings",
                               urlIcon: "assets/images/icon_setting.png",
-                              onPressedFunction: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SettingsScreen(),
-                                  )),
+                              onPressedFunction: () =>
+                                  context.go("/mytradeasia/settings")
+                              // Navigator.push(
+                              // context,
+                              // MaterialPageRoute(
+                              //   builder: (context) =>
+                              //       const SettingsScreen(),
+                              // ))
+                              ,
                             ),
 
                             // language menu
@@ -155,12 +154,13 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 nama: "Language",
                                 urlIcon: "assets/images/icon_language.png",
                                 onPressedFunction: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LanguageAppsScreen(),
-                                      ));
+                                  context.go("/mytradeasia/language");
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           const LanguageAppsScreen(),
+                                  //     ));
                                 }),
 
                             // my cart menu
@@ -170,12 +170,13 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                     nama: "My Cart",
                                     urlIcon: "assets/images/icon_mycart.png",
                                     onPressedFunction: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const CartScreen(),
-                                          ));
+                                      context.push("/mytradeasia/cart");
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      //           const CartScreen(),
+                                      //     ));
                                     }),
 
                             // quotations menu
@@ -183,20 +184,26 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 nama: "Quotations",
                                 urlIcon: "assets/images/icon_quotation.png",
                                 onPressedFunction: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        if (streamSnapshot.data?.docs[0]
-                                                ['role'] ==
-                                            "Sales") {
-                                          return const SalesQuotationsScreen();
-                                        } else {
-                                          return const QuotationsScreen();
-                                        }
-                                      },
-                                    ),
-                                  );
+                                  if (streamSnapshot.data?.docs[0]['role'] ==
+                                      "Sales") {
+                                    context.go("/mytradeasia/sales_quotations");
+                                  } else {
+                                    context.go("/mytradeasia/quotations");
+                                  }
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) {
+                                  //       if (streamSnapshot.data?.docs[0]
+                                  //               ['role'] ==
+                                  //           "Sales") {
+                                  //         return const SalesQuotationsScreen();
+                                  //       } else {
+                                  //         return const QuotationsScreen();
+                                  //       }
+                                  //     },
+                                  //   ),
+                                  // );
                                 }),
 
                             // contact us menu
@@ -204,14 +211,15 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               nama: "Contact Us",
                               urlIcon: "assets/images/icon_cs.png",
                               onPressedFunction: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const ContactUsScreen();
-                                    },
-                                  ),
-                                );
+                                context.go("/mytradeasia/contact_us");
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) {
+                                //       return const ContactUsScreen();
+                                //     },
+                                //   ),
+                                // );
                               },
                             ),
 
@@ -220,14 +228,16 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               nama: "FAQs",
                               urlIcon: "assets/images/icon_faq.png",
                               onPressedFunction: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const FaqScreen();
-                                    },
-                                  ),
-                                );
+                                context.go("/mytradeasia/faq");
+
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) {
+                                //       return const FaqScreen();
+                                //     },
+                                //   ),
+                                // );
                               },
                             ),
 

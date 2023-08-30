@@ -211,8 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   onPressed:
                                                                       () {
                                                                     /* With go_router */
-                                                                    context.go(
-                                                                        "/home/cart");
+                                                                    context.push(
+                                                                        "/mytradeasia/cart");
                                                                     // Navigator.push(
                                                                     //     context,
                                                                     //     MaterialPageRoute(

@@ -27,8 +27,17 @@ import 'package:mytradeasia/view/menu/home/top_products/top_products_screen.dart
 import 'package:mytradeasia/view/menu/messages/messages_detail_screen.dart';
 import 'package:mytradeasia/view/menu/messages/messages_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/mytradeasia_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/change_password_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/contact_us/contact_us_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/faq/faq_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/languages/language_apps_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/email_change_otp.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/personal_data_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/quotation_detail.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/notification_screen.dart';
+import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:mytradeasia/view/menu/other/splash_page.dart';
 
@@ -57,27 +66,27 @@ class Routes {
                 GoRoute(
                     path: "notification",
                     builder: (context, state) => const NotificationScreen()),
-                GoRoute(
-                    path: "cart",
-                    builder: (context, state) => const CartScreen(),
-                    routes: [
-                      GoRoute(
-                          path: "quotations",
-                          builder: (context, state) => const QuotationsScreen(),
-                          routes: [
-                            GoRoute(
-                                path: "detail_quotation",
-                                name: 'detail_quotation',
-                                builder: (context, state) {
-                                  QuotationDetailParameter param =
-                                      state.extra as QuotationDetailParameter;
-                                  return QuotationDetailScreen(
-                                    status: param.status,
-                                    isSales: param.isSales,
-                                  );
-                                })
-                          ])
-                    ]),
+                // GoRoute(
+                //     path: "cart",
+                //     builder: (context, state) => const CartScreen(),
+                //     routes: [
+                //       GoRoute(
+                //           path: "quotations",
+                //           builder: (context, state) => const QuotationsScreen(),
+                //           routes: [
+                //             GoRoute(
+                //                 path: "detail_quotation",
+                //                 name: 'detail_quotation',
+                //                 builder: (context, state) {
+                //                   QuotationDetailParameter param =
+                //                       state.extra as QuotationDetailParameter;
+                //                   return QuotationDetailScreen(
+                //                     status: param.status,
+                //                     isSales: param.isSales,
+                //                   );
+                //                 })
+                //           ])
+                //     ]),
                 GoRoute(
                     path: "search",
                     builder: (context, state) => const SearchScreen()),
@@ -180,7 +189,77 @@ class Routes {
           GoRoute(
               path: "/mytradeasia",
               pageBuilder: (context, state) => NoTransitionPage(
-                  child: const MyTradeAsiaScreen(), key: state.pageKey))
+                  child: const MyTradeAsiaScreen(), key: state.pageKey),
+              routes: [
+                GoRoute(
+                    path: "personal_data",
+                    builder: (context, state) => const PersonalDataScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "change_email",
+                          builder: (context, state) =>
+                              const ChangeEmailScreen(),
+                          routes: [
+                            GoRoute(
+                                path: "otp_email",
+                                builder: (context, state) =>
+                                    const EmailChangeOtpScreen())
+                          ])
+                    ]),
+                GoRoute(
+                    path: "change_password",
+                    builder: (context, state) => const ChangePasswordScreen()),
+                GoRoute(
+                    path: "settings",
+                    builder: (context, state) => const SettingsScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "notification_menu",
+                          builder: (context, state) => const NotificationMenu())
+                    ]),
+                GoRoute(
+                  path: "cart",
+                  builder: (context, state) => const CartScreen(),
+                ),
+                GoRoute(
+                    path: "quotations",
+                    builder: (context, state) => const QuotationsScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "detail_quotation",
+                          builder: (context, state) {
+                            QuotationDetailParameter param =
+                                state.extra as QuotationDetailParameter;
+                            return QuotationDetailScreen(
+                              status: param.status,
+                              isSales: param.isSales,
+                            );
+                          }),
+                    ]),
+                GoRoute(
+                    path: "sales_quotations",
+                    builder: (context, state) => const SalesQuotationsScreen(),
+                    routes: [
+                      GoRoute(
+                          path: "detail_quotation",
+                          builder: (context, state) {
+                            QuotationDetailParameter param =
+                                state.extra as QuotationDetailParameter;
+                            return QuotationDetailScreen(
+                              status: param.status,
+                              isSales: param.isSales,
+                            );
+                          }),
+                    ]),
+                GoRoute(
+                    path: "language",
+                    builder: (context, state) => const LanguageAppsScreen()),
+                GoRoute(
+                    path: "contact_us",
+                    builder: (context, state) => const ContactUsScreen()),
+                GoRoute(
+                    path: "faq", builder: (context, state) => const FaqScreen())
+              ])
         ]),
     GoRoute(
         path: "/auth",

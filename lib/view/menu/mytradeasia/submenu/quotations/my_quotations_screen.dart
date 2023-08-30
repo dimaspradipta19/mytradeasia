@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/quotation_detail.dart';
 
 import '../../../../../widget/quotation_widget.dart';
 
@@ -71,7 +70,9 @@ class QuotationsScreen extends StatelessWidget {
                               QuotationDetailParameter param =
                                   QuotationDetailParameter(status: 'submitted');
 
-                              context.goNamed("detail_quotation", extra: param);
+                              context.push(
+                                  "/mytradeasia/quotations/detail_quotation",
+                                  extra: param);
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
@@ -90,7 +91,9 @@ class QuotationsScreen extends StatelessWidget {
                               QuotationDetailParameter param =
                                   QuotationDetailParameter(status: 'approved');
 
-                              context.goNamed("detail_quotation", extra: param);
+                              context.push(
+                                  "/mytradeasia/quotations/detail_quotation",
+                                  extra: param);
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
@@ -109,7 +112,9 @@ class QuotationsScreen extends StatelessWidget {
                               QuotationDetailParameter param =
                                   QuotationDetailParameter(status: 'rejected');
 
-                              context.goNamed("detail_quotation", extra: param);
+                              context.push(
+                                  "/mytradeasia/quotations/detail_quotation",
+                                  extra: param);
                               //   Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
@@ -321,15 +326,25 @@ class SalesQuotationsScreen extends StatelessWidget {
                             status: "New Request",
                             fontStatusColor: secondaryColor1,
                             backgroundStatusColor: thirdColor1,
-                            navigationPage: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const QuotationDetailScreen(
-                                    status: "sales",
-                                    isSales: true,
-                                  ),
-                                )))
+                            navigationPage: () {
+                              QuotationDetailParameter param =
+                                  QuotationDetailParameter(
+                                      status: 'sales', isSales: true);
+                              context.push(
+                                  "/mytradeasia/sales_quotations/detail_quotation",
+                                  extra: param);
+                            }
+
+                            // Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) =>
+                            //               const QuotationDetailScreen(
+                            //             status: "sales",
+                            //             isSales: true,
+                            //           ),
+                            //         ))
+                            )
                       ],
                     ),
                   ),

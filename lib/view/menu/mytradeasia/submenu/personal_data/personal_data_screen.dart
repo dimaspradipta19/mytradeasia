@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/personal_data/change_email_screen.dart';
 
 import '../../../../../widget/dialog_sheet_widget.dart';
 import '../../../../../widget/text_editing_widget.dart';
@@ -284,11 +283,14 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                       "cannot read email...",
                                   imageUrl: "assets/images/icon_forward.png",
                                   navigationPage: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return const ChangeEmailScreen();
-                                      },
-                                    ));
+                                    context.go(
+                                        "/mytradeasia/personal_data/change_email");
+
+                                    // Navigator.push(context, MaterialPageRoute(
+                                    //   builder: (context) {
+                                    //     return const ChangeEmailScreen();
+                                    //   },
+                                    // ));
                                   },
                                 ),
                               ),
