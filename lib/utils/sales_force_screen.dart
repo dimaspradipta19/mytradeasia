@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
+import 'package:mytradeasia/features/presentation/state_management/provider/sales_force_data_provider.dart';
+import 'package:mytradeasia/features/presentation/state_management/provider/sales_force_detail_provider.dart';
 import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
