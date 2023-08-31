@@ -4,13 +4,13 @@ import 'package:mytradeasia/features/domain/entities/search_product_entities/sea
 import 'package:mytradeasia/features/domain/repository/search_product_repository.dart';
 
 class GetTopProduct
-    implements UseCase<DataState<List<SearchProductEntity>>, void> {
+    implements UseCase<DataState<List<SearchProductEntity>>, String> {
   final SearchProductRepo _searchProductRepo;
 
   GetTopProduct(this._searchProductRepo);
 
   @override
-  Future<DataState<List<SearchProductEntity>>> call({void param}) {
-    return _searchProductRepo.getSearchProduct();
+  Future<DataState<List<SearchProductEntity>>> call({String? param}) {
+    return _searchProductRepo.getSearchProduct(param!);
   }
 }

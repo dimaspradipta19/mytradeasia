@@ -4,13 +4,13 @@ import 'package:mytradeasia/features/domain/entities/sales_force_data_entities/s
 import 'package:mytradeasia/features/domain/repository/sales_force_data_repository.dart';
 
 class GetSalesForceData
-    implements UseCase<DataState<SalesforceDataEntity>, void> {
+    implements UseCase<DataState<SalesforceDataEntity>, String> {
   final SalesForceDataRepository _salesForceDataRepository;
 
   GetSalesForceData(this._salesForceDataRepository);
 
   @override
-  Future<DataState<SalesforceDataEntity>> call({void param}) {
-    return _salesForceDataRepository.getSalesForceData();
+  Future<DataState<SalesforceDataEntity>> call({String? param}) {
+    return _salesForceDataRepository.getSalesForceData(param!);
   }
 }
