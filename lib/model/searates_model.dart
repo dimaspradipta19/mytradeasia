@@ -33,7 +33,7 @@ class Data {
   final Metadata metadata;
   final List<Location> locations;
   final List<Facility> facilities;
-  final Route route;
+  // final Route route;
   final List<dynamic> vessels;
   final List<Container> containers;
 
@@ -41,7 +41,7 @@ class Data {
     required this.metadata,
     required this.locations,
     required this.facilities,
-    required this.route,
+    // required this.route,
     required this.vessels,
     required this.containers,
   });
@@ -52,7 +52,7 @@ class Data {
             json["locations"].map((x) => Location.fromJson(x))),
         facilities: List<Facility>.from(
             json["facilities"].map((x) => Facility.fromJson(x))),
-        route: Route.fromJson(json["route"]),
+        // route: Route.fromJson(json["route"]),
         vessels: List<dynamic>.from(json["vessels"].map((x) => x)),
         containers: List<Container>.from(
             json["containers"].map((x) => Container.fromJson(x))),
@@ -62,7 +62,7 @@ class Data {
         "metadata": metadata.toJson(),
         "locations": List<dynamic>.from(locations.map((x) => x.toJson())),
         "facilities": List<dynamic>.from(facilities.map((x) => x.toJson())),
-        "route": route.toJson(),
+        // "route": route.toJson(),
         "vessels": List<dynamic>.from(vessels.map((x) => x)),
         "containers": List<dynamic>.from(containers.map((x) => x.toJson())),
       };
@@ -112,9 +112,9 @@ class Event {
   final bool actual;
   final bool isAdditionalEvent;
   final String type;
-  final dynamic transportType;
-  final dynamic vessel;
-  final dynamic voyage;
+  // final dynamic transportType;
+  // final dynamic vessel;
+  // final dynamic voyage;
 
   Event({
     required this.orderId,
@@ -128,26 +128,26 @@ class Event {
     required this.actual,
     required this.isAdditionalEvent,
     required this.type,
-    required this.transportType,
-    required this.vessel,
-    required this.voyage,
+    // required this.transportType,
+    // required this.vessel,
+    // required this.voyage,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
         orderId: json["order_id"],
-        location: json["location"],
+        location: json["location"] ?? 0,
         facility: json["facility"],
         description: json["description"],
         eventType: json["event_type"],
         eventCode: json["event_code"],
         status: json["status"],
         date: DateTime.parse(json["date"]),
-        actual: json["actual"],
+        actual: json["actual"] ?? false,
         isAdditionalEvent: json["is_additional_event"],
         type: json["type"],
-        transportType: json["transport_type"],
-        vessel: json["vessel"],
-        voyage: json["voyage"],
+        // transportType: json["transport_type"],
+        // vessel: json["vessel"],
+        // voyage: json["voyage"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -162,9 +162,9 @@ class Event {
         "actual": actual,
         "is_additional_event": isAdditionalEvent,
         "type": type,
-        "transport_type": transportType,
-        "vessel": vessel,
-        "voyage": voyage,
+        // "transport_type": transportType,
+        // "vessel": vessel,
+        // "voyage": voyage,
       };
 }
 
@@ -174,9 +174,9 @@ class Facility {
   final String countryCode;
   final String locode;
   final String bicCode;
-  final dynamic smdgCode;
-  final dynamic lat;
-  final dynamic lng;
+  // final dynamic smdgCode;
+  // final dynamic lat;
+  // final dynamic lng;
 
   Facility({
     required this.id,
@@ -184,9 +184,9 @@ class Facility {
     required this.countryCode,
     required this.locode,
     required this.bicCode,
-    required this.smdgCode,
-    required this.lat,
-    required this.lng,
+    // required this.smdgCode,
+    // required this.lat,
+    // required this.lng,
   });
 
   factory Facility.fromJson(Map<String, dynamic> json) => Facility(
@@ -195,9 +195,9 @@ class Facility {
         countryCode: json["country_code"],
         locode: json["locode"],
         bicCode: json["bic_code"],
-        smdgCode: json["smdg_code"],
-        lat: json["lat"],
-        lng: json["lng"],
+        // smdgCode: json["smdg_code"],
+        // lat: json["lat"] ?? "",
+        // lng: json["lng"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -206,9 +206,9 @@ class Facility {
         "country_code": countryCode,
         "locode": locode,
         "bic_code": bicCode,
-        "smdg_code": smdgCode,
-        "lat": lat,
-        "lng": lng,
+        // "smdg_code": smdgCode,
+        // "lat": lat,
+        // "lng": lng,
       };
 }
 
@@ -242,8 +242,8 @@ class Location {
         country: json["country"],
         countryCode: json["country_code"],
         locode: json["locode"],
-        lat: json["lat"]?.toDouble(),
-        lng: json["lng"]?.toDouble(),
+        lat: json["lat"]?.toDouble() ?? "",
+        lng: json["lng"]?.toDouble() ?? "",
         timezone: json["timezone"],
       );
 

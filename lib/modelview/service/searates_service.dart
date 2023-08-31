@@ -6,7 +6,10 @@ import 'package:http/http.dart' as http;
 
 class SearatesService {
   Future<SearatesModel?> getSearatesData() async {
+    // API key from email mas Teguh & Searates
     const String apiKey = "7CX5-1IW6-E2DL-3S8V-KNOF";
+
+    // Type dari shipment yang ingin dilakukan tracking
     const String typeShipment = "CT";
     String url =
         "https://tracking.searates.com/tracking?api_key=$apiKey&number=CCLU7899374&sealine=auto&type=$typeShipment&force_update=false&route=false&ais=false";
@@ -27,7 +30,7 @@ class SearatesService {
         throw Exception("Unexpected error occured!");
       }
     } catch (e) {
-      log("error in dhl_service with status ${e.toString()}");
+      log("error in searates with status ${e.toString()}");
     }
     return null;
   }
