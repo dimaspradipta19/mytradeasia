@@ -4,13 +4,13 @@ import 'package:mytradeasia/features/domain/entities/sales_force_login_entities/
 import 'package:mytradeasia/features/domain/repository/sales_force_login_repository.dart';
 
 class GetSalesforceLogin
-    implements UseCase<DataState<List<SalesforceLoginEntity>>, void> {
+    implements UseCase<DataState<SalesforceLoginEntity>, void> {
   final SalesforceLoginRepo _salesforceLoginRepo;
 
   GetSalesforceLogin(this._salesforceLoginRepo);
 
   @override
-  Future<DataState<List<SalesforceLoginEntity>>> call({void param}) {
+  Future<DataState<SalesforceLoginEntity>> call({void param}) {
     return _salesforceLoginRepo.getSalesforceLogin();
   }
 }
