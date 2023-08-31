@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
-import 'package:mytradeasia/features/data/model/sales_force_login_models/sales_force_login_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:mytradeasia/model/sales_force_login_model.dart';
 
 class SalesforceLoginService {
-  final dio = Dio();
-
   Future<SalesforceLoginModel?> postSalesforce() async {
     String clientId =
         "3MVG9SM6_sNwRXqvilLdlZtTOR_ZK3HrAugrl.YUGMvo.qn0nRTtL9upffxdnWZXfn6PfYB0C4SAR8FnwG1BI";
@@ -20,19 +18,17 @@ class SalesforceLoginService {
         "https://test.salesforce.com/services/oauth2/token?grant_type=password&client_id=$clientId&client_secret=$clientSecret&username=$userName&password=$passwordSalesforce";
 
     try {
-      final response = await dio.post(
-        urlSalesforce,
-        options: Options(
-          headers: {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          },
-        ),
+      http.Response response = await http.post(
+        Uri.parse(urlSalesforce),
+        headers: {
+          "key": "Content-Type",
+          "value": "application/json",
+          "type": "text"
+        },
       );
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> decodedJson = await jsonDecode(response.data);
+        Map<String, dynamic> decodedJson = await jsonDecode(response.body);
 
         var result = SalesforceLoginModel.fromJson(decodedJson);
 
@@ -44,5 +40,6 @@ class SalesforceLoginService {
       log("error at salesforce service or ${e.toString()}");
     }
     return null;
+
   }
 }

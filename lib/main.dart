@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/config/routes/routes.dart';
-import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
+import 'package:mytradeasia/features/data/data_sources/old_remote/detail_product_service.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
