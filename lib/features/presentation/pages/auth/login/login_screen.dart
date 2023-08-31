@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
-import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../config/themes/theme.dart';
-import '../../../../../widget/loading_overlay_widget.dart';
+import '../../../widgets/loading_overlay_widget.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +19,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  bool _passwordVisible = false;
+
+  @override
+  void initState() {
+    _passwordVisible = false;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -101,50 +108,47 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text("Password", style: heading3),
                         ),
                         // phone number
-                        Consumer<ObscureTextProvider>(
-                          builder: (context, ObscureTextProvider valueObsecure,
-                                  child) =>
-                              TextFormField(
-                            obscureText: valueObsecure.obscureText,
-                            keyboardType: TextInputType.number,
-                            controller: _phoneNumberController,
-                            validator: (valuePassword) {
-                              if (valuePassword!.isEmpty ||
-                                  valuePassword.length < 6) {
-                                return "Password must be filled";
-                              }
+                        TextFormField(
+                          obscureText: !_passwordVisible,
+                          keyboardType: TextInputType.number,
+                          controller: _phoneNumberController,
+                          validator: (valuePassword) {
+                            if (valuePassword!.isEmpty ||
+                                valuePassword.length < 6) {
+                              return "Password must be filled";
+                            }
 
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              hintText: "Enter your password",
-                              hintStyle:
-                                  body1Regular.copyWith(color: greyColor),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              border: const OutlineInputBorder(),
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: greyColor3),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(7.0))),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: secondaryColor1),
-                              ),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  valueObsecure.getObsecureText();
-                                },
-                                icon: valueObsecure.obscureText
-                                    ? Image.asset(
-                                        "assets/images/icon_eye_close.png",
-                                        width: 24.0,
-                                        height: 24.0,
-                                      )
-                                    : Image.asset(
-                                        "assets/images/icon_eye_open.png",
-                                        width: 24.0,
-                                        height: 24.0),
-                              ),
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Enter your password",
+                            hintStyle: body1Regular.copyWith(color: greyColor),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            border: const OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: greyColor3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7.0))),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor1),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                              icon: !_passwordVisible
+                                  ? Image.asset(
+                                      "assets/images/icon_eye_close.png",
+                                      width: 24.0,
+                                      height: 24.0,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/icon_eye_open.png",
+                                      width: 24.0,
+                                      height: 24.0),
                             ),
                           ),
                         ),

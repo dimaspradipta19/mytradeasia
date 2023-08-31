@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../config/themes/theme.dart';
-import '../../../../../widget/dialog_sheet_widget.dart';
+import '../../../widgets/dialog_sheet_widget.dart';
 // import '../homescreen.dart';
 
 class BiodataScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
   final _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
 
-  var _passwordVisible;
+  bool _passwordVisible = false;
 
   @override
   void initState() {

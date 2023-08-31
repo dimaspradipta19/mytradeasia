@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../config/themes/theme.dart';
 import '../../../../../modelview/provider/loading_provider.dart';
-import '../../../../../widget/loading_overlay_widget.dart';
+import '../../../widgets/loading_overlay_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

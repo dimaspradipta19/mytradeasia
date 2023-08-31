@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 
 import '../../../../../../config/themes/theme.dart';
+import '../../../../widgets/dialog_sheet_widget.dart';
 import '../login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
