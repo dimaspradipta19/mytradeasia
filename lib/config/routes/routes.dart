@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
-import 'package:mytradeasia/view/auth/biodata/biodata_screen.dart';
-import 'package:mytradeasia/view/auth/choose_role/role_user_screen.dart';
-import 'package:mytradeasia/view/auth/login/forgot_password/forgot_password_screen.dart';
-import 'package:mytradeasia/view/auth/login/forgot_password/reset_password_screen.dart';
-import 'package:mytradeasia/view/auth/login/login_screen.dart';
-import 'package:mytradeasia/view/auth/register/register_screen.dart';
 import 'package:mytradeasia/view/menu/history/history_screen.dart';
 import 'package:mytradeasia/view/menu/history/order/order_detail_screen.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_detail.dart';
@@ -40,6 +34,12 @@ import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/notification_
 import 'package:mytradeasia/view/menu/mytradeasia/submenu/settings/settings_screen.dart';
 import 'package:mytradeasia/view/menu/other/navigation_bar.dart';
 import 'package:mytradeasia/view/menu/other/splash_page.dart';
+import '../../features/presentation/pages/auth/biodata/biodata_screen.dart';
+import '../../features/presentation/pages/auth/choose_role/role_user_screen.dart';
+import '../../features/presentation/pages/auth/login/forgot_password/forgot_password_screen.dart';
+import '../../features/presentation/pages/auth/login/forgot_password/reset_password_screen.dart';
+import '../../features/presentation/pages/auth/login/login_screen.dart';
+import '../../features/presentation/pages/auth/register/register_screen.dart';
 
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
