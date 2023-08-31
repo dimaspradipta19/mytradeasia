@@ -4,7 +4,7 @@ import 'package:mytradeasia/utils/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../model/industry_model.dart';
+import '../../../../../../../model/industry_model.dart';
 
 class AllIndustryScreen extends StatefulWidget {
   const AllIndustryScreen({super.key});
