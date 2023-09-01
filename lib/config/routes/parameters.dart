@@ -27,3 +27,9 @@ class MessageDetailParameter {
       required this.currentUserId,
       required this.chatId});
 }
+
+class BiodataParameter {
+  String email;
+  String phone;
+  BiodataParameter({required this.email, required this.phone});
+}

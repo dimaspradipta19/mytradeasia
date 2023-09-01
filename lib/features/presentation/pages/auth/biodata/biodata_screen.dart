@@ -7,7 +7,10 @@ import '../../../widgets/dialog_sheet_widget.dart';
 // import '../homescreen.dart';
 
 class BiodataScreen extends StatefulWidget {
-  const BiodataScreen({super.key});
+  const BiodataScreen({super.key, required this.email, required this.phone});
+
+  final String email;
+  final String phone;
 
   @override
   State<BiodataScreen> createState() => _BiodataScreenState();
@@ -68,6 +71,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       'companyName': _companyNameController.text,
                       'country': _countryController.text,
                       'password': _passwordController.text,
+                      'phone': "085920602360",
                       'uid': auth.currentUser!.uid.toString(),
                     };
 

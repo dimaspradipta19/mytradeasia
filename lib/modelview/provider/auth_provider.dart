@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
-import '../../view/menu/other/navigation_bar.dart';
 
 class AuthProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -92,7 +92,10 @@ class AuthProvider with ChangeNotifier {
       };
       FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
 
-      context.go("/auth/register/biodata");
+      BiodataParameter param =
+          BiodataParameter(email: email, phone: phoneNumber);
+
+      context.go("/auth/register/biodata", extra: param);
 
       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
       //   builder: (context) {

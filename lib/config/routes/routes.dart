@@ -263,7 +263,14 @@ class Routes {
               routes: [
                 GoRoute(
                     path: "biodata",
-                    builder: (context, state) => const BiodataScreen())
+                    builder: (context, state) {
+                      BiodataParameter param = state.extra as BiodataParameter;
+
+                      return BiodataScreen(
+                        email: param.email,
+                        phone: param.phone,
+                      );
+                    })
               ]),
         ]),
   ]);
