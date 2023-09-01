@@ -8,6 +8,7 @@ import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../../config/routes/parameters.dart';
 import '../../../../../config/themes/theme.dart';
 import '../../../../../modelview/provider/loading_provider.dart';
 import '../../../widgets/loading_overlay_widget.dart';
@@ -35,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var valueLoading = Provider.of<LoadingProvider>(context);
+    // var valueLoading = Provider.of<LoadingProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -257,43 +258,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             onPressed: () async {
-                              valueLoading.isLoading;
-                              valueLoading.getStateLoading();
-                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              // valueLoading.isLoading;
+                              // valueLoading.getStateLoading();
+                              // final FirebaseAuth auth = FirebaseAuth.instance;
 
-                              final SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
+                              // final SharedPreferences prefs =
+                              //     await SharedPreferences.getInstance();
 
-                              Provider.of<AuthProvider>(context, listen: false)
-                                  .registerWithEmail(
-                                      _emailController.text,
-                                      _phoneNumberController.text,
-                                      prefs.getString("role") ?? "",
-                                      context)
-                                  .then((value) {
-                                valueLoading.isLoading;
-                                valueLoading.getStateLoading();
-                              }).then((value) {
-                                prefs.setString(
-                                    "uid", auth.currentUser!.uid.toString());
-                                prefs.setString(
-                                    "password", _phoneNumberController.text);
-                              }).then(
-                                (value) {
-                                  String docsId = FirebaseAuth
-                                      .instance.currentUser!.uid
-                                      .toString();
-                                  Map<String, dynamic> data = {
-                                    "uid": prefs.getString("uid") ?? "",
-                                    "password":
-                                        prefs.getString("password") ?? "",
-                                  };
-                                  FirebaseFirestore.instance
-                                      .collection('biodata')
-                                      .doc(docsId)
-                                      .update(data);
-                                },
-                              );
+                              // Provider.of<AuthProvider>(context, listen: false)
+                              //     .registerWithEmail(
+                              //         _emailController.text,
+                              //         _phoneNumberController.text,
+                              //         prefs.getString("role") ?? "",
+                              //         context)
+                              //     .then((value) {
+                              //   valueLoading.isLoading;
+                              //   valueLoading.getStateLoading();
+                              // }).then((value) {
+                              //   prefs.setString(
+                              //       "uid", auth.currentUser!.uid.toString());
+                              //   prefs.setString(
+                              //       "password", _phoneNumberController.text);
+                              // }).then(
+                              //   (value) {
+                              //     String docsId = FirebaseAuth
+                              //         .instance.currentUser!.uid
+                              //         .toString();
+                              //     Map<String, dynamic> data = {
+                              //       "uid": prefs.getString("uid") ?? "",
+                              //       "password":
+                              //           prefs.getString("password") ?? "",
+                              //     };
+                              //     FirebaseFirestore.instance
+                              //         .collection('biodata')
+                              //         .doc(docsId)
+                              //         .update(data);
+                              //   },
+                              // );
+                              BiodataParameter param = BiodataParameter(
+                                  email: _emailController.text,
+                                  phone: _phoneNumberController.text);
+
+                              context.go("/auth/register/biodata",
+                                  extra: param);
                             },
                             child: Text(
                               "Sign Up",
@@ -431,12 +438,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
             ),
-            if (valueLoading.isLoading)
-              SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                child: const LoadingOverlay(),
-              ),
+            // if (valueLoading.isLoading)
+            //   SizedBox(
+            //     width: double.infinity,
+            //     height: MediaQuery.of(context).size.height,
+            //     child: const LoadingOverlay(),
+            //   ),
           ],
         ),
       ),

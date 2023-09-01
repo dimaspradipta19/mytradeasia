@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/config/routes/routes.dart';
 import 'package:mytradeasia/features/data/data_sources/old_remote/detail_product_service.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
@@ -48,51 +50,51 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ListProductProvider(),
+        BlocProvider(
+          create: (context) => AuthBloc(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => SearchProductProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LoadingProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ObscureTextProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => TopProductsProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => AllIndustryProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => AuthProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FaqProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) =>
-              DetailProductProvider(service: DetailProductService()),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SeeMoreProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => DhlShipmentProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SalesforceLoginProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SalesforceDataProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SalesforceDetailProvider(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SearchProductProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => LoadingProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => ObscureTextProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => TopProductsProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => AllIndustryProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => AuthProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => FaqProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) =>
+        //       DetailProductProvider(service: DetailProductService()),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SeeMoreProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => DhlShipmentProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SalesforceLoginProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SalesforceDataProvider(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SalesforceDetailProvider(),
+        // ),
       ],
       child: StreamProvider<InternetConnectionStatus>(
         initialData: InternetConnectionStatus.connected,
@@ -109,7 +111,6 @@ class _MyAppState extends State<MyApp> {
             fontFamily: "Poppins",
           ),
           routerConfig: Routes().router,
-          // home: const SplashScreen(),
         ),
       ),
     );

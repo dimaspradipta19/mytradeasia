@@ -34,7 +34,7 @@ class AuthProvider with ChangeNotifier {
       setUser(userCredential.user);
 
       /* With go_route */
-      context.go("/home");
+      // context.go("/home");
 
       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
       //   builder: (context) {
@@ -91,17 +91,6 @@ class AuthProvider with ChangeNotifier {
         "uid": "",
       };
       FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
-
-      BiodataParameter param =
-          BiodataParameter(email: email, phone: phoneNumber);
-
-      context.go("/auth/register/biodata", extra: param);
-
-      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-      //   builder: (context) {
-      //     return const BiodataScreen();
-      //   },
-      // ), (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == "email-already-in-use") {
         showDialog(

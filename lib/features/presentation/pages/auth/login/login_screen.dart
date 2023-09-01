@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_state.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/loading_provider.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var valueLoading = Provider.of<LoadingProvider>(context);
+    var authBloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -185,9 +189,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 55.0,
                     child: _emailController.text.isNotEmpty &&
                             _phoneNumberController.text.isNotEmpty
-                        ? Consumer<AuthProvider>(
-                            builder: (context, valueAuth, child) =>
-                                ElevatedButton(
+                        ? BlocBuilder<AuthBloc, AuthState>(
+                            builder: (_, state) => ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
@@ -201,15 +204,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  valueLoading.isLoading;
-                                  valueLoading.getStateLoading();
-                                  valueAuth
-                                      .loginWithEmail(_emailController.text,
-                                          _phoneNumberController.text, context)
-                                      .then((value) {
-                                    valueLoading.isLoading;
-                                    valueLoading.getStateLoading();
-                                  });
+                                  // valueLoading.isLoading;
+                                  // valueLoading.getStateLoading();
+                                  // valueAuth
+                                  //     .loginWithEmail(_emailController.text,
+                                  //         _phoneNumberController.text, context)
+                                  //     .then((value) {
+                                  //   valueLoading.isLoading;
+                                  //   valueLoading.getStateLoading();
+                                  // });
+                                  authBloc.add(LoginWithEmail(
+                                      _emailController.text,
+                                      _phoneNumberController.text,
+                                      context));
                                 }
                               },
                               child: Text(
@@ -353,12 +360,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            if (valueLoading.isLoading)
-              SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                child: const LoadingOverlay(),
-              ),
+            // if (valueLoading.isLoading)
+            //   SizedBox(
+            //     width: double.infinity,
+            //     height: MediaQuery.of(context).size.height,
+            //     child: const LoadingOverlay(),
+            //   ),
           ],
         ),
       ),

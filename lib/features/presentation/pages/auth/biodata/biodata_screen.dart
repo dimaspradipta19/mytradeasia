@@ -228,7 +228,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       TextFormField(
                         controller: _countryController,
                         decoration: InputDecoration(
-                          hintText: "Enter your last name",
+                          hintText: "Enter your Country",
                           hintStyle: body1Regular.copyWith(color: greyColor),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 20.0),
@@ -258,7 +258,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                         obscureText: !_passwordVisible,
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          hintText: "Enter your company name",
+                          hintText: "Enter your Password",
                           hintStyle: body1Regular.copyWith(color: greyColor),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 20.0),
