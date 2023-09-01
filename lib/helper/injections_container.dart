@@ -29,6 +29,15 @@ import 'package:mytradeasia/features/domain/repository/sales_force_detail_reposi
 import 'package:mytradeasia/features/domain/repository/sales_force_login_repository.dart';
 import 'package:mytradeasia/features/domain/repository/search_product_repository.dart';
 import 'package:mytradeasia/features/domain/repository/top_product_repository.dart';
+import 'package:mytradeasia/features/domain/usecases/detail_product_usecases/get_detail_product.dart';
+import 'package:mytradeasia/features/domain/usecases/dhl_shipment_usecases/get_dhl_shipment.dart';
+import 'package:mytradeasia/features/domain/usecases/faq_usecases/get_faq_data.dart';
+import 'package:mytradeasia/features/domain/usecases/industry_usecases/get_industry.dart';
+import 'package:mytradeasia/features/domain/usecases/list_product_usecases/get_list_product.dart';
+import 'package:mytradeasia/features/domain/usecases/sales_force_data_usecases/get_sales_force_data.dart';
+import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases/get_sales_force_detail.dart';
+import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
+import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get_search_product.dart';
 
 final injections = GetIt.instance;
 
@@ -67,4 +76,20 @@ Future<void> initializeDependencies() async {
       SearchProductRepositoryImpl(injections()));
   injections.registerSingleton<TopProductRepository>(
       TopProductRepositoryImpl(injections()));
+
+  //UseCases Dependencies
+  injections
+      .registerSingleton<GetDetailProduct>(GetDetailProduct(injections()));
+  injections.registerSingleton<GetDhlShipment>(GetDhlShipment(injections()));
+  injections.registerSingleton<GetFaqData>(GetFaqData(injections()));
+  injections.registerSingleton<GetIndustryData>(GetIndustryData(injections()));
+  injections.registerSingleton<GetListProduct>(GetListProduct(injections()));
+  injections
+      .registerSingleton<GetSalesForceData>(GetSalesForceData(injections()));
+  injections.registerSingleton<GetSalesforceDetail>(
+      GetSalesforceDetail(injections()));
+  injections
+      .registerSingleton<GetSalesforceLogin>(GetSalesforceLogin(injections()));
+  injections
+      .registerSingleton<GetSearchProduct>(GetSearchProduct(injections()));
 }

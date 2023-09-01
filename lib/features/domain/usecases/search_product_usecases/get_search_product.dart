@@ -3,11 +3,11 @@ import 'package:mytradeasia/core/usecase/usecase.dart';
 import 'package:mytradeasia/features/domain/entities/search_product_entities/search_product_entity.dart';
 import 'package:mytradeasia/features/domain/repository/search_product_repository.dart';
 
-class GetTopProduct
+class GetSearchProduct
     implements UseCase<DataState<List<SearchProductEntity>>, String> {
   final SearchProductRepo _searchProductRepo;
 
-  GetTopProduct(this._searchProductRepo);
+  GetSearchProduct(this._searchProductRepo);
 
   @override
   Future<DataState<List<SearchProductEntity>>> call({String? param}) {
