@@ -36,7 +36,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var valueLoading = Provider.of<LoadingProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(

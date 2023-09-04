@@ -208,8 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  // valueLoading.isLoading;
-                                  // valueLoading.getStateLoading();
                                   authBloc.add(const AuthLoading());
                                   authBloc.add(LoginWithEmail(
                                       _emailController.text,
@@ -368,20 +366,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: MediaQuery.of(context).size.height,
                     child: const LoadingOverlay(),
                   ),
-
-            // checkConnection(),
-            // BlocBuilder<AuthBloc, AuthState>(
-            //   builder: (context, state) {
-            //     if (state is AuthLoadingState) {
-            //       SizedBox(
-            //         width: double.infinity,
-            //         height: MediaQuery.of(context).size.height,
-            //         child: const LoadingOverlay(),
-            //       );
-            //     }
-            //     return const SizedBox();
-            //   },
-            // )
           ],
         ),
       ),
