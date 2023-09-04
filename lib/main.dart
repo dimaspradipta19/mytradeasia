@@ -6,7 +6,10 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/config/routes/routes.dart';
 import 'package:mytradeasia/features/data/data_sources/old_remote/detail_product_service.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_event.dart';
 import 'package:mytradeasia/firebase_options.dart';
+import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/auth_provider.dart';
 import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
@@ -29,6 +32,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await initializeDependencies();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -54,6 +59,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (_) => injections<ListProductBloc>(),
         ),
         // ChangeNotifierProvider(
         //   create: (context) => SearchProductProvider(),

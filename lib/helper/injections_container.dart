@@ -38,6 +38,7 @@ import 'package:mytradeasia/features/domain/usecases/sales_force_data_usecases/g
 import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases/get_sales_force_detail.dart';
 import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
 import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get_search_product.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 
 final injections = GetIt.instance;
 
@@ -92,4 +93,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetSalesforceLogin>(GetSalesforceLogin(injections()));
   injections
       .registerSingleton<GetSearchProduct>(GetSearchProduct(injections()));
+
+  //Bloc
+  injections
+      .registerFactory<ListProductBloc>(() => ListProductBloc(injections()));
 }

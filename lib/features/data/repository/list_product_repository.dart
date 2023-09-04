@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -15,16 +16,21 @@ class ListProductRepositoryImpl implements ListProductRepository {
   Future<DataState<List<AllProductEntities>>> getListProduct() async {
     try {
       final response = await _listProductService.getListProduct();
-      if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data!);
-      } else {
-        return DataFailed(DioException(
-          error: response.statusMessage,
-          response: response,
-          type: DioExceptionType.badResponse,
-          requestOptions: response.requestOptions,
-        ));
-      }
+      log("RESPONSE DATA : ${response.data}");
+      return DataSuccess(response.data!);
+
+      // if (response.statusCode == HttpStatus.ok) {
+      //   return DataSuccess(response.data!);
+      // } else {
+      //   log("ERROR MSG : ${response.statusCode}");
+      //
+      //   return DataFailed(DioException(
+      //     error: response.statusMessage,
+      //     response: response,
+      //     type: DioExceptionType.badResponse,
+      //     requestOptions: response.requestOptions,
+      //   ));
+      // }
     } on DioException catch (e) {
       return DataFailed(e);
     }
