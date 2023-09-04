@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // provider for get top product
-      Provider.of<TopProductsProvider>(context, listen: false).getTopProducts();
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   // provider for get top product
+    //   Provider.of<TopProductsProvider>(context, listen: false).getTopProducts();
 
-      // provider for get token
-      Provider.of<SalesforceLoginProvider>(context, listen: false)
-          .postSalesforceLogin();
-    });
+    //   // provider for get token
+    //   Provider.of<SalesforceLoginProvider>(context, listen: false)
+    //       .postSalesforceLogin();
+    // });
   }
 
   @override
@@ -50,9 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Center(
           child: RefreshIndicator(
-            onRefresh: () =>
-                Provider.of<TopProductsProvider>(context, listen: false)
-                    .getTopProducts(),
+            onRefresh: () async {},
+            // Provider.of<TopProductsProvider>(context, listen: false)
+            //     .getTopProducts(),
             color: primaryColor1,
             child: SingleChildScrollView(
               child: StreamBuilder(
@@ -295,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         prefixIcon: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   left: 20,
                                                                   right: 15.0),
                                                           child: Image.asset(
@@ -392,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               Padding(
                                                                 padding: const EdgeInsets
-                                                                    .only(
+                                                                        .only(
                                                                     top: size20px *
                                                                         0.75,
                                                                     bottom:
@@ -473,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   },
                                                   child: Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         horizontal:
                                                             size20px / 2,
                                                         vertical: size20px / 5),
@@ -974,7 +974,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   child:
                                                                       ClipRRect(
                                                                     borderRadius: const BorderRadius
-                                                                        .all(
+                                                                            .all(
                                                                         Radius.circular(size20px /
                                                                             2)),
                                                                     child:
@@ -1010,7 +1010,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   child:
                                                                       Padding(
                                                                     padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                            .symmetric(
                                                                         vertical:
                                                                             5.0,
                                                                         horizontal:
@@ -1033,7 +1033,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets
-                                                                      .symmetric(
+                                                                          .symmetric(
                                                                       horizontal:
                                                                           10.0,
                                                                       vertical:
@@ -1093,15 +1093,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: InkWell(
                                                           onTap: () {},
                                                           child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
+                                                            padding: const EdgeInsets
                                                                     .symmetric(
-                                                                    horizontal:
-                                                                        size20px /
-                                                                            2,
-                                                                    vertical:
-                                                                        size20px /
-                                                                            5),
+                                                                horizontal:
+                                                                    size20px /
+                                                                        2,
+                                                                vertical:
+                                                                    size20px /
+                                                                        5),
                                                             child: Text(
                                                               "Load More",
                                                               style: text12

@@ -206,15 +206,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              onPressed: () async {
+                              onPressed: () {
+                                // authBloc.add(const AuthLoading());
+                                setState(() {
+                                  _connection = !_connection;
+                                });
                                 if (_formKey.currentState!.validate()) {
-                                  authBloc.add(const AuthLoading());
                                   authBloc.add(LoginWithEmail(
                                       _emailController.text,
                                       _phoneNumberController.text,
                                       context));
-                                  if (state is AuthLoggedInState) {
-                                    context.go("/home");
+                                  if (state is! AuthLoggedInState) {
+                                    _connection = !_connection;
                                   }
                                 }
                               },

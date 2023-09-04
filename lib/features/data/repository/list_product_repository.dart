@@ -16,7 +16,7 @@ class ListProductRepositoryImpl implements ListProductRepository {
   Future<DataState<List<AllProductEntities>>> getListProduct() async {
     try {
       final response = await _listProductService.getListProduct();
-      log("RESPONSE DATA : ${response.data}");
+      log("RESPONSE STATUS CODE : ${response.statusCode}");
       return DataSuccess(response.data!);
 
       // if (response.statusCode == HttpStatus.ok) {

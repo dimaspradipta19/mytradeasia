@@ -104,11 +104,10 @@ class _MyAppState extends State<MyApp> {
         //   create: (context) => SalesforceDetailProvider(),
         // ),
       ],
-      child: StreamBuilder<InternetConnectionStatus>(
-        initialData: InternetConnectionStatus.connected,
-        stream: InternetConnectionChecker().onStatusChange,
-        builder: (context, snapshot) {
-          return MaterialApp.router(
+      child: StreamProvider<InternetConnectionStatus>(
+          initialData: InternetConnectionStatus.connected,
+          create: ((_) => InternetConnectionChecker().onStatusChange),
+          child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: 'MyTradeasia',
             theme: ThemeData(
@@ -120,9 +119,7 @@ class _MyAppState extends State<MyApp> {
               fontFamily: "Poppins",
             ),
             routerConfig: Routes().router,
-          );
-        },
-      ),
+          )),
     );
   }
 }

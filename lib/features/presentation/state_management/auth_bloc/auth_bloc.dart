@@ -22,9 +22,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString("email", event.email);
         // await prefs.setString("phoneNumber", event);
-        await prefs.setBool("isLoggedIn", true);
+        // await prefs.setBool("isLoggedIn", true);
 
         emit(AuthLoggedInState(userCredential.user));
+        context.go("/home");
       } on FirebaseAuthException catch (e) {
         if (e.code == "user-not-found") {
           showDialog(
