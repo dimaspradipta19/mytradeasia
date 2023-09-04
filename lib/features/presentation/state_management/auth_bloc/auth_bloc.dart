@@ -12,7 +12,7 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  AuthBloc() : super(AuthLoadingState()) {
+  AuthBloc() : super(const AuthInitState()) {
     on<LoginWithEmail>((event, emit) async {
       BuildContext context = event.context;
       try {
@@ -24,9 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // await prefs.setString("phoneNumber", event);
         await prefs.setBool("isLoggedIn", true);
 
-        print(userCredential);
-
-        // emit(AuthLoggedInState(userCredential.user));
+        emit(AuthLoggedInState(userCredential.user));
       } on FirebaseAuthException catch (e) {
         if (e.code == "user-not-found") {
           showDialog(
@@ -92,6 +90,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthErrorState(e));
       }
     });
+
+    on<AuthLoading>(
+      (event, emit) => emit(const AuthLoadingState()),
+    );
+
     on<LogOut>((event, emit) {
       // TODO: implement event handler
     });

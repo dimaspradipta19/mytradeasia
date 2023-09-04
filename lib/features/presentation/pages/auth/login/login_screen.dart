@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_state.dart';
-import 'package:mytradeasia/modelview/provider/auth_provider.dart';
-import 'package:mytradeasia/modelview/provider/loading_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../config/themes/theme.dart';
 import '../../../widgets/loading_overlay_widget.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,11 +22,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool _passwordVisible = false;
+  bool _connection = true;
 
   @override
   void initState() {
     _passwordVisible = false;
+    checkConnection();
     super.initState();
+  }
+
+  checkConnection() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if (result == true) {
+      _connection = true;
+      return;
+    } else {
+      _connection = false;
+    }
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {});
+      checkConnection();
+    });
   }
 
   @override
@@ -167,15 +180,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           /* With go_route */
                           context.go("/auth/login/forgot_password");
-
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) {
-                          //       return const ForgotPasswordScreen();
-                          //     },
-                          //   ),
-                          // );
                         },
                         child: Text(
                           "Forgot Password?",
@@ -202,21 +206,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   // valueLoading.isLoading;
                                   // valueLoading.getStateLoading();
-                                  // valueAuth
-                                  //     .loginWithEmail(_emailController.text,
-                                  //         _phoneNumberController.text, context)
-                                  //     .then((value) {
-                                  //   valueLoading.isLoading;
-                                  //   valueLoading.getStateLoading();
-                                  // });
+                                  authBloc.add(const AuthLoading());
                                   authBloc.add(LoginWithEmail(
                                       _emailController.text,
                                       _phoneNumberController.text,
                                       context));
+                                  if (state is AuthLoggedInState) {
+                                    context.go("/home");
+                                  }
                                 }
                               },
                               child: Text(
@@ -360,12 +361,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            // if (valueLoading.isLoading)
-            //   SizedBox(
-            //     width: double.infinity,
-            //     height: MediaQuery.of(context).size.height,
-            //     child: const LoadingOverlay(),
-            //   ),
+            _connection
+                ? SizedBox()
+                : SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height,
+                    child: const LoadingOverlay(),
+                  ),
+
+            // checkConnection(),
+            // BlocBuilder<AuthBloc, AuthState>(
+            //   builder: (context, state) {
+            //     if (state is AuthLoadingState) {
+            //       SizedBox(
+            //         width: double.infinity,
+            //         height: MediaQuery.of(context).size.height,
+            //         child: const LoadingOverlay(),
+            //       );
+            //     }
+            //     return const SizedBox();
+            //   },
+            // )
           ],
         ),
       ),

@@ -42,6 +42,10 @@ class RegisterWithEmail extends AuthEvent {
       this.country);
 }
 
+class AuthLoading extends AuthEvent {
+  const AuthLoading();
+}
+
 class LogOut extends AuthEvent {
   const LogOut();
 }

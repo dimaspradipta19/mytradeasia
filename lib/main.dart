@@ -96,22 +96,24 @@ class _MyAppState extends State<MyApp> {
         //   create: (context) => SalesforceDetailProvider(),
         // ),
       ],
-      child: StreamProvider<InternetConnectionStatus>(
+      child: StreamBuilder<InternetConnectionStatus>(
         initialData: InternetConnectionStatus.connected,
-        create: ((context) => InternetConnectionChecker().onStatusChange),
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          title: 'MyTradeasia',
-          theme: ThemeData(
-            appBarTheme: const AppBarTheme(color: whiteColor),
-            primaryColor: whiteColor,
-            bottomNavigationBarTheme:
-                const BottomNavigationBarThemeData(backgroundColor: whiteColor),
-            scaffoldBackgroundColor: whiteColor,
-            fontFamily: "Poppins",
-          ),
-          routerConfig: Routes().router,
-        ),
+        stream: InternetConnectionChecker().onStatusChange,
+        builder: (context, snapshot) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'MyTradeasia',
+            theme: ThemeData(
+              appBarTheme: const AppBarTheme(color: whiteColor),
+              primaryColor: whiteColor,
+              bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                  backgroundColor: whiteColor),
+              scaffoldBackgroundColor: whiteColor,
+              fontFamily: "Poppins",
+            ),
+            routerConfig: Routes().router,
+          );
+        },
       ),
     );
   }
