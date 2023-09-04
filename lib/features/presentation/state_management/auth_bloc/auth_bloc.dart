@@ -16,7 +16,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginWithEmail>((event, emit) async {
       BuildContext context = event.context;
       try {
-        // TODO: implement event handler
         UserCredential userCredential = await _auth.signInWithEmailAndPassword(
             email: event.email, password: event.password);
 

@@ -16,7 +16,7 @@ class ListProductRepositoryImpl implements ListProductRepository {
     try {
       final response = await _listProductService.getListProduct();
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,
