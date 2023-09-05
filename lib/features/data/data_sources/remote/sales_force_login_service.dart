@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:mytradeasia/features/data/model/sales_force_login_models/sales_force_login_model.dart';
 
 class SalesforceLoginService {
   final dio = Dio();
 
-  Future<Response<dynamic>> postSalesforce() async {
+  Future<Response<SalesforceLoginModel>> postSalesforce() async {
     String clientId =
         "3MVG9SM6_sNwRXqvilLdlZtTOR_ZK3HrAugrl.YUGMvo.qn0nRTtL9upffxdnWZXfn6PfYB0C4SAR8FnwG1BI";
     String clientSecret =
@@ -25,6 +26,14 @@ class SalesforceLoginService {
         },
       ),
     );
-    return response;
+    final data = response.data;
+
+    final dataMapped = data.map((e) => SalesforceLoginModel.fromJson(e));
+
+    return Response<SalesforceLoginModel>(
+      statusCode: response.statusCode,
+      requestOptions: response.requestOptions,
+      data: dataMapped,
+    );
   }
 }

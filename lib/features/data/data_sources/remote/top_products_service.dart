@@ -6,10 +6,18 @@ class TopProductsService {
   List<TopProductsModel> resultAwal = [];
   final dio = Dio();
 
-  Future<Response<dynamic>> getTopProducts() async {
+  Future<Response<List<TopProductsModel>>> getTopProducts() async {
     const String endPoint = "/top-products";
     final response = await dio.get(tradeasiaApi + endPoint);
 
-    return response;
+    final dataList = response.data as List<dynamic>;
+    final listProductModel =
+        dataList.map((e) => TopProductsModel.fromJson(e)).toList();
+
+    return Response<List<TopProductsModel>>(
+      statusCode: response.statusCode,
+      requestOptions: response.requestOptions,
+      data: listProductModel,
+    );
   }
 }

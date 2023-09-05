@@ -16,7 +16,7 @@ class IndustryRepositoryImpl implements IndustryRepository {
     try {
       final response = await _allIndustryService.getAllIndustryList();
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

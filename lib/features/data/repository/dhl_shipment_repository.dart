@@ -18,7 +18,7 @@ class DhlShipmentRepositoryImpl implements DhlShipmentRepo {
       final response = await _dhlShipmentService.getDhlShipment(trackingNumber);
 
       if (response!.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:mytradeasia/features/data/model/sales_force_detail_models/sales_force_detail_model.dart';
 
 class SalesforceDetailService {
   final dio = Dio();
-  Future<Response<dynamic>> getSalesforceDetail(
+  Future<Response<SalesforceDetailModel>> getSalesforceDetail(
       Map<String, dynamic> detailData) async {
     String urlDetail = detailData["urlDetail"];
     String token = detailData["token"];
@@ -17,6 +18,14 @@ class SalesforceDetailService {
         },
       ),
     );
-    return response;
+    final data = response.data;
+
+    final dataMapped = data.map((e) => SalesforceDetailModel.fromJson(e));
+
+    return Response<SalesforceDetailModel>(
+      statusCode: response.statusCode,
+      requestOptions: response.requestOptions,
+      data: dataMapped,
+    );
   }
 }

@@ -17,7 +17,7 @@ class SalesforceDataRepositoryImpl implements SalesForceDataRepository {
     try {
       final response = await _salesforceDataService.getAllData(token);
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

@@ -5,10 +5,19 @@ class SearchProductService {
   List<SearchProductModel> resultAwal = [];
   final dio = Dio();
 
-  Future<Response<dynamic>> getSearchProduct(String productName) async {
+  Future<Response<List<SearchProductModel>>> getSearchProduct(
+      String productName) async {
     String url = "http://tradeasia.sg/en/list-product?productname=$productName";
     final response = await dio.get(url);
 
-    return response;
+    final dataList = response.data as List<dynamic>;
+    final listProductModel =
+        dataList.map((e) => SearchProductModel.fromJson(e)).toList();
+
+    return Response<List<SearchProductModel>>(
+      statusCode: response.statusCode,
+      requestOptions: response.requestOptions,
+      data: listProductModel,
+    );
   }
 }

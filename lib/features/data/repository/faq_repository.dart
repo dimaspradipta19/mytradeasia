@@ -16,7 +16,7 @@ class FaqRepositoryImpl implements FaqRepository {
     try {
       final response = await _faqService.getFaq();
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

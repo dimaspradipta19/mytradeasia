@@ -16,7 +16,7 @@ class TopProductRepositoryImpl implements TopProductRepository {
     try {
       final response = await _topProductsService.getTopProducts();
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

@@ -16,7 +16,7 @@ class SalesforceLoginRepositoryImpl implements SalesforceLoginRepo {
     try {
       final response = await _salesforceLoginService.postSalesforce();
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

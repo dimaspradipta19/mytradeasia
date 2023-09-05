@@ -18,7 +18,7 @@ class SearchProductRepositoryImpl implements SearchProductRepo {
       final response =
           await _searchProductService.getSearchProduct(productName);
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:mytradeasia/core/constants/constants.dart';
 import 'package:mytradeasia/features/data/model/all_product_models/all_product_model.dart';

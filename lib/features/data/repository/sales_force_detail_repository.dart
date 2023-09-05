@@ -18,7 +18,7 @@ class SalesforceDetailRepositoryImpl implements SalesForceDetailRepo {
       final response =
           await _salesforceDetailService.getSalesforceDetail(detailData);
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data);
+        return DataSuccess(response.data!);
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,
