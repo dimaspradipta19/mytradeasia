@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../config/themes/theme.dart';
 import '../../../widgets/dialog_sheet_widget.dart';
 // import '../homescreen.dart';
@@ -45,6 +51,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var authBloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
@@ -64,46 +71,66 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    String docsId = auth.currentUser!.uid.toString();
+                    final SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    final role = prefs.getString("role") ?? "";
                     Map<String, dynamic> data = {
                       'firstName': _firstNameController.text,
                       'lastName': _lastNameController.text,
                       'companyName': _companyNameController.text,
                       'country': _countryController.text,
                       'password': _passwordController.text,
-                      'phone': "085920602360",
-                      'uid': auth.currentUser!.uid.toString(),
+                      'phone': widget.phone,
                     };
+                    if (_formKey.currentState!.validate()) {
+                      log("EMAIL : ${widget.email}");
+                      log("PHONE : ${widget.phone}");
+                      log("ROLE : $role");
 
-                    await FirebaseFirestore.instance
-                        .collection('biodata')
-                        .doc(docsId)
-                        .update(data);
+                      log("DATA : $data");
+                      authBloc.add(RegisterWithEmail(
+                          widget.email,
+                          widget.phone,
+                          role,
+                          context,
+                          _companyNameController.text,
+                          _firstNameController.text,
+                          _lastNameController.text,
+                          _passwordController.text,
+                          _countryController.text));
+                      await showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return DialogWidget(
+                              urlIcon:
+                                  "assets/images/icon_sukses_reset_password.png",
+                              title: "Successful Registration",
+                              subtitle:
+                                  "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                              textForButton: "Go to Home",
+                              navigatorFunction: () {
+                                /* with go_router */
+                                context.go("/auth/login");
 
-                    await showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return DialogWidget(
-                            urlIcon:
-                                "assets/images/icon_sukses_reset_password.png",
-                            title: "Successful Registration",
-                            subtitle:
-                                "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                            textForButton: "Go to Home",
-                            navigatorFunction: () {
-                              /* with go_router */
-                              context.go("/auth/login");
+                                // Navigator.pushAndRemoveUntil(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => const LoginScreen(),
+                                //     ),
+                                //     (route) => false);
+                              });
+                        },
+                      );
+                    }
 
-                              // Navigator.pushAndRemoveUntil(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => const LoginScreen(),
-                              //     ),
-                              //     (route) => false);
-                            });
-                      },
-                    );
+                    // String docsId = auth.currentUser!.uid.toString();
+
+                    //
+                    // await FirebaseFirestore.instance
+                    //     .collection('biodata')
+                    //     .doc(docsId)
+                    //     .update(data);
                   },
                   child: Text(
                     "Create Account",
@@ -155,6 +182,11 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       const SizedBox(height: 8.0),
                       TextFormField(
                         controller: _firstNameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "First Name is empty";
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: "Enter your first name",
                           hintStyle: body1Regular.copyWith(color: greyColor),
@@ -179,6 +211,11 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       const SizedBox(height: 8.0),
                       TextFormField(
                         controller: _lastNameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Last Name is empty";
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: "Enter your last name",
                           hintStyle: body1Regular.copyWith(color: greyColor),
@@ -203,6 +240,11 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       const SizedBox(height: 8.0),
                       TextFormField(
                         controller: _companyNameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Company Name is empty";
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: "Enter your company name",
                           hintStyle: body1Regular.copyWith(color: greyColor),
@@ -227,6 +269,11 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       const SizedBox(height: 8.0),
                       TextFormField(
                         controller: _countryController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Country is empty";
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: "Enter your Country",
                           hintStyle: body1Regular.copyWith(color: greyColor),
@@ -257,6 +304,14 @@ class _BiodataScreenState extends State<BiodataScreen> {
                       TextFormField(
                         obscureText: !_passwordVisible,
                         controller: _passwordController,
+                        validator: (valuePassword) {
+                          if (valuePassword!.isEmpty ||
+                              valuePassword.length < 6) {
+                            return "Password must be longer than 6 characters";
+                          }
+
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Enter your Password",
                           hintStyle: body1Regular.copyWith(color: greyColor),

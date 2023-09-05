@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // phone number
                         TextFormField(
                           obscureText: !_passwordVisible,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.visiblePassword,
                           controller: _phoneNumberController,
                           validator: (valuePassword) {
                             if (valuePassword!.isEmpty ||

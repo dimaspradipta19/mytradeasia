@@ -55,7 +55,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
     on<RegisterWithEmail>((event, emit) async {
-      // TODO: implement event handler
+      BuildContext context = event.context;
+
       try {
         UserCredential userCredential =
             await _auth.createUserWithEmailAndPassword(
@@ -75,19 +76,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         };
         FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
       } on FirebaseAuthException catch (e) {
-        // if (e.code == "email-already-in-use") {
-        //   showDialog(
-        //     context: context,
-        //     builder: (context) => DialogWidget(
-        //         urlIcon: "assets/images/logo_delete_account.png",
-        //         title: "Email already in use",
-        //         subtitle: "Try another email for registration",
-        //         textForButton: "Go back",
-        //         navigatorFunction: () {
-        //           Navigator.pop(context);
-        //         }),
-        //   );
-        // }
+        if (e.code == "email-already-in-use") {
+          showDialog(
+            context: context,
+            builder: (context) => DialogWidget(
+                urlIcon: "assets/images/logo_delete_account.png",
+                title: "Email already in use",
+                subtitle: "Try another email for registration",
+                textForButton: "Go back",
+                navigatorFunction: () {
+                  Navigator.pop(context);
+                }),
+          );
+        }
         emit(AuthErrorState(e));
       }
     });
