@@ -97,8 +97,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (event, emit) => emit(const AuthLoadingState()),
     );
 
-    on<LogOut>((event, emit) {
-      // TODO: implement event handler
+    on<LogOut>((event, emit) async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("isLoggedIn", false);
+      prefs.clear();
+      await _auth.signOut();
+      emit(const AuthInitState());
     });
   }
 }

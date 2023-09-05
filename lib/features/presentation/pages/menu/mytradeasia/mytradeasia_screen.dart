@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mytradeasia/modelview/provider/auth_provider.dart';
+
 import 'package:mytradeasia/config/themes/theme.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
 import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
 import 'package:mytradeasia/widget/mytradeasia_widget.dart';
-import 'package:provider/provider.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
@@ -21,7 +23,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var providerOut = Provider.of<AuthProvider>(context, listen: false);
+    var authBloc = BlocProvider.of<AuthBloc>(context);
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -309,7 +311,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                             navigatorFunctionNo: () =>
                                                 Navigator.pop(context),
                                             navigatorFunctionYes: () {
-                                              providerOut.logout(context);
+                                              // providerOut.logout(context);
+                                              authBloc.add(const LogOut());
 
                                               /* With go_route */
                                               context.go("/auth");
