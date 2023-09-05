@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/features/data/data_sources/old_remote/sales_force_data_service.dart';
 import 'package:mytradeasia/model/sales_force_data_model.dart';
-import 'package:mytradeasia/utils/result_state.dart';
+import 'package:mytradeasia/core/constants/result_state.dart';
 
 class SalesforceDataProvider with ChangeNotifier {
   SalesforceDataService service = SalesforceDataService();

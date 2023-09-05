@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
-import 'package:mytradeasia/utils/result_state.dart';
+import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 

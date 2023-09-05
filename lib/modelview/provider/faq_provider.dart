@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:mytradeasia/features/data/data_sources/old_remote/faq_service.dart';
 import 'package:mytradeasia/model/faq_model.dart';
-import 'package:mytradeasia/utils/result_state.dart';
+import 'package:mytradeasia/core/constants/result_state.dart';
 
 class FaqProvider with ChangeNotifier {
   ResultState state = ResultState.noData;

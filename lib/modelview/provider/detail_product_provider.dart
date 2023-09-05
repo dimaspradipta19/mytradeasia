@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mytradeasia/features/data/data_sources/old_remote/detail_product_service.dart';
 
 import '../../model/detail_product_model.dart';
-import '../../utils/result_state.dart';
+import '../../core/constants/result_state.dart';
 
 // class DetailProductProvider with ChangeNotifier {
 //   DetailProductModel? resultDetailProduct;

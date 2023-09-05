@@ -8,7 +8,7 @@ import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../utils/result_state.dart';
+import '../../../../../../core/constants/result_state.dart';
 import '../all_products/products/products_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {

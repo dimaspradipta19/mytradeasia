@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:mytradeasia/modelview/provider/faq_provider.dart';
-import 'package:mytradeasia/utils/result_state.dart';
+import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

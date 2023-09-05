@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
-import 'package:mytradeasia/utils/result_state.dart';
+import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 
