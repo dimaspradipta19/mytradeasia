@@ -11,10 +11,8 @@ class ListProductService {
     String endPoint = "/list-product";
     final response = await dio.get(tradeasiaApi + endPoint);
     final dataList = response.data as List<dynamic>;
-    // log("DATALIST : $dataList");
     final listProductModel =
         dataList.map((e) => AllProductModel.fromJson(e)).toList();
-    // log("LISTPRODUCTMODEL : $listProductModel");
 
     return Response<List<AllProductModel>>(
       statusCode: response.statusCode,

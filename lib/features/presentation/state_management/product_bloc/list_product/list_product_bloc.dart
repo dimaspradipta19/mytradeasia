@@ -29,7 +29,7 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
 
     final dataState = await _getListProduct();
 
-    log("PRODBLOC : ${dataState.data}");
+    // log("PRODBLOC : ${dataState.data}");
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(ListProductDone(dataState.data!));
