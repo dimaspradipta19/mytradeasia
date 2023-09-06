@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
-import 'package:mytradeasia/core/constants/result_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../../../model/industry_model.dart';
 
@@ -14,6 +15,12 @@ class AllIndustryScreen extends StatefulWidget {
 }
 
 class _AllIndustryScreenState extends State<AllIndustryScreen> {
+  @override
+  void initState() {
+    BlocProvider.of<IndustryBloc>(context).add(const GetIndustry());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,16 +49,20 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Consumer<AllIndustryProvider>(builder:
-                  (context, AllIndustryProvider valueAllIndustry, child) {
-                if (valueAllIndustry.state == ResultState.loading) {
+              child: BlocBuilder<IndustryBloc, IndustryState>(
+                  builder: (context, state) {
+                if (state is IndustryLoading) {
                   return const Center(
                     child: CircularProgressIndicator.adaptive(
                         backgroundColor: primaryColor1),
                   );
-                } else if (valueAllIndustry.state == ResultState.noData) {
+                } else if (state.industry!.detailIndustry!.isEmpty) {
                   return Container(
                     child: Center(child: Text("No Data Found")),
+                  );
+                } else if (state is IndustryError) {
+                  return const Center(
+                    child: Text("An error occurred"),
                   );
                 }
 
@@ -59,8 +70,7 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.zero,
-                  itemCount:
-                      valueAllIndustry.allIndustryList!.detailIndustry.length,
+                  itemCount: state.industry!.detailIndustry!.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       crossAxisSpacing: 10,
@@ -107,10 +117,10 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                         width:
                                             MediaQuery.of(context).size.width,
                                         child: ListView.builder(
-                                          itemCount: valueAllIndustry
-                                              .allIndustryList!
-                                              .detailIndustry[index]
-                                              .category
+                                          itemCount: state
+                                              .industry!
+                                              .detailIndustry![index]
+                                              .category!
                                               .length,
                                           shrinkWrap: true,
                                           physics:
@@ -135,11 +145,14 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                                                           left: 20.0,
                                                           top: 16.0),
                                                   child: Text(
-                                                    valueAllIndustry
-                                                        .allIndustryList!
-                                                        .detailIndustry[index]
-                                                        .category[indexCategory]
-                                                        .categoryName,
+                                                    state
+                                                            .industry!
+                                                            .detailIndustry![
+                                                                index]
+                                                            .category![
+                                                                indexCategory]
+                                                            .categoryName ??
+                                                        "",
                                                     style: body1Medium,
                                                   ),
                                                 ),
@@ -182,8 +195,9 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                           ),
                           Expanded(
                             child: Text(
-                              valueAllIndustry.allIndustryList!
-                                  .detailIndustry[index].industryName,
+                              state.industry!.detailIndustry![index]
+                                      .industryName ??
+                                  "",
                               style: text10.copyWith(color: fontColor1),
                               textAlign: TextAlign.center,
                             ),

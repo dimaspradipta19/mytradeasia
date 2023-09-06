@@ -12,6 +12,9 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../cart/cart_screen.dart';
 
@@ -30,9 +33,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   Timer? debouncerTime;
 
   Future<void> _getListProducts() async {
-    var listProductBloc = BlocProvider.of<ListProductBloc>(context);
-
-    listProductBloc.add(GetProducts());
+    BlocProvider.of<ListProductBloc>(context).add(GetProducts());
   }
 
   @override
@@ -91,6 +92,10 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
 
                               debouncerTime =
                                   Timer(const Duration(milliseconds: 700), () {
+                                BlocProvider.of<SearchProductBloc>(context).add(
+                                    SearchProduct(
+                                        _searchProductController.text));
+
                                 // Provider.of<SearchProductProvider>(context,
                                 //         listen: false)
                                 //     .getListProduct(
@@ -324,464 +329,500 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
 
                 // GRID All Product
                 Expanded(
-                  child: BlocBuilder<ListProductBloc, ListProductState>(
-                      builder: (_, state) {
-                    return _searchProductController.text.isEmpty
-                        /* All product */
-                        ? GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 15,
-                                    mainAxisSpacing: 15,
-                                    childAspectRatio: 0.6),
-                            itemCount: state is ListProductLoading
-                                ? 6
-                                : state.products?.length,
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              if (state is ListProductLoading) {
-                                return Shimmer.fromColors(
-                                    baseColor: greyColor3,
-                                    highlightColor: greyColor,
-                                    child: const Card());
-                              } else {
-                                return InkWell(
-                                  onTap: () async {
-                                    /* With go_router */
-                                    context
-                                        .pushNamed("product", pathParameters: {
-                                      'url': state.products![index].seoUrl ??
-                                          "/images/product/alum.webp"
-                                    });
-                                    // Navigator.push(context,
-                                    //     MaterialPageRoute(
-                                    //   builder: (context) {
-                                    //     return ProductsDetailScreen(
-                                    //         urlProduct: valueAllProduct
-                                    //                 .listAllProduct[
-                                    //                     index]
-                                    //                 .seoUrl ??
-                                    //             "/images/product/alum.webp");
-                                    //   },
-                                    // ));
+                  child: BlocBuilder<SearchProductBloc, SearchProductState>(
+                    builder: (context, searchState) {
+                      return BlocBuilder<ListProductBloc, ListProductState>(
+                          builder: (_, state) {
+                        return _searchProductController.text.isEmpty
+                            /* All product */
+                            ? GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 15,
+                                        childAspectRatio: 0.6),
+                                itemCount: state is ListProductLoading
+                                    ? 6
+                                    : state.products?.length,
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  if (state is ListProductLoading) {
+                                    return Shimmer.fromColors(
+                                        baseColor: greyColor3,
+                                        highlightColor: greyColor,
+                                        child: const Card());
+                                  } else {
+                                    return InkWell(
+                                      onTap: () async {
+                                        /* With go_router */
+                                        context.pushNamed("product",
+                                            pathParameters: {
+                                              'url': state.products![index]
+                                                      .seoUrl ??
+                                                  "/images/product/alum.webp"
+                                            });
+                                        // Navigator.push(context,
+                                        //     MaterialPageRoute(
+                                        //   builder: (context) {
+                                        //     return ProductsDetailScreen(
+                                        //         urlProduct: valueAllProduct
+                                        //                 .listAllProduct[
+                                        //                     index]
+                                        //                 .seoUrl ??
+                                        //             "/images/product/alum.webp");
+                                        //   },
+                                        // ));
 
-                                    String docsId =
-                                        _auth.currentUser!.uid.toString();
-                                    Map<String, dynamic> data = {
-                                      "productName":
-                                          state.products![index].productname,
-                                      "seo_url": state.products![index].seoUrl,
-                                      "casNumber":
-                                          state.products![index].casNumber,
-                                      "hsCode": state.products![index].hsCode,
-                                      "productImage":
-                                          state.products![index].productimage
-                                    };
-                                    await FirebaseFirestore.instance
-                                        .collection('biodata')
-                                        .doc(docsId)
-                                        .update({
-                                      "recentlySeen":
-                                          FieldValue.arrayUnion([data])
-                                    });
-                                  },
-                                  child: Card(
-                                    shadowColor: blackColor,
-                                    elevation: 3.0,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(
-                                              size20px / 4),
-                                          child: ClipRRect(
-                                            borderRadius: const BorderRadius
-                                                .all(
-                                                Radius.circular(size20px / 2)),
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: size20px * 5.5,
-                                              child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      "$url${state.products?[index].productimage}",
-                                                  fit: BoxFit.fill,
-                                                  placeholder: (context, url) =>
-                                                      const Center(
-                                                        child:
-                                                            CircularProgressIndicator
-                                                                .adaptive(),
-                                                      ),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      const Icon(Icons.error)),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                            child: Text(
-                                              state.products != null
-                                                  ? state.products![index]
-                                                      .productname!
-                                                  : "",
-                                              style: text14,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text("CAS Number :",
-                                                      style: text10),
-                                                  Text(
-                                                      state.products![index]
-                                                          .casNumber!,
-                                                      style: text10.copyWith(
-                                                          color: greyColor2)),
-                                                ],
-                                              ),
-                                              const Spacer(),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text("HS Code :",
-                                                      style: text10),
-                                                  Text(
-                                                      state.products![index]
-                                                          .hsCode!,
-                                                      style: text10.copyWith(
-                                                          color: greyColor2)),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
+                                        String docsId =
+                                            _auth.currentUser!.uid.toString();
+                                        Map<String, dynamic> data = {
+                                          "productName": state
+                                              .products![index].productname,
+                                          "seo_url":
+                                              state.products![index].seoUrl,
+                                          "casNumber":
+                                              state.products![index].casNumber,
+                                          "hsCode":
+                                              state.products![index].hsCode,
+                                          "productImage": state
+                                              .products![index].productimage
+                                        };
+                                        await FirebaseFirestore.instance
+                                            .collection('biodata')
+                                            .doc(docsId)
+                                            .update({
+                                          "recentlySeen":
+                                              FieldValue.arrayUnion([data])
+                                        });
+                                      },
+                                      child: Card(
+                                        shadowColor: blackColor,
+                                        elevation: 3.0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(
+                                                  size20px / 4),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(
+                                                            size20px / 2)),
                                                 child: SizedBox(
-                                                  height: 30,
                                                   width: MediaQuery.of(context)
                                                       .size
                                                       .width,
-                                                  child: ElevatedButton(
-                                                      style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all<Color>(
-                                                                      primaryColor1),
-                                                          shape: MaterialStateProperty
-                                                              .all<
-                                                                  RoundedRectangleBorder>(
-                                                            RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          7.0),
-                                                            ),
-                                                          ),
-                                                          padding: MaterialStateProperty
-                                                              .all<EdgeInsets>(
-                                                                  EdgeInsets
-                                                                      .zero)),
-                                                      onPressed: () {
-                                                        print("send inquiry");
-                                                      },
-                                                      child: Text(
-                                                        "Send Inquiry",
-                                                        style: text12.copyWith(
-                                                          color: whiteColor,
-                                                        ),
-                                                      )),
+                                                  height: size20px * 5.5,
+                                                  child: CachedNetworkImage(
+                                                      imageUrl:
+                                                          "$url${state.products?[index].productimage}",
+                                                      fit: BoxFit.fill,
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              const Center(
+                                                                child: CircularProgressIndicator
+                                                                    .adaptive(),
+                                                              ),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error)),
                                                 ),
                                               ),
-                                              const SizedBox(width: 2),
-                                              Container(
-                                                height: 30,
-                                                width: 30,
-                                                decoration: const BoxDecoration(
-                                                    color: secondaryColor1,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                5))),
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    print("cart icon");
-                                                  },
-                                                  icon: Image.asset(
-                                                    "assets/images/icon_cart.png",
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0),
+                                                child: Text(
+                                                  state.products != null
+                                                      ? state.products![index]
+                                                          .productname!
+                                                      : "",
+                                                  style: text14,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("CAS Number :",
+                                                          style: text10),
+                                                      Text(
+                                                          state.products![index]
+                                                              .casNumber!,
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
                                                   ),
+                                                  const Spacer(),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("HS Code :",
+                                                          style: text10),
+                                                      Text(
+                                                          state.products![index]
+                                                              .hsCode!,
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height: 30,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all<
+                                                                          Color>(
+                                                                      primaryColor1),
+                                                              shape: MaterialStateProperty
+                                                                  .all<
+                                                                      RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              7.0),
+                                                                ),
+                                                              ),
+                                                              padding: MaterialStateProperty
+                                                                  .all<EdgeInsets>(
+                                                                      EdgeInsets
+                                                                          .zero)),
+                                                          onPressed: () {
+                                                            print(
+                                                                "send inquiry");
+                                                          },
+                                                          child: Text(
+                                                            "Send Inquiry",
+                                                            style:
+                                                                text12.copyWith(
+                                                              color: whiteColor,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 2),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                secondaryColor1,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            5))),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        print("cart icon");
+                                                      },
+                                                      icon: Image.asset(
+                                                        "assets/images/icon_cart.png",
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                              )
+                            // Search Provider
+                            : GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 15,
+                                        childAspectRatio: 0.6),
+                                itemCount: searchState is SearchProductLoading
+                                    ? 4
+                                    : searchState.searchProducts!.length,
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  if (searchState is SearchProductLoading) {
+                                    return Shimmer.fromColors(
+                                        baseColor: greyColor3,
+                                        highlightColor: greyColor,
+                                        child: const Card());
+                                  } else if (searchState
+                                      .searchProducts!.isEmpty) {
+                                    return const Center(
+                                      child: Text("No Product Found"),
+                                    );
+                                  } else {
+                                    return InkWell(
+                                      onTap: () async {
+                                        context.pushNamed("product",
+                                            pathParameters: {
+                                              'url': searchState
+                                                      .searchProducts![index]
+                                                      .seoUrl ??
+                                                  "/en/acrylic-acid"
+                                            });
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) {
+                                        //       return ProductsDetailScreen(
+                                        //         urlProduct: searchState.searchProducts![index]
+                                        //             .seoUrl ??
+                                        //             "/en/acrylic-acid",
+                                        //       );
+                                        //     },
+                                        //   ),
+                                        // );
+
+                                        String docsId =
+                                            _auth.currentUser!.uid.toString();
+                                        Map<String, dynamic> data = {
+                                          "productName": searchState
+                                              .searchProducts![index]
+                                              .productname,
+                                          "seo_url": searchState
+                                              .searchProducts![index].seoUrl,
+                                          "casNumber": searchState
+                                              .searchProducts![index].casNumber,
+                                          "hsCode": searchState
+                                              .searchProducts![index].hsCode,
+                                          "productImage": searchState
+                                              .searchProducts![index]
+                                              .productimage
+                                        };
+                                        await FirebaseFirestore.instance
+                                            .collection('biodata')
+                                            .doc(docsId)
+                                            .update({
+                                          "recentlySeen":
+                                              FieldValue.arrayUnion([data])
+                                        });
+                                      },
+                                      child: Card(
+                                        shadowColor: blackColor,
+                                        elevation: 3.0,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(
+                                                  size24px / 4),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(
+                                                            size20px / 2)),
+                                                child: SizedBox(
+                                                    height: size20px * 5.5,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            "$url${searchState.searchProducts![index].productimage}",
+                                                        fit: BoxFit.fill,
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                const Center(
+                                                                  child: CircularProgressIndicator
+                                                                      .adaptive(),
+                                                                ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            const Icon(
+                                                                Icons.error))),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 5.0,
+                                                        horizontal: 10.0),
+                                                child: Text(
+                                                  searchState
+                                                          .searchProducts![
+                                                              index]
+                                                          .productname ??
+                                                      "",
+                                                  style: text14,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          )
-                        // Search Provider
-                        : Container();
-                  }
-                      // GridView.builder(
-                      //       gridDelegate:
-                      //           const SliverGridDelegateWithFixedCrossAxisCount(
-                      //               crossAxisCount: 2,
-                      //               crossAxisSpacing: 15,
-                      //               mainAxisSpacing: 15,
-                      //               childAspectRatio: 0.6),
-                      //       itemCount:
-                      //           valueSearch.state == ResultState.loading
-                      //               ? 4
-                      //               : valueSearch.searchProduct.length,
-                      //       shrinkWrap: true,
-                      //       physics: const BouncingScrollPhysics(),
-                      //       padding: EdgeInsets.zero,
-                      //       itemBuilder: (context, index) {
-                      //         if (valueSearch.state ==
-                      //             ResultState.loading) {
-                      //           return Shimmer.fromColors(
-                      //               baseColor: greyColor3,
-                      //               highlightColor: greyColor,
-                      //               child: const Card());
-                      //         } else {
-                      //           return InkWell(
-                      //             onTap: () async {
-                      //               Navigator.push(
-                      //                 context,
-                      //                 MaterialPageRoute(
-                      //                   builder: (context) {
-                      //                     return ProductsDetailScreen(
-                      //                       urlProduct: valueSearch
-                      //                               .searchProduct[index]
-                      //                               .seoUrl ??
-                      //                           "/en/acrylic-acid",
-                      //                     );
-                      //                   },
-                      //                 ),
-                      //               );
-                      //
-                      //               String docsId =
-                      //                   _auth.currentUser!.uid.toString();
-                      //               Map<String, dynamic> data = {
-                      //                 "productName": valueSearch
-                      //                     .searchProduct[index].productname,
-                      //                 "seo_url": valueSearch
-                      //                     .searchProduct[index].seoUrl,
-                      //                 "casNumber": valueSearch
-                      //                     .searchProduct[index].casNumber,
-                      //                 "hsCode": valueSearch
-                      //                     .searchProduct[index].hsCode,
-                      //                 "productImage": valueSearch
-                      //                     .searchProduct[index].productimage
-                      //               };
-                      //               await FirebaseFirestore.instance
-                      //                   .collection('biodata')
-                      //                   .doc(docsId)
-                      //                   .update({
-                      //                 "recentlySeen":
-                      //                     FieldValue.arrayUnion([data])
-                      //               });
-                      //             },
-                      //             child: Card(
-                      //               shadowColor: blackColor,
-                      //               elevation: 3.0,
-                      //               child: Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   Padding(
-                      //                     padding: const EdgeInsets.all(
-                      //                         size24px / 4),
-                      //                     child: ClipRRect(
-                      //                       borderRadius:
-                      //                           const BorderRadius.all(
-                      //                               Radius.circular(
-                      //                                   size20px / 2)),
-                      //                       child: SizedBox(
-                      //                           height: size20px * 5.5,
-                      //                           width:
-                      //                               MediaQuery.of(context)
-                      //                                   .size
-                      //                                   .width,
-                      //                           child: CachedNetworkImage(
-                      //                               imageUrl:
-                      //                                   "$url${valueSearch.searchProduct[index].productimage}",
-                      //                               fit: BoxFit.fill,
-                      //                               placeholder:
-                      //                                   (context, url) =>
-                      //                                       const Center(
-                      //                                         child: CircularProgressIndicator
-                      //                                             .adaptive(),
-                      //                                       ),
-                      //                               errorWidget: (context,
-                      //                                       url, error) =>
-                      //                                   const Icon(
-                      //                                       Icons.error))),
-                      //                     ),
-                      //                   ),
-                      //                   Expanded(
-                      //                     child: Padding(
-                      //                       padding:
-                      //                           const EdgeInsets.symmetric(
-                      //                               vertical: 5.0,
-                      //                               horizontal: 10.0),
-                      //                       child: Text(
-                      //                         valueSearch
-                      //                             .searchProduct[index]
-                      //                             .productname,
-                      //                         style: text14,
-                      //                         maxLines: 2,
-                      //                         overflow:
-                      //                             TextOverflow.ellipsis,
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                   Padding(
-                      //                     padding:
-                      //                         const EdgeInsets.symmetric(
-                      //                             horizontal: 10.0),
-                      //                     child: Row(
-                      //                       children: [
-                      //                         Column(
-                      //                           crossAxisAlignment:
-                      //                               CrossAxisAlignment
-                      //                                   .start,
-                      //                           children: [
-                      //                             const Text("CAS Number :",
-                      //                                 style: text10),
-                      //                             Text(
-                      //                                 valueSearch
-                      //                                     .searchProduct[
-                      //                                         index]
-                      //                                     .casNumber,
-                      //                                 style: text10.copyWith(
-                      //                                     color:
-                      //                                         greyColor2)),
-                      //                           ],
-                      //                         ),
-                      //                         const Spacer(),
-                      //                         Column(
-                      //                           crossAxisAlignment:
-                      //                               CrossAxisAlignment
-                      //                                   .start,
-                      //                           children: [
-                      //                             const Text("HS Code :",
-                      //                                 style: text10),
-                      //                             Text(
-                      //                                 valueSearch
-                      //                                     .searchProduct[
-                      //                                         index]
-                      //                                     .hsCode,
-                      //                                 style: text10.copyWith(
-                      //                                     color:
-                      //                                         greyColor2)),
-                      //                           ],
-                      //                         ),
-                      //                       ],
-                      //                     ),
-                      //                   ),
-                      //                   Padding(
-                      //                     padding: const EdgeInsets.all(
-                      //                         size20px / 2),
-                      //                     child: Row(
-                      //                       children: [
-                      //                         Expanded(
-                      //                           child: SizedBox(
-                      //                             height: 30,
-                      //                             width:
-                      //                                 MediaQuery.of(context)
-                      //                                     .size
-                      //                                     .width,
-                      //                             child: ElevatedButton(
-                      //                                 style: ButtonStyle(
-                      //                                     backgroundColor:
-                      //                                         MaterialStateProperty.all<
-                      //                                                 Color>(
-                      //                                             primaryColor1),
-                      //                                     shape: MaterialStateProperty
-                      //                                         .all<
-                      //                                             RoundedRectangleBorder>(
-                      //                                       RoundedRectangleBorder(
-                      //                                         borderRadius:
-                      //                                             BorderRadius
-                      //                                                 .circular(
-                      //                                                     7.0),
-                      //                                       ),
-                      //                                     ),
-                      //                                     padding: MaterialStateProperty
-                      //                                         .all<EdgeInsets>(
-                      //                                             EdgeInsets
-                      //                                                 .zero)),
-                      //                                 onPressed: () {
-                      //                                   print(
-                      //                                       "send inquiry");
-                      //                                 },
-                      //                                 child: Text(
-                      //                                   "Send Inquiry",
-                      //                                   style:
-                      //                                       text12.copyWith(
-                      //                                     color: whiteColor,
-                      //                                   ),
-                      //                                 )),
-                      //                           ),
-                      //                         ),
-                      //                         const SizedBox(width: 2),
-                      //                         Container(
-                      //                           height: 30,
-                      //                           width: 30,
-                      //                           decoration:
-                      //                               const BoxDecoration(
-                      //                                   color:
-                      //                                       secondaryColor1,
-                      //                                   borderRadius:
-                      //                                       BorderRadius
-                      //                                           .all(Radius
-                      //                                               .circular(
-                      //                                                   5))),
-                      //                           child: IconButton(
-                      //                             onPressed: () {
-                      //                               print("cart icon");
-                      //                             },
-                      //                             icon: Image.asset(
-                      //                               "assets/images/icon_cart.png",
-                      //                             ),
-                      //                           ),
-                      //                         ),
-                      //                       ],
-                      //                     ),
-                      //                   )
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           );
-                      //         }
-                      //       },
-                      //     ),
-                      ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("CAS Number :",
+                                                          style: text10),
+                                                      Text(
+                                                          searchState
+                                                                  .searchProducts![
+                                                                      index]
+                                                                  .casNumber ??
+                                                              "",
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                  const Spacer(),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text("HS Code :",
+                                                          style: text10),
+                                                      Text(
+                                                          searchState
+                                                                  .searchProducts![
+                                                                      index]
+                                                                  .hsCode ??
+                                                              "",
+                                                          style: text10.copyWith(
+                                                              color:
+                                                                  greyColor2)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(
+                                                  size20px / 2),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height: 30,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all<
+                                                                          Color>(
+                                                                      primaryColor1),
+                                                              shape: MaterialStateProperty
+                                                                  .all<
+                                                                      RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              7.0),
+                                                                ),
+                                                              ),
+                                                              padding: MaterialStateProperty
+                                                                  .all<EdgeInsets>(
+                                                                      EdgeInsets
+                                                                          .zero)),
+                                                          onPressed: () {
+                                                            print(
+                                                                "send inquiry");
+                                                          },
+                                                          child: Text(
+                                                            "Send Inquiry",
+                                                            style:
+                                                                text12.copyWith(
+                                                              color: whiteColor,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 2),
+                                                  Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                secondaryColor1,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            5))),
+                                                    child: IconButton(
+                                                      onPressed: () {
+                                                        print("cart icon");
+                                                      },
+                                                      icon: Image.asset(
+                                                        "assets/images/icon_cart.png",
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                              );
+                      });
+                    },
+                  ),
                 ),
               ],
             ),
