@@ -17,8 +17,8 @@ class ListProductLoading extends ListProductState {
 }
 
 class ListProductDone extends ListProductState {
-  const ListProductDone(List<AllProductEntities> article)
-      : super(products: article);
+  const ListProductDone(List<AllProductEntities> product)
+      : super(products: product);
 }
 
 class ListProductError extends ListProductState {

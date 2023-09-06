@@ -9,12 +9,12 @@ class AllIndustryService {
     const String endPoint = "/list-industry";
     final response = await dio.get(tradeasiaApi + endPoint);
     final data = response.data;
-    final listProductModel = data.map((e) => AllIndustryModel.fromJson(e));
+    final allIndustry = AllIndustryModel.fromJson(data);
 
     return Response<AllIndustryModel>(
       statusCode: response.statusCode,
       requestOptions: response.requestOptions,
-      data: listProductModel,
+      data: allIndustry,
     );
   }
 }
