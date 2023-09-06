@@ -5,13 +5,16 @@ class TopProductEntity extends Equatable {
   final String? productname;
   final String? casNumber;
   final String? hsCode;
+  final String? seoUrl;
+  final int? priority;
 
-  const TopProductEntity({
-    this.productimage,
-    this.productname,
-    this.casNumber,
-    this.hsCode,
-  });
+  const TopProductEntity(
+      {this.productimage,
+      this.productname,
+      this.casNumber,
+      this.hsCode,
+      this.seoUrl,
+      this.priority});
 
   @override
   List<Object?> get props {
@@ -20,6 +23,8 @@ class TopProductEntity extends Equatable {
       this.productname,
       this.casNumber,
       this.hsCode,
+      this.seoUrl,
+      this.priority
     ];
   }
 }

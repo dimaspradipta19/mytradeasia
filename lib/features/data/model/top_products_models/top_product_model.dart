@@ -8,7 +8,14 @@ class TopProductsModel extends TopProductEntity {
     String? hsCode,
     String? seoUrl,
     int? priority,
-  });
+  }) : super(
+          productimage: productimage,
+          productname: productname,
+          casNumber: casNumber,
+          hsCode: hsCode,
+          seoUrl: seoUrl,
+          priority: priority,
+        );
 
   factory TopProductsModel.fromJson(Map<String, dynamic> json) =>
       TopProductsModel(

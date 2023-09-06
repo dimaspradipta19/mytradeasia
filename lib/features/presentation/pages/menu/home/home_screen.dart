@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_event.dart';
 import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
@@ -455,10 +458,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    Provider.of<TopProductsProvider>(
-                                                            context,
-                                                            listen: false)
-                                                        .getTopProducts();
+                                                    var topProductBloc =
+                                                        BlocProvider.of<
+                                                                TopProductBloc>(
+                                                            context);
+                                                    // Provider.of<TopProductsProvider>(
+                                                    //         context,
+                                                    //         listen: false)
+                                                    //     .getTopProducts();
+                                                    topProductBloc.add(
+                                                        const GetTopProduct());
 
                                                     /* With go_router */
                                                     context.go(

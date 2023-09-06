@@ -38,9 +38,11 @@ import 'package:mytradeasia/features/domain/usecases/sales_force_data_usecases/g
 import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases/get_sales_force_detail.dart';
 import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
 import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get_search_product.dart';
+import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_top_product.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 
 final injections = GetIt.instance;
 
@@ -95,10 +97,14 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetSalesforceLogin>(GetSalesforceLogin(injections()));
   injections
       .registerSingleton<GetSearchProduct>(GetSearchProduct(injections()));
+  injections.registerSingleton<GetTopProductUseCase>(
+      GetTopProductUseCase(injections()));
 
   //Bloc
   injections
       .registerFactory<ListProductBloc>(() => ListProductBloc(injections()));
   injections.registerFactory<IndustryBloc>(() => IndustryBloc(injections()));
   injections.registerFactory<FaqBloc>(() => FaqBloc(injections()));
+  injections
+      .registerFactory<TopProductBloc>(() => TopProductBloc(injections()));
 }
