@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
 import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/core/constants/result_state.dart';
@@ -12,7 +11,6 @@ import 'package:mytradeasia/utils/sales_force_screen.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
-import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -295,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         prefixIcon: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   left: 20,
                                                                   right: 15.0),
                                                           child: Image.asset(
@@ -392,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               Padding(
                                                                 padding: const EdgeInsets
-                                                                        .only(
+                                                                    .only(
                                                                     top: size20px *
                                                                         0.75,
                                                                     bottom:
@@ -473,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   },
                                                   child: Padding(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         horizontal:
                                                             size20px / 2,
                                                         vertical: size20px / 5),
@@ -883,10 +881,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     icon:
                                                         "assets/images/icon_all_industry.png",
                                                     onPressed: () {
-                                                      Provider.of<AllIndustryProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .getAllIndustry();
+                                                      // Provider.of<AllIndustryProvider>(
+                                                      //         context,
+                                                      //         listen: false)
+                                                      //     .getAllIndustry();
 
                                                       /* With go_router */
                                                       context.go(
@@ -974,7 +972,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   child:
                                                                       ClipRRect(
                                                                     borderRadius: const BorderRadius
-                                                                            .all(
+                                                                        .all(
                                                                         Radius.circular(size20px /
                                                                             2)),
                                                                     child:
@@ -1010,7 +1008,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   child:
                                                                       Padding(
                                                                     padding: const EdgeInsets
-                                                                            .symmetric(
+                                                                        .symmetric(
                                                                         vertical:
                                                                             5.0,
                                                                         horizontal:
@@ -1033,7 +1031,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets
-                                                                          .symmetric(
+                                                                      .symmetric(
                                                                       horizontal:
                                                                           10.0,
                                                                       vertical:
@@ -1093,14 +1091,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: InkWell(
                                                           onTap: () {},
                                                           child: Padding(
-                                                            padding: const EdgeInsets
+                                                            padding:
+                                                                const EdgeInsets
                                                                     .symmetric(
-                                                                horizontal:
-                                                                    size20px /
-                                                                        2,
-                                                                vertical:
-                                                                    size20px /
-                                                                        5),
+                                                                    horizontal:
+                                                                        size20px /
+                                                                            2,
+                                                                    vertical:
+                                                                        size20px /
+                                                                            5),
                                                             child: Text(
                                                               "Load More",
                                                               style: text12

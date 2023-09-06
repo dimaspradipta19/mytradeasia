@@ -30,9 +30,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   Timer? debouncerTime;
 
   Future<void> _getListProducts() async {
-    var listProductBloc = BlocProvider.of<ListProductBloc>(context);
-
-    listProductBloc.add(GetProducts());
+    BlocProvider.of<ListProductBloc>(context).add(GetProducts());
   }
 
   @override
