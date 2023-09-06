@@ -27,6 +27,8 @@ import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 
+import 'features/presentation/state_management/industry_bloc/industry_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -62,6 +64,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (_) => injections<ListProductBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => injections<IndustryBloc>(),
         ),
         // ChangeNotifierProvider(
         //   create: (context) => SearchProductProvider(),

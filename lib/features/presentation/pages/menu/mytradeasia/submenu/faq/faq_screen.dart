@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../../config/themes/theme.dart';
+import '../../../../../../../modelview/provider/faq_provider.dart';
 
 class FaqScreen extends StatefulWidget {
   const FaqScreen({super.key});
