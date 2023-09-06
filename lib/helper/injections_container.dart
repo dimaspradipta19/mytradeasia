@@ -41,6 +41,7 @@ import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 
 final injections = GetIt.instance;
 
@@ -100,5 +101,8 @@ Future<void> initializeDependencies() async {
   injections
       .registerFactory<ListProductBloc>(() => ListProductBloc(injections()));
   injections.registerFactory<IndustryBloc>(() => IndustryBloc(injections()));
+  injections.registerFactory<SearchProductBloc>(
+      () => SearchProductBloc(injections()));
+
   injections.registerFactory<FaqBloc>(() => FaqBloc(injections()));
 }
