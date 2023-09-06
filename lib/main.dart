@@ -4,28 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mytradeasia/config/routes/routes.dart';
-import 'package:mytradeasia/features/data/data_sources/old_remote/detail_product_service.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
-import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
-import 'package:mytradeasia/modelview/provider/auth_provider.dart';
-import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
-import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
-import 'package:mytradeasia/modelview/provider/faq_provider.dart';
-import 'package:mytradeasia/modelview/provider/list_product_provider.dart';
-import 'package:mytradeasia/modelview/provider/loading_provider.dart';
-import 'package:mytradeasia/modelview/provider/obsecure_provider.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
-import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
-import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
-import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -73,6 +59,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (_) => injections<SearchProductBloc>(),
         ),
+        // ChangeNotifierProvider(
+        //   create: (context) => SearchProductProvider(),
+        // ),
+        BlocProvider(create: (_) => injections<TopProductBloc>()),
         BlocProvider(
           create: (_) => injections<FaqBloc>(),
         ),
