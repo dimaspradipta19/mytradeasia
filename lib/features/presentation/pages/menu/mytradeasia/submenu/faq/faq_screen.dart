@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 // import 'package:mytradeasia/modelview/provider/faq_provider.dart';
 import 'package:mytradeasia/core/constants/result_state.dart';
-import 'package:provider/provider.dart';
+import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_event.dart';
+// import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../../config/themes/theme.dart';
+import '../../../../../state_management/faq_bloc/faq_bloc.dart';
+import '../../../../../state_management/faq_bloc/faq_state.dart';
 
 class FaqScreen extends StatefulWidget {
   const FaqScreen({super.key});
@@ -19,7 +23,8 @@ class _FaqScreenState extends State<FaqScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<FaqProvider>(context, listen: false).getFaqResult();
+      var authBloc = BlocProvider.of<FaqBloc>(context);
+      authBloc.add(const GetFaq());
     });
   }
 
@@ -47,9 +52,9 @@ class _FaqScreenState extends State<FaqScreen> {
         elevation: 0.0,
         backgroundColor: whiteColor,
       ),
-      body: Consumer<FaqProvider>(
-        builder: (context, FaqProvider valueFaq, child) {
-          if (valueFaq.state == ResultState.loading) {
+      body: BlocBuilder<FaqBloc, FaqState>(
+        builder: (context, state) {
+          if (state is FaqLoading) {
             return Shimmer.fromColors(
                 baseColor: greyColor3,
                 highlightColor: greyColor,
@@ -66,10 +71,10 @@ class _FaqScreenState extends State<FaqScreen> {
                     ],
                   ),
                 ));
-          } else if (valueFaq.state == ResultState.hasData) {
+          } else if (state is FaqDone) {
             return ListView.builder(
               shrinkWrap: true,
-              itemCount: valueFaq.faqResult.length,
+              itemCount: state.faqData!.length,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) => Column(
                 children: [
@@ -80,14 +85,14 @@ class _FaqScreenState extends State<FaqScreen> {
                       titleChild: Padding(
                         padding:
                             const EdgeInsets.symmetric(horizontal: size20px),
-                        child: Text(valueFaq.faqResult[index].faqQuestion,
+                        child: Text(state.faqData![index].faqQuestion!,
                             style: body1Medium),
                       ),
                       contentChild: Padding(
                         padding:
                             const EdgeInsets.symmetric(horizontal: size20px),
                         child: Center(
-                            child: Text(valueFaq.faqResult[index].faqAnswer)),
+                            child: Text(state.faqData![index].faqAnswer!)),
                       ),
                       collapsedIcon: Padding(
                         padding: const EdgeInsets.only(right: size20px),
