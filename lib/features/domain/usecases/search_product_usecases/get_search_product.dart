@@ -10,7 +10,7 @@ class GetSearchProduct
   GetSearchProduct(this._searchProductRepo);
 
   @override
-  Future<DataState<List<SearchProductEntity>>> call({String? param}) {
+  Future<DataState<List<SearchProductEntity>>> call({required String? param}) {
     return _searchProductRepo.getSearchProduct(param!);
   }
 }

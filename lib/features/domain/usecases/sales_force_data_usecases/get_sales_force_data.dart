@@ -10,7 +10,7 @@ class GetSalesForceData
   GetSalesForceData(this._salesForceDataRepository);
 
   @override
-  Future<DataState<SalesforceDataEntity>> call({String? param}) {
+  Future<DataState<SalesforceDataEntity>> call({required String? param}) {
     return _salesForceDataRepository.getSalesForceData(param!);
   }
 }

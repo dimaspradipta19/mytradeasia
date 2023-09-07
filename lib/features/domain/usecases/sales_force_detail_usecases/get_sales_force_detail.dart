@@ -12,7 +12,7 @@ class GetSalesforceDetail
 
   @override
   Future<DataState<SalesforceDetailEntity>> call(
-      {Map<String, dynamic>? param}) {
+      {required Map<String, dynamic>? param}) {
     return _salesForceDetailRepo.getSalesForceDetail(param!);
   }
 }
