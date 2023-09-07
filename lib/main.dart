@@ -7,7 +7,9 @@ import 'package:mytradeasia/config/routes/routes.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/firebase_options.dart';
@@ -67,6 +69,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => injections<DhlShipmentBloc>(),
         ),
 
+        BlocProvider(create: (_) => injections<DetailProductBloc>()),
         // ChangeNotifierProvider(
         //   create: (context) => LoadingProvider(),
         // ),

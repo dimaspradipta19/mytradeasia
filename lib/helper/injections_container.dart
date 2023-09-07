@@ -42,6 +42,7 @@ import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_to
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
@@ -114,4 +115,6 @@ Future<void> initializeDependencies() async {
       .registerFactory<TopProductBloc>(() => TopProductBloc(injections()));
   injections
       .registerFactory<DhlShipmentBloc>(() => DhlShipmentBloc(injections()));
+  injections.registerFactory<DetailProductBloc>(
+      () => DetailProductBloc(injections()));
 }

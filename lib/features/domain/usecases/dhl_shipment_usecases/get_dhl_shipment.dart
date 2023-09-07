@@ -8,6 +8,7 @@ class GetDhlShipment implements UseCase<DataState<DhlShipmentEntity>, String> {
 
   GetDhlShipment(this._dhlShipmentRepo);
 
+  //TODO: change to required parameter
   @override
   Future<DataState<DhlShipmentEntity>> call({String? param}) {
     return _dhlShipmentRepo.getDhlShipment(param!);

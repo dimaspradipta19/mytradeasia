@@ -2,7 +2,7 @@ import 'package:mytradeasia/features/domain/entities/detail_product_entities/det
 
 class DetailsProductModel extends DetailsProductEntity {
   const DetailsProductModel({
-    _DetailProductModel? detailProduct,
+    _DetailProduct? detailProduct,
     List<_ListIndustryModel>? listIndustry,
     List<_ListCategoryModel>? listCategory,
     List<_RelatedProductModel>? relatedProducts,
@@ -16,9 +16,7 @@ class DetailsProductModel extends DetailsProductEntity {
   factory DetailsProductModel.fromJson(Map<String, dynamic> json) =>
       DetailsProductModel(
         // detailProduct: DetailProduct.fromJson(json["detail_product"]),
-        detailProduct: json["detail_product"] != null
-            ? _DetailProductModel.fromJson(json["detail_product"])
-            : null,
+        detailProduct: _DetailProduct.fromJson(json["detail_product"]),
         listIndustry: List<_ListIndustryModel>.from(
             json["list-industry"].map((x) => _ListIndustryModel.fromJson(x))),
         listCategory: List<_ListCategoryModel>.from(
@@ -29,8 +27,8 @@ class DetailsProductModel extends DetailsProductEntity {
       );
 }
 
-class _DetailProductModel extends DetailProduct {
-  const _DetailProductModel({
+class _DetailProduct extends DetailProduct {
+  const _DetailProduct({
     String? productname,
     String? productimage,
     String? iupacName,
@@ -52,8 +50,7 @@ class _DetailProductModel extends DetailProduct {
           packagingName: packagingName,
         );
 
-  factory _DetailProductModel.fromJson(Map<String, dynamic> json) =>
-      _DetailProductModel(
+  factory _DetailProduct.fromJson(Map<String, dynamic> json) => _DetailProduct(
         productname: json["productname"] ?? "",
         productimage: json["productimage"] ?? "",
         iupacName: json["iupac_name"] ?? "",

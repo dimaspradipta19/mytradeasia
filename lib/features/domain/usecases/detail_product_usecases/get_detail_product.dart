@@ -10,7 +10,7 @@ class GetDetailProduct
   GetDetailProduct(this._detailProductRepository);
 
   @override
-  Future<DataState<DetailsProductEntity>> call({String? param}) {
+  Future<DataState<DetailsProductEntity>> call({required String? param}) {
     return _detailProductRepository.getDetailProductRepo(param!);
   }
 }

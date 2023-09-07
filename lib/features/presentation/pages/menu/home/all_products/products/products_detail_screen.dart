@@ -2,12 +2,16 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/data/data_sources/old_remote/detail_product_service.dart';
-import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
-import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
+// import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
+// import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:provider/provider.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_state.dart';
+// import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../widgets/tabbar_content/tabbar_detail_content_widget.dart';
@@ -29,9 +33,9 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
   @override
   void initState() {
     super.initState();
+    var detailProductBloc = BlocProvider.of<DetailProductBloc>(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<DetailProductProvider>(context, listen: false)
-          .getDetailProduct(widget.urlProduct);
+      detailProductBloc.add(GetDetailProductEvent(widget.urlProduct));
     });
   }
 
@@ -42,709 +46,695 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
 
   String? _selectedValueUnit;
 
+  getExpand() {
+    isExpand = !isExpand;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var detailProductBloc = BlocProvider.of<DetailProductBloc>(context);
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
       child: Scaffold(
         body: RefreshIndicator(
           color: primaryColor1,
-          onRefresh: () {
+          onRefresh: () async {
             setState(() {});
-            Provider.of<DetailProductProvider>(context, listen: false)
-                .getDetailProduct(widget.urlProduct);
-            return DetailProductService().getDetailProduct(widget.urlProduct);
+            return detailProductBloc
+                .add(GetDetailProductEvent(widget.urlProduct));
           },
           child: SingleChildScrollView(
-            child: FutureBuilder(
-                future:
-                    DetailProductService().getDetailProduct(widget.urlProduct),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Shimmer.fromColors(
-                      baseColor: greyColor3,
-                      highlightColor: greyColor,
-                      child: Container(
-                        color: greyColor3,
-                        width: MediaQuery.of(context).size.width,
-                        height: size20px * 15.0,
-                      ),
-                    );
-                  } else if (snapshot.data?.detailProduct == null) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.pop(context);
-                    });
+            child: BlocBuilder<DetailProductBloc, DetailProductState>(
 
-                    return Center(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                // future: detailProductBloc.add(GetDetailProductEvent(widget.urlProduct)),
+                builder: (context, state) {
+              if (state is DetailProductLoading) {
+                return Shimmer.fromColors(
+                  baseColor: greyColor3,
+                  highlightColor: greyColor,
+                  child: Container(
+                    color: greyColor3,
+                    width: MediaQuery.of(context).size.width,
+                    height: size20px * 15.0,
+                  ),
+                );
+              } else if (state.detailProductData == null) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pop(context);
+                });
+
+                return Center(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: size20px * 20),
+                      child: Column(
+                        children: [
+                          const Text(
+                              "Sorry there is no data for this products"),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        primaryColor1),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side:
+                                          const BorderSide(color: greyColor3)),
+                                ),
+                                elevation:
+                                    MaterialStateProperty.all<double>(0.0),
+                              ),
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              child: const Text("Refresh"))
+                        ],
+                      ),
+                    ),
+                  ],
+                ));
+              } else if (state is DetailProductDone ||
+                  state.detailProductData != null) {
+                return Stack(
+                  children: [
+                    Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: size20px * 20),
-                          child: Column(
-                            children: [
-                              const Text(
-                                  "Sorry there is no data for this products"),
-                              ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            primaryColor1),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          side: const BorderSide(
-                                              color: greyColor3)),
-                                    ),
-                                    elevation:
-                                        MaterialStateProperty.all<double>(0.0),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {});
-                                  },
-                                  child: const Text("Refresh"))
-                            ],
+                        Container(
+                          color: greyColor3,
+                          width: MediaQuery.of(context).size.width,
+                          height: size20px * 15.0,
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "$url${state.detailProductData!.detailProduct!.productimage!}",
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
                         ),
                       ],
-                    ));
-                  } else if (snapshot.connectionState == ConnectionState.done ||
-                      snapshot.hasData) {
-                    return Stack(
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              color: greyColor3,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: size20px),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: size20px * 2.0, bottom: size20px * 7.0),
+                            child: SizedBox(
+                              height: size20px + 30,
                               width: MediaQuery.of(context).size.width,
-                              height: size20px * 15.0,
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "$url${snapshot.data?.detailProduct?.productimage}",
-                                fit: BoxFit.fill,
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator.adaptive(),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: Image.asset(
+                                      "assets/images/icon_back.png",
+                                      color: greyColor3,
+                                      width: size20px + 4,
+                                      height: size20px + 4,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: size20px + 30,
+                                    width: size20px * 12,
+                                    child: Form(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: greyColor3),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(size20px / 2),
+                                            ),
+                                          ),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: greyColor3),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(size20px / 2),
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: whiteColor,
+                                          prefixIcon: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20, right: 15.0),
+                                            child: Image.asset(
+                                              "assets/images/icon_search.png",
+                                              width: 24.0,
+                                              height: 24.0,
+                                            ),
+                                          ),
+                                          hintText: "Dipentene",
+                                          hintStyle: body1Regular,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: size20px + 30,
+                                    height: size20px + 30,
+                                    decoration: const BoxDecoration(
+                                      color: secondaryColor1,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.all(size20px - 6),
+                                      child: Image.asset(
+                                          "assets/images/icon_cart.png"),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: size20px),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: size20px * 2.0,
-                                    bottom: size20px * 7.0),
-                                child: SizedBox(
-                                  height: size20px + 30,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).pop(true);
-                                        },
-                                        child: Image.asset(
-                                          "assets/images/icon_back.png",
-                                          color: greyColor3,
-                                          width: size20px + 4,
-                                          height: size20px + 4,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: size20px + 30,
-                                        width: size20px * 12,
-                                        child: Form(
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              enabledBorder:
-                                                  const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: greyColor3),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(size20px / 2),
-                                                ),
-                                              ),
-                                              focusedBorder:
-                                                  const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: greyColor3),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(size20px / 2),
-                                                ),
-                                              ),
-                                              filled: true,
-                                              fillColor: whiteColor,
-                                              prefixIcon: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20, right: 15.0),
-                                                child: Image.asset(
-                                                  "assets/images/icon_search.png",
-                                                  width: 24.0,
-                                                  height: 24.0,
-                                                ),
-                                              ),
-                                              hintText: "Dipentene",
-                                              hintStyle: body1Regular,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: size20px + 30,
-                                        height: size20px + 30,
-                                        decoration: const BoxDecoration(
-                                          color: secondaryColor1,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(
-                                              size20px - 6),
-                                          child: Image.asset(
-                                              "assets/images/icon_cart.png"),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          ),
+                          SizedBox(
+                            width: size20px * 16.75,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              SizedBox(
-                                width: size20px * 16.75,
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  elevation: 2,
-                                  margin: EdgeInsets.zero,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(size20px),
-                                    child: Column(
+                              elevation: 2,
+                              margin: EdgeInsets.zero,
+                              child: Padding(
+                                padding: const EdgeInsets.all(size20px),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        Expanded(
+                                          child: Text(
+                                            state
+                                                    .detailProductData
+                                                    ?.detailProduct
+                                                    ?.productname ??
+                                                "N/A",
+                                            style: heading1,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        Container(
+                                          height: size20px + 10.0,
+                                          width: size20px + 10.0,
+                                          padding: const EdgeInsets.all(
+                                              size20px / 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(size20px),
+                                              ),
+                                              border:
+                                                  Border.all(color: greyColor)),
+                                          child: Image.asset(
+                                            "assets/images/icon_share.png",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: size20px * 0.75),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(
-                                              child: Text(
-                                                snapshot.data?.detailProduct
-                                                        ?.productname ??
+                                            const Text("CAS Number :",
+                                                style: body1Medium),
+                                            Text(
+                                                state
+                                                        .detailProductData
+                                                        ?.detailProduct
+                                                        ?.casNumber ??
                                                     "N/A",
-                                                style: heading1,
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            Container(
-                                              height: size20px + 10.0,
-                                              width: size20px + 10.0,
-                                              padding: const EdgeInsets.all(
-                                                  size20px / 5),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(size20px),
-                                                  ),
-                                                  border: Border.all(
-                                                      color: greyColor)),
-                                              child: Image.asset(
-                                                "assets/images/icon_share.png",
-                                              ),
+                                                // snapshot.data?.detailProduct
+                                                //         ?.casNumber ??
+                                                //     "N/A",
+                                                style: body1Regular.copyWith(
+                                                    color: greyColor2)),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text("HS Code :",
+                                                style: body1Medium),
+                                            Text(
+                                                state
+                                                        .detailProductData
+                                                        ?.detailProduct
+                                                        ?.hsCode ??
+                                                    "N/A",
+                                                style: body1Regular.copyWith(
+                                                    color: greyColor2)),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text("Formula :",
+                                                style: body1Medium),
+                                            SizedBox(
+                                              width: size20px * 5,
+                                              child: Text(
+                                                  state
+                                                          .detailProductData
+                                                          ?.detailProduct
+                                                          ?.formula ??
+                                                      "N/A",
+                                                  style: body1Regular.copyWith(
+                                                      color: greyColor2,
+                                                      overflow: TextOverflow
+                                                          .ellipsis)),
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: size20px * 0.75),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: size20px - 5.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: SizedBox(
+                                              height: size20px * 2,
+                                              width: size20px * 7.0,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                primaryColor1),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(7.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    "Download TDS",
+                                                    style: body1Medium.copyWith(
+                                                        color: whiteColor),
+                                                  )),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                              width: size20px * 0.75),
+                                          Expanded(
+                                            child: SizedBox(
+                                              height: size20px * 2,
+                                              width: size20px * 7.0,
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(primaryColor1),
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              7.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "Download MSDS",
+                                                  style: body1Medium.copyWith(
+                                                      color: whiteColor),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          /* Basic Info */
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: size20px),
+                            child: Text(
+                              "Basic Information",
+                              style: heading2,
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: 4,
+                              itemBuilder: (context, index) {
+                                List<List<String>> basicInformation = [
+                                  [
+                                    "IUPAC Name",
+                                    (state.detailProductData?.detailProduct
+                                            ?.iupacName ??
+                                        "N/A")
+                                  ],
+                                  ["Appearance", "N/A"],
+                                  ["Common Name", "N/A"],
+                                  [
+                                    "Packaging",
+                                    (state.detailProductData?.detailProduct
+                                            ?.packagingName ??
+                                        "N/A")
+                                  ]
+                                ];
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      color: index.isEven
+                                          ? greyColor4
+                                          : whiteColor,
+                                      borderRadius: BorderRadius.circular(7)),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: size20px,
+                                        vertical: size20px - 5),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 4,
+                                          child:
+                                              Text(basicInformation[index][0]),
+                                        ),
+                                        const Expanded(
+                                          flex: 1,
+                                          child: Text(":"),
+                                        ),
+                                        Expanded(
+                                          flex: 6,
+                                          child:
+                                              Text(basicInformation[index][1]),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          /* End Basic Info */
+
+                          /* Industry */
+                          const Padding(
+                            padding: EdgeInsets.only(top: size20px),
+                            child: Text(
+                              "Industry",
+                              style: heading2,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: size20px, bottom: size20px),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: size20px * 2.5,
+                              child: ListView.builder(
+                                itemCount: state
+                                    .detailProductData?.listIndustry!.length,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                thirdColor1),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                size20px * 5),
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () {},
+                                      child: Text(
+                                        state.detailProductData!
+                                            .listIndustry![index].industryName!,
+                                        style: body1Regular,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          const TabBar(
+                            indicatorColor: primaryColor1,
+                            tabs: [
+                              Tab(
+                                child: Text(
+                                  "Description",
+                                  style: heading2,
+                                ),
+                              ),
+                              Tab(
+                                child: Text(
+                                  "Application",
+                                  style: heading2,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          /* Tabbar Content */
+                          SizedBox(
+                            height: isExpand
+                                ? MediaQuery.of(context).size.height * 0.75
+                                : size20px * 7.5,
+                            width: MediaQuery.of(context).size.width,
+                            child: TabBarView(
+                              children: [
+                                // Description content
+                                descriptionContent(state.detailProductData,
+                                    isExpand, getExpand()),
+
+                                // Application content
+                                applicationContent(state.detailProductData,
+                                    isExpand, getExpand()),
+                              ],
+                            ),
+                          ),
+
+                          /* Related products */
+                          const Padding(
+                            padding:
+                                EdgeInsets.symmetric(vertical: size20px - 4.0),
+                            child: Text(
+                              "Related products",
+                              style: heading2,
+                            ),
+                          ),
+                          GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.7),
+                            itemCount: state
+                                .detailProductData!.relatedProducts!.length,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, indexRelated) {
+                              return InkWell(
+                                onTap: () {
+                                  /* With go_router */
+                                  context.pushNamed("product", pathParameters: {
+                                    'url': state
+                                            .detailProductData
+                                            ?.relatedProducts?[indexRelated]
+                                            .seoUrl ??
+                                        "/en/acrylic-acid"
+                                  });
+                                  // Navigator.push(context, MaterialPageRoute(
+                                  //   builder: (context) {
+                                  //     return ProductsDetailScreen(
+                                  //         urlProduct: snapshot
+                                  //                 .data
+                                  //                 ?.relatedProducts[
+                                  //                     indexRelated]
+                                  //                 .seoUrl ??
+                                  //             "/en/acrylic-acid");
+                                  //   },
+                                  // ));
+                                },
+                                child: Card(
+                                  shadowColor: blackColor,
+                                  elevation: 3.0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.all(size24px / 4),
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(size20px / 2)),
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: size20px * 5.5,
+                                            child: state
+                                                        .detailProductData
+                                                        ?.relatedProducts?[
+                                                            indexRelated]
+                                                        .productimage !=
+                                                    null
+                                                ? CachedNetworkImage(
+                                                    imageUrl: url +
+                                                        state
+                                                            .detailProductData!
+                                                            .relatedProducts![
+                                                                indexRelated]
+                                                            .productimage!,
+                                                    // state.detailProductData!.relatedProducts[indexRelated].productimage,
+                                                    fit: BoxFit.fill,
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            const Center(
+                                                      child:
+                                                          CircularProgressIndicator
+                                                              .adaptive(),
+                                                    ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
+                                                  )
+                                                : const CircularProgressIndicator
+                                                    .adaptive(),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0, horizontal: 10.0),
+                                          child: Text(
+                                            state
+                                                .detailProductData!
+                                                .relatedProducts![indexRelated]
+                                                .productname!,
+                                            style: text14,
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: size20px / 2,
+                                            vertical: size20px / 5),
+                                        child: Row(
                                           children: [
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const Text("CAS Number :",
-                                                    style: body1Medium),
+                                                    style: text10),
                                                 Text(
-                                                    snapshot.data?.detailProduct
-                                                            ?.casNumber ??
-                                                        "N/A",
-                                                    style:
-                                                        body1Regular.copyWith(
-                                                            color: greyColor2)),
+                                                    state
+                                                        .detailProductData!
+                                                        .relatedProducts![
+                                                            indexRelated]
+                                                        .casNumber!,
+                                                    style: text10.copyWith(
+                                                        color: greyColor2)),
                                               ],
                                             ),
+                                            const Spacer(),
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const Text("HS Code :",
-                                                    style: body1Medium),
+                                                    style: text10),
                                                 Text(
-                                                    snapshot.data?.detailProduct
-                                                            ?.hsCode ??
-                                                        "N/A",
-                                                    style:
-                                                        body1Regular.copyWith(
-                                                            color: greyColor2)),
+                                                    state
+                                                        .detailProductData!
+                                                        .relatedProducts![
+                                                            indexRelated]
+                                                        .hsCode!,
+                                                    style: text10.copyWith(
+                                                        color: greyColor2)),
                                               ],
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Text("Formula :",
-                                                    style: body1Medium),
-                                                SizedBox(
-                                                  width: size20px * 5,
-                                                  child: Text(
-                                                      snapshot
-                                                              .data
-                                                              ?.detailProduct
-                                                              ?.formula ??
-                                                          "N/A",
-                                                      style:
-                                                          body1Regular.copyWith(
-                                                              color: greyColor2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis)),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: size20px - 5.0),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: SizedBox(
-                                                  height: size20px * 2,
-                                                  width: size20px * 7.0,
-                                                  child: ElevatedButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    primaryColor1),
-                                                        shape: MaterialStateProperty
-                                                            .all<
-                                                                RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        7.0),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {},
-                                                      child: Text(
-                                                        "Download TDS",
-                                                        style: body1Medium
-                                                            .copyWith(
-                                                                color:
-                                                                    whiteColor),
-                                                      )),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                  width: size20px * 0.75),
-                                              Expanded(
-                                                child: SizedBox(
-                                                  height: size20px * 2,
-                                                  width: size20px * 7.0,
-                                                  child: ElevatedButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStateProperty
-                                                              .all<Color>(
-                                                                  primaryColor1),
-                                                      shape: MaterialStateProperty
-                                                          .all<
-                                                              RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      7.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {},
-                                                    child: Text(
-                                                      "Download MSDS",
-                                                      style:
-                                                          body1Medium.copyWith(
-                                                              color:
-                                                                  whiteColor),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              /* Basic Info */
-                              const Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: size20px),
-                                child: Text(
-                                  "Basic Information",
-                                  style: heading2,
-                                ),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    List<List<String>> basicInformation = [
-                                      [
-                                        "IUPAC Name",
-                                        (snapshot.data?.detailProduct
-                                                ?.iupacName ??
-                                            "N/A")
-                                      ],
-                                      ["Appearance", "N/A"],
-                                      ["Common Name", "N/A"],
-                                      [
-                                        "Packaging",
-                                        (snapshot.data?.detailProduct
-                                                ?.packagingName ??
-                                            "N/A")
-                                      ]
-                                    ];
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                          color: index.isEven
-                                              ? greyColor4
-                                              : whiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(7)),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: size20px,
-                                            vertical: size20px - 5),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 4,
-                                              child: Text(
-                                                  basicInformation[index][0]),
-                                            ),
-                                            const Expanded(
-                                              flex: 1,
-                                              child: Text(":"),
-                                            ),
-                                            Expanded(
-                                              flex: 6,
-                                              child: Text(
-                                                  basicInformation[index][1]),
                                             ),
                                           ],
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              /* End Basic Info */
-
-                              /* Industry */
-                              const Padding(
-                                padding: EdgeInsets.only(top: size20px),
-                                child: Text(
-                                  "Industry",
-                                  style: heading2,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: size20px, bottom: size20px),
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: size20px * 2.5,
-                                  child: ListView.builder(
-                                    itemCount:
-                                        snapshot.data?.listIndustry.length,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(thirdColor1),
-                                            shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        size20px * 5),
-                                              ),
-                                            ),
-                                          ),
-                                          onPressed: () {},
-                                          child: Text(
-                                            snapshot.data!.listIndustry[index]
-                                                .industryName,
-                                            style: body1Regular,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                              const TabBar(
-                                indicatorColor: primaryColor1,
-                                tabs: [
-                                  Tab(
-                                    child: Text(
-                                      "Description",
-                                      style: heading2,
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Text(
-                                      "Application",
-                                      style: heading2,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              /* Tabbar Content */
-                              Consumer<SeeMoreProvider>(
-                                builder: (context, valueSeeMore, _) => SizedBox(
-                                  height: valueSeeMore.isExpand
-                                      ? MediaQuery.of(context).size.height *
-                                          0.75
-                                      : size20px * 7.5,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: TabBarView(
-                                    children: [
-                                      // Description content
-                                      descriptionContent(
-                                          snapshot, valueSeeMore),
-
-                                      // Application content
-                                      applicationContent(
-                                          snapshot, valueSeeMore),
                                     ],
                                   ),
                                 ),
-                              ),
-
-                              /* Related products */
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: size20px - 4.0),
-                                child: Text(
-                                  "Related products",
-                                  style: heading2,
-                                ),
-                              ),
-                              GridView.builder(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 15,
-                                        mainAxisSpacing: 15,
-                                        childAspectRatio: 0.7),
-                                itemCount:
-                                    snapshot.data!.relatedProducts.length,
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (context, indexRelated) {
-                                  return InkWell(
-                                    onTap: () {
-                                      /* With go_router */
-                                      context.pushNamed("product",
-                                          pathParameters: {
-                                            'url': snapshot
-                                                    .data
-                                                    ?.relatedProducts[
-                                                        indexRelated]
-                                                    .seoUrl ??
-                                                "/en/acrylic-acid"
-                                          });
-                                      // Navigator.push(context, MaterialPageRoute(
-                                      //   builder: (context) {
-                                      //     return ProductsDetailScreen(
-                                      //         urlProduct: snapshot
-                                      //                 .data
-                                      //                 ?.relatedProducts[
-                                      //                     indexRelated]
-                                      //                 .seoUrl ??
-                                      //             "/en/acrylic-acid");
-                                      //   },
-                                      // ));
-                                    },
-                                    child: Card(
-                                      shadowColor: blackColor,
-                                      elevation: 3.0,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(
-                                                size24px / 4),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(
-                                                          size20px / 2)),
-                                              child: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: size20px * 5.5,
-                                                child: snapshot
-                                                            .data
-                                                            ?.relatedProducts[
-                                                                indexRelated]
-                                                            .productimage !=
-                                                        null
-                                                    ? CachedNetworkImage(
-                                                        imageUrl: url +
-                                                            snapshot
-                                                                .data!
-                                                                .relatedProducts[
-                                                                    indexRelated]
-                                                                .productimage,
-                                                        fit: BoxFit.fill,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                const Center(
-                                                          child:
-                                                              CircularProgressIndicator
-                                                                  .adaptive(),
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            const Icon(
-                                                                Icons.error),
-                                                      )
-                                                    : const CircularProgressIndicator
-                                                        .adaptive(),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 5.0,
-                                                      horizontal: 10.0),
-                                              child: Text(
-                                                snapshot
-                                                    .data!
-                                                    .relatedProducts[
-                                                        indexRelated]
-                                                    .productname,
-                                                style: text14,
-                                                maxLines: 2,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: size20px / 2,
-                                                vertical: size20px / 5),
-                                            child: Row(
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text("CAS Number :",
-                                                        style: text10),
-                                                    Text(
-                                                        snapshot
-                                                            .data!
-                                                            .relatedProducts[
-                                                                indexRelated]
-                                                            .casNumber,
-                                                        style: text10.copyWith(
-                                                            color: greyColor2)),
-                                                  ],
-                                                ),
-                                                const Spacer(),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text("HS Code :",
-                                                        style: text10),
-                                                    Text(
-                                                        snapshot
-                                                            .data!
-                                                            .relatedProducts[
-                                                                indexRelated]
-                                                            .hsCode,
-                                                        style: text10.copyWith(
-                                                            color: greyColor2)),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              /* End Related products */
-                            ],
+                              );
+                            },
                           ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text("Error"),
+                          /* End Related products */
                         ],
                       ),
-                    );
-                  }
-                }),
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Error"),
+                    ],
+                  ),
+                );
+              }
+            }),
           ),
         ),
         bottomNavigationBar: Padding(
