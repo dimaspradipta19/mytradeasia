@@ -45,6 +45,7 @@ import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 
 final injections = GetIt.instance;
@@ -117,4 +118,6 @@ Future<void> initializeDependencies() async {
       .registerFactory<DhlShipmentBloc>(() => DhlShipmentBloc(injections()));
   injections.registerFactory<DetailProductBloc>(
       () => DetailProductBloc(injections()));
+  injections.registerFactory<SalesforceLoginBloc>(
+      () => SalesforceLoginBloc(injections()));
 }

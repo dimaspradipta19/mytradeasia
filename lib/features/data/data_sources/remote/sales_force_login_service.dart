@@ -28,12 +28,12 @@ class SalesforceLoginService {
     );
     final data = response.data;
 
-    final dataMapped = data.map((e) => SalesforceLoginModel.fromJson(e));
+    // final dataMapped = data.map((e) => SalesforceLoginModel.fromJson(e));
 
     return Response<SalesforceLoginModel>(
       statusCode: response.statusCode,
       requestOptions: response.requestOptions,
-      data: dataMapped,
+      data: SalesforceLoginModel.fromJson(data),
     );
   }
 }
