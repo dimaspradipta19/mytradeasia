@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_state.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_state.dart';
@@ -37,17 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<TopProductBloc>(context).add(const GetTopProduct());
     super.initState();
 
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   // provider for get top product
-    //   Provider.of<TopProductsProvider>(context, listen: false).getTopProducts();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      BlocProvider.of<TopProductBloc>(context).add(const GetTopProduct());
 
-    //   // provider for get token
-    //   Provider.of<SalesforceLoginProvider>(context, listen: false)
-    //       .postSalesforceLogin();
-    // });
+      BlocProvider.of<SalesforceLoginBloc>(context)
+          .add(const LoginSalesforce());
+    });
   }
 
   @override
@@ -347,14 +347,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? streamSnapshot.data!.docs[0]
                                                           ['role'] ==
                                                       "Sales"
-                                                  ? Consumer<
-                                                          SalesforceLoginProvider>(
-                                                      builder: (context,
-                                                          valueAccessToken,
-                                                          child) {
-                                                      if (valueAccessToken
-                                                              .state ==
-                                                          ResultState.loading) {
+                                                  ? BlocBuilder<
+                                                          SalesforceLoginBloc,
+                                                          SalesforceLoginState>(
+                                                      builder:
+                                                          (context, state) {
+                                                      if (state
+                                                          is SalesforceLoginLoading) {
                                                         return Shimmer
                                                             .fromColors(
                                                           baseColor: greyColor,
@@ -431,14 +430,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         );
                                                       }
 
-                                                      if (valueAccessToken
-                                                              .state ==
-                                                          ResultState.hasData) {
+                                                      if (state
+                                                          is SalesforceLoginDone) {
                                                         return MenuGridWidgetSales(
-                                                          accessToken:
-                                                              valueAccessToken
-                                                                  .results!
-                                                                  .accessToken,
+                                                          accessToken: state
+                                                              .loginEntity!
+                                                              .accessToken!,
                                                         );
                                                       }
 
