@@ -9,7 +9,7 @@ class DetailProductService {
 
     final response = await dio.get(url);
     final data = response.data;
-    final detailProductModel = data.map((e) => DetailsProductModel.fromJson(e));
+    final detailProductModel = DetailsProductModel.fromJson(data);
 
     return Response<DetailsProductModel>(
       statusCode: response.statusCode,

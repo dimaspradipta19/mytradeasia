@@ -8,6 +8,7 @@ abstract class TopProductState extends Equatable {
 
   const TopProductState({this.topProductData, this.error});
 
+  @override
   List<Object> get props => [topProductData!, error!];
 }
 

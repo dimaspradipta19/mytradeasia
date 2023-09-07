@@ -41,6 +41,7 @@ import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get
 import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_top_product.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
@@ -111,4 +112,6 @@ Future<void> initializeDependencies() async {
   injections.registerFactory<FaqBloc>(() => FaqBloc(injections()));
   injections
       .registerFactory<TopProductBloc>(() => TopProductBloc(injections()));
+  injections.registerFactory<DetailProductBloc>(
+      () => DetailProductBloc(injections()));
 }
