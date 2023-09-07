@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -41,14 +42,11 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
 
   final String url = "https://chemtradea.chemtradeasia.com/";
 
-  bool isExpand = false;
+  ValueNotifier<bool> isExpand2 = ValueNotifier<bool>(false);
+
   final TextEditingController _quantityController = TextEditingController();
 
   String? _selectedValueUnit;
-
-  getExpand() {
-    isExpand = !isExpand;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +360,10 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    print(isExpand2.value);
+                                                    setState(() {});
+                                                  },
                                                   child: Text(
                                                     "Download TDS",
                                                     style: body1Medium.copyWith(
@@ -544,23 +545,29 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                           ),
 
                           /* Tabbar Content */
-                          SizedBox(
-                            height: isExpand
-                                ? MediaQuery.of(context).size.height * 0.75
-                                : size20px * 7.5,
-                            width: MediaQuery.of(context).size.width,
-                            child: TabBarView(
-                              children: [
-                                // Description content
-                                descriptionContent(state.detailProductData,
-                                    isExpand, getExpand()),
 
-                                // Application content
-                                applicationContent(state.detailProductData,
-                                    isExpand, getExpand()),
-                              ],
-                            ),
-                          ),
+                          ValueListenableBuilder(
+                              valueListenable: isExpand2,
+                              builder: (context, value, child) {
+                                return SizedBox(
+                                  height: isExpand2.value
+                                      ? MediaQuery.of(context).size.height *
+                                          0.75
+                                      : size20px * 7.5,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: TabBarView(
+                                    children: [
+                                      // Description content
+                                      descriptionContent(
+                                          state.detailProductData, isExpand2),
+
+                                      // Application content
+                                      applicationContent(
+                                          state.detailProductData, isExpand2),
+                                    ],
+                                  ),
+                                );
+                              }),
 
                           /* Related products */
                           const Padding(
