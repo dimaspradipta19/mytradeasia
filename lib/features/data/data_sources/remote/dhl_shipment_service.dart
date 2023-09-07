@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:mytradeasia/core/constants/constants.dart';
 import 'package:mytradeasia/features/data/model/dhl_shipment_models/dhl_shipment_model.dart';
@@ -18,12 +20,14 @@ class DhlShipmentService {
 
     final data = response.data;
 
-    final dataMapped = data.map((e) => DhlShipmentModel.fromJson(e));
+    log("DHL DATA : $data");
+
+    final dhlShipmentData = DhlShipmentModel.fromJson(data);
 
     return Response<DhlShipmentModel>(
       statusCode: response.statusCode,
       requestOptions: response.requestOptions,
-      data: dataMapped,
+      data: dhlShipmentData,
     );
   }
 }

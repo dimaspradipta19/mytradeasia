@@ -10,10 +10,10 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
   final GetListProduct _getListProduct;
 
   ListProductBloc(this._getListProduct) : super(const ListProductLoading()) {
-    on<GetProducts>(onGetArticles);
+    on<GetProducts>(onGetProducts);
   }
 
-  void onGetArticles(GetProducts event, Emitter<ListProductState> emit) async {
+  void onGetProducts(GetProducts event, Emitter<ListProductState> emit) async {
     // log("TEST");
     //
     // var dataState;

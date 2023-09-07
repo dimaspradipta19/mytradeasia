@@ -83,7 +83,7 @@ class _DetailsModel extends Details {
       {_ProofOfDeliveryModel? proofOfDelivery,
       bool? proofOfDeliverySignedAvailable,
       int? totalNumberOfPieces,
-      List<String>? pieceIds})
+      List<dynamic>? pieceIds})
       : super(
             proofOfDelivery: proofOfDelivery,
             proofOfDeliverySignedAvailable: proofOfDeliverySignedAvailable,
@@ -123,7 +123,7 @@ class _EventModel extends Event {
     DateTime? timestamp,
     _LocationModel? location,
     String? description,
-    List<String>? pieceIds,
+    List<dynamic>? pieceIds,
   }) : super(
             timestamp: timestamp,
             location: location,

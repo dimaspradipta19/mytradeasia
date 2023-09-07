@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
+import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_state.dart';
 import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
 import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
@@ -16,10 +20,8 @@ class TrackingShipmentScreen extends StatefulWidget {
 class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<DhlShipmentProvider>(context, listen: false)
-          .getDhlShipment("4995568406");
-    });
+    BlocProvider.of<DhlShipmentBloc>(context)
+        .add(const FetchDhlShipment("4995568406"));
     super.initState();
   }
 
@@ -54,16 +56,17 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Consumer<DhlShipmentProvider>(
-                builder: (context, DhlShipmentProvider valueShipment, child) {
-                  if (valueShipment.state == ResultState.loading) {
-                    return const CircularProgressIndicator.adaptive();
-                  } else if (valueShipment.state == ResultState.hasData) {
+              child: BlocBuilder<DhlShipmentBloc, DhlShipmentState>(
+                builder: (context, state) {
+                  if (state is DhlShipmentLoading) {
+                    return const Center(
+                        child: CircularProgressIndicator.adaptive());
+                  } else if (state is DhlShipmentDone) {
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
-                      itemCount: valueShipment.resultShipment!.shipments.length,
+                      itemCount: state.shipment!.shipments!.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 15.0),
@@ -116,7 +119,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                          .symmetric(
+                                                      .symmetric(
                                                       horizontal: 8.0),
                                                   child: Text(
                                                     "Shipped",
@@ -140,7 +143,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                          .symmetric(
+                                                      .symmetric(
                                                       horizontal: 8.0),
                                                   child: Text(
                                                     "Pending",
