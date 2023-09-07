@@ -1,8 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:mytradeasia/core/constants/result_state.dart';
+import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../config/themes/theme.dart';
@@ -43,10 +47,8 @@ class _DetailedShipmentProductsScreenState
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<DhlShipmentProvider>(context, listen: false)
-          .getDhlShipment("4995568406");
-    });
+    BlocProvider.of<DhlShipmentBloc>(context)
+        .add(const FetchDhlShipment("4995568406"));
     super.initState();
   }
 
@@ -88,12 +90,12 @@ class _DetailedShipmentProductsScreenState
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Consumer<DhlShipmentProvider>(
-          builder: (context, DhlShipmentProvider valueShipment, child) {
-            if (valueShipment.state == ResultState.loading) {
+        child: BlocBuilder<DhlShipmentBloc, DhlShipmentState>(
+          builder: (context, state) {
+            if (state is DhlShipmentLoading) {
               return const Center(child: CircularProgressIndicator.adaptive());
-            } else if (valueShipment.state == ResultState.hasData) {
-              var shipment = valueShipment.resultShipment!.shipments[0];
+            } else if (state is DhlShipmentDone) {
+              var shipment = state.shipment!.shipments![0];
               return Column(
                 children: [
                   // Worldwide images + text
@@ -127,8 +129,9 @@ class _DetailedShipmentProductsScreenState
                                     child: Column(
                                       children: [
                                         Text(
-                                          shipment
-                                              .origin.address.addressLocality,
+                                          shipment.origin!.address!
+                                                  .addressLocality ??
+                                              "",
                                           style: heading3,
                                         ),
                                         const Text(
@@ -150,8 +153,9 @@ class _DetailedShipmentProductsScreenState
                                     child: Column(
                                       children: [
                                         Text(
-                                          shipment.destination.address
-                                              .addressLocality,
+                                          shipment.destination!.address!
+                                                  .addressLocality ??
+                                              "",
                                           style: heading3,
                                         ),
                                         const Text(
@@ -201,10 +205,10 @@ class _DetailedShipmentProductsScreenState
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: shipment.events.length,
+                              itemCount: shipment.events!.length,
                               reverse: true,
                               itemBuilder: (context, index) {
-                                var events = shipment.events[index];
+                                var events = shipment.events![index];
 
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 34),
@@ -229,12 +233,13 @@ class _DetailedShipmentProductsScreenState
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                    events.location.address
-                                                        .addressLocality,
+                                                    events.location!.address!
+                                                            .addressLocality ??
+                                                        "",
                                                     style: text15),
                                                 Expanded(child: Container()),
                                                 Text(
-                                                  "${events.timestamp.day} - ${events.timestamp.month} - ${events.timestamp.year}"
+                                                  "${events.timestamp!.day} - ${events.timestamp!.month} - ${events.timestamp!.year}"
                                                       .toString(),
                                                   style: text10,
                                                 ),
@@ -243,7 +248,7 @@ class _DetailedShipmentProductsScreenState
                                             const SizedBox(
                                                 height: size20px / 4),
                                             Text(
-                                              events.description,
+                                              events.description ?? "",
                                               style: body1Regular,
                                             )
                                           ],
@@ -299,8 +304,9 @@ class _DetailedShipmentProductsScreenState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                valueShipment.resultShipment!.shipments[0]
-                                    .events[0].description,
+                                state.shipment!.shipments![0].events![0]
+                                        .description ??
+                                    "",
                                 style: text15),
                             const SizedBox(height: size20px / 4),
                             const Text(

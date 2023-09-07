@@ -64,7 +64,7 @@ class Details {
   final ProofOfDelivery? proofOfDelivery;
   final bool? proofOfDeliverySignedAvailable;
   final int? totalNumberOfPieces;
-  final List<String>? pieceIds;
+  final List<dynamic>? pieceIds;
 
   const Details({
     required this.proofOfDelivery,
@@ -90,7 +90,7 @@ class Event {
   final DateTime? timestamp;
   final Location? location;
   final String? description;
-  final List<String>? pieceIds;
+  final List<dynamic>? pieceIds;
 
   const Event({
     required this.timestamp,
