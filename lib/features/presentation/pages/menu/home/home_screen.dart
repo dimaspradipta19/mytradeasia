@@ -1350,11 +1350,6 @@ class MenuGridWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     context.go("/home/all_products");
-                    // Navigator.push(context, MaterialPageRoute(
-                    //   builder: (context) {
-                    //     return const AllProductsScreen();
-                    //   },
-                    // ));
                   },
                   child: Container(
                     height: 60,
@@ -1510,11 +1505,7 @@ class MenuGridWidgetSales extends StatelessWidget {
                 flex: 5,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const AllProductsScreen();
-                      },
-                    ));
+                    context.go("/home/all_products");
                   },
                   child: Container(
                     height: 60,
