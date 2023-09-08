@@ -9,6 +9,7 @@ class SearchProductBloc extends Bloc<SearchProductEvent, SearchProductState> {
   SearchProductBloc(this._getSearchProduct)
       : super(const SearchProductLoading()) {
     on<SearchProduct>(onSearchProduct);
+    on<ClearSearch>(onClearSearch);
   }
 
   void onSearchProduct(
@@ -20,5 +21,9 @@ class SearchProductBloc extends Bloc<SearchProductEvent, SearchProductState> {
     if (dataState is DataFailed) {
       emit(SearchProductError(dataState.error!));
     }
+  }
+
+  void onClearSearch(ClearSearch event, Emitter<SearchProductState> emit) {
+    emit(SearchProductDone([]));
   }
 }

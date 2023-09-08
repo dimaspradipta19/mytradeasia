@@ -4,6 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
 import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final searchProd =
-        Provider.of<SearchProductProvider>(context, listen: false);
+    final searchProd = BlocProvider.of<SearchProductBloc>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: size20px),
@@ -49,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.pop(context);
-                      searchProd.searchProduct.clear();
+                      searchProd.add(const ClearSearch());
                     },
                     child: Image.asset(
                       "assets/images/icon_back.png",
@@ -76,10 +79,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
                             debouncerTime =
                                 Timer(const Duration(milliseconds: 700), () {
-                              Provider.of<SearchProductProvider>(context,
-                                      listen: false)
-                                  .getListProduct(
-                                      _searchProductController.text);
+                              searchProd.add(
+                                  SearchProduct(_searchProductController.text));
                             });
                           },
                           controller: _searchProductController,
@@ -103,13 +104,13 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             // Grid Data Search Product
             Expanded(
-              child: Consumer<SearchProductProvider>(
-                builder: (context, SearchProductProvider valueSearch, _) {
-                  if (valueSearch.state == ResultState.loading) {
+              child: BlocBuilder<SearchProductBloc, SearchProductState>(
+                builder: (context, state) {
+                  if (state is SearchProductLoading) {
                     return const Center(
                       child: CircularProgressIndicator.adaptive(),
                     );
-                  } else if (valueSearch.state == ResultState.hasData &&
+                  } else if (state is SearchProductDone &&
                       _searchProductController.text.isNotEmpty) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,9 +161,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                     crossAxisSpacing: 15,
                                     mainAxisSpacing: 15,
                                     childAspectRatio: 0.6),
-                            itemCount: valueSearch.state == ResultState.loading
+                            itemCount: state is SearchProductLoading
                                 ? 4
-                                : valueSearch.searchProduct.length,
+                                : state.searchProducts!.length,
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),
                             padding: EdgeInsets.zero,
@@ -176,8 +177,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     MaterialPageRoute(
                                       builder: (context) {
                                         return ProductsDetailScreen(
-                                          urlProduct: valueSearch
-                                                  .searchProduct[index]
+                                          urlProduct: state
+                                                  .searchProducts![index]
                                                   .seoUrl ??
                                               "/en/acrylic-acid",
                                         );
@@ -187,16 +188,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                   String docsId =
                                       _auth.currentUser!.uid.toString();
                                   Map<String, dynamic> data = {
-                                    "productName": valueSearch
-                                        .searchProduct[index].productname,
+                                    "productName": state
+                                        .searchProducts![index].productname,
                                     "seo_url":
-                                        valueSearch.searchProduct[index].seoUrl,
-                                    "casNumber": valueSearch
-                                        .searchProduct[index].casNumber,
+                                        state.searchProducts![index].seoUrl,
+                                    "casNumber":
+                                        state.searchProducts![index].casNumber,
                                     "hsCode":
-                                        valueSearch.searchProduct[index].hsCode,
-                                    "productImage": valueSearch
-                                        .searchProduct[index].productimage
+                                        state.searchProducts![index].hsCode,
+                                    "productImage": state
+                                        .searchProducts![index].productimage
                                   };
 
                                   await FirebaseFirestore.instance
@@ -230,7 +231,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           size20px / 2)),
                                               child: CachedNetworkImage(
                                                   imageUrl:
-                                                      "$url${valueSearch.searchProduct[index].productimage}",
+                                                      "$url${state.searchProducts![index].productimage}",
                                                   fit: BoxFit.fill,
                                                   placeholder: (context, url) =>
                                                       const Center(
@@ -250,8 +251,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10.0),
                                           child: Text(
-                                            valueSearch.searchProduct[index]
-                                                .productname,
+                                            state.searchProducts![index]
+                                                    .productname ??
+                                                "",
                                             style: text14,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -272,9 +274,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 const Text("CAS Number :",
                                                     style: text10),
                                                 Text(
-                                                    valueSearch
-                                                        .searchProduct[index]
-                                                        .casNumber,
+                                                    state.searchProducts![index]
+                                                            .casNumber ??
+                                                        "",
                                                     style: text10.copyWith(
                                                         color: greyColor2)),
                                               ],
@@ -286,9 +288,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 const Text("HS Code :",
                                                     style: text10),
                                                 Text(
-                                                    valueSearch
-                                                        .searchProduct[index]
-                                                        .hsCode,
+                                                    state.searchProducts![index]
+                                                            .hsCode ??
+                                                        "",
                                                     style: text10.copyWith(
                                                         color: greyColor2)),
                                               ],
@@ -369,7 +371,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ],
                     );
-                  } else if (valueSearch.state == ResultState.hasData) {
+                  } else if (state is SearchProductDone) {
                     return Column(
                       children: const [
                         RecentlySeenWidget(),
@@ -377,7 +379,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         PopularSearchWidget()
                       ],
                     );
-                  } else if (valueSearch.state == ResultState.error) {
+                  } else if (state is SearchProductError) {
                     return const Center(child: Text("Error"));
                   } else {
                     return Column(
