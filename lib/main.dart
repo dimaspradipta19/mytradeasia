@@ -11,6 +11,7 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/firebase_options.dart';
@@ -71,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(create: (_) => injections<DetailProductBloc>()),
         BlocProvider(create: (_) => injections<SalesforceLoginBloc>()),
+        BlocProvider(create: (_) => injections<SalesforceDataBloc>()),
 
         // ChangeNotifierProvider(
         //   create: (context) => LoadingProvider(),

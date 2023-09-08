@@ -1,7 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_state.dart';
+// import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
 import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
@@ -23,8 +27,8 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<SalesforceDataProvider>(context, listen: false)
-          .getAllData(widget.token);
+      var salesForceDataBloc = BlocProvider.of<SalesforceDataBloc>(context);
+      salesForceDataBloc.add(GetDataSalesforce(widget.token));
     });
   }
 
@@ -42,53 +46,51 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
       ),
       body: Column(
         children: [
-          Consumer<SalesforceDataProvider>(
-            builder: (context, valueData, child) {
-              if (valueData.state == ResultState.loading) {
+          BlocBuilder<SalesforceDataBloc, SalesforceDataState>(
+            builder: (context, state) {
+              if (state is SalesforceDataLoading) {
                 return const Expanded(
                   child: Center(child: CircularProgressIndicator.adaptive()),
                 );
               }
 
-              if (valueData.state == ResultState.hasData) {
+              if (state is SalesforceDataDone && state.dataEntity != null) {
                 return Expanded(
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: valueData.resultDataModel!.records.length,
+                    itemCount: state.dataEntity!.records!.length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         trailing: const Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
-                          log(valueData.resultDataModel!.records[index].id);
+                          log(state.dataEntity!.records![index].id!);
 
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return DetailSalesforceDataScreen(
-                                urlDetail: valueData.resultDataModel!
-                                    .records[index].attributes.url,
+                                urlDetail: state.dataEntity!.records![index]
+                                    .attributes!.url!,
                                 token: widget.token,
                               );
                             },
                           ));
                         },
-                        title: Text(
-                            valueData.resultDataModel!.records[index].name),
-                        subtitle:
-                            Text(valueData.resultDataModel!.records[index].id),
+                        title: Text(state.dataEntity!.records![index].name!),
+                        subtitle: Text(state.dataEntity!.records![index].id!),
                       );
                     },
                   ),
                 );
               }
 
-              if (valueData.state == ResultState.noData) {
+              if (state is SalesforceDataDone && state.dataEntity == null) {
                 return const Text("No Data Found");
               }
 
               return const Text("Error screen");
             },
-          ),
+          )
         ],
       ),
     );
