@@ -18,7 +18,7 @@ class SalesforceDataService {
 
     final data = response.data;
 
-    final dataMapped = data.map((e) => SalesforceDataModel.fromJson(e));
+    final dataMapped = SalesforceDataModel.fromJson(data);
 
     return Response<SalesforceDataModel>(
       statusCode: response.statusCode,

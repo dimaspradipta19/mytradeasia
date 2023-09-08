@@ -1,7 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_state.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_state.dart';
+// import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
 import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
 import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
@@ -23,8 +30,8 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<SalesforceDataProvider>(context, listen: false)
-          .getAllData(widget.token);
+      var salesForceDataBloc = BlocProvider.of<SalesforceDataBloc>(context);
+      salesForceDataBloc.add(GetDataSalesforce(widget.token));
     });
   }
 
@@ -42,53 +49,51 @@ class _SalesForceLoginScreenState extends State<SalesForceLoginScreen> {
       ),
       body: Column(
         children: [
-          Consumer<SalesforceDataProvider>(
-            builder: (context, valueData, child) {
-              if (valueData.state == ResultState.loading) {
+          BlocBuilder<SalesforceDataBloc, SalesforceDataState>(
+            builder: (context, state) {
+              if (state is SalesforceDataLoading) {
                 return const Expanded(
                   child: Center(child: CircularProgressIndicator.adaptive()),
                 );
               }
 
-              if (valueData.state == ResultState.hasData) {
+              if (state is SalesforceDataDone && state.dataEntity != null) {
                 return Expanded(
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: valueData.resultDataModel!.records.length,
+                    itemCount: state.dataEntity!.records!.length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         trailing: const Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
-                          log(valueData.resultDataModel!.records[index].id);
+                          log(state.dataEntity!.records![index].id!);
 
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return DetailSalesforceDataScreen(
-                                urlDetail: valueData.resultDataModel!
-                                    .records[index].attributes.url,
+                                urlDetail: state.dataEntity!.records![index]
+                                    .attributes!.url!,
                                 token: widget.token,
                               );
                             },
                           ));
                         },
-                        title: Text(
-                            valueData.resultDataModel!.records[index].name),
-                        subtitle:
-                            Text(valueData.resultDataModel!.records[index].id),
+                        title: Text(state.dataEntity!.records![index].name!),
+                        subtitle: Text(state.dataEntity!.records![index].id!),
                       );
                     },
                   ),
                 );
               }
 
-              if (valueData.state == ResultState.noData) {
+              if (state is SalesforceDataDone && state.dataEntity == null) {
                 return const Text("No Data Found");
               }
 
               return const Text("Error screen");
             },
-          ),
+          )
         ],
       ),
     );
@@ -113,8 +118,10 @@ class _DetailSalesforceDataScreenState
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
-      Provider.of<SalesforceDetailProvider>(context, listen: false)
-          .getSalesforceDetail(widget.token, widget.urlDetail);
+      // Provider.of<SalesforceDetailProvider>(context, listen: false)
+      //     .getSalesforceDetail(widget.token, widget.urlDetail);
+      BlocProvider.of<SalesforceDetailBloc>(context).add(GetDetailSalesforce(
+          {"urlDetail": widget.urlDetail, "token": widget.token}));
     });
   }
 
@@ -129,32 +136,30 @@ class _DetailSalesforceDataScreenState
             style: text20,
           )),
       body: Center(
-        child: Consumer<SalesforceDetailProvider>(
-          builder: (context, valueSalesforceDetail, child) {
-            if (valueSalesforceDetail.state == ResultState.loading) {
+        child: BlocBuilder<SalesforceDetailBloc, SalesforceDetailState>(
+          builder: (context, state) {
+            if (state is SalesforceDetailLoading) {
               return const CircularProgressIndicator.adaptive();
             }
 
-            if (valueSalesforceDetail.state == ResultState.hasData) {
+            if (state is SalesforceDetailDone) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("ID : ${valueSalesforceDetail.result!.id}"),
-                  Text("Name : ${valueSalesforceDetail.result!.name}"),
-                  Text("Type : ${valueSalesforceDetail.result!.type}"),
+                  Text("ID : ${state.detailEntity!.id}"),
+                  Text("Name : ${state.detailEntity!.name}"),
+                  Text("Type : ${state.detailEntity!.type}"),
+                  Text("Record Type ID : ${state.detailEntity!.recordTypeId}"),
+                  Text("Billing Street : ${state.detailEntity!.billingStreet}"),
                   Text(
-                      "Record Type ID : ${valueSalesforceDetail.result!.recordTypeId}"),
+                      "Billing Country : ${state.detailEntity!.billingCountry}"),
                   Text(
-                      "Billing Street : ${valueSalesforceDetail.result!.billingStreet}"),
+                      "Currency Iso Code : ${state.detailEntity!.currencyIsoCode}"),
                   Text(
-                      "Billing Country : ${valueSalesforceDetail.result!.billingCountry}"),
+                      "Business Entity : ${state.detailEntity!.businessEntityC}"),
                   Text(
-                      "Currency Iso Code : ${valueSalesforceDetail.result!.currencyIsoCode}"),
-                  Text(
-                      "Business Entity : ${valueSalesforceDetail.result!.businessEntityC}"),
-                  Text(
-                      "Insurance Company Name : ${valueSalesforceDetail.result!.insuranceCompanyNameC}"),
+                      "Insurance Company Name : ${state.detailEntity!.insuranceCompanyNameC}"),
                 ],
               );
             }
