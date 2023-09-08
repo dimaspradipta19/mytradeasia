@@ -11,15 +11,10 @@ import 'package:mytradeasia/features/presentation/state_management/salesforce_bl
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_state.dart';
-import 'package:mytradeasia/modelview/provider/all_industry_provider.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_login_provider.dart';
-import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
-import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/utils/sales_force_screen.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:mytradeasia/view/menu/home/all_products/products/all_products_screen.dart';
-import 'package:mytradeasia/view/menu/home/all_products/products/products_detail_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

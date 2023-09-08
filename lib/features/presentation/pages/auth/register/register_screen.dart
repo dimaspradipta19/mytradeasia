@@ -1,17 +1,9 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mytradeasia/modelview/provider/auth_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../../config/routes/parameters.dart';
 import '../../../../../config/themes/theme.dart';
-import '../../../../../modelview/provider/loading_provider.dart';
-import '../../../widgets/loading_overlay_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

@@ -3,14 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
-import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_state.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../../config/themes/theme.dart';
-import '../../../../../../modelview/provider/dhl_shipment_provider.dart';
 
 class DetailedShipmentProductsScreen extends StatefulWidget {
   const DetailedShipmentProductsScreen({super.key});

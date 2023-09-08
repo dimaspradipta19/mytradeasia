@@ -8,11 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
-import 'package:mytradeasia/modelview/provider/search_product_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../../../core/constants/result_state.dart';
 import '../all_products/products/products_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {

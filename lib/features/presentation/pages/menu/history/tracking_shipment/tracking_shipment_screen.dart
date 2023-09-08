@@ -5,10 +5,7 @@ import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_state.dart';
-import 'package:mytradeasia/modelview/provider/dhl_shipment_provider.dart';
-import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:provider/provider.dart';
 
 class TrackingShipmentScreen extends StatefulWidget {
   const TrackingShipmentScreen({super.key});

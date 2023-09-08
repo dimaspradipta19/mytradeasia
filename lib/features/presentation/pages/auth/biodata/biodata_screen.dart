@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,20 +71,15 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     final SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     final role = prefs.getString("role") ?? "";
-                    Map<String, dynamic> data = {
-                      'firstName': _firstNameController.text,
-                      'lastName': _lastNameController.text,
-                      'companyName': _companyNameController.text,
-                      'country': _countryController.text,
-                      'password': _passwordController.text,
-                      'phone': widget.phone,
-                    };
+                    // Map<String, dynamic> data = {
+                    //   'firstName': _firstNameController.text,
+                    //   'lastName': _lastNameController.text,
+                    //   'companyName': _companyNameController.text,
+                    //   'country': _countryController.text,
+                    //   'password': _passwordController.text,
+                    //   'phone': widget.phone,
+                    // };
                     if (_formKey.currentState!.validate()) {
-                      log("EMAIL : ${widget.email}");
-                      log("PHONE : ${widget.phone}");
-                      log("ROLE : $role");
-
-                      log("DATA : $data");
                       authBloc.add(RegisterWithEmail(
                           widget.email,
                           widget.phone,
@@ -112,25 +104,10 @@ class _BiodataScreenState extends State<BiodataScreen> {
                               navigatorFunction: () {
                                 /* with go_router */
                                 context.go("/auth/login");
-
-                                // Navigator.pushAndRemoveUntil(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => const LoginScreen(),
-                                //     ),
-                                //     (route) => false);
                               });
                         },
                       );
                     }
-
-                    // String docsId = auth.currentUser!.uid.toString();
-
-                    //
-                    // await FirebaseFirestore.instance
-                    //     .collection('biodata')
-                    //     .doc(docsId)
-                    //     .update(data);
                   },
                   child: Text(
                     "Create Account",
@@ -186,6 +163,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                           if (value == null || value.isEmpty) {
                             return "First Name is empty";
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           hintText: "Enter your first name",
@@ -215,6 +193,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                           if (value == null || value.isEmpty) {
                             return "Last Name is empty";
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           hintText: "Enter your last name",
@@ -244,6 +223,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                           if (value == null || value.isEmpty) {
                             return "Company Name is empty";
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           hintText: "Enter your company name",
@@ -273,6 +253,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                           if (value == null || value.isEmpty) {
                             return "Country is empty";
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           hintText: "Enter your Country",

@@ -8,11 +8,7 @@ import 'package:mytradeasia/features/presentation/state_management/salesforce_bl
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_state.dart';
-// import 'package:mytradeasia/modelview/provider/sales_force_data_provider.dart';
-import 'package:mytradeasia/modelview/provider/sales_force_detail_provider.dart';
-import 'package:mytradeasia/core/constants/result_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:provider/provider.dart';
 
 // import '../modelview/provider/sales_force_login_provider.dart';
 
