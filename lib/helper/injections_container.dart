@@ -46,6 +46,7 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/list_product/list_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 
@@ -123,4 +124,6 @@ Future<void> initializeDependencies() async {
       () => SalesforceLoginBloc(injections()));
   injections.registerFactory<SalesforceDataBloc>(
       () => SalesforceDataBloc(injections()));
+  injections.registerFactory<SalesforceDetailBloc>(
+      () => SalesforceDetailBloc(injections()));
 }

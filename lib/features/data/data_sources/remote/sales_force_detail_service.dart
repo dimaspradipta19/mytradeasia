@@ -20,12 +20,10 @@ class SalesforceDetailService {
     );
     final data = response.data;
 
-    final dataMapped = data.map((e) => SalesforceDetailModel.fromJson(e));
-
     return Response<SalesforceDetailModel>(
       statusCode: response.statusCode,
       requestOptions: response.requestOptions,
-      data: dataMapped,
+      data: SalesforceDetailModel.fromJson(data),
     );
   }
 }
