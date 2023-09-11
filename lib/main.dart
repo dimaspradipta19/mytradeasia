@@ -14,10 +14,10 @@ import 'package:mytradeasia/features/presentation/state_management/salesforce_bl
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
+import 'package:mytradeasia/features/presentation/widgets/loading_overlay_widget.dart';
 import 'package:mytradeasia/firebase_options.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:provider/provider.dart';
 
 import 'features/presentation/state_management/industry_bloc/industry_bloc.dart';
 
@@ -47,6 +47,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _connection = true;
+  checkConnection() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if (result == true) {
+      _connection = true;
+      return;
+    } else {
+      _connection = false;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    checkConnection();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -75,10 +93,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => injections<SalesforceDataBloc>()),
         BlocProvider(create: (_) => injections<SalesforceDetailBloc>()),
       ],
-      child: StreamProvider<InternetConnectionStatus>(
-          initialData: InternetConnectionStatus.connected,
-          create: ((_) => InternetConnectionChecker().onStatusChange),
-          child: MaterialApp.router(
+      child: StreamBuilder<InternetConnectionStatus>(
+        initialData: InternetConnectionStatus.connected,
+        stream: InternetConnectionChecker().onStatusChange,
+        builder: (context, snapshot) {
+          return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: 'MyTradeasia',
             theme: ThemeData(
@@ -90,7 +109,18 @@ class _MyAppState extends State<MyApp> {
               fontFamily: "Poppins",
             ),
             routerConfig: Routes().router,
-          )),
+            builder: (context, child) {
+              checkConnection();
+              return Stack(
+                children: [
+                  child!,
+                  _connection ? SizedBox() : LoadingOverlay(),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
