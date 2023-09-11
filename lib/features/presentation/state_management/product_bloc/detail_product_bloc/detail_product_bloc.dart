@@ -15,7 +15,7 @@ class DetailProductBloc extends Bloc<DetailProductEvent, DetailProductState> {
   }
 
   void onDispose(DetailDispose event, Emitter<DetailProductState> emit) {
-    emit(DetailProductInitial());
+    emit(DetailProductLoading());
   }
 
   void onGetDetailProduct(

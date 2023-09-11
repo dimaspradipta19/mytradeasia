@@ -35,6 +35,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
   void initState() {
     super.initState();
     var detailProductBloc = BlocProvider.of<DetailProductBloc>(context);
+    detailProductBloc.add(DetailDispose());
     detailProductBloc.add(GetDetailProductEvent(widget.urlProduct));
   }
 
@@ -64,6 +65,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
             child: BlocBuilder<DetailProductBloc, DetailProductState>(
                 builder: (context, state) {
               if (state is DetailProductLoading) {
+                print("test");
                 return Shimmer.fromColors(
                   baseColor: greyColor3,
                   highlightColor: greyColor,
@@ -113,7 +115,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      detailProductBloc.add(DetailDispose());
                                       context.pop();
                                     },
                                     child: Image.asset(
