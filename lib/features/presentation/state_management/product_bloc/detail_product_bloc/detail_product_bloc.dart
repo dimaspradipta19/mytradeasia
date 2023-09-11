@@ -11,6 +11,11 @@ class DetailProductBloc extends Bloc<DetailProductEvent, DetailProductState> {
   DetailProductBloc(this._getDetailProductUseCase)
       : super(const DetailProductLoading()) {
     on<GetDetailProductEvent>(onGetDetailProduct);
+    on<DetailDispose>(onDispose);
+  }
+
+  void onDispose(DetailDispose event, Emitter<DetailProductState> emit) {
+    emit(DetailProductInitial());
   }
 
   void onGetDetailProduct(

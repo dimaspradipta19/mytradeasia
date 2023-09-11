@@ -383,22 +383,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             onTap: () {
                                               var topProductBloc = BlocProvider
                                                   .of<TopProductBloc>(context);
-                                              // Provider.of<TopProductsProvider>(
-                                              //         context,
-                                              //         listen: false)
-                                              //     .getTopProducts();
+
                                               topProductBloc
                                                   .add(const GetTopProduct());
 
                                               /* With go_router */
                                               context.go("/home/top_products");
-
-                                              // Navigator.push(context,
-                                              //     MaterialPageRoute(
-                                              //   builder: (context) {
-                                              //     return const TopProductsScreen();
-                                              //   },
-                                              // ));
                                             },
                                             child: Padding(
                                               padding:
@@ -463,10 +453,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   context.pushNamed("product",
                                                       pathParameters: {
                                                         'url': state
-                                                                .topProductData![
-                                                                    index]
-                                                                .seoUrl ??
-                                                            "/images/product/alum.webp"
+                                                            .topProductData![
+                                                                index]
+                                                            .seoUrl!
                                                       });
 
                                                   String docsId = _auth

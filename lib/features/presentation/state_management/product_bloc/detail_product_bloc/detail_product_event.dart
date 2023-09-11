@@ -6,3 +6,5 @@ class GetDetailProductEvent extends DetailProductEvent {
   final String product;
   const GetDetailProductEvent(this.product);
 }
+
+class DetailDispose extends DetailProductEvent {}

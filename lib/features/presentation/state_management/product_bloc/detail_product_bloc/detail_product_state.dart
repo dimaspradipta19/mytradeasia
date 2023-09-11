@@ -12,6 +12,8 @@ abstract class DetailProductState extends Equatable {
   List<Object> get props => [detailProductData!, error!];
 }
 
+class DetailProductInitial extends DetailProductState {}
+
 class DetailProductLoading extends DetailProductState {
   const DetailProductLoading();
 }
