@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_state.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_state.dart';
@@ -40,6 +44,14 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<ListProductBloc>(context).add(GetProducts());
+    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+  }
+
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -142,21 +154,50 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                       decoration: BoxDecoration(
                           color: secondaryColor1,
                           borderRadius: BorderRadius.circular(7)),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const CartScreen();
-                              },
+                      child: Stack(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const CartScreen();
+                                  },
+                                ),
+                              );
+                            },
+                            icon: Image.asset(
+                              "assets/images/icon_cart.png",
+                              width: size20px + 4,
                             ),
-                          );
-                        },
-                        icon: Image.asset(
-                          "assets/images/icon_cart.png",
-                          width: size20px + 4,
-                        ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors
+                                    .red, // You can change the background color as needed
+                                shape: BoxShape.circle,
+                              ),
+                              child: BlocBuilder<CartBloc, CartState>(
+                                builder: (context, state) {
+                                  return Text(
+                                    state.cartItems!.length
+                                        .toString(), // Replace with the actual count of items in the cart
+                                    style: TextStyle(
+                                      color: Colors
+                                          .white, // You can change the text color as needed
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   ],
@@ -551,8 +592,38 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                                         .circular(
                                                                             5))),
                                                     child: IconButton(
-                                                      onPressed: () {
-                                                        print("cart icon");
+                                                      onPressed: () async {
+                                                        String docsId = _auth
+                                                            .currentUser!.uid
+                                                            .toString();
+                                                        Map<String, dynamic>
+                                                            data = {
+                                                          "productName": state
+                                                              .products![index]
+                                                              .productname,
+                                                          "seo_url": state
+                                                              .products![index]
+                                                              .seoUrl,
+                                                          "casNumber": state
+                                                              .products![index]
+                                                              .casNumber,
+                                                          "hsCode": state
+                                                              .products![index]
+                                                              .hsCode,
+                                                          "productImage": state
+                                                              .products![index]
+                                                              .productimage
+                                                        };
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'biodata')
+                                                            .doc(docsId)
+                                                            .update({
+                                                          "cart": FieldValue
+                                                              .arrayUnion(
+                                                                  [data])
+                                                        });
                                                       },
                                                       icon: Image.asset(
                                                         "assets/images/icon_cart.png",
