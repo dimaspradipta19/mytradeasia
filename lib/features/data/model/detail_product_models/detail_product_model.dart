@@ -15,8 +15,9 @@ class DetailsProductModel extends DetailsProductEntity {
 
   factory DetailsProductModel.fromJson(Map<String, dynamic> json) =>
       DetailsProductModel(
-        // detailProduct: DetailProduct.fromJson(json["detail_product"]),
-        detailProduct: _DetailProduct.fromJson(json["detail_product"]),
+        detailProduct: json["detail_product"] != null
+            ? _DetailProduct.fromJson(json["detail_product"])
+            : null,
         listIndustry: List<_ListIndustryModel>.from(
             json["list-industry"].map((x) => _ListIndustryModel.fromJson(x))),
         listCategory: List<_ListCategoryModel>.from(

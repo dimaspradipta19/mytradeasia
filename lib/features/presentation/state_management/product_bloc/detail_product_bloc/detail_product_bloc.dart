@@ -11,13 +11,20 @@ class DetailProductBloc extends Bloc<DetailProductEvent, DetailProductState> {
   DetailProductBloc(this._getDetailProductUseCase)
       : super(const DetailProductLoading()) {
     on<GetDetailProductEvent>(onGetDetailProduct);
+    on<DetailDispose>(onDispose);
+  }
+
+  void onDispose(DetailDispose event, Emitter<DetailProductState> emit) {
+    emit(DetailProductLoading());
   }
 
   void onGetDetailProduct(
       GetDetailProductEvent event, Emitter<DetailProductState> emit) async {
     final dataState = await _getDetailProductUseCase(param: event.product);
 
-    // print(dataState.data);
+    if (dataState.data!.detailProduct == null) {
+      emit(const DetailProductEmpty());
+    }
 
     if (dataState is DataSuccess && dataState.data!.detailProduct != null) {
       emit(DetailProductDone(dataState.data!));

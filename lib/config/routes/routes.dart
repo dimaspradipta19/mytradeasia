@@ -46,7 +46,7 @@ final GlobalKey<NavigatorState> _shellNavigatorKey =
 
 class Routes {
   GoRouter router =
-      GoRouter(initialLocation: "/", debugLogDiagnostics: true, routes: [
+      GoRouter(initialLocation: "/", debugLogDiagnostics: false, routes: [
     GoRoute(
         path: "/",
         builder: (context, state) => const SplashScreen(),

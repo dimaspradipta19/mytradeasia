@@ -35,9 +35,8 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
   void initState() {
     super.initState();
     var detailProductBloc = BlocProvider.of<DetailProductBloc>(context);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      detailProductBloc.add(GetDetailProductEvent(widget.urlProduct));
-    });
+    detailProductBloc.add(DetailDispose());
+    detailProductBloc.add(GetDetailProductEvent(widget.urlProduct));
   }
 
   final String url = "https://chemtradea.chemtradeasia.com/";
@@ -64,8 +63,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
           },
           child: SingleChildScrollView(
             child: BlocBuilder<DetailProductBloc, DetailProductState>(
-
-                // future: detailProductBloc.add(GetDetailProductEvent(widget.urlProduct)),
                 builder: (context, state) {
               if (state is DetailProductLoading) {
                 return Shimmer.fromColors(
@@ -77,46 +74,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                     height: size20px * 15.0,
                   ),
                 );
-              } else if (state.detailProductData == null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pop(context);
-                });
-
-                return Center(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: size20px * 20),
-                      child: Column(
-                        children: [
-                          const Text(
-                              "Sorry there is no data for this products"),
-                          ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        primaryColor1),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side:
-                                          const BorderSide(color: greyColor3)),
-                                ),
-                                elevation:
-                                    MaterialStateProperty.all<double>(0.0),
-                              ),
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              child: const Text("Refresh"))
-                        ],
-                      ),
-                    ),
-                  ],
-                ));
               } else if (state is DetailProductDone ||
                   state.detailProductData != null) {
                 return Stack(
@@ -157,7 +114,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).pop(true);
+                                      context.pop();
                                     },
                                     child: Image.asset(
                                       "assets/images/icon_back.png",
@@ -289,9 +246,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                         ?.detailProduct
                                                         ?.casNumber ??
                                                     "N/A",
-                                                // snapshot.data?.detailProduct
-                                                //         ?.casNumber ??
-                                                //     "N/A",
                                                 style: body1Regular.copyWith(
                                                     color: greyColor2)),
                                           ],
@@ -732,14 +686,40 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                 );
               } else {
                 return Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text("Error"),
-                    ],
-                  ),
-                );
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: size20px * 20),
+                      child: Column(
+                        children: [
+                          const Text(
+                              "Sorry there is no data for this products"),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        primaryColor1),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side:
+                                          const BorderSide(color: greyColor3)),
+                                ),
+                                elevation:
+                                    MaterialStateProperty.all<double>(0.0),
+                              ),
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              child: const Text("Refresh"))
+                        ],
+                      ),
+                    ),
+                  ],
+                ));
               }
             }),
           ),
