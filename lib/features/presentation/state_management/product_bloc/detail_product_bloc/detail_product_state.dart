@@ -18,6 +18,10 @@ class DetailProductLoading extends DetailProductState {
   const DetailProductLoading();
 }
 
+class DetailProductEmpty extends DetailProductState {
+  const DetailProductEmpty();
+}
+
 class DetailProductDone extends DetailProductState {
   const DetailProductDone(DetailsProductEntity detailProductData)
       : super(detailProductData: detailProductData);
