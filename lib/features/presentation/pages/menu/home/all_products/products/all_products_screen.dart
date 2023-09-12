@@ -40,6 +40,27 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
     BlocProvider.of<ListProductBloc>(context).add(GetProducts());
   }
 
+  void addToCart(
+      {required String productName,
+      required String seoUrl,
+      required String casNumber,
+      required String hsCode,
+      required String productImage}) async {
+    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    String docsId = _auth.currentUser!.uid.toString();
+
+    Map<String, dynamic> data = {
+      "productName": productName,
+      "seo_url": seoUrl,
+      "casNumber": casNumber,
+      "hsCode": hsCode,
+      "productImage": productImage
+    };
+    await FirebaseFirestore.instance.collection('biodata').doc(docsId).update({
+      "cart": FieldValue.arrayUnion([data])
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +71,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   @override
   void didChangeDependencies() {
     BlocProvider.of<CartBloc>(context).add(GetCartItems());
-
     super.didChangeDependencies();
   }
 
@@ -172,31 +192,37 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                               width: size20px + 4,
                             ),
                           ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Colors
-                                    .red, // You can change the background color as needed
-                                shape: BoxShape.circle,
-                              ),
-                              child: BlocBuilder<CartBloc, CartState>(
-                                builder: (context, state) {
-                                  return Text(
-                                    state.cartItems!.length
-                                        .toString(), // Replace with the actual count of items in the cart
-                                    style: TextStyle(
-                                      color: Colors
-                                          .white, // You can change the text color as needed
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
+                          BlocBuilder<CartBloc, CartState>(
+                              builder: (context, state) {
+                            if (state is CartDoneState &&
+                                state.cartItems != null) {
+                              if (state.cartItems!.isNotEmpty) {
+                                return Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: Container(
+                                      padding: EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        color: Colors
+                                            .red, // You can change the background color as needed
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                          state.cartItems!.length
+                                              .toString(), // Replace with the actual count of items in the cart
+                                          style: TextStyle(
+                                            color: Colors
+                                                .white, // You can change the text color as needed
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                    ));
+                              } else {
+                                return Container();
+                              }
+                            } else {
+                              return Container();
+                            }
+                          })
                         ],
                       ),
                     )
@@ -591,44 +617,68 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             5))),
-                                                    child: IconButton(
-                                                      onPressed: () async {
-                                                        String docsId = _auth
-                                                            .currentUser!.uid
-                                                            .toString();
-                                                        Map<String, dynamic>
-                                                            data = {
-                                                          "productName": state
-                                                              .products![index]
-                                                              .productname,
-                                                          "seo_url": state
-                                                              .products![index]
-                                                              .seoUrl,
-                                                          "casNumber": state
-                                                              .products![index]
-                                                              .casNumber,
-                                                          "hsCode": state
-                                                              .products![index]
-                                                              .hsCode,
-                                                          "productImage": state
-                                                              .products![index]
-                                                              .productimage
-                                                        };
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'biodata')
-                                                            .doc(docsId)
-                                                            .update({
-                                                          "cart": FieldValue
-                                                              .arrayUnion(
-                                                                  [data])
-                                                        });
-                                                      },
-                                                      icon: Image.asset(
-                                                        "assets/images/icon_cart.png",
-                                                      ),
-                                                    ),
+                                                    child: BlocBuilder<CartBloc,
+                                                            CartState>(
+                                                        builder: (context,
+                                                            cartState) {
+                                                      bool chosen = false;
+                                                      for (var item in cartState
+                                                          .cartItems!) {
+                                                        if (item[
+                                                                'productName'] ==
+                                                            state
+                                                                .products![
+                                                                    index]
+                                                                .productname!) {
+                                                          chosen = true;
+                                                        }
+                                                      }
+
+                                                      if (chosen) {
+                                                        return IconButton(
+                                                          onPressed: () {},
+                                                          // icon: const Icon(
+                                                          //   Icons.check,
+                                                          //   size: 15,
+                                                          //   color: Colors.white,
+                                                          // ),
+                                                          icon: const Icon(
+                                                            Icons.check,
+                                                            size: 15,
+                                                            color: Colors.white,
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        return IconButton(
+                                                          onPressed: () {
+                                                            addToCart(
+                                                                productName: state
+                                                                    .products![
+                                                                        index]
+                                                                    .productname!,
+                                                                seoUrl: state
+                                                                    .products![
+                                                                        index]
+                                                                    .seoUrl!,
+                                                                casNumber: state
+                                                                    .products![
+                                                                        index]
+                                                                    .casNumber!,
+                                                                hsCode: state
+                                                                    .products![
+                                                                        index]
+                                                                    .hsCode!,
+                                                                productImage: state
+                                                                    .products![
+                                                                        index]
+                                                                    .productimage!);
+                                                          },
+                                                          icon: Image.asset(
+                                                            "assets/images/icon_cart.png",
+                                                          ),
+                                                        );
+                                                      }
+                                                    }),
                                                   ),
                                                 ],
                                               ),

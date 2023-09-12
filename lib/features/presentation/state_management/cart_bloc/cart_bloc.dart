@@ -25,11 +25,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         return doc.data() as Map<String, dynamic>;
       });
 
-      final List<dynamic> cartData = firestoreData['cart'];
+      List<dynamic> cartData = [];
+      if (firestoreData['cart'] != null) {
+        cartData = firestoreData['cart'];
+      }
       for (var item in cartData) {
         item['isChecked'] = false;
       }
-      log("CART DATA : $cartData");
+      // log("CART DATA : $cartData");
 
       emit(CartDoneState(cartData));
     } on FirebaseException catch (e) {
