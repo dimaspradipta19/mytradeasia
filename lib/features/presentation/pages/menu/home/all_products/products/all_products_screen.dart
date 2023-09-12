@@ -358,23 +358,13 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                     return InkWell(
                                       onTap: () async {
                                         /* With go_router */
+
                                         context.pushNamed("product",
                                             pathParameters: {
                                               'url': state.products![index]
                                                       .seoUrl ??
                                                   "/images/product/alum.webp"
                                             });
-                                        // Navigator.push(context,
-                                        //     MaterialPageRoute(
-                                        //   builder: (context) {
-                                        //     return ProductsDetailScreen(
-                                        //         urlProduct: valueAllProduct
-                                        //                 .listAllProduct[
-                                        //                     index]
-                                        //                 .seoUrl ??
-                                        //             "/images/product/alum.webp");
-                                        //   },
-                                        // ));
 
                                         String docsId =
                                             _auth.currentUser!.uid.toString();
@@ -604,18 +594,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                       .seoUrl ??
                                                   "/en/acrylic-acid"
                                             });
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) {
-                                        //       return ProductsDetailScreen(
-                                        //         urlProduct: searchState.searchProducts![index]
-                                        //             .seoUrl ??
-                                        //             "/en/acrylic-acid",
-                                        //       );
-                                        //     },
-                                        //   ),
-                                        // );
 
                                         String docsId =
                                             _auth.currentUser!.uid.toString();

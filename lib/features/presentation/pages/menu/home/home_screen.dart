@@ -450,6 +450,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             itemBuilder: (context, index) {
                                               return InkWell(
                                                 onTap: () async {
+                                                  // print(state
+                                                  //     .topProductData![index]
+                                                  //     .seoUrl);
                                                   context.pushNamed("product",
                                                       pathParameters: {
                                                         'url': state

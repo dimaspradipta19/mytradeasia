@@ -65,7 +65,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
             child: BlocBuilder<DetailProductBloc, DetailProductState>(
                 builder: (context, state) {
               if (state is DetailProductLoading) {
-                print("test");
                 return Shimmer.fromColors(
                   baseColor: greyColor3,
                   highlightColor: greyColor,
@@ -247,9 +246,6 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                         ?.detailProduct
                                                         ?.casNumber ??
                                                     "N/A",
-                                                // snapshot.data?.detailProduct
-                                                //         ?.casNumber ??
-                                                //     "N/A",
                                                 style: body1Regular.copyWith(
                                                     color: greyColor2)),
                                           ],
