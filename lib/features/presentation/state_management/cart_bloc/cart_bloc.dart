@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +6,6 @@ import 'package:mytradeasia/features/presentation/state_management/cart_bloc/car
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   CartBloc() : super(const CartLoadingState()) {
     on<GetCartItems>(onGetCartItems);
@@ -32,7 +29,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       for (var item in cartData) {
         item['isChecked'] = false;
       }
-      // log("CART DATA : $cartData");
 
       emit(CartDoneState(cartData));
     } on FirebaseException catch (e) {

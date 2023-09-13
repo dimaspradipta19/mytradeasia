@@ -71,7 +71,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           "country": event.country,
           "firstName": event.firstName,
           "lastName": event.lastName,
-          "password": event.password,
           "uid": docsId,
         };
         FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
