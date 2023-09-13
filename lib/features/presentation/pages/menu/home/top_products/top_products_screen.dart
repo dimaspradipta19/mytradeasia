@@ -13,6 +13,7 @@ import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
 // import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../../config/routes/parameters.dart';
 import '../../../../../../config/themes/theme.dart';
 import '../../../../widgets/banner_top_products_widget.dart';
 
@@ -298,7 +299,15 @@ class AllTopProductsWidget extends StatelessWidget {
                                             padding: MaterialStateProperty.all<
                                                 EdgeInsets>(EdgeInsets.zero)),
                                         onPressed: () {
-                                          print("send inquiry");
+                                          RequestQuotationParameter param =
+                                              RequestQuotationParameter(
+                                            product: state
+                                                    .topProductData![index]
+                                                    .productname ??
+                                                "",
+                                          );
+                                          context.go("/home/request_quotation",
+                                              extra: param);
                                         },
                                         child: Text(
                                           "Send Inquiry",

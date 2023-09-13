@@ -5,11 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 
+import '../../../../../../config/routes/parameters.dart';
 import '../all_products/products/products_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -330,7 +332,18 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                   EdgeInsets
                                                                       .zero)),
                                                       onPressed: () {
-                                                        print("send inquiry");
+                                                        RequestQuotationParameter
+                                                            param =
+                                                            RequestQuotationParameter(
+                                                          product: state
+                                                                  .searchProducts![
+                                                                      index]
+                                                                  .productname ??
+                                                              "",
+                                                        );
+                                                        context.go(
+                                                            "/home/request_quotation",
+                                                            extra: param);
                                                       },
                                                       child: Text(
                                                         "Send Inquiry",

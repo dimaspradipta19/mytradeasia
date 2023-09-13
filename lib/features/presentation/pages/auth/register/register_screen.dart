@@ -14,6 +14,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool isChecked = false;
+  String countryNum = '+62';
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -108,10 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Expanded(
+                            Expanded(
                               flex: 1,
                               child: CountryCodePicker(
-                                onChanged: print,
+                                onChanged: (element) =>
+                                    countryNum = element.dialCode.toString(),
                                 // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                                 initialSelection: 'ID',
                                 favorite: ['ID', 'UK'],
@@ -287,8 +289,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //   },
                               // );
                               BiodataParameter param = BiodataParameter(
-                                  email: _emailController.text,
-                                  phone: _phoneNumberController.text);
+                                email: _emailController.text,
+                                phone: countryNum + _phoneNumberController.text,
+                              );
 
                               context.go("/auth/register/biodata",
                                   extra: param);
@@ -361,12 +364,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               "assets/images/logo_google.png",
                               width: size20px + 4,
                             ),
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              var value = prefs.getString("role") ?? "";
-
-                              print(value);
+                            onPressed: () {
+                              print(countryNum + _phoneNumberController.text);
                             },
                           ),
                         ),

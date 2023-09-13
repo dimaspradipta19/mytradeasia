@@ -8,7 +8,9 @@ import 'package:mytradeasia/view/menu/other/languages_screen.dart';
 import '../../../../widgets/text_editing_widget.dart';
 
 class RequestQuotationScreen extends StatefulWidget {
-  const RequestQuotationScreen({super.key});
+  const RequestQuotationScreen({super.key, required this.productname});
+
+  final String productname;
 
   @override
   State<RequestQuotationScreen> createState() => _RequestQuotationScreenState();
@@ -33,6 +35,27 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  Map<String, dynamic> _data = {};
+
+  @override
+  void initState() {
+    _productNameController.text = widget.productname;
+    getUserData();
+    super.initState();
+  }
+
+  getUserData() async {
+    _data = await _firestore
+        .collection('biodata')
+        .doc(_auth.currentUser?.uid.toString())
+        .get()
+        .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+    _firstNameController.text = _data['firstName'] ?? '';
+    _lastNameController.text = _data['lastName'] ?? '';
+    _phoneNumberController.text = _data['phone'] ?? '';
+    _countryController.text = _data['country'] ?? '';
+    _companyNameController.text = _data['companyName'] ?? '';
+  }
 
   @override
   void dispose() {
@@ -770,6 +793,9 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                           ),
                                                         ),
                                                         onPressed: () {
+                                                          // print(streamSnapshot
+                                                          //         .data!.docs[0]
+                                                          //     ['firstName']);
                                                           _messagesController
                                                                   .text =
                                                               "Can I get a sample first?";
@@ -812,10 +838,10 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                 ),
               ),
               onPressed: () {
-                print(_messagesController.text);
+                print(_auth.currentUser!.uid);
 
                 /* With go_router */
-                context.goNamed("submitted_rfq");
+                // context.goNamed("submitted_rfq");
 
                 // Navigator.push(context, MaterialPageRoute(
                 //   builder: (context) {

@@ -71,7 +71,13 @@ class Routes {
                     builder: (context, state) => const SearchScreen()),
                 GoRoute(
                     path: "request_quotation",
-                    builder: (context, state) => const RequestQuotationScreen(),
+                    builder: (context, state) {
+                      RequestQuotationParameter param =
+                          state.extra as RequestQuotationParameter;
+                      return RequestQuotationScreen(
+                        productname: param.product ?? '',
+                      );
+                    },
                     routes: [
                       GoRoute(
                           path: 'submitted_rfq',

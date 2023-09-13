@@ -7,6 +7,7 @@ import 'package:mytradeasia/features/presentation/state_management/auth_bloc/aut
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../config/themes/theme.dart';
 import '../../../widgets/dialog_sheet_widget.dart';
+import 'package:country_picker/country_picker.dart';
 // import '../homescreen.dart';
 
 class BiodataScreen extends StatefulWidget {
@@ -27,6 +28,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
+  String countryName = '';
 
   bool _passwordVisible = false;
 
@@ -71,14 +73,6 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     final SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     final role = prefs.getString("role") ?? "";
-                    // Map<String, dynamic> data = {
-                    //   'firstName': _firstNameController.text,
-                    //   'lastName': _lastNameController.text,
-                    //   'companyName': _companyNameController.text,
-                    //   'country': _countryController.text,
-                    //   'password': _passwordController.text,
-                    //   'phone': widget.phone,
-                    // };
                     if (_formKey.currentState!.validate()) {
                       authBloc.add(RegisterWithEmail(
                           widget.email,
@@ -269,7 +263,44 @@ class _BiodataScreenState extends State<BiodataScreen> {
                             borderSide: BorderSide(color: secondaryColor1),
                           ),
                           suffixIcon: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showCountryPicker(
+                                context: context,
+                                //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
+                                favorite: <String>['ID'],
+                                //Optional. Shows phone code before the country name.
+                                showPhoneCode: false,
+                                onSelect: (Country country) {
+                                  // countryName = country.displayName;
+                                  _countryController.text = country.name;
+                                },
+                                // Optional. Sets the theme for the country list picker.
+                                countryListTheme: CountryListThemeData(
+                                  // Optional. Sets the border radius for the bottomsheet.
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(40.0),
+                                    topRight: Radius.circular(40.0),
+                                  ),
+                                  // Optional. Styles the search field.
+                                  inputDecoration: InputDecoration(
+                                    labelText: 'Search',
+                                    hintText: 'Start typing to search',
+                                    prefixIcon: const Icon(Icons.search),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: const Color(0xFF8C98A8)
+                                            .withOpacity(0.2),
+                                      ),
+                                    ),
+                                  ),
+                                  // Optional. Styles the text in the search field
+                                  searchTextStyle: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              );
+                            },
                             icon: Image.asset("assets/images/icon_forward.png",
                                 width: 24.0, height: 24.0),
                           ),
