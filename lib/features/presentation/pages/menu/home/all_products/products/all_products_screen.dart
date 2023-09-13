@@ -16,6 +16,7 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../../../../config/routes/parameters.dart';
 import '../../cart/cart_screen.dart';
 
 class AllProductsScreen extends StatefulWidget {
@@ -515,8 +516,18 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                                       EdgeInsets
                                                                           .zero)),
                                                           onPressed: () {
-                                                            print(
-                                                                "send inquiry");
+                                                            RequestQuotationParameter
+                                                                param =
+                                                                RequestQuotationParameter(
+                                                              product: state
+                                                                      .products![
+                                                                          index]
+                                                                      .productname ??
+                                                                  "",
+                                                            );
+                                                            context.go(
+                                                                "/home/request_quotation",
+                                                                extra: param);
                                                           },
                                                           child: Text(
                                                             "Send Inquiry",
@@ -754,8 +765,18 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                                       EdgeInsets
                                                                           .zero)),
                                                           onPressed: () {
-                                                            print(
-                                                                "send inquiry");
+                                                            RequestQuotationParameter
+                                                                param =
+                                                                RequestQuotationParameter(
+                                                              product: searchState
+                                                                      .searchProducts![
+                                                                          index]
+                                                                      .productname ??
+                                                                  "",
+                                                            );
+                                                            context.go(
+                                                                "/home/request_quotation",
+                                                                extra: param);
                                                           },
                                                           child: Text(
                                                             "Send Inquiry",

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_state.dart';
@@ -645,7 +646,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           ),
                                                                         ),
                                                                         padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
-                                                                    onPressed: () {},
+                                                                    onPressed: () {
+                                                                      RequestQuotationParameter
+                                                                          param =
+                                                                          RequestQuotationParameter(
+                                                                        product:
+                                                                            state.topProductData![index].productname ??
+                                                                                "",
+                                                                      );
+                                                                      context.go(
+                                                                          "/home/request_quotation",
+                                                                          extra:
+                                                                              param);
+                                                                    },
                                                                     child: Text(
                                                                       "Send Inquiry",
                                                                       style: text12
@@ -1063,12 +1076,10 @@ class MenuGridWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   /* With go_router */
-                  context.go("/home/request_quotation");
-                  // Navigator.push(context, MaterialPageRoute(
-                  //   builder: (context) {
-                  //     return const RequestQuotationScreen();
-                  //   },
-                  // ));
+                  RequestQuotationParameter param = RequestQuotationParameter(
+                    product: null,
+                  );
+                  context.go("/home/request_quotation", extra: param);
                 },
                 child: Container(
                   height: 60,

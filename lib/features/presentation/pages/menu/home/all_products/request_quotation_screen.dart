@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/view/menu/other/languages_screen.dart';
@@ -9,7 +8,9 @@ import 'package:mytradeasia/view/menu/other/languages_screen.dart';
 import '../../../../widgets/text_editing_widget.dart';
 
 class RequestQuotationScreen extends StatefulWidget {
-  const RequestQuotationScreen({super.key});
+  const RequestQuotationScreen({super.key, required this.productname});
+
+  final String productname;
 
   @override
   State<RequestQuotationScreen> createState() => _RequestQuotationScreenState();
@@ -38,6 +39,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
 
   @override
   void initState() {
+    _productNameController.text = widget.productname;
     getUserData();
     super.initState();
   }

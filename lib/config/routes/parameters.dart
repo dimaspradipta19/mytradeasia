@@ -33,3 +33,8 @@ class BiodataParameter {
   String phone;
   BiodataParameter({required this.email, required this.phone});
 }
+
+class RequestQuotationParameter {
+  String? product;
+  RequestQuotationParameter({this.product});
+}
