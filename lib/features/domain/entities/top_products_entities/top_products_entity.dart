@@ -1,30 +1,25 @@
-import 'package:equatable/equatable.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_entity.dart';
 
-class TopProductEntity extends Equatable {
-  final String? productimage;
-  final String? productname;
-  final String? casNumber;
-  final String? hsCode;
-  final String? seoUrl;
+class TopProductEntity extends ProductEntity {
   final int? priority;
 
-  const TopProductEntity(
-      {this.productimage,
-      this.productname,
-      this.casNumber,
-      this.hsCode,
-      this.seoUrl,
-      this.priority});
+  const TopProductEntity({
+    String? productimage,
+    String? productname,
+    String? casNumber,
+    String? hsCode,
+    String? seoUrl,
+    this.priority,
+  }) : super(
+          productname: productname,
+          productimage: productimage,
+          hsCode: hsCode,
+          casNumber: casNumber,
+          seoUrl: seoUrl,
+        );
 
   @override
   List<Object?> get props {
-    return [
-      this.productimage,
-      this.productname,
-      this.casNumber,
-      this.hsCode,
-      this.seoUrl,
-      this.priority
-    ];
+    return super.props..add(priority);
   }
 }

@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_state.dart';
+import 'package:mytradeasia/features/presentation/widgets/add_to_cart_button.dart';
+import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
 // import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -98,10 +100,7 @@ class _TopProductsScreenState extends State<TopProductsScreen> {
                               Radius.circular(10.0),
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(size20px / 1.5),
-                            child: Image.asset("assets/images/icon_cart.png"),
-                          ),
+                          child: const CartButton(),
                         )
                       ],
                     ),
@@ -311,21 +310,15 @@ class AllTopProductsWidget extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 2),
                                 Container(
-                                  height: 30,
-                                  width: 30,
-                                  decoration: const BoxDecoration(
-                                      color: secondaryColor1,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      print("cart icon");
-                                    },
-                                    icon: Image.asset(
-                                      "assets/images/icon_cart.png",
-                                    ),
-                                  ),
-                                ),
+                                    height: 30,
+                                    width: 30,
+                                    decoration: const BoxDecoration(
+                                        color: secondaryColor1,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    child: AddToCartButton(
+                                        listProduct: state.topProductData!,
+                                        index: index)),
                               ],
                             ),
                           )
