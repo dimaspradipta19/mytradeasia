@@ -57,7 +57,9 @@ class _CartScreenState extends State<CartScreen> {
           "seo_url": item['seo_url'],
           "casNumber": item['casNumber'],
           "hsCode": item['hsCode'],
-          "productImage": item['productImage']
+          "productImage": item['productImage'],
+          "quantity": item['quantity'],
+          "unit": item['unit']
         };
         deletedData.add(data);
       }
@@ -317,7 +319,6 @@ class _CartScreenState extends State<CartScreen> {
                 style: heading2,
               ),
             ));
-        ;
       }
     });
   }
