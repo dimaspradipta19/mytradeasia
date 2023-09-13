@@ -696,25 +696,54 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                         children: [
                           const Text(
                               "Sorry there is no data for this products"),
-                          ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        primaryColor1),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side:
-                                          const BorderSide(color: greyColor3)),
-                                ),
-                                elevation:
-                                    MaterialStateProperty.all<double>(0.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            primaryColor1),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          side: const BorderSide(
+                                              color: greyColor3)),
+                                    ),
+                                    elevation:
+                                        MaterialStateProperty.all<double>(0.0),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
+                                  child: const Text("Refresh")),
+                              const SizedBox(
+                                width: 10,
                               ),
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              child: const Text("Refresh"))
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            primaryColor1),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          side: const BorderSide(
+                                              color: greyColor3)),
+                                    ),
+                                    elevation:
+                                        MaterialStateProperty.all<double>(0.0),
+                                  ),
+                                  onPressed: () {
+                                    context.pop();
+                                  },
+                                  child: const Text("Go Back"))
+                            ],
+                          ),
                         ],
                       ),
                     ),
