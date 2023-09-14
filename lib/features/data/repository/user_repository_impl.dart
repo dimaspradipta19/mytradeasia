@@ -1,0 +1,27 @@
+import 'package:dio/dio.dart';
+import 'package:mytradeasia/features/data/data_sources/firebase/auth_user_firebase.dart';
+import 'package:mytradeasia/features/data/model/user_models/user_model.dart';
+import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
+import 'package:mytradeasia/features/domain/repository/user_repository.dart';
+
+class UserRepositoryImpl implements UserRepository {
+  final AuthUserFirebase _authUserFirebase;
+
+  UserRepositoryImpl(this._authUserFirebase);
+
+  @override
+  Future<String> registerUser(UserEntity s) async {
+    UserModel userData = UserModel(
+      companyName: s.companyName,
+      country: s.country,
+      email: s.email,
+      firstName: s.firstName,
+      lastName: s.lastName,
+      password: s.password,
+      phoneNumber: s.phoneNumber,
+      role: s.role,
+    );
+    final response = await _authUserFirebase.postRegisterUser(userData);
+    return response;
+  }
+}

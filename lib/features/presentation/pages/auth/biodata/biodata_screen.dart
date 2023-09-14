@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,15 +78,18 @@ class _BiodataScreenState extends State<BiodataScreen> {
                     final role = prefs.getString("role") ?? "";
                     if (_formKey.currentState!.validate()) {
                       authBloc.add(RegisterWithEmail(
-                          widget.email,
-                          widget.phone,
-                          role,
-                          context,
-                          _companyNameController.text,
-                          _firstNameController.text,
-                          _lastNameController.text,
-                          _passwordController.text,
-                          _countryController.text));
+                        UserEntity(
+                          companyName: _companyNameController.text,
+                          country: _countryController.text,
+                          email: widget.email,
+                          firstName: _firstNameController.text,
+                          lastName: _lastNameController.text,
+                          password: _passwordController.text,
+                          phoneNumber: widget.phone,
+                          role: role,
+                        ),
+                        context,
+                      ));
                       await showDialog(
                         barrierDismissible: false,
                         context: context,
