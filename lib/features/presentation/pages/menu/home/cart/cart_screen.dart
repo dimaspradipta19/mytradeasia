@@ -177,86 +177,92 @@ class _CartScreenState extends State<CartScreen> {
                     itemCount: state.cartItems!.length,
                     itemBuilder: (context, index) {
                       Map<String, dynamic> item = state.cartItems![index];
-                      return SizedBox(
-                        height: size20px * 5.5,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              value: item["isChecked"],
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  state.cartItems![index]["isChecked"] = value;
-                                });
-                              },
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: size20px + 5.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: CachedNetworkImage(
-                                  imageUrl: "$url${item["productImage"]}",
-                                  width: size20px * 4.5,
-                                  height: size20px * 4.5 + 5,
-                                  fit: BoxFit.cover,
+                      return InkWell(
+                        onTap: () => log("TAPPED"),
+                        child: SizedBox(
+                          height: size20px * 5.5,
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: item["isChecked"],
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    state.cartItems![index]["isChecked"] =
+                                        value;
+                                  });
+                                },
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: size20px + 5.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "$url${item["productImage"]}",
+                                    width: size20px * 4.5,
+                                    height: size20px * 4.5 + 5,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: size20px - 15.0),
-                                  child: Text(
-                                      item["productName"].length > 26
-                                          ? "${item["productName"].substring(0, 25)}. . ."
-                                          : item["productName"],
-                                      style: heading3),
-                                ),
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text("CAS Number :",
-                                            style: body2Medium),
-                                        Text(item["casNumber"],
-                                            style: body2Medium.copyWith(
-                                                color: greyColor2)),
-                                      ],
-                                    ),
-                                    const SizedBox(width: size20px + 10.0),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text("HS Code :",
-                                            style: body2Medium),
-                                        Text(item["hsCode"],
-                                            style: body2Medium.copyWith(
-                                                color: greyColor2)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 2),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Quantity :",
-                                        style: body2Medium),
-                                    Text("${item["quantity"]} ${item["unit"]}",
-                                        style: body2Medium.copyWith(
-                                            color: greyColor2)),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: size20px - 15.0),
+                                    child: Text(
+                                        item["productName"].length > 26
+                                            ? "${item["productName"].substring(0, 25)}. . ."
+                                            : item["productName"],
+                                        style: heading3),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("CAS Number :",
+                                              style: body2Medium),
+                                          Text(item["casNumber"],
+                                              style: body2Medium.copyWith(
+                                                  color: greyColor2)),
+                                        ],
+                                      ),
+                                      const SizedBox(width: size20px + 10.0),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("HS Code :",
+                                              style: body2Medium),
+                                          Text(item["hsCode"],
+                                              style: body2Medium.copyWith(
+                                                  color: greyColor2)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Quantity :",
+                                          style: body2Medium),
+                                      Text(
+                                          "${item["quantity"]} ${item["unit"]}",
+                                          style: body2Medium.copyWith(
+                                              color: greyColor2)),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },

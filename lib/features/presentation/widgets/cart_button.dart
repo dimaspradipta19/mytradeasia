@@ -28,18 +28,14 @@ class CartButton extends StatelessWidget {
                   top: 0,
                   right: 0,
                   child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors
-                          .red, // You can change the background color as needed
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
                       shape: BoxShape.circle,
                     ),
-                    child: Text(
-                        state.cartItems!.length
-                            .toString(), // Replace with the actual count of items in the cart
-                        style: TextStyle(
-                          color: Colors
-                              .white, // You can change the text color as needed
+                    child: Text(state.cartItems!.length.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         )),
                   ));
