@@ -339,40 +339,50 @@ class _AddToCartButtonState extends State<AddToCartButton> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(builder: (context, cartState) {
-      // Check if product already exist in cart
-      bool chosen = false;
-      for (var item in cartState.cartItems!) {
-        if (item['productName'] ==
-            widget.listProduct[widget.index].productname!) {
-          chosen = true;
+      if (cartState is CartDoneState) {
+        // Check if product already exist in cart
+        bool chosen = false;
+        for (var item in cartState.cartItems!) {
+          if (item['productName'] ==
+              widget.listProduct[widget.index].productname!) {
+            chosen = true;
+          }
         }
-      }
 
-      if (chosen) {
-        return IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.check,
-            size: 15,
-            color: Colors.white,
-          ),
-        );
+        if (chosen) {
+          return IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.check,
+              size: 15,
+              color: Colors.white,
+            ),
+          );
+        } else {
+          return IconButton(
+            onPressed: () {
+              addToCartBottomSheet(
+                  productName: widget.listProduct[widget.index].productname!,
+                  seoUrl: widget.listProduct[widget.index].seoUrl!,
+                  casNumber: widget.listProduct[widget.index].casNumber!,
+                  hsCode: widget.listProduct[widget.index].hsCode!,
+                  productImage: widget.listProduct[widget.index].productimage!);
+            },
+            icon: Image.asset(
+              "assets/images/icon_cart.png",
+            ),
+          );
+        }
       } else {
-        return IconButton(
-          onPressed: () {
-            addToCartBottomSheet(
-                productName: widget.listProduct[widget.index].productname!,
-                seoUrl: widget.listProduct[widget.index].seoUrl!,
-                casNumber: widget.listProduct[widget.index].casNumber!,
-                hsCode: widget.listProduct[widget.index].hsCode!,
-                productImage: widget.listProduct[widget.index].productimage!);
-          },
-          icon: Image.asset(
-            "assets/images/icon_cart.png",
-          ),
-        );
+        return Container();
       }
     });
   }

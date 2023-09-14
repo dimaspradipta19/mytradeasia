@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
+import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_state.dart';
@@ -40,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       BlocProvider.of<SalesforceLoginBloc>(context)
           .add(const LoginSalesforce());
+
+      BlocProvider.of<CartBloc>(context).add(GetCartItems());
     });
   }
 
