@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../widget/dialog_sheet_widget.dart';
@@ -11,8 +14,9 @@ import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final RegisterUser _postRegisterUser;
 
-  AuthBloc() : super(const AuthInitState()) {
+  AuthBloc(this._postRegisterUser) : super(const AuthInitState()) {
     on<LoginWithEmail>((event, emit) async {
       BuildContext context = event.context;
       try {
@@ -57,41 +61,61 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterWithEmail>((event, emit) async {
       BuildContext context = event.context;
 
-      try {
-        UserCredential userCredential =
-            await _auth.createUserWithEmailAndPassword(
-                email: event.email, password: event.password);
-
-        emit(AuthLoggedInState(userCredential.user));
-
-        String docsId = FirebaseAuth.instance.currentUser!.uid.toString();
-        Map<String, dynamic> data = {
-          'role': event.role,
-          "companyName": event.companyName,
-          "country": event.country,
-          "firstName": event.firstName,
-          "lastName": event.lastName,
-          "phone": event.phoneNumber,
-          "uid": docsId,
-        };
-        FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == "email-already-in-use") {
-          showDialog(
-            context: context,
-            builder: (context) => DialogWidget(
-                urlIcon: "assets/images/logo_delete_account.png",
-                title: "Email already in use",
-                subtitle: "Try another email for registration",
-                textForButton: "Go back",
-                navigatorFunction: () {
-                  Navigator.pop(context);
-                }),
-          );
-        }
-        emit(AuthErrorState(e));
+      final response = await _postRegisterUser.call(param: event.userData);
+      if (response == "success") {
+        log("register success");
+      } else {
+        log(response);
+        showDialog(
+          context: context,
+          builder: (context) => DialogWidget(
+              urlIcon: "assets/images/logo_delete_account.png",
+              title: "Email already in use",
+              subtitle: "Try another email for registration",
+              textForButton: "Go back",
+              navigatorFunction: () {
+                Navigator.pop(context);
+              }),
+        );
       }
     });
+    // on<RegisterWithEmail>((event, emit) async {
+    //   BuildContext context = event.context;
+
+    //   try {
+    //     await _auth.createUserWithEmailAndPassword(
+    //         email: event.email, password: event.password);
+
+    //     // emit(AuthLoggedInState(userCredential.user));
+
+    //     String docsId = FirebaseAuth.instance.currentUser!.uid.toString();
+    //     Map<String, dynamic> data = {
+    //       'role': event.role,
+    //       "companyName": event.companyName,
+    //       "country": event.country,
+    //       "firstName": event.firstName,
+    //       "lastName": event.lastName,
+    //       "phone": event.phoneNumber,
+    //       "uid": docsId,
+    //     };
+    //     FirebaseFirestore.instance.collection('biodata').doc(docsId).set(data);
+    //   } on FirebaseAuthException catch (e) {
+    //     if (e.code == "email-already-in-use") {
+    //       showDialog(
+    //         context: context,
+    //         builder: (context) => DialogWidget(
+    //             urlIcon: "assets/images/logo_delete_account.png",
+    //             title: "Email already in use",
+    //             subtitle: "Try another email for registration",
+    //             textForButton: "Go back",
+    //             navigatorFunction: () {
+    //               Navigator.pop(context);
+    //             }),
+    //       );
+    //     }
+    //     emit(AuthErrorState(e));
+    //   }
+    // });
 
     on<AuthLoading>(
       (event, emit) => emit(const AuthLoadingState()),

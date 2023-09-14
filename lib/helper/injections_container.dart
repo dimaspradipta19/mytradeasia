@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:mytradeasia/features/data/data_sources/firebase/auth_user_firebase.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/all_industry_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/detail_product_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/dhl_shipment_service.dart';
@@ -19,6 +20,7 @@ import 'package:mytradeasia/features/data/repository/sales_force_detail_reposito
 import 'package:mytradeasia/features/data/repository/sales_force_login_repository.dart';
 import 'package:mytradeasia/features/data/repository/search_product_repository.dart';
 import 'package:mytradeasia/features/data/repository/top_product_repository.dart';
+import 'package:mytradeasia/features/data/repository/user_repository_impl.dart';
 import 'package:mytradeasia/features/domain/repository/detail_product_repository.dart';
 import 'package:mytradeasia/features/domain/repository/dhl_shipment_repository.dart';
 import 'package:mytradeasia/features/domain/repository/faq_repository.dart';
@@ -29,6 +31,7 @@ import 'package:mytradeasia/features/domain/repository/sales_force_detail_reposi
 import 'package:mytradeasia/features/domain/repository/sales_force_login_repository.dart';
 import 'package:mytradeasia/features/domain/repository/search_product_repository.dart';
 import 'package:mytradeasia/features/domain/repository/top_product_repository.dart';
+import 'package:mytradeasia/features/domain/repository/user_repository.dart';
 import 'package:mytradeasia/features/domain/usecases/detail_product_usecases/get_detail_product.dart';
 import 'package:mytradeasia/features/domain/usecases/dhl_shipment_usecases/get_dhl_shipment.dart';
 import 'package:mytradeasia/features/domain/usecases/faq_usecases/get_faq_data.dart';
@@ -39,6 +42,8 @@ import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases
 import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
 import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get_search_product.dart';
 import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_top_product.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
+import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/faq_bloc/faq_bloc.dart';
@@ -66,6 +71,7 @@ Future<void> initializeDependencies() async {
       .registerSingleton<SalesforceLoginService>(SalesforceLoginService());
   injections.registerSingleton<SearchProductService>(SearchProductService());
   injections.registerSingleton<TopProductsService>(TopProductsService());
+  injections.registerSingleton<AuthUserFirebase>(AuthUserFirebase());
 
   //Repositories Dependencies
   injections.registerSingleton<DetailProductRepository>(
@@ -87,6 +93,8 @@ Future<void> initializeDependencies() async {
       SearchProductRepositoryImpl(injections()));
   injections.registerSingleton<TopProductRepository>(
       TopProductRepositoryImpl(injections()));
+  injections
+      .registerSingleton<UserRepository>(UserRepositoryImpl(injections()));
 
   //UseCases Dependencies
   injections
@@ -105,6 +113,7 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetSearchProduct>(GetSearchProduct(injections()));
   injections.registerSingleton<GetTopProductUseCase>(
       GetTopProductUseCase(injections()));
+  injections.registerSingleton<RegisterUser>(RegisterUser(injections()));
 
   //Bloc
   injections
@@ -126,4 +135,5 @@ Future<void> initializeDependencies() async {
       () => SalesforceDataBloc(injections()));
   injections.registerFactory<SalesforceDetailBloc>(
       () => SalesforceDetailBloc(injections()));
+  injections.registerFactory<AuthBloc>(() => AuthBloc(injections()));
 }
