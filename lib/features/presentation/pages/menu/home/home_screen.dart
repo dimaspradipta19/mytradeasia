@@ -17,7 +17,7 @@ import 'package:mytradeasia/features/presentation/widgets/add_to_cart_button.dar
 import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
 import 'package:mytradeasia/utils/sales_force_screen.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/view/menu/history/tracking_document/tracking_document_screen.dart';
+import 'package:mytradeasia/old_file_tobedeleted/view/menu/history/tracking_document/tracking_document_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -317,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   top:
                                                                       size20px *
                                                                           0.75,
@@ -500,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .only(
+                                                                    .only(
                                                                 left: size24px /
                                                                     4,
                                                                 right:
@@ -547,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .symmetric(
+                                                                      .symmetric(
                                                                   vertical: 5.0,
                                                                   horizontal:
                                                                       10.0),
@@ -568,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .symmetric(
+                                                                    .symmetric(
                                                                 horizontal:
                                                                     10.0),
                                                         child: Row(
@@ -834,7 +834,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     4),
                                                             child: ClipRRect(
                                                               borderRadius: const BorderRadius
-                                                                  .all(
+                                                                      .all(
                                                                   Radius.circular(
                                                                       size20px /
                                                                           2)),
@@ -870,13 +870,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           ),
                                                           Expanded(
                                                             child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
+                                                              padding: const EdgeInsets
                                                                       .symmetric(
-                                                                      vertical:
-                                                                          5.0,
-                                                                      horizontal:
-                                                                          10.0),
+                                                                  vertical: 5.0,
+                                                                  horizontal:
+                                                                      10.0),
                                                               child: Text(
                                                                 docsData["recentlySeen"]
                                                                         [index][
@@ -890,14 +888,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                           ),
                                                           Padding(
-                                                            padding:
-                                                                const EdgeInsets
+                                                            padding: const EdgeInsets
                                                                     .symmetric(
-                                                                    horizontal:
-                                                                        10.0,
-                                                                    vertical:
-                                                                        size20px /
-                                                                            4),
+                                                                horizontal:
+                                                                    10.0,
+                                                                vertical:
+                                                                    size20px /
+                                                                        4),
                                                             child: Row(
                                                               children: [
                                                                 Column(
@@ -961,7 +958,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     onTap: () {},
                                                     child: Padding(
                                                       padding: const EdgeInsets
-                                                          .symmetric(
+                                                              .symmetric(
                                                           horizontal:
                                                               size20px / 2,
                                                           vertical:

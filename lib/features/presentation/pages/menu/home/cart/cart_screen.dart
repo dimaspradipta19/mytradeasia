@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_state.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
+import 'package:mytradeasia/old_file_tobedeleted/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 
 import '../../../../../../config/themes/theme.dart';
 

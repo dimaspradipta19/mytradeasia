@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
-import 'package:mytradeasia/widget/dialog_sheet_widget.dart';
-import 'package:mytradeasia/widget/mytradeasia_widget.dart';
+import 'package:mytradeasia/old_file_tobedeleted/widget/dialog_sheet_widget.dart';
+import 'package:mytradeasia/old_file_tobedeleted/widget/mytradeasia_widget.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
