@@ -359,8 +359,20 @@ class _CartScreenState extends State<CartScreen> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackbar);
                                 } else {
-                                  editCartItem(product: product, cart: cart);
-                                  Navigator.pop(context);
+                                  if (quantity <= 0) {
+                                    const snackbar = SnackBar(
+                                      content: Text(
+                                        "Quantity must be greater than zero",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      backgroundColor: redColor1,
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackbar);
+                                  } else {
+                                    editCartItem(product: product, cart: cart);
+                                    Navigator.pop(context);
+                                  }
                                 }
                               }
                             },

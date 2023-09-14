@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -260,8 +258,6 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                               ),
                             ),
                             onPressed: () {
-                              log("UNIT : $_selectedValueUnit");
-                              log("QUANTITY : ${_quantityController.text}");
                               if (_selectedValueUnit == null ||
                                   _quantityController.text == "") {
                                 const snackbar = SnackBar(
@@ -287,17 +283,29 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackbar);
                                 } else {
-                                  addToCart(
-                                      productName: productName,
-                                      seoUrl: seoUrl,
-                                      casNumber: casNumber,
-                                      hsCode: hsCode,
-                                      productImage: productImage);
-                                  setState(() {
-                                    _quantityController.text = '';
-                                    _selectedValueUnit = null;
-                                  });
-                                  Navigator.pop(context);
+                                  if (quantity <= 0) {
+                                    const snackbar = SnackBar(
+                                      content: Text(
+                                        "Quantity must be greater than zero",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      backgroundColor: redColor1,
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackbar);
+                                  } else {
+                                    addToCart(
+                                        productName: productName,
+                                        seoUrl: seoUrl,
+                                        casNumber: casNumber,
+                                        hsCode: hsCode,
+                                        productImage: productImage);
+                                    setState(() {
+                                      _quantityController.text = '';
+                                      _selectedValueUnit = null;
+                                    });
+                                    Navigator.pop(context);
+                                  }
                                 }
                               }
                             },
