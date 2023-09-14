@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/change_password/password_change_otp.dart';
+import 'package:mytradeasia/old_file_tobedeleted/view/menu/mytradeasia/submenu/change_password/password_change_otp.dart';
 
 import '../../../../../../../config/themes/theme.dart';
 import '../../../../../widgets/text_editing_widget.dart';

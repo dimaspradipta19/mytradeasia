@@ -12,7 +12,7 @@ import 'package:mytradeasia/features/presentation/state_management/cart_bloc/car
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/text_editing_widget.dart';
 import 'package:mytradeasia/helper/helper_functions.dart';
-import 'package:mytradeasia/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
+import 'package:mytradeasia/old_file_tobedeleted/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 
 import '../../../../../../config/themes/theme.dart';
 
