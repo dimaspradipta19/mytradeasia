@@ -9,7 +9,7 @@ class UserModel extends UserEntity {
     String? country,
     String? firstName,
     String? lastName,
-    String? phoneNumber,
+    String? phone,
   }) : super(
           email: email,
           password: password,
@@ -18,7 +18,7 @@ class UserModel extends UserEntity {
           country: country,
           firstName: firstName,
           lastName: lastName,
-          phoneNumber: phoneNumber,
+          phone: phone,
         );
 
   Map<String, dynamic> toMap() {
@@ -28,7 +28,7 @@ class UserModel extends UserEntity {
       'country': country,
       'firstName': firstName,
       'lastName': lastName,
-      'phoneNumber': phoneNumber,
+      'phoneNumber': phone,
     };
   }
 }

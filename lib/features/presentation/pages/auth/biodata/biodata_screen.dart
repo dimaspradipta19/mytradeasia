@@ -85,7 +85,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                           firstName: _firstNameController.text,
                           lastName: _lastNameController.text,
                           password: _passwordController.text,
-                          phoneNumber: widget.phone,
+                          phone: widget.phone,
                           role: role,
                         ),
                         context,

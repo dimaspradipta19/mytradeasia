@@ -42,6 +42,7 @@ import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases
 import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
 import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get_search_product.dart';
 import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_top_product.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
@@ -114,6 +115,7 @@ Future<void> initializeDependencies() async {
   injections.registerSingleton<GetTopProductUseCase>(
       GetTopProductUseCase(injections()));
   injections.registerSingleton<RegisterUser>(RegisterUser(injections()));
+  injections.registerSingleton<LoginUser>(LoginUser(injections()));
 
   //Bloc
   injections
@@ -135,5 +137,6 @@ Future<void> initializeDependencies() async {
       () => SalesforceDataBloc(injections()));
   injections.registerFactory<SalesforceDetailBloc>(
       () => SalesforceDetailBloc(injections()));
-  injections.registerFactory<AuthBloc>(() => AuthBloc(injections()));
+  injections
+      .registerFactory<AuthBloc>(() => AuthBloc(injections(), injections()));
 }

@@ -50,6 +50,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
         .doc(_auth.currentUser?.uid.toString())
         .get()
         .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+
     _firstNameController.text = _data['firstName'] ?? '';
     _lastNameController.text = _data['lastName'] ?? '';
     _phoneNumberController.text = _data['phone'] ?? '';
