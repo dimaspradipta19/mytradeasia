@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
@@ -317,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   top:
                                                                       size20px *
                                                                           0.75,
@@ -500,7 +501,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
+                                                                .only(
                                                                 left: size24px /
                                                                     4,
                                                                 right:
@@ -547,7 +548,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .symmetric(
+                                                                  .symmetric(
                                                                   vertical: 5.0,
                                                                   horizontal:
                                                                       10.0),
@@ -568,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .symmetric(
+                                                                .symmetric(
                                                                 horizontal:
                                                                     10.0),
                                                         child: Row(
@@ -643,12 +644,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         ),
                                                                         padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero)),
                                                                     onPressed: () {
+                                                                      List<ProductToRfq>
+                                                                          products =
+                                                                          [];
+                                                                      ProductToRfq
+                                                                          product =
+                                                                          ProductToRfq(
+                                                                        productName: state
+                                                                            .topProductData![index]
+                                                                            .productname!,
+                                                                        productImage: state
+                                                                            .topProductData![index]
+                                                                            .productimage!,
+                                                                        hsCode: state
+                                                                            .topProductData![index]
+                                                                            .hsCode!,
+                                                                        casNumber: state
+                                                                            .topProductData![index]
+                                                                            .casNumber!,
+                                                                      );
+                                                                      products.add(
+                                                                          product);
+
                                                                       RequestQuotationParameter
                                                                           param =
                                                                           RequestQuotationParameter(
-                                                                        product:
-                                                                            state.topProductData![index].productname ??
-                                                                                "",
+                                                                        products:
+                                                                            products,
                                                                       );
                                                                       context.go(
                                                                           "/home/request_quotation",
@@ -834,7 +856,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     4),
                                                             child: ClipRRect(
                                                               borderRadius: const BorderRadius
-                                                                      .all(
+                                                                  .all(
                                                                   Radius.circular(
                                                                       size20px /
                                                                           2)),
@@ -870,11 +892,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           ),
                                                           Expanded(
                                                             child: Padding(
-                                                              padding: const EdgeInsets
+                                                              padding:
+                                                                  const EdgeInsets
                                                                       .symmetric(
-                                                                  vertical: 5.0,
-                                                                  horizontal:
-                                                                      10.0),
+                                                                      vertical:
+                                                                          5.0,
+                                                                      horizontal:
+                                                                          10.0),
                                                               child: Text(
                                                                 docsData["recentlySeen"]
                                                                         [index][
@@ -888,13 +912,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                           ),
                                                           Padding(
-                                                            padding: const EdgeInsets
+                                                            padding:
+                                                                const EdgeInsets
                                                                     .symmetric(
-                                                                horizontal:
-                                                                    10.0,
-                                                                vertical:
-                                                                    size20px /
-                                                                        4),
+                                                                    horizontal:
+                                                                        10.0,
+                                                                    vertical:
+                                                                        size20px /
+                                                                            4),
                                                             child: Row(
                                                               children: [
                                                                 Column(
@@ -958,7 +983,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     onTap: () {},
                                                     child: Padding(
                                                       padding: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           horizontal:
                                                               size20px / 2,
                                                           vertical:
@@ -1069,7 +1094,7 @@ class MenuGridWidget extends StatelessWidget {
                 onTap: () {
                   /* With go_router */
                   RequestQuotationParameter param = RequestQuotationParameter(
-                    product: null,
+                    products: [],
                   );
                   context.go("/home/request_quotation", extra: param);
                 },

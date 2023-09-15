@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
@@ -511,14 +512,36 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                                       EdgeInsets
                                                                           .zero)),
                                                           onPressed: () {
+                                                            List<ProductToRfq>
+                                                                products = [];
+                                                            ProductToRfq
+                                                                product =
+                                                                ProductToRfq(
+                                                              productName: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productname!,
+                                                              productImage: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productimage!,
+                                                              hsCode: state
+                                                                  .products![
+                                                                      index]
+                                                                  .hsCode!,
+                                                              casNumber: state
+                                                                  .products![
+                                                                      index]
+                                                                  .casNumber!,
+                                                            );
+                                                            products
+                                                                .add(product);
+
                                                             RequestQuotationParameter
                                                                 param =
                                                                 RequestQuotationParameter(
-                                                              product: state
-                                                                      .products![
-                                                                          index]
-                                                                      .productname ??
-                                                                  "",
+                                                              products:
+                                                                  products,
                                                             );
                                                             context.go(
                                                                 "/home/request_quotation",
@@ -756,14 +779,36 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                                       EdgeInsets
                                                                           .zero)),
                                                           onPressed: () {
+                                                            List<ProductToRfq>
+                                                                products = [];
+                                                            ProductToRfq
+                                                                product =
+                                                                ProductToRfq(
+                                                              productName: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productname!,
+                                                              productImage: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productimage!,
+                                                              hsCode: state
+                                                                  .products![
+                                                                      index]
+                                                                  .hsCode!,
+                                                              casNumber: state
+                                                                  .products![
+                                                                      index]
+                                                                  .casNumber!,
+                                                            );
+                                                            products
+                                                                .add(product);
+
                                                             RequestQuotationParameter
                                                                 param =
                                                                 RequestQuotationParameter(
-                                                              product: searchState
-                                                                      .searchProducts![
-                                                                          index]
-                                                                      .productname ??
-                                                                  "",
+                                                              products:
+                                                                  products,
                                                             );
                                                             context.go(
                                                                 "/home/request_quotation",

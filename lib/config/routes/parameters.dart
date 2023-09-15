@@ -1,3 +1,5 @@
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
+
 class TrackingDocumentParameter {
   String product;
   int indexProducts;
@@ -35,8 +37,6 @@ class BiodataParameter {
 }
 
 class RequestQuotationParameter {
-  String? product = "";
-  double? quantity = 0;
-  String? unit = "";
-  RequestQuotationParameter({this.product, this.quantity, this.unit});
+  List<ProductToRfq> products;
+  RequestQuotationParameter({required this.products});
 }

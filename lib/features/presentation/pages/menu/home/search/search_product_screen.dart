@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
@@ -332,14 +333,33 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                   EdgeInsets
                                                                       .zero)),
                                                       onPressed: () {
+                                                        List<ProductToRfq>
+                                                            products = [];
+                                                        ProductToRfq product =
+                                                            ProductToRfq(
+                                                          productName: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .productname!,
+                                                          productImage: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .productimage!,
+                                                          hsCode: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .hsCode!,
+                                                          casNumber: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .casNumber!,
+                                                        );
+                                                        products.add(product);
+
                                                         RequestQuotationParameter
                                                             param =
                                                             RequestQuotationParameter(
-                                                          product: state
-                                                                  .searchProducts![
-                                                                      index]
-                                                                  .productname ??
-                                                              "",
+                                                          products: products,
                                                         );
                                                         context.go(
                                                             "/home/request_quotation",

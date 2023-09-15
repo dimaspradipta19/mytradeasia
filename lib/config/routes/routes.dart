@@ -72,12 +72,10 @@ class Routes {
                 GoRoute(
                   path: "request_quotation",
                   builder: (context, state) {
-                    RequestQuotationParameter? param =
-                        state.extra as RequestQuotationParameter?;
+                    RequestQuotationParameter param =
+                        state.extra as RequestQuotationParameter;
                     return RequestQuotationScreen(
-                      productname: param != null ? param.product ?? "" : "",
-                      quantity: param != null ? param.quantity ?? 0 : 0,
-                      unit: param != null ? param.unit ?? "" : "",
+                      products: param.products,
                     );
                   },
                 ),
