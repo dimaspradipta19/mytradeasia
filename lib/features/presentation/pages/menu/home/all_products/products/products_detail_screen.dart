@@ -574,7 +574,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                               return InkWell(
                                 onTap: () {
                                   /* With go_router */
-                                  context.pushNamed("product", pathParameters: {
+                                  context.goNamed("product", pathParameters: {
                                     'url': state
                                             .detailProductData
                                             ?.relatedProducts?[indexRelated]
