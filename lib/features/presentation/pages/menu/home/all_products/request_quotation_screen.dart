@@ -663,7 +663,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical:
                                                             size20px / 2.0),
                                                     child: Text(
@@ -719,7 +719,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   // Button 2
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical: 5.0),
                                                     child: SizedBox(
                                                       height: size20px * 1.5,
@@ -842,8 +842,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                 print(_auth.currentUser!.uid);
 
                 /* With go_router */
-                // context.goNamed("submitted_rfq");
-
+                context.goNamed("submitted_rfq");
                 // Navigator.push(context, MaterialPageRoute(
                 //   builder: (context) {
                 //     return const SubmittedRFQScreen();
