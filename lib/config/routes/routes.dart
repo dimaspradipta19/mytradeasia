@@ -76,6 +76,8 @@ class Routes {
                         state.extra as RequestQuotationParameter?;
                     return RequestQuotationScreen(
                       productname: param != null ? param.product ?? "" : "",
+                      quantity: param != null ? param.quantity ?? 0 : 0,
+                      unit: param != null ? param.unit ?? "" : "",
                     );
                   },
                 ),
