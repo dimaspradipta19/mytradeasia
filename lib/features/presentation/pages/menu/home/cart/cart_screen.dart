@@ -707,6 +707,9 @@ class ActiveButton extends StatelessWidget {
             if (item['isChecked']) {
               ProductToRfq data = ProductToRfq(
                   productName: item['productName'],
+                  productImage: item['productImage'],
+                  hsCode: item['hsCode'],
+                  casNumber: item['casNumber'],
                   quantity: item['quantity'],
                   unit: item['unit']);
               selectedItem.add(data);

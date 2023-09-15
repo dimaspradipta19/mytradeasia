@@ -337,10 +337,23 @@ class _SearchScreenState extends State<SearchScreen> {
                                                             products = [];
                                                         ProductToRfq product =
                                                             ProductToRfq(
-                                                                productName: state
-                                                                    .searchProducts![
-                                                                        index]
-                                                                    .productname!);
+                                                          productName: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .productname!,
+                                                          productImage: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .productimage!,
+                                                          hsCode: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .hsCode!,
+                                                          casNumber: state
+                                                              .searchProducts![
+                                                                  index]
+                                                              .casNumber!,
+                                                        );
                                                         products.add(product);
 
                                                         RequestQuotationParameter

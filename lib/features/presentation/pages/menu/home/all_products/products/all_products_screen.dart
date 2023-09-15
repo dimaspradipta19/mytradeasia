@@ -517,10 +517,23 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                             ProductToRfq
                                                                 product =
                                                                 ProductToRfq(
-                                                                    productName: state
-                                                                        .products![
-                                                                            index]
-                                                                        .productname!);
+                                                              productName: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productname!,
+                                                              productImage: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productimage!,
+                                                              hsCode: state
+                                                                  .products![
+                                                                      index]
+                                                                  .hsCode!,
+                                                              casNumber: state
+                                                                  .products![
+                                                                      index]
+                                                                  .casNumber!,
+                                                            );
                                                             products
                                                                 .add(product);
 
@@ -771,10 +784,23 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                             ProductToRfq
                                                                 product =
                                                                 ProductToRfq(
-                                                                    productName: state
-                                                                        .products![
-                                                                            index]
-                                                                        .productname!);
+                                                              productName: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productname!,
+                                                              productImage: state
+                                                                  .products![
+                                                                      index]
+                                                                  .productimage!,
+                                                              hsCode: state
+                                                                  .products![
+                                                                      index]
+                                                                  .hsCode!,
+                                                              casNumber: state
+                                                                  .products![
+                                                                      index]
+                                                                  .casNumber!,
+                                                            );
                                                             products
                                                                 .add(product);
 

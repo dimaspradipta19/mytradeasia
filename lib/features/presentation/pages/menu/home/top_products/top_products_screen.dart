@@ -302,9 +302,18 @@ class AllTopProductsWidget extends StatelessWidget {
                                         onPressed: () {
                                           List<ProductToRfq> products = [];
                                           ProductToRfq product = ProductToRfq(
-                                              productName: state
-                                                  .topProductData![index]
-                                                  .productname!);
+                                            productName: state
+                                                .topProductData![index]
+                                                .productname!,
+                                            productImage: state
+                                                .topProductData![index]
+                                                .productimage!,
+                                            hsCode: state
+                                                .topProductData![index].hsCode!,
+                                            casNumber: state
+                                                .topProductData![index]
+                                                .casNumber!,
+                                          );
                                           products.add(product);
 
                                           RequestQuotationParameter param =

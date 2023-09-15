@@ -650,7 +650,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ProductToRfq
                                                                           product =
                                                                           ProductToRfq(
-                                                                              productName: state.topProductData![index].productname!);
+                                                                        productName: state
+                                                                            .topProductData![index]
+                                                                            .productname!,
+                                                                        productImage: state
+                                                                            .topProductData![index]
+                                                                            .productimage!,
+                                                                        hsCode: state
+                                                                            .topProductData![index]
+                                                                            .hsCode!,
+                                                                        casNumber: state
+                                                                            .topProductData![index]
+                                                                            .casNumber!,
+                                                                      );
                                                                       products.add(
                                                                           product);
 
