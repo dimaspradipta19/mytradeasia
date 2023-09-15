@@ -511,10 +511,10 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                       ],
                                                       value: _selectedValueUnit,
                                                       onChanged: (value) {
-                                                        setState(() {
-                                                          _selectedValueUnit =
-                                                              value;
-                                                        });
+                                                        // setState(() {
+                                                        _selectedValueUnit =
+                                                            value;
+                                                        // });
                                                       },
                                                     ),
                                                   ),
@@ -581,10 +581,10 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                 ],
                                                 value: _selectedValueIncoterm,
                                                 onChanged: (value) {
-                                                  setState(() {
-                                                    _selectedValueIncoterm =
-                                                        value;
-                                                  });
+                                                  // setState(() {
+                                                  _selectedValueIncoterm =
+                                                      value;
+                                                  // });
                                                 },
                                               ),
                                             ),
@@ -676,7 +676,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         vertical:
                                                             size20px / 2.0),
                                                     child: Text(
@@ -732,7 +732,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   // Button 2
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         vertical: 5.0),
                                                     child: SizedBox(
                                                       height: size20px * 1.5,
