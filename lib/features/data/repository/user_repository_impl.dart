@@ -18,10 +18,16 @@ class UserRepositoryImpl implements UserRepository {
       firstName: s.firstName,
       lastName: s.lastName,
       password: s.password,
-      phoneNumber: s.phoneNumber,
+      phone: s.phone,
       role: s.role,
     );
     final response = await _authUserFirebase.postRegisterUser(userData);
+    return response;
+  }
+
+  @override
+  Future<dynamic> loginUser(Map<String, String> s) async {
+    final response = await _authUserFirebase.postLoginUser(s);
     return response;
   }
 }

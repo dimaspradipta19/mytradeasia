@@ -70,21 +70,19 @@ class Routes {
                     path: "search",
                     builder: (context, state) => const SearchScreen()),
                 GoRoute(
-                    path: "request_quotation",
-                    builder: (context, state) {
-                      RequestQuotationParameter param =
-                          state.extra as RequestQuotationParameter;
-                      return RequestQuotationScreen(
-                        productname: param.product ?? '',
-                      );
-                    },
-                    routes: [
-                      GoRoute(
-                          path: 'submitted_rfq',
-                          name: 'submitted_rfq',
-                          builder: (context, state) =>
-                              const SubmittedRFQScreen())
-                    ]),
+                  path: "request_quotation",
+                  builder: (context, state) {
+                    RequestQuotationParameter? param =
+                        state.extra as RequestQuotationParameter?;
+                    return RequestQuotationScreen(
+                      productname: param != null ? param.product ?? "" : "",
+                    );
+                  },
+                ),
+                GoRoute(
+                    path: 'submitted_rfq',
+                    name: 'submitted_rfq',
+                    builder: (context, state) => const SubmittedRFQScreen()),
                 GoRoute(
                     path: "all_products",
                     builder: (context, state) => const AllProductsScreen(),

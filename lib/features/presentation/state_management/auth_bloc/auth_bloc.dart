@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,23 +16,20 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final RegisterUser _postRegisterUser;
+  final LoginUser _postLoginUser;
 
-  AuthBloc(this._postRegisterUser) : super(const AuthInitState()) {
+  AuthBloc(this._postRegisterUser, this._postLoginUser)
+      : super(const AuthInitState()) {
     on<LoginWithEmail>((event, emit) async {
       BuildContext context = event.context;
-      try {
-        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-            email: event.email, password: event.password);
 
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("email", event.email);
-        // await prefs.setString("phoneNumber", event);
-        await prefs.setBool("isLoggedIn", true);
-
-        emit(AuthLoggedInState(userCredential.user));
+      final response = await _postLoginUser
+          .call(param: {"email": event.email, "password": event.password});
+      if (response is UserCredential) {
+        emit(AuthLoggedInState(response.user));
         context.go("/home");
-      } on FirebaseAuthException catch (e) {
-        if (e.code == "user-not-found") {
+      } else {
+        if (response == "user-not-found") {
           showDialog(
             context: context,
             builder: (context) => DialogWidget(
@@ -43,7 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                   context.pop(context);
                 }),
           );
-        } else if (e.code == 'wrong-password') {
+        } else if (response == 'wrong-password') {
           showDialog(
             context: context,
             builder: (context) => DialogWidget(
@@ -57,6 +55,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         }
       }
+      // try {
+      //   UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      //       email: event.email, password: event.password);
+
+      //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+      //   await prefs.setString("email", event.email);
+      //   // await prefs.setString("phoneNumber", event);
+      //   await prefs.setBool("isLoggedIn", true);
+
+      //   emit(AuthLoggedInState(userCredential.user));
+      //   context.go("/home");
+      // } on FirebaseAuthException catch (e) {
+      //   if (e.code == "user-not-found") {
+      //     showDialog(
+      //       context: context,
+      //       builder: (context) => DialogWidget(
+      //           urlIcon: "assets/images/logo_delete_account.png",
+      //           title: "Wrong Email",
+      //           subtitle: "No user found for that email.",
+      //           textForButton: "Go back",
+      //           navigatorFunction: () {
+      //             context.pop(context);
+      //           }),
+      //     );
+      //   } else if (e.code == 'wrong-password') {
+      //     showDialog(
+      //       context: context,
+      //       builder: (context) => DialogWidget(
+      //           urlIcon: "assets/images/logo_delete_account.png",
+      //           title: "Wrong Password",
+      //           subtitle: "Wrong password provided for that user.",
+      //           textForButton: "Go back",
+      //           navigatorFunction: () {
+      //             context.pop(context);
+      //           }),
+      //     );
+      //   }
+      // }
     });
     on<RegisterWithEmail>((event, emit) async {
       BuildContext context = event.context;
