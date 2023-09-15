@@ -3,21 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/helper/helper_functions.dart';
 import 'package:mytradeasia/old_file_tobedeleted/view/menu/other/languages_screen.dart';
 
 import '../../../../widgets/text_editing_widget.dart';
 
 class RequestQuotationScreen extends StatefulWidget {
-  const RequestQuotationScreen(
-      {super.key,
-      required this.productname,
-      required this.quantity,
-      required this.unit});
+  const RequestQuotationScreen({super.key, required this.products});
 
-  final String productname;
-  final double quantity;
-  final String unit;
+  final List<ProductToRfq> products;
 
   @override
   State<RequestQuotationScreen> createState() => _RequestQuotationScreenState();
@@ -47,10 +42,10 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   @override
   void initState() {
     setState(() {
-      _productNameController.text = widget.productname;
-      _quantityController.text =
-          parseDoubleToIntegerIfNecessary(widget.quantity).toString();
-      _selectedValueUnit = widget.unit == "" ? null : widget.unit;
+      // _productNameController.text = widget.productname;
+      // _quantityController.text =
+      //     parseDoubleToIntegerIfNecessary(widget.quantity).toString();
+      // _selectedValueUnit = widget.unit == "" ? null : widget.unit;
     });
 
     getUserData();
@@ -676,7 +671,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical:
                                                             size20px / 2.0),
                                                     child: Text(
@@ -732,7 +727,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   // Button 2
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical: 5.0),
                                                     child: SizedBox(
                                                       height: size20px * 1.5,

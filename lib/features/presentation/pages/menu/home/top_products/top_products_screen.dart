@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 // import 'package:mytradeasia/modelview/provider/top_products_provider.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_event.dart';
@@ -299,12 +300,16 @@ class AllTopProductsWidget extends StatelessWidget {
                                             padding: MaterialStateProperty.all<
                                                 EdgeInsets>(EdgeInsets.zero)),
                                         onPressed: () {
+                                          List<ProductToRfq> products = [];
+                                          ProductToRfq product = ProductToRfq(
+                                              productName: state
+                                                  .topProductData![index]
+                                                  .productname!);
+                                          products.add(product);
+
                                           RequestQuotationParameter param =
                                               RequestQuotationParameter(
-                                            product: state
-                                                    .topProductData![index]
-                                                    .productname ??
-                                                "",
+                                            products: products,
                                           );
                                           context.go("/home/request_quotation",
                                               extra: param);

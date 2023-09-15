@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/core/constants/constants.dart';
+import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_state.dart';
@@ -579,11 +580,9 @@ class _CartScreenState extends State<CartScreen> {
                 padding: const EdgeInsets.symmetric(
                     horizontal: size20px, vertical: size20px - 8.0),
                 child: state.cartItems!.any((item) => item["isChecked"])
-                    ? const ActiveButton(
+                    ? ActiveButton(
                         titleButton: "Send Incquiry",
-                        productName: "Ethyl",
-                        unit: "Tonne",
-                        quantity: 12,
+                        cartData: state.cartItems!,
                       )
                     : const InactiveButton(
                         titleButton: "Send Inquiry",
@@ -684,16 +683,10 @@ class InactiveButton extends StatelessWidget {
 
 class ActiveButton extends StatelessWidget {
   const ActiveButton(
-      {super.key,
-      required this.titleButton,
-      required this.productName,
-      required this.quantity,
-      required this.unit});
+      {super.key, required this.titleButton, required this.cartData});
 
   final String titleButton;
-  final String productName;
-  final double quantity;
-  final String unit;
+  final List<dynamic> cartData;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -709,8 +702,27 @@ class ActiveButton extends StatelessWidget {
           ),
         ),
         onPressed: (() {
+          final List<ProductToRfq> selectedItem = [];
+          for (var item in cartData) {
+            if (item['isChecked']) {
+              ProductToRfq data = ProductToRfq(
+                  productName: item['productName'],
+                  quantity: item['quantity'],
+                  unit: item['unit']);
+              selectedItem.add(data);
+            }
+          }
+          // List<ProductToRfq> products = [];
+          // ProductToRfq product = ProductToRfq(productName: data
+          //     .products![
+          // index]
+          //     .productname!);
+          // products.add(product);
+          //
           RequestQuotationParameter param = RequestQuotationParameter(
-              product: productName, quantity: quantity, unit: unit);
+            products: selectedItem,
+          );
+
           context.push("/home/request_quotation", extra: param);
           // Navigator.push(context, MaterialPageRoute(
           //   builder: (context) {
