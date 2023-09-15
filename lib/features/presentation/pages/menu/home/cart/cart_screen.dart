@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/core/constants/constants.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
@@ -577,10 +578,13 @@ class _CartScreenState extends State<CartScreen> {
             bottomNavigationBar: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: size20px, vertical: size20px - 8.0),
-                child: state.cartItems!.every((item) => item["isChecked"])
+                child: state.cartItems!.any((item) => item["isChecked"])
                     ? const ActiveButton(
                         titleButton: "Send Incquiry",
-                        navigationPage: QuotationsScreen())
+                        productName: "Ethyl",
+                        unit: "Tonne",
+                        quantity: 12,
+                      )
                     : const InactiveButton(
                         titleButton: "Send Inquiry",
                       )),
@@ -680,10 +684,16 @@ class InactiveButton extends StatelessWidget {
 
 class ActiveButton extends StatelessWidget {
   const ActiveButton(
-      {super.key, required this.titleButton, required this.navigationPage});
+      {super.key,
+      required this.titleButton,
+      required this.productName,
+      required this.quantity,
+      required this.unit});
 
   final String titleButton;
-  final Widget navigationPage;
+  final String productName;
+  final double quantity;
+  final String unit;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -699,7 +709,9 @@ class ActiveButton extends StatelessWidget {
           ),
         ),
         onPressed: (() {
-          context.push("/mytradeasia/quotations");
+          RequestQuotationParameter param =
+              RequestQuotationParameter(product: productName);
+          context.push("/home/request_quotation", extra: param);
           // Navigator.push(context, MaterialPageRoute(
           //   builder: (context) {
           //     return navigationPage;
