@@ -35,6 +35,8 @@ class BiodataParameter {
 }
 
 class RequestQuotationParameter {
-  String? product;
-  RequestQuotationParameter({this.product});
+  String? product = "";
+  double? quantity = 0;
+  String? unit = "";
+  RequestQuotationParameter({this.product, this.quantity, this.unit});
 }

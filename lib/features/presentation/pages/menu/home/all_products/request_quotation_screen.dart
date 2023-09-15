@@ -3,14 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
+import 'package:mytradeasia/helper/helper_functions.dart';
 import 'package:mytradeasia/old_file_tobedeleted/view/menu/other/languages_screen.dart';
 
 import '../../../../widgets/text_editing_widget.dart';
 
 class RequestQuotationScreen extends StatefulWidget {
-  const RequestQuotationScreen({super.key, required this.productname});
+  const RequestQuotationScreen(
+      {super.key,
+      required this.productname,
+      required this.quantity,
+      required this.unit});
 
   final String productname;
+  final double quantity;
+  final String unit;
 
   @override
   State<RequestQuotationScreen> createState() => _RequestQuotationScreenState();
@@ -39,7 +46,13 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
 
   @override
   void initState() {
-    _productNameController.text = widget.productname;
+    setState(() {
+      _productNameController.text = widget.productname;
+      _quantityController.text =
+          parseDoubleToIntegerIfNecessary(widget.quantity).toString();
+      _selectedValueUnit = widget.unit == "" ? null : widget.unit;
+    });
+
     getUserData();
     super.initState();
   }

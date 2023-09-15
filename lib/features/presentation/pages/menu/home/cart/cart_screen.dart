@@ -709,8 +709,8 @@ class ActiveButton extends StatelessWidget {
           ),
         ),
         onPressed: (() {
-          RequestQuotationParameter param =
-              RequestQuotationParameter(product: productName);
+          RequestQuotationParameter param = RequestQuotationParameter(
+              product: productName, quantity: quantity, unit: unit);
           context.push("/home/request_quotation", extra: param);
           // Navigator.push(context, MaterialPageRoute(
           //   builder: (context) {
