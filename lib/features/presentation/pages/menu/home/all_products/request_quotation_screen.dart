@@ -368,9 +368,33 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                               ],
                                             )
                                           : Container(),
-
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: size20px - 5.0,
+                                                bottom: size20px - 12.0),
+                                            child: Text(
+                                              "Products",
+                                              style: text14,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5.0,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                          ),
+                                        ],
+                                      ),
                                       widget.products.isNotEmpty
                                           ? SizedBox(
+                                              height: size20px *
+                                                  3.5 *
+                                                  widget.products.length
+                                                      .toDouble(),
                                               child: Expanded(
                                                 child: Scrollbar(
                                                   thumbVisibility: true,
@@ -406,7 +430,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                             children: [
                                                               Padding(
                                                                 padding: const EdgeInsets
-                                                                    .only(
+                                                                        .only(
                                                                     right:
                                                                         size20px +
                                                                             5.0),
@@ -441,16 +465,19 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                                 children: [
                                                                   Padding(
                                                                     padding: const EdgeInsets
-                                                                        .only(
+                                                                            .only(
                                                                         bottom: size20px -
                                                                             15.0),
                                                                     child: Text(
-                                                                        widget
-                                                                            .products[
-                                                                                index]
-                                                                            .productName,
-                                                                        style:
-                                                                            heading3),
+                                                                      widget.products[index].productName.length >
+                                                                              31
+                                                                          ? "${widget.products[index].productName.substring(0, 31)}..."
+                                                                          : widget
+                                                                              .products[index]
+                                                                              .productName,
+                                                                      style:
+                                                                          heading3,
+                                                                    ),
                                                                   ),
                                                                   Row(
                                                                     children: [
@@ -514,196 +541,187 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                 ),
                                               ),
                                             )
-                                          : Column(
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: size20px - 5.0,
-                                                          bottom:
-                                                              size20px - 12.0),
-                                                      child: Text(
-                                                        "Product Name",
-                                                        style: text14,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 50.0,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      child: TextEditingWidget(
-                                                        readOnly: false,
-                                                        controller:
-                                                            _productNameController,
-                                                        hintText: "Dipentene",
-                                                      ),
-                                                    ),
-                                                  ],
+                                          : ClipOval(
+                                              child: Material(
+                                                color:
+                                                    primaryColor1, // button color
+                                                child: InkWell(
+                                                  // splashColor: Colors
+                                                  //     .red, // inkwell color
+                                                  child: SizedBox(
+                                                      width: 46,
+                                                      height: 46,
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        color: Colors.white,
+                                                      )),
+                                                  onTap: () {
+                                                    context.goNamed(
+                                                        "all_products");
+                                                  },
                                                 ),
-
-                                                //Quantity & Unit
-                                                const SizedBox(
-                                                    height: size20px - 5.0),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 10,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Text(
-                                                            "Quantity",
-                                                            style: text14,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 8.0),
-                                                          SizedBox(
-                                                            width:
-                                                                size20px * 8.0,
-                                                            height:
-                                                                size20px + 30,
-                                                            // TexteditingController here
-                                                            child:
-                                                                TextEditingWidget(
-                                                              controller:
-                                                                  _quantityController,
-                                                              hintText:
-                                                                  "Quantity",
-                                                              readOnly: false,
-                                                              inputType:
-                                                                  TextInputType
-                                                                      .number,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: Container()),
-                                                    Expanded(
-                                                      flex: 10,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Text(
-                                                            "Unit",
-                                                            style: text14,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 8.0),
-                                                          Container(
-                                                            decoration: BoxDecoration(
-                                                                border: Border.all(
-                                                                    color:
-                                                                        greyColor3),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            7.0)),
-                                                            width:
-                                                                size20px * 8.0,
-                                                            height:
-                                                                size20px + 28,
-                                                            // TexteditingController here
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                left: size20px,
-                                                              ),
-                                                              child:
-                                                                  DropdownButtonFormField(
-                                                                icon: Image.asset(
-                                                                    "assets/images/icon_bottom.png"),
-                                                                hint: Text(
-                                                                  "Unit",
-                                                                  style: body1Regular
-                                                                      .copyWith(
-                                                                          color:
-                                                                              greyColor),
-                                                                ),
-                                                                decoration:
-                                                                    const InputDecoration(
-                                                                  border:
-                                                                      InputBorder
-                                                                          .none,
-                                                                ),
-                                                                style:
-                                                                    body1Regular,
-                                                                items: const [
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        'Tonne',
-                                                                    child: Text(
-                                                                        'Tonne',
-                                                                        style:
-                                                                            body1Regular),
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        '20” FCL',
-                                                                    child: Text(
-                                                                        '20” FCL',
-                                                                        style:
-                                                                            body1Regular),
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        'Litres',
-                                                                    child: Text(
-                                                                        'Litres',
-                                                                        style:
-                                                                            body1Regular),
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        'Kilogram (Kg)',
-                                                                    child: Text(
-                                                                        'Kilogram (Kg)',
-                                                                        style:
-                                                                            body1Regular),
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        'Metric Tonne (MT)',
-                                                                    child: Text(
-                                                                        'Metric Tonne (MT)',
-                                                                        style:
-                                                                            body1Regular),
-                                                                  ),
-                                                                ],
-                                                                value:
-                                                                    _selectedValueUnit,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  // setState(() {
-                                                                  _selectedValueUnit =
-                                                                      value;
-                                                                  // });
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
                                             ),
+                                      // : Column(
+                                      //     children: [
+                                      //       //Quantity & Unit
+                                      //       const SizedBox(
+                                      //           height: size20px - 5.0),
+                                      //       Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment
+                                      //                 .spaceBetween,
+                                      //         children: [
+                                      //           Expanded(
+                                      //             flex: 10,
+                                      //             child: Column(
+                                      //               crossAxisAlignment:
+                                      //                   CrossAxisAlignment
+                                      //                       .start,
+                                      //               children: [
+                                      //                 const Text(
+                                      //                   "Quantity",
+                                      //                   style: text14,
+                                      //                 ),
+                                      //                 const SizedBox(
+                                      //                     height: 8.0),
+                                      //                 SizedBox(
+                                      //                   width:
+                                      //                       size20px * 8.0,
+                                      //                   height:
+                                      //                       size20px + 30,
+                                      //                   // TexteditingController here
+                                      //                   child:
+                                      //                       TextEditingWidget(
+                                      //                     controller:
+                                      //                         _quantityController,
+                                      //                     hintText:
+                                      //                         "Quantity",
+                                      //                     readOnly: false,
+                                      //                     inputType:
+                                      //                         TextInputType
+                                      //                             .number,
+                                      //                   ),
+                                      //                 ),
+                                      //               ],
+                                      //             ),
+                                      //           ),
+                                      //           Expanded(
+                                      //               flex: 1,
+                                      //               child: Container()),
+                                      //           Expanded(
+                                      //             flex: 10,
+                                      //             child: Column(
+                                      //               crossAxisAlignment:
+                                      //                   CrossAxisAlignment
+                                      //                       .start,
+                                      //               children: [
+                                      //                 const Text(
+                                      //                   "Unit",
+                                      //                   style: text14,
+                                      //                 ),
+                                      //                 const SizedBox(
+                                      //                     height: 8.0),
+                                      //                 Container(
+                                      //                   decoration: BoxDecoration(
+                                      //                       border: Border.all(
+                                      //                           color:
+                                      //                               greyColor3),
+                                      //                       borderRadius:
+                                      //                           BorderRadius
+                                      //                               .circular(
+                                      //                                   7.0)),
+                                      //                   width:
+                                      //                       size20px * 8.0,
+                                      //                   height:
+                                      //                       size20px + 28,
+                                      //                   // TexteditingController here
+                                      //                   child: Padding(
+                                      //                     padding:
+                                      //                         const EdgeInsets
+                                      //                             .only(
+                                      //                       left: size20px,
+                                      //                     ),
+                                      //                     child:
+                                      //                         DropdownButtonFormField(
+                                      //                       icon: Image.asset(
+                                      //                           "assets/images/icon_bottom.png"),
+                                      //                       hint: Text(
+                                      //                         "Unit",
+                                      //                         style: body1Regular
+                                      //                             .copyWith(
+                                      //                                 color:
+                                      //                                     greyColor),
+                                      //                       ),
+                                      //                       decoration:
+                                      //                           const InputDecoration(
+                                      //                         border:
+                                      //                             InputBorder
+                                      //                                 .none,
+                                      //                       ),
+                                      //                       style:
+                                      //                           body1Regular,
+                                      //                       items: const [
+                                      //                         DropdownMenuItem(
+                                      //                           value:
+                                      //                               'Tonne',
+                                      //                           child: Text(
+                                      //                               'Tonne',
+                                      //                               style:
+                                      //                                   body1Regular),
+                                      //                         ),
+                                      //                         DropdownMenuItem(
+                                      //                           value:
+                                      //                               '20” FCL',
+                                      //                           child: Text(
+                                      //                               '20” FCL',
+                                      //                               style:
+                                      //                                   body1Regular),
+                                      //                         ),
+                                      //                         DropdownMenuItem(
+                                      //                           value:
+                                      //                               'Litres',
+                                      //                           child: Text(
+                                      //                               'Litres',
+                                      //                               style:
+                                      //                                   body1Regular),
+                                      //                         ),
+                                      //                         DropdownMenuItem(
+                                      //                           value:
+                                      //                               'Kilogram (Kg)',
+                                      //                           child: Text(
+                                      //                               'Kilogram (Kg)',
+                                      //                               style:
+                                      //                                   body1Regular),
+                                      //                         ),
+                                      //                         DropdownMenuItem(
+                                      //                           value:
+                                      //                               'Metric Tonne (MT)',
+                                      //                           child: Text(
+                                      //                               'Metric Tonne (MT)',
+                                      //                               style:
+                                      //                                   body1Regular),
+                                      //                         ),
+                                      //                       ],
+                                      //                       value:
+                                      //                           _selectedValueUnit,
+                                      //                       onChanged:
+                                      //                           (value) {
+                                      //                         // setState(() {
+                                      //                         _selectedValueUnit =
+                                      //                             value;
+                                      //                         // });
+                                      //                       },
+                                      //                     ),
+                                      //                   ),
+                                      //                 ),
+                                      //               ],
+                                      //             ),
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ],
+                                      //   ),
                                       //Incoterm
                                       Column(
                                         crossAxisAlignment:
@@ -855,7 +873,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         vertical:
                                                             size20px / 2.0),
                                                     child: Text(
@@ -911,7 +929,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   // Button 2
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         vertical: 5.0),
                                                     child: SizedBox(
                                                       height: size20px * 1.5,
@@ -1031,8 +1049,6 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                 ),
               ),
               onPressed: () {
-                print(_auth.currentUser!.uid);
-
                 /* With go_router */
                 context.goNamed("submitted_rfq");
                 // Navigator.push(context, MaterialPageRoute(
@@ -1053,16 +1069,21 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   void editCartItemBottomSheet(
       {required List<ProductToRfq> products,
       required ProductToRfq product}) async {
-    setState(() {
-      if (product.quantity != null) {
-        _quantityController.text =
-            parseDoubleToIntegerIfNecessary(product.quantity!).toString();
-      }
-      _selectedValueUnit = product.unit;
-    });
+    // setState(() {
+    //   if (product.quantity != null) {
+    //     _quantityController.text =
+    //         parseDoubleToIntegerIfNecessary(product.quantity!).toString();
+    //   }
+    //   _selectedValueUnit = product.unit;
+    // });
+    if (product.quantity != null) {
+      _quantityController.text =
+          parseDoubleToIntegerIfNecessary(product.quantity!).toString();
+    }
+    _selectedValueUnit = product.unit;
 
     return showModalBottomSheet<dynamic>(
-      isScrollControlled: true,
+      // isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(40.0),
