@@ -85,6 +85,7 @@ class Routes {
                     builder: (context, state) => const SubmittedRFQScreen()),
                 GoRoute(
                     path: "all_products",
+                    name: "all_products",
                     builder: (context, state) => const AllProductsScreen(),
                     routes: [
                       GoRoute(
