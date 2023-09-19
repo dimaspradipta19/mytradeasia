@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       BlocProvider.of<SalesforceLoginBloc>(context)
           .add(const LoginSalesforce());
 
-      BlocProvider.of<CartBloc>(context).add(GetCartItems());
+      BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     });
   }
 

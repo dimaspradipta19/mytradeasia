@@ -1,32 +1,56 @@
-import 'package:mytradeasia/features/domain/entities/cart_entities/cart_entities.dart';
+class CartModel {
+  String? seoUrl;
+  String? unit;
+  double? quantity;
+  String? productImage;
+  String? hsCode;
+  String? casNumber;
+  String? productName;
+  bool? isChecked;
 
-class CartModel extends CartEntity {
-  const CartModel({
-    String? productName,
-    String? productImage,
-    String? hsCode,
-    String? casNumber,
-    String? seoUrl,
-    String? unit,
-    double? quantity,
-  }) : super(
-            productName: productName,
-            productImage: productImage,
-            hsCode: hsCode,
-            casNumber: casNumber,
-            seoUrl: seoUrl,
-            unit: unit,
-            quantity: quantity);
+  CartModel(
+      {this.seoUrl,
+      this.unit,
+      this.quantity,
+      this.productImage,
+      this.hsCode,
+      this.casNumber,
+      this.productName,
+      this.isChecked});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'productname': productName,
-      'productimage': productImage,
-      'hsCode': hsCode,
-      'casNumber': casNumber,
-      'seo_url': seoUrl,
-      'unit': unit,
-      'quantity': quantity
-    };
+  CartModel.fromJson(Map<String, dynamic> json) {
+    seoUrl = json['seo_url'];
+    unit = json['unit'];
+    quantity = json['quantity'];
+    productImage = json['productImage'];
+    hsCode = json['hsCode'];
+    casNumber = json['casNumber'];
+    productName = json['productName'];
+    isChecked = json['isChecked'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['seo_url'] = this.seoUrl;
+    data['unit'] = this.unit;
+    data['quantity'] = this.quantity;
+    data['productImage'] = this.productImage;
+    data['hsCode'] = this.hsCode;
+    data['casNumber'] = this.casNumber;
+    data['productName'] = this.productName;
+    data['isChecked'] = this.isChecked;
+    return data;
+  }
+
+  Map<String, dynamic> toFirebase() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['seo_url'] = this.seoUrl;
+    data['unit'] = this.unit;
+    data['quantity'] = this.quantity;
+    data['productImage'] = this.productImage;
+    data['hsCode'] = this.hsCode;
+    data['casNumber'] = this.casNumber;
+    data['productName'] = this.productName;
+    return data;
   }
 }
