@@ -5,6 +5,7 @@ import 'package:mytradeasia/features/data/data_sources/remote/detail_product_ser
 import 'package:mytradeasia/features/data/data_sources/remote/dhl_shipment_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/faq_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/list_product_service.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/rfq_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/sales_force_data_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/sales_force_detail_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/sales_force_login_service.dart';
@@ -15,6 +16,7 @@ import 'package:mytradeasia/features/data/repository/dhl_shipment_repository.dar
 import 'package:mytradeasia/features/data/repository/faq_repository.dart';
 import 'package:mytradeasia/features/data/repository/industry_repository.dart';
 import 'package:mytradeasia/features/data/repository/list_product_repository.dart';
+import 'package:mytradeasia/features/data/repository/rfq_repository_impl.dart';
 import 'package:mytradeasia/features/data/repository/sales_force_data_repository.dart';
 import 'package:mytradeasia/features/data/repository/sales_force_detail_repository.dart';
 import 'package:mytradeasia/features/data/repository/sales_force_login_repository.dart';
@@ -26,6 +28,7 @@ import 'package:mytradeasia/features/domain/repository/dhl_shipment_repository.d
 import 'package:mytradeasia/features/domain/repository/faq_repository.dart';
 import 'package:mytradeasia/features/domain/repository/industry_repository.dart';
 import 'package:mytradeasia/features/domain/repository/list_product_repository.dart';
+import 'package:mytradeasia/features/domain/repository/rfq_repository.dart';
 import 'package:mytradeasia/features/domain/repository/sales_force_data_repository.dart';
 import 'package:mytradeasia/features/domain/repository/sales_force_detail_repository.dart';
 import 'package:mytradeasia/features/domain/repository/sales_force_login_repository.dart';
@@ -37,6 +40,7 @@ import 'package:mytradeasia/features/domain/usecases/dhl_shipment_usecases/get_d
 import 'package:mytradeasia/features/domain/usecases/faq_usecases/get_faq_data.dart';
 import 'package:mytradeasia/features/domain/usecases/industry_usecases/get_industry.dart';
 import 'package:mytradeasia/features/domain/usecases/list_product_usecases/get_list_product.dart';
+import 'package:mytradeasia/features/domain/usecases/rfq_usecases/submit_rfq.dart';
 import 'package:mytradeasia/features/domain/usecases/sales_force_data_usecases/get_sales_force_data.dart';
 import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases/get_sales_force_detail.dart';
 import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
@@ -73,6 +77,7 @@ Future<void> initializeDependencies() async {
   injections.registerSingleton<SearchProductService>(SearchProductService());
   injections.registerSingleton<TopProductsService>(TopProductsService());
   injections.registerSingleton<AuthUserFirebase>(AuthUserFirebase());
+  injections.registerSingleton<RfqService>(RfqService());
 
   //Repositories Dependencies
   injections.registerSingleton<DetailProductRepository>(
@@ -96,6 +101,7 @@ Future<void> initializeDependencies() async {
       TopProductRepositoryImpl(injections()));
   injections
       .registerSingleton<UserRepository>(UserRepositoryImpl(injections()));
+  injections.registerSingleton<RfqRepository>(RfqRepositoryImpl(injections()));
 
   //UseCases Dependencies
   injections
@@ -116,6 +122,8 @@ Future<void> initializeDependencies() async {
       GetTopProductUseCase(injections()));
   injections.registerSingleton<RegisterUser>(RegisterUser(injections()));
   injections.registerSingleton<LoginUser>(LoginUser(injections()));
+  injections
+      .registerSingleton<SubmitRfqUseCase>(SubmitRfqUseCase(injections()));
 
   //Bloc
   injections
