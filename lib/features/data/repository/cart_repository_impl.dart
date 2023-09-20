@@ -24,4 +24,13 @@ class CartRepositoryImpl implements CartRepository {
       return Future.error(e.toString());
     }
   }
+
+  @override
+  Future<String> deleteCartItems(List<CartModel> cart) async {
+    try {
+      return await _cartFirebase.deleteCartItems(cart);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

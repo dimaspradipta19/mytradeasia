@@ -31,53 +31,6 @@ class _CartScreenState extends State<CartScreen> {
   TextEditingController _quantityController = TextEditingController();
   String? _selectedValueUnit;
 
-  void deleteCartItem({required List<CartModel> cartData}) async {
-    // Get all selected items
-    final List<CartModel> deletedData = [];
-    for (var item in cartData) {
-      if (item.isChecked!) {
-        CartModel data = CartModel(
-            productName: item.productName,
-            seoUrl: item.seoUrl,
-            casNumber: item.casNumber,
-            hsCode: item.hsCode,
-            productImage: item.productImage,
-            quantity: item.quantity,
-            unit: item.unit);
-
-        // Map<String, dynamic> data = {
-        //   "productName": item.productName,
-        //   "seo_url": item.seoUrl,
-        //   "casNumber": item.casNumber,
-        //   "hsCode": item.hsCode,
-        //   "productImage": item.productImage,
-        //   "quantity": item.quantity,
-        //   "unit": item.unit
-        // };
-        deletedData.add(data);
-      }
-    }
-
-    if (deletedData.isEmpty) {
-      // if no items are selected, do nothing
-      log("NO DATA DELETED");
-    } else {
-      // Delete items from firestore
-      String docsId = _auth.currentUser!.uid.toString();
-      for (var item in deletedData) {
-        await FirebaseFirestore.instance
-            .collection('biodata')
-            .doc(docsId)
-            .update({
-          "cart": FieldValue.arrayRemove([item.toFirebase()])
-        });
-      }
-
-      // Re-fetch the cart items data
-      BlocProvider.of<CartBloc>(context).add(const GetCartItems());
-    }
-  }
-
   void editCartItem(
       {required List<CartModel> cart, required CartModel product}) async {
     String docsId = _auth.currentUser!.uid.toString();
@@ -472,7 +425,12 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       Expanded(child: Container()),
                       InkWell(
-                        onTap: () => deleteCartItem(cartData: state.cartItems!),
+                        onTap: () {
+                          BlocProvider.of<CartBloc>(context)
+                              .add(RemoveFromCart(state.cartItems!));
+                          BlocProvider.of<CartBloc>(context)
+                              .add(const GetCartItems());
+                        },
                         child: Container(
                           decoration: const BoxDecoration(
                               color: thirdColor1,

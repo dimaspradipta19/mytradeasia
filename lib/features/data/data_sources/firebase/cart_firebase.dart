@@ -42,4 +42,43 @@ class CartFirebase {
       return e.toString();
     }
   }
+
+  Future<String> deleteCartItems(List<CartModel> cart) async {
+    try {
+      // Get all selected items
+      final List<CartModel> deletedData = [];
+      for (var item in cart) {
+        if (item.isChecked!) {
+          CartModel data = CartModel(
+              productName: item.productName,
+              seoUrl: item.seoUrl,
+              casNumber: item.casNumber,
+              hsCode: item.hsCode,
+              productImage: item.productImage,
+              quantity: item.quantity,
+              unit: item.unit);
+          deletedData.add(data);
+        }
+      }
+
+      if (deletedData.isEmpty) {
+        // if no items are selected, do nothing
+        return "none";
+      } else {
+        // Delete items from firestore
+        String docsId = _auth.currentUser!.uid.toString();
+        for (var item in deletedData) {
+          await FirebaseFirestore.instance
+              .collection('biodata')
+              .doc(docsId)
+              .update({
+            "cart": FieldValue.arrayRemove([item.toFirebase()])
+          });
+        }
+      }
+      return "success";
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }
