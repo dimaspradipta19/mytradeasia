@@ -33,4 +33,18 @@ class CartRepositoryImpl implements CartRepository {
       return Future.error(e.toString());
     }
   }
+
+  @override
+  Future<String> updateCartItem(
+      {required List<CartModel> cart,
+      required CartModel product,
+      required double quantity,
+      required String unit}) async {
+    try {
+      return await _cartFirebase.updateCartItem(
+          cart: cart, product: product, quantity: quantity, unit: unit);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

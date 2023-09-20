@@ -81,4 +81,45 @@ class CartFirebase {
       return e.toString();
     }
   }
+
+  Future<String> updateCartItem(
+      {required List<CartModel> cart,
+      required CartModel product,
+      required double quantity,
+      required String unit}) async {
+    try {
+      String docsId = _auth.currentUser!.uid.toString();
+
+      CartModel data = CartModel(
+          productName: product.productName,
+          seoUrl: product.seoUrl,
+          casNumber: product.casNumber,
+          hsCode: product.hsCode,
+          productImage: product.productImage,
+          quantity: quantity,
+          unit: unit);
+
+      // Find the index of the updated data
+      int updatedDataIdx =
+          cart.indexWhere((product) => product.productName == data.productName);
+
+      // Update the cart
+      cart[updatedDataIdx] = data;
+
+      // Convert to firebase data
+      List<dynamic> firebaseData = [];
+      for (var item in cart) {
+        firebaseData.add(item.toFirebase());
+      }
+
+      // Send the newly updated cart data to firestore
+      await FirebaseFirestore.instance
+          .collection('biodata')
+          .doc(docsId)
+          .update({"cart": firebaseData});
+      return "success";
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }
