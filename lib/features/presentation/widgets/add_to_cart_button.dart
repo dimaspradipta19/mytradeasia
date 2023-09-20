@@ -10,6 +10,7 @@ import 'package:mytradeasia/features/presentation/state_management/cart_bloc/car
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/text_editing_widget.dart';
+import 'package:mytradeasia/helper/helper_functions.dart';
 
 class AddToCartButton extends StatefulWidget {
   final List<ProductEntity> listProduct;
@@ -27,12 +28,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
   String? _selectedValueUnit;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<dynamic> addToCartBottomSheet(
-      {required String productName,
-      required String seoUrl,
-      required String casNumber,
-      required String hsCode,
-      required String productImage}) {
+  Future<dynamic> addToCartBottomSheet({required ProductEntity product}) {
     return showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -69,7 +65,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(size20px / 4)),
                               child: CachedNetworkImage(
-                                imageUrl: chemtradeasiaUrl + productImage,
+                                imageUrl:
+                                    chemtradeasiaUrl + product.productimage!,
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator.adaptive(),
@@ -87,7 +84,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                 width: MediaQuery.of(context).size.width * 0.5,
                                 height: size20px * 2.5,
                                 child: Text(
-                                  productName,
+                                  product.productname ?? "",
                                   style: heading2,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -106,7 +103,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                       ),
                                       const SizedBox(height: 5.0),
                                       Text(
-                                        casNumber,
+                                        product.casNumber ?? "",
                                         style: body1Regular.copyWith(
                                             color: greyColor2),
                                       ),
@@ -125,7 +122,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                       ),
                                       const SizedBox(height: 5.0),
                                       Text(
-                                        hsCode,
+                                        product.hsCode ?? "",
                                         style: body1Regular.copyWith(
                                             color: greyColor2),
                                       ),
@@ -294,12 +291,22 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackbar);
                                   } else {
-                                    addToCart(
-                                        productName: productName,
-                                        seoUrl: seoUrl,
-                                        casNumber: casNumber,
-                                        hsCode: hsCode,
-                                        productImage: productImage);
+                                    // addToCart(
+                                    //     productName: productName,
+                                    //     seoUrl: seoUrl,
+                                    //     casNumber: casNumber,
+                                    //     hsCode: hsCode,
+                                    //     productImage: productImage);
+                                    BlocProvider.of<CartBloc>(context).add(
+                                        AddToCart(castProductEntityToCartModel(
+                                            product: product,
+                                            quantity: double.parse(
+                                                _quantityController.text),
+                                            unit: _selectedValueUnit!)));
+
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(GetCartItems());
+
                                     setState(() {
                                       _quantityController.text = '';
                                       _selectedValueUnit = null;
@@ -378,11 +385,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           return IconButton(
             onPressed: () {
               addToCartBottomSheet(
-                  productName: widget.listProduct[widget.index].productname!,
-                  seoUrl: widget.listProduct[widget.index].seoUrl!,
-                  casNumber: widget.listProduct[widget.index].casNumber!,
-                  hsCode: widget.listProduct[widget.index].hsCode!,
-                  productImage: widget.listProduct[widget.index].productimage!);
+                product: widget.listProduct[widget.index],
+              );
             },
             icon: Image.asset(
               "assets/images/icon_cart.png",
