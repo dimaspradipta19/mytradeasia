@@ -46,6 +46,9 @@ import 'package:mytradeasia/features/domain/usecases/sales_force_detail_usecases
 import 'package:mytradeasia/features/domain/usecases/sales_force_login_usecases/get_sales_force_login.dart';
 import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get_search_product.dart';
 import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_top_product.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/add_recently_seen.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_current_userid.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
@@ -124,6 +127,10 @@ Future<void> initializeDependencies() async {
   injections.registerSingleton<LoginUser>(LoginUser(injections()));
   injections
       .registerSingleton<SubmitRfqUseCase>(SubmitRfqUseCase(injections()));
+  injections.registerSingleton<GetUserSnapshot>(GetUserSnapshot(injections()));
+  injections
+      .registerSingleton<GetCurrentUserId>(GetCurrentUserId(injections()));
+  injections.registerSingleton<AddRecentlySeen>(AddRecentlySeen(injections()));
 
   //Bloc
   injections
