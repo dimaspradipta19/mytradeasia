@@ -1,5 +1,4 @@
 import 'package:mytradeasia/features/data/model/cart_models/cart_models.dart';
-import 'package:mytradeasia/features/domain/entities/product_entities/all_product_entity.dart';
 
 abstract class CartEvent {
   const CartEvent();
@@ -12,9 +11,9 @@ class AddToCart extends CartEvent {
 }
 
 class RemoveFromCart extends CartEvent {
-  final AllProductEntities product;
+  final List<CartModel> cart;
 
-  const RemoveFromCart(this.product);
+  const RemoveFromCart(this.cart);
 }
 
 class GetCartItems extends CartEvent {

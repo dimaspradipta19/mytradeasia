@@ -1,6 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
@@ -26,7 +24,6 @@ class AddToCartButton extends StatefulWidget {
 class _AddToCartButtonState extends State<AddToCartButton> {
   final TextEditingController _quantityController = TextEditingController();
   String? _selectedValueUnit;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<dynamic> addToCartBottomSheet({required ProductEntity product}) {
     return showModalBottomSheet<dynamic>(
@@ -291,12 +288,6 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackbar);
                                   } else {
-                                    // addToCart(
-                                    //     productName: productName,
-                                    //     seoUrl: seoUrl,
-                                    //     casNumber: casNumber,
-                                    //     hsCode: hsCode,
-                                    //     productImage: productImage);
                                     BlocProvider.of<CartBloc>(context).add(
                                         AddToCart(castProductEntityToCartModel(
                                             product: product,
@@ -328,29 +319,6 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         );
       },
     );
-  }
-
-  void addToCart(
-      {required String productName,
-      required String seoUrl,
-      required String casNumber,
-      required String hsCode,
-      required String productImage}) async {
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
-    String docsId = _auth.currentUser!.uid.toString();
-
-    Map<String, dynamic> data = {
-      "productName": productName,
-      "seo_url": seoUrl,
-      "casNumber": casNumber,
-      "hsCode": hsCode,
-      "productImage": productImage,
-      "quantity": double.tryParse(_quantityController.text),
-      "unit": _selectedValueUnit
-    };
-    await FirebaseFirestore.instance.collection('biodata').doc(docsId).update({
-      "cart": FieldValue.arrayUnion([data])
-    });
   }
 
   @override

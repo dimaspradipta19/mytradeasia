@@ -17,7 +17,10 @@ class CartLoadingState extends CartState {
 }
 
 class CartDoneState extends CartState {
-  const CartDoneState({List<CartModel>? cartItems, String? addCartStatus})
+  const CartDoneState(
+      {List<CartModel>? cartItems,
+      String? addCartStatus,
+      String? deleteItemStatus})
       : super(cartItems: cartItems);
 }
 
