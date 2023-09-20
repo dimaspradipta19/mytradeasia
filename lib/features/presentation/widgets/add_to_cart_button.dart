@@ -349,7 +349,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    // BlocProvider.of<CartBloc>(context).add(GetCartItems());
   }
 
   @override
@@ -359,7 +359,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         // Check if product already exist in cart
         bool chosen = false;
         for (var item in cartState.cartItems!) {
-          if (item['productName'] ==
+          if (item.productName ==
               widget.listProduct[widget.index].productname!) {
             chosen = true;
           }

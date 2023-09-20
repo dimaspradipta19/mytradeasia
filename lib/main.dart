@@ -73,6 +73,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => injections<AuthBloc>(),
         ),
+        BlocProvider(create: (_) => injections<CartBloc>()),
         BlocProvider(
           create: (_) => injections<ListProductBloc>(),
         ),
@@ -93,7 +94,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => injections<SalesforceLoginBloc>()),
         BlocProvider(create: (_) => injections<SalesforceDataBloc>()),
         BlocProvider(create: (_) => injections<SalesforceDetailBloc>()),
-        BlocProvider(create: (_) => CartBloc()),
       ],
       child: StreamBuilder<InternetConnectionStatus>(
         initialData: InternetConnectionStatus.connected,
