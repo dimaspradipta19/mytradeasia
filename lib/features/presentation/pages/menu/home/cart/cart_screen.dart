@@ -1,8 +1,4 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -26,56 +22,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   TextEditingController _quantityController = TextEditingController();
   String? _selectedValueUnit;
-
-  void editCartItem(
-      {required List<CartModel> cart, required CartModel product}) async {
-    String docsId = _auth.currentUser!.uid.toString();
-
-    // Map<String, dynamic> data = {
-    //   "productName": product.productName,
-    //   "seo_url": product.seoUrl,
-    //   "casNumber": product.casNumber,
-    //   "hsCode": product.hsCode,
-    //   "productImage": product.productImage,
-    //   "quantity": double.tryParse(_quantityController.text),
-    //   "unit": _selectedValueUnit
-    // };
-
-    CartModel data = CartModel(
-        productName: product.productName,
-        seoUrl: product.seoUrl,
-        casNumber: product.casNumber,
-        hsCode: product.hsCode,
-        productImage: product.productImage,
-        quantity: double.tryParse(_quantityController.text),
-        unit: _selectedValueUnit);
-
-    // Find the index of the updated data
-    int updatedDataIdx =
-        cart.indexWhere((product) => product.productName == data.productName);
-
-    // Update the cart
-    cart[updatedDataIdx] = data;
-
-    // Convert to firebase data
-    List<dynamic> firebaseData = [];
-    for (var item in cart) {
-      firebaseData.add(item.toFirebase());
-    }
-
-    // Send the newly updated cart data to firestore
-    await FirebaseFirestore.instance
-        .collection('biodata')
-        .doc(docsId)
-        .update({"cart": firebaseData});
-
-    // Re-fetch the cart items data
-    BlocProvider.of<CartBloc>(context).add(const GetCartItems());
-  }
 
   void editCartItemBottomSheet(
       {required List<CartModel> cart, required CartModel product}) async {
@@ -347,7 +295,16 @@ class _CartScreenState extends State<CartScreen> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackbar);
                                   } else {
-                                    editCartItem(product: product, cart: cart);
+                                    BlocProvider.of<CartBloc>(context).add(
+                                        UpdateCartItem(
+                                            cart,
+                                            product,
+                                            double.parse(
+                                                _quantityController.text),
+                                            _selectedValueUnit!));
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(const GetCartItems());
+
                                     Navigator.pop(context);
                                   }
                                 }
@@ -413,7 +370,6 @@ class _CartScreenState extends State<CartScreen> {
                         onChanged: (dynamic value) {
                           setState(() {
                             for (var item in state.cartItems!) {
-                              log("VALUE : $value");
                               item.isChecked = value;
                             }
                           });

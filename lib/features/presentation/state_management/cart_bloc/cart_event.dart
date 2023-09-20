@@ -16,6 +16,15 @@ class RemoveFromCart extends CartEvent {
   const RemoveFromCart(this.cart);
 }
 
+class UpdateCartItem extends CartEvent {
+  final List<CartModel> cart;
+  final CartModel product;
+  final double quantity;
+  final String unit;
+
+  const UpdateCartItem(this.cart, this.product, this.quantity, this.unit);
+}
+
 class GetCartItems extends CartEvent {
   const GetCartItems();
 }
