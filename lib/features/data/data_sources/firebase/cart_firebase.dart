@@ -16,9 +16,8 @@ class CartFirebase {
 
     List<CartModel> data = [];
 
-    List<dynamic> cartData = [];
     if (firestoreData['cart'] != null) {
-      cartData = firestoreData['cart'];
+      List<dynamic> cartData = firestoreData['cart'];
       for (var item in cartData) {
         item['isChecked'] = false;
         final cartItem = CartModel.fromJson(item);
@@ -27,5 +26,20 @@ class CartFirebase {
     }
 
     return data;
+  }
+
+  Future<String> addCartItem(CartModel product) async {
+    try {
+      String docsId = _auth.currentUser!.uid.toString();
+      await FirebaseFirestore.instance
+          .collection('biodata')
+          .doc(docsId)
+          .update({
+        "cart": FieldValue.arrayUnion([product.toFirebase()])
+      });
+      return "success";
+    } catch (e) {
+      return e.toString();
+    }
   }
 }

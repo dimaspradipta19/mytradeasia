@@ -15,4 +15,13 @@ class CartRepositoryImpl implements CartRepository {
       return Future.error(e.toString());
     }
   }
+
+  @override
+  Future<String> addCartItem(CartModel product) async {
+    try {
+      return await _cartFirebase.addCartItem(product);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }
