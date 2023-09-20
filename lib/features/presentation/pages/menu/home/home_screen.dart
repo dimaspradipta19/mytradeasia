@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/add_recently_seen.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_recently_seen.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
@@ -30,17 +31,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GetUserSnapshot _getUserSnapshot = injections<GetUserSnapshot>();
   final AddRecentlySeen _addRecentlySeen = injections<AddRecentlySeen>();
+  final GetRecentlySeen _getRecentlySeen = injections<GetRecentlySeen>();
   final String url = "https://chemtradea.chemtradeasia.com/";
   final bool showAll = false;
+  List _recentlySeen = [];
 
   @override
   void initState() {
     super.initState();
-
+    getRecentlyseen();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       BlocProvider.of<TopProductBloc>(context).add(const GetTopProduct());
 
@@ -49,6 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
       BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     });
+  }
+
+  void getRecentlyseen() async {
+    _recentlySeen = await _getRecentlySeen();
   }
 
   @override
@@ -791,8 +796,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text("Last Seen Products",
                                           style: text18),
                                     ),
-                                    docsData["recentlySeen"] == null ||
-                                            docsData["recentlySeen"].length == 0
+                                    _recentlySeen.length == 0
                                         ? const Center(
                                             child: Text("Tidak ada product"))
                                         : Column(
@@ -808,13 +812,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           mainAxisSpacing: 15,
                                                           childAspectRatio:
                                                               0.7),
-                                                  itemCount: docsData[
-                                                                  "recentlySeen"]
-                                                              .length <
-                                                          4
-                                                      ? docsData["recentlySeen"]
-                                                          .length
-                                                      : 4,
+                                                  itemCount:
+                                                      _recentlySeen.length < 4
+                                                          ? _recentlySeen.length
+                                                          : 4,
                                                   shrinkWrap: true,
                                                   padding: EdgeInsets.zero,
                                                   physics:
@@ -855,7 +856,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 child:
                                                                     CachedNetworkImage(
                                                                   imageUrl:
-                                                                      "$url${docsData["recentlySeen"][index]["productImage"]}",
+                                                                      "$url${_recentlySeen[index]["productImage"]}",
                                                                   fit: BoxFit
                                                                       .fill,
                                                                   placeholder: (context,
@@ -882,8 +883,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   horizontal:
                                                                       10.0),
                                                               child: Text(
-                                                                docsData["recentlySeen"]
-                                                                        [index][
+                                                                _recentlySeen[
+                                                                        index][
                                                                     "productName"],
                                                                 style: text14,
                                                                 maxLines: 2,
@@ -913,7 +914,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         style:
                                                                             text10),
                                                                     Text(
-                                                                        docsData["recentlySeen"][index]
+                                                                        _recentlySeen[index]
                                                                             [
                                                                             "casNumber"],
                                                                         // "",
@@ -933,7 +934,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         style:
                                                                             text10),
                                                                     Text(
-                                                                        docsData["recentlySeen"][index]
+                                                                        _recentlySeen[index]
                                                                             [
                                                                             "hsCode"],
                                                                         // "",

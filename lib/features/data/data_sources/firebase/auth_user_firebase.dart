@@ -50,6 +50,14 @@ class AuthUserFirebase {
         .map((event) => UserModel.fromSnapshot(event).toMap());
   }
 
+  Future<Map<String, dynamic>> getUserData() async {
+    return await _firestore
+        .collection('biodata')
+        .doc(getCurrentUId())
+        .get()
+        .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+  }
+
   void addRecentlySeen(Map<String, dynamic> data) async {
     await FirebaseFirestore.instance
         .collection('biodata')
@@ -57,5 +65,22 @@ class AuthUserFirebase {
         .update({
       "recentlySeen": FieldValue.arrayUnion([data])
     });
+  }
+
+  Future<List> getRecentlySeen() async {
+    final Map<String, dynamic> firestoreData = await FirebaseFirestore.instance
+        .collection('biodata')
+        .doc(getCurrentUId())
+        .get()
+        .then((DocumentSnapshot doc) {
+      return doc.data() as Map<String, dynamic>;
+    });
+
+    List recentlySeenData = [];
+    if (firestoreData['recentlySeen'] != null) {
+      recentlySeenData = firestoreData['recentlySeen'];
+    }
+
+    return recentlySeenData;
   }
 }

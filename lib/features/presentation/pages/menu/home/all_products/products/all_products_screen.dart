@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/add_recently_seen.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
@@ -20,6 +19,7 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/search_product/search_product_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/add_to_cart_button.dart';
 import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
+import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../../../config/routes/parameters.dart';
 import '../../cart/cart_screen.dart';
@@ -34,7 +34,7 @@ class AllProductsScreen extends StatefulWidget {
 class _AllProductsScreenState extends State<AllProductsScreen> {
   final TextEditingController _searchProductController =
       TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AddRecentlySeen _addRecentlySeen = injections<AddRecentlySeen>();
   Timer? debouncerTime;
 
   Future<void> _getListProducts() async {
@@ -363,8 +363,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                   "/images/product/alum.webp"
                                             });
 
-                                        String docsId =
-                                            _auth.currentUser!.uid.toString();
                                         Map<String, dynamic> data = {
                                           "productName": state
                                               .products![index].productname,
@@ -377,13 +375,8 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                           "productImage": state
                                               .products![index].productimage
                                         };
-                                        await FirebaseFirestore.instance
-                                            .collection('biodata')
-                                            .doc(docsId)
-                                            .update({
-                                          "recentlySeen":
-                                              FieldValue.arrayUnion([data])
-                                        });
+
+                                        await _addRecentlySeen(param: data);
                                       },
                                       child: Card(
                                         shadowColor: blackColor,
@@ -620,8 +613,6 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                                   "/en/acrylic-acid"
                                             });
 
-                                        String docsId =
-                                            _auth.currentUser!.uid.toString();
                                         Map<String, dynamic> data = {
                                           "productName": searchState
                                               .searchProducts![index]
@@ -636,13 +627,7 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                                               .searchProducts![index]
                                               .productimage
                                         };
-                                        await FirebaseFirestore.instance
-                                            .collection('biodata')
-                                            .doc(docsId)
-                                            .update({
-                                          "recentlySeen":
-                                              FieldValue.arrayUnion([data])
-                                        });
+                                        await _addRecentlySeen(param: data);
                                       },
                                       child: Card(
                                         shadowColor: blackColor,

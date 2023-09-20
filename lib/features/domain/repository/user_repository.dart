@@ -4,6 +4,8 @@ abstract class UserRepository {
   Future<String> registerUser(UserEntity s);
   Future<dynamic> loginUser(Map<String, String> s);
   Stream<Map<String, dynamic>> getUserSnapshot();
+  Future<Map<String, dynamic>> getUserData();
   Future<String> getCurrentUserId();
   void addRecentlySeen(Map<String, dynamic> s);
+  Future<List<dynamic>> getRecentlySeen();
 }

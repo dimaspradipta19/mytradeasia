@@ -52,6 +52,8 @@ import 'package:mytradeasia/features/domain/usecases/search_product_usecases/get
 import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_top_product.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/add_recently_seen.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_current_userid.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_recently_seen.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_data.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
@@ -140,6 +142,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetCurrentUserId>(GetCurrentUserId(injections()));
   injections.registerSingleton<AddRecentlySeen>(AddRecentlySeen(injections()));
   injections.registerSingleton<GetCart>(GetCart(injections()));
+  injections.registerSingleton<GetRecentlySeen>(GetRecentlySeen(injections()));
+  injections.registerSingleton<GetUserData>(GetUserData(injections()));
 
   //Bloc
   injections

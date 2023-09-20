@@ -45,4 +45,14 @@ class UserRepositoryImpl implements UserRepository {
   void addRecentlySeen(Map<String, dynamic> s) {
     _authUserFirebase.addRecentlySeen(s);
   }
+
+  @override
+  Future<List> getRecentlySeen() async {
+    return _authUserFirebase.getRecentlySeen();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getUserData() {
+    return _authUserFirebase.getUserData();
+  }
 }
