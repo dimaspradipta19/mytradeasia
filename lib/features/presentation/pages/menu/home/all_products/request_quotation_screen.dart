@@ -8,6 +8,7 @@ import 'package:mytradeasia/core/resources/data_state.dart';
 import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/domain/entities/rfq_entities/rfq_entity.dart';
 import 'package:mytradeasia/features/domain/usecases/rfq_usecases/submit_rfq.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_data.dart';
 import 'package:mytradeasia/helper/helper_functions.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:mytradeasia/old_file_tobedeleted/view/menu/other/languages_screen.dart';
@@ -38,6 +39,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   final TextEditingController _messagesController =
       TextEditingController(text: "Hi, I'm interested in this product.");
   final SubmitRfqUseCase _submitRfq = injections<SubmitRfqUseCase>();
+  final GetUserData _geUserData = injections<GetUserData>();
   final _formKey = GlobalKey<FormState>();
 
   final ScrollController _scrollController = ScrollController();
@@ -64,11 +66,12 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
   }
 
   getUserData() async {
-    _data = await _firestore
-        .collection('biodata')
-        .doc(_auth.currentUser?.uid.toString())
-        .get()
-        .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+    // _data = await _firestore
+    //     .collection('biodata')
+    //     .doc(_auth.currentUser?.uid.toString())
+    //     .get()
+    //     .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+    _data = await _geUserData();
 
     _firstNameController.text = _data['firstName'] ?? '';
     _lastNameController.text = _data['lastName'] ?? '';

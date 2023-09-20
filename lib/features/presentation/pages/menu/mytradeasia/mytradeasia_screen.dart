@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:mytradeasia/config/themes/theme.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
+import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:mytradeasia/old_file_tobedeleted/widget/dialog_sheet_widget.dart';
 import 'package:mytradeasia/old_file_tobedeleted/widget/mytradeasia_widget.dart';
 
@@ -18,8 +18,7 @@ class MyTradeAsiaScreen extends StatefulWidget {
 }
 
 class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GetUserSnapshot _getUserSnapshot = injections<GetUserSnapshot>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +39,8 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: StreamBuilder(
-              stream: _firestore
-                  .collection('biodata')
-                  .where('uid', isEqualTo: _auth.currentUser!.uid.toString())
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+              stream: _getUserSnapshot.call(),
+              builder: (context, AsyncSnapshot streamSnapshot) {
                 return streamSnapshot.connectionState == ConnectionState.waiting
                     ? const CircularProgressIndicator.adaptive(
                         backgroundColor: primaryColor1,
@@ -82,12 +78,12 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "${streamSnapshot.data?.docs[0]['firstName'] == "" ? "new" : streamSnapshot.data?.docs[0]['firstName']} ${streamSnapshot.data?.docs[0]['lastName'] == "" ? "user" : streamSnapshot.data?.docs[0]['lastName']}",
+                                                  "${streamSnapshot.data['firstName'] == "" ? "new" : streamSnapshot.data['firstName']} ${streamSnapshot.data['lastName'] == "" ? "user" : streamSnapshot.data['lastName']}",
                                                   style: text16,
                                                 ),
                                                 Text(
-                                                  streamSnapshot.data?.docs[0]
-                                                          ['companyName'] ??
+                                                  streamSnapshot.data[
+                                                          'companyName'] ??
                                                       "",
                                                   style: text15.copyWith(
                                                       fontWeight:
@@ -166,7 +162,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 }),
 
                             // my cart menu
-                            streamSnapshot.data?.docs[0]['role'] == "Sales"
+                            streamSnapshot.data['role'] == "Sales"
                                 ? Container()
                                 : MyTradeAsiaWidget(
                                     nama: "My Cart",
@@ -186,8 +182,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 nama: "Quotations",
                                 urlIcon: "assets/images/icon_quotation.png",
                                 onPressedFunction: () {
-                                  if (streamSnapshot.data?.docs[0]['role'] ==
-                                      "Sales") {
+                                  if (streamSnapshot.data['role'] == "Sales") {
                                     context.go("/mytradeasia/sales_quotations");
                                   } else {
                                     context.go("/mytradeasia/quotations");

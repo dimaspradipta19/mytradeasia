@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:mytradeasia/features/data/data_sources/firebase/auth_user_firebase.dart';
 import 'package:mytradeasia/features/data/model/user_models/user_model.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
@@ -29,5 +28,31 @@ class UserRepositoryImpl implements UserRepository {
   Future<dynamic> loginUser(Map<String, String> s) async {
     final response = await _authUserFirebase.postLoginUser(s);
     return response;
+  }
+
+  @override
+  Stream<Map<String, dynamic>> getUserSnapshot() {
+    final uid = _authUserFirebase.getCurrentUId();
+    return _authUserFirebase.getUserSnapshot(uid);
+  }
+
+  @override
+  Future<String> getCurrentUserId() async {
+    return _authUserFirebase.getCurrentUId();
+  }
+
+  @override
+  void addRecentlySeen(Map<String, dynamic> s) {
+    _authUserFirebase.addRecentlySeen(s);
+  }
+
+  @override
+  Future<List> getRecentlySeen() async {
+    return _authUserFirebase.getRecentlySeen();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getUserData() {
+    return _authUserFirebase.getUserData();
   }
 }

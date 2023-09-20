@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthUserFirebase {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> postRegisterUser(UserModel userData) async {
     try {
@@ -20,6 +21,8 @@ class AuthUserFirebase {
       return e.code;
     }
   }
+
+  String getCurrentUId() => _auth.currentUser!.uid;
 
   Future<dynamic> postLoginUser(Map<String, String> auth) async {
     try {
@@ -37,5 +40,47 @@ class AuthUserFirebase {
     } on FirebaseAuthException catch (e) {
       return e.code;
     }
+  }
+
+  Stream<Map<String, dynamic>> getUserSnapshot(String uid) {
+    final userSnapshot = _firestore.collection('biodata').doc(uid).get();
+
+    return userSnapshot
+        .asStream()
+        .map((event) => UserModel.fromSnapshot(event).toMap());
+  }
+
+  Future<Map<String, dynamic>> getUserData() async {
+    return await _firestore
+        .collection('biodata')
+        .doc(getCurrentUId())
+        .get()
+        .then((DocumentSnapshot doc) => doc.data() as Map<String, dynamic>);
+  }
+
+  void addRecentlySeen(Map<String, dynamic> data) async {
+    await FirebaseFirestore.instance
+        .collection('biodata')
+        .doc(getCurrentUId())
+        .update({
+      "recentlySeen": FieldValue.arrayUnion([data])
+    });
+  }
+
+  Future<List> getRecentlySeen() async {
+    final Map<String, dynamic> firestoreData = await FirebaseFirestore.instance
+        .collection('biodata')
+        .doc(getCurrentUId())
+        .get()
+        .then((DocumentSnapshot doc) {
+      return doc.data() as Map<String, dynamic>;
+    });
+
+    List recentlySeenData = [];
+    if (firestoreData['recentlySeen'] != null) {
+      recentlySeenData = firestoreData['recentlySeen'];
+    }
+
+    return recentlySeenData;
   }
 }

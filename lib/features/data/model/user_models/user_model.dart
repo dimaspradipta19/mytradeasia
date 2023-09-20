@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -30,5 +31,16 @@ class UserModel extends UserEntity {
       'lastName': lastName,
       'phoneNumber': phone,
     };
+  }
+
+  factory UserModel.fromSnapshot(DocumentSnapshot documentSnapshot) {
+    return UserModel(
+      role: documentSnapshot.get('role'),
+      companyName: documentSnapshot.get('companyName'),
+      country: documentSnapshot.get('country'),
+      firstName: documentSnapshot.get('firstName'),
+      lastName: documentSnapshot.get('lastName'),
+      phone: documentSnapshot.get('phone'),
+    );
   }
 }

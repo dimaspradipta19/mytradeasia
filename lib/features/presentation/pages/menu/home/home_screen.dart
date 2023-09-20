@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/add_recently_seen.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_recently_seen.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:mytradeasia/features/presentation/state_management/top_products_
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/add_to_cart_button.dart';
 import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
+import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:mytradeasia/utils/sales_force_screen.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/old_file_tobedeleted/view/menu/history/tracking_document/tracking_document_screen.dart';
@@ -29,15 +31,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GetUserSnapshot _getUserSnapshot = injections<GetUserSnapshot>();
+  final AddRecentlySeen _addRecentlySeen = injections<AddRecentlySeen>();
+  final GetRecentlySeen _getRecentlySeen = injections<GetRecentlySeen>();
   final String url = "https://chemtradea.chemtradeasia.com/";
   final bool showAll = false;
+  List _recentlySeen = [];
 
   @override
   void initState() {
     super.initState();
-
+    getRecentlyseen();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       BlocProvider.of<TopProductBloc>(context).add(const GetTopProduct());
 
@@ -46,6 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
       BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     });
+  }
+
+  void getRecentlyseen() async {
+    _recentlySeen = await _getRecentlySeen();
   }
 
   @override
@@ -61,13 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
             color: primaryColor1,
             child: SingleChildScrollView(
               child: StreamBuilder(
-                  stream: _firestore
-                      .collection('biodata')
-                      .where('uid',
-                          isEqualTo: _auth.currentUser!.uid.toString())
-                      .snapshots(),
-                  builder:
-                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  stream: _getUserSnapshot.call(),
+                  builder: (context, AsyncSnapshot streamSnapshot) {
                     if (streamSnapshot.connectionState ==
                         ConnectionState.waiting) {
                       return const CircularProgressIndicator.adaptive(
@@ -82,8 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
 
                     if (streamSnapshot.hasData) {
-                      var docsData = streamSnapshot.data!.docs[0].data()
-                          as Map<String, dynamic>?;
+                      var docsData =
+                          streamSnapshot.data as Map<String, dynamic>;
+
                       return Column(
                         children: [
                           Column(
@@ -127,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     height: 30,
                                                     width: size20px * 10,
                                                     child: Text(
-                                                      "${streamSnapshot.data?.docs[0]['firstName'] == "" ? "new" : streamSnapshot.data?.docs[0]['firstName']} ${streamSnapshot.data?.docs[0]['lastName'] == "" ? "user" : streamSnapshot.data?.docs[0]['lastName']}",
+                                                      "${streamSnapshot.data['firstName'] == "" ? "new" : streamSnapshot.data['firstName']} ${streamSnapshot.data['lastName'] == "" ? "user" : streamSnapshot.data['lastName']}",
                                                       style: text16.copyWith(
                                                           color: whiteColor,
                                                           fontWeight:
@@ -163,12 +167,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                   const SizedBox(
                                                       width: size20px / 2),
-                                                  streamSnapshot.data?.docs[0]
-                                                                  ['role'] ==
+                                                  streamSnapshot.data['role'] ==
                                                               "Agent" ||
-                                                          streamSnapshot.data
-                                                                      ?.docs[0]
-                                                                  ['role'] ==
+                                                          streamSnapshot.data[
+                                                                  'role'] ==
                                                               "Customer"
                                                       ? Container(
                                                           height: 40.0,
@@ -268,11 +270,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     /* 4 Menu Section */
-                                    streamSnapshot.data != null &&
-                                            streamSnapshot.data!.docs.isNotEmpty
-                                        ? streamSnapshot.data!.docs[0]
-                                                    ['role'] ==
-                                                "Sales"
+                                    streamSnapshot.data != null
+                                        ? streamSnapshot.data['role'] == "Sales"
                                             ? BlocBuilder<SalesforceLoginBloc,
                                                     SalesforceLoginState>(
                                                 builder: (context, state) {
@@ -318,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   top:
                                                                       size20px *
                                                                           0.75,
@@ -459,9 +458,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             .seoUrl!
                                                       });
 
-                                                  String docsId = _auth
-                                                      .currentUser!.uid
-                                                      .toString();
                                                   Map<String, dynamic> data = {
                                                     "productName": state
                                                         .topProductData![index]
@@ -480,15 +476,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .productimage
                                                   };
 
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('biodata')
-                                                      .doc(docsId)
-                                                      .update({
-                                                    "recentlySeen":
-                                                        FieldValue.arrayUnion(
-                                                            [data])
-                                                  });
+                                                  await _addRecentlySeen(
+                                                      param: data);
                                                 },
                                                 child: Card(
                                                   shadowColor: blackColor,
@@ -501,7 +490,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .only(
+                                                                    .only(
                                                                 left: size24px /
                                                                     4,
                                                                 right:
@@ -548,7 +537,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .symmetric(
+                                                                      .symmetric(
                                                                   vertical: 5.0,
                                                                   horizontal:
                                                                       10.0),
@@ -569,7 +558,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .symmetric(
+                                                                    .symmetric(
                                                                 horizontal:
                                                                     10.0),
                                                         child: Row(
@@ -807,8 +796,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text("Last Seen Products",
                                           style: text18),
                                     ),
-                                    docsData!["recentlySeen"] == null ||
-                                            docsData["recentlySeen"].length == 0
+                                    _recentlySeen.length == 0
                                         ? const Center(
                                             child: Text("Tidak ada product"))
                                         : Column(
@@ -824,13 +812,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           mainAxisSpacing: 15,
                                                           childAspectRatio:
                                                               0.7),
-                                                  itemCount: docsData[
-                                                                  "recentlySeen"]
-                                                              .length <
-                                                          4
-                                                      ? docsData["recentlySeen"]
-                                                          .length
-                                                      : 4,
+                                                  itemCount:
+                                                      _recentlySeen.length < 4
+                                                          ? _recentlySeen.length
+                                                          : 4,
                                                   shrinkWrap: true,
                                                   padding: EdgeInsets.zero,
                                                   physics:
@@ -856,7 +841,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     4),
                                                             child: ClipRRect(
                                                               borderRadius: const BorderRadius
-                                                                  .all(
+                                                                      .all(
                                                                   Radius.circular(
                                                                       size20px /
                                                                           2)),
@@ -871,7 +856,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 child:
                                                                     CachedNetworkImage(
                                                                   imageUrl:
-                                                                      "$url${docsData["recentlySeen"][index]["productImage"]}",
+                                                                      "$url${_recentlySeen[index]["productImage"]}",
                                                                   fit: BoxFit
                                                                       .fill,
                                                                   placeholder: (context,
@@ -892,16 +877,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           ),
                                                           Expanded(
                                                             child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
+                                                              padding: const EdgeInsets
                                                                       .symmetric(
-                                                                      vertical:
-                                                                          5.0,
-                                                                      horizontal:
-                                                                          10.0),
+                                                                  vertical: 5.0,
+                                                                  horizontal:
+                                                                      10.0),
                                                               child: Text(
-                                                                docsData["recentlySeen"]
-                                                                        [index][
+                                                                _recentlySeen[
+                                                                        index][
                                                                     "productName"],
                                                                 style: text14,
                                                                 maxLines: 2,
@@ -912,14 +895,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                           ),
                                                           Padding(
-                                                            padding:
-                                                                const EdgeInsets
+                                                            padding: const EdgeInsets
                                                                     .symmetric(
-                                                                    horizontal:
-                                                                        10.0,
-                                                                    vertical:
-                                                                        size20px /
-                                                                            4),
+                                                                horizontal:
+                                                                    10.0,
+                                                                vertical:
+                                                                    size20px /
+                                                                        4),
                                                             child: Row(
                                                               children: [
                                                                 Column(
@@ -932,7 +914,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         style:
                                                                             text10),
                                                                     Text(
-                                                                        docsData["recentlySeen"][index]
+                                                                        _recentlySeen[index]
                                                                             [
                                                                             "casNumber"],
                                                                         // "",
@@ -952,7 +934,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         style:
                                                                             text10),
                                                                     Text(
-                                                                        docsData["recentlySeen"][index]
+                                                                        _recentlySeen[index]
                                                                             [
                                                                             "hsCode"],
                                                                         // "",
@@ -983,7 +965,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     onTap: () {},
                                                     child: Padding(
                                                       padding: const EdgeInsets
-                                                          .symmetric(
+                                                              .symmetric(
                                                           horizontal:
                                                               size20px / 2,
                                                           vertical:
