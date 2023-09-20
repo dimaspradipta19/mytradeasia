@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mytradeasia/features/domain/entities/product_entities/all_product_entity.dart';
+import 'package:mytradeasia/features/data/model/cart_models/cart_models.dart';
 
 class CartState extends Equatable {
-  final List<dynamic>? cartItems;
+  final List<CartModel>? cartItems;
   final FirebaseException? error;
 
   const CartState({this.cartItems, this.error});
@@ -17,7 +17,7 @@ class CartLoadingState extends CartState {
 }
 
 class CartDoneState extends CartState {
-  const CartDoneState(List<dynamic>? cartItems) : super(cartItems: cartItems);
+  const CartDoneState(List<CartModel>? cartItems) : super(cartItems: cartItems);
 }
 
 class CartErrorState extends CartState {

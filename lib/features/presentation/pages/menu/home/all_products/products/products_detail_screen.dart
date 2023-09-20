@@ -825,7 +825,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                       // Check if product already exist in cart
                       bool chosen = false;
                       for (var item in cartState.cartItems!) {
-                        if (item['productName'] ==
+                        if (item.productName ==
                             snapshot.data!.detailProduct!.productname) {
                           chosen = true;
                         }
@@ -906,7 +906,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                       child: ClipRRect(
                                                         borderRadius:
                                                             const BorderRadius
-                                                                    .all(
+                                                                .all(
                                                                 Radius.circular(
                                                                     size20px /
                                                                         4)),

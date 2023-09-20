@@ -948,7 +948,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
     _selectedValueUnit = product.unit;
 
     return showModalBottomSheet<dynamic>(
-      // isScrollControlled: true,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(40.0),

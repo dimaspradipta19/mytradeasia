@@ -8,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/core/constants/constants.dart';
+import 'package:mytradeasia/features/data/model/cart_models/cart_models.dart';
 import 'package:mytradeasia/features/domain/entities/product_entities/product_to_rfq_entity.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/text_editing_widget.dart';
 import 'package:mytradeasia/helper/helper_functions.dart';
-import 'package:mytradeasia/old_file_tobedeleted/view/menu/mytradeasia/submenu/quotations/my_quotations_screen.dart';
 
 import '../../../../../../config/themes/theme.dart';
 
@@ -31,20 +31,29 @@ class _CartScreenState extends State<CartScreen> {
   TextEditingController _quantityController = TextEditingController();
   String? _selectedValueUnit;
 
-  void deleteCartItem({required List<dynamic> cartData}) async {
+  void deleteCartItem({required List<CartModel> cartData}) async {
     // Get all selected items
-    final List<dynamic> deletedData = [];
+    final List<CartModel> deletedData = [];
     for (var item in cartData) {
-      if (item['isChecked']) {
-        Map<String, dynamic> data = {
-          "productName": item['productName'],
-          "seo_url": item['seo_url'],
-          "casNumber": item['casNumber'],
-          "hsCode": item['hsCode'],
-          "productImage": item['productImage'],
-          "quantity": item['quantity'],
-          "unit": item['unit']
-        };
+      if (item.isChecked!) {
+        CartModel data = CartModel(
+            productName: item.productName,
+            seoUrl: item.seoUrl,
+            casNumber: item.casNumber,
+            hsCode: item.hsCode,
+            productImage: item.productImage,
+            quantity: item.quantity,
+            unit: item.unit);
+
+        // Map<String, dynamic> data = {
+        //   "productName": item.productName,
+        //   "seo_url": item.seoUrl,
+        //   "casNumber": item.casNumber,
+        //   "hsCode": item.hsCode,
+        //   "productImage": item.productImage,
+        //   "quantity": item.quantity,
+        //   "unit": item.unit
+        // };
         deletedData.add(data);
       }
     }
@@ -60,54 +69,67 @@ class _CartScreenState extends State<CartScreen> {
             .collection('biodata')
             .doc(docsId)
             .update({
-          "cart": FieldValue.arrayRemove([item])
+          "cart": FieldValue.arrayRemove([item.toFirebase()])
         });
       }
 
       // Re-fetch the cart items data
-      BlocProvider.of<CartBloc>(context).add(GetCartItems());
+      BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     }
   }
 
   void editCartItem(
-      {required List<dynamic> cart,
-      required Map<String, dynamic> product}) async {
+      {required List<CartModel> cart, required CartModel product}) async {
     String docsId = _auth.currentUser!.uid.toString();
 
-    Map<String, dynamic> data = {
-      "productName": product['productName'],
-      "seo_url": product['seo_url'],
-      "casNumber": product['casNumber'],
-      "hsCode": product['hsCode'],
-      "productImage": product['productImage'],
-      "quantity": double.tryParse(_quantityController.text),
-      "unit": _selectedValueUnit
-    };
+    // Map<String, dynamic> data = {
+    //   "productName": product.productName,
+    //   "seo_url": product.seoUrl,
+    //   "casNumber": product.casNumber,
+    //   "hsCode": product.hsCode,
+    //   "productImage": product.productImage,
+    //   "quantity": double.tryParse(_quantityController.text),
+    //   "unit": _selectedValueUnit
+    // };
+
+    CartModel data = CartModel(
+        productName: product.productName,
+        seoUrl: product.seoUrl,
+        casNumber: product.casNumber,
+        hsCode: product.hsCode,
+        productImage: product.productImage,
+        quantity: double.tryParse(_quantityController.text),
+        unit: _selectedValueUnit);
 
     // Find the index of the updated data
-    int updatedDataIdx = cart
-        .indexWhere((product) => product['productName'] == data['productName']);
+    int updatedDataIdx =
+        cart.indexWhere((product) => product.productName == data.productName);
 
     // Update the cart
     cart[updatedDataIdx] = data;
+
+    // Convert to firebase data
+    List<dynamic> firebaseData = [];
+    for (var item in cart) {
+      firebaseData.add(item.toFirebase());
+    }
 
     // Send the newly updated cart data to firestore
     await FirebaseFirestore.instance
         .collection('biodata')
         .doc(docsId)
-        .update({"cart": cart});
+        .update({"cart": firebaseData});
 
     // Re-fetch the cart items data
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    BlocProvider.of<CartBloc>(context).add(const GetCartItems());
   }
 
   void editCartItemBottomSheet(
-      {required List<dynamic> cart,
-      required Map<String, dynamic> product}) async {
+      {required List<CartModel> cart, required CartModel product}) async {
     setState(() {
       _quantityController.text =
-          parseDoubleToIntegerIfNecessary(product['quantity']).toString();
-      _selectedValueUnit = product['unit'];
+          parseDoubleToIntegerIfNecessary(product.quantity!).toString();
+      _selectedValueUnit = product.unit;
     });
 
     return showModalBottomSheet<dynamic>(
@@ -147,7 +169,7 @@ class _CartScreenState extends State<CartScreen> {
                                   Radius.circular(size20px / 4)),
                               child: CachedNetworkImage(
                                 imageUrl:
-                                    chemtradeasiaUrl + product['productImage'],
+                                    chemtradeasiaUrl + product.productImage!,
                                 fit: BoxFit.fill,
                                 placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator.adaptive(),
@@ -165,7 +187,7 @@ class _CartScreenState extends State<CartScreen> {
                                 width: MediaQuery.of(context).size.width * 0.5,
                                 height: size20px * 2.5,
                                 child: Text(
-                                  product['productName'],
+                                  product.productName ?? "",
                                   style: heading2,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -184,7 +206,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       const SizedBox(height: 5.0),
                                       Text(
-                                        product['casNumber'],
+                                        product.casNumber ?? "",
                                         style: body1Regular.copyWith(
                                             color: greyColor2),
                                       ),
@@ -203,7 +225,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       const SizedBox(height: 5.0),
                                       Text(
-                                        product['hsCode'],
+                                        product.hsCode ?? "",
                                         style: body1Regular.copyWith(
                                             color: greyColor2),
                                       ),
@@ -434,12 +456,12 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       Checkbox(
                         value:
-                            state.cartItems!.every((item) => item["isChecked"]),
+                            state.cartItems!.every((item) => item.isChecked!),
                         onChanged: (dynamic value) {
                           setState(() {
                             for (var item in state.cartItems!) {
                               log("VALUE : $value");
-                              item["isChecked"] = value;
+                              item.isChecked = value;
                             }
                           });
                         },
@@ -481,7 +503,7 @@ class _CartScreenState extends State<CartScreen> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.cartItems!.length,
                     itemBuilder: (context, index) {
-                      Map<String, dynamic> item = state.cartItems![index];
+                      CartModel item = state.cartItems![index];
                       return InkWell(
                         onTap: () => editCartItemBottomSheet(
                             cart: state.cartItems!, product: item),
@@ -491,11 +513,10 @@ class _CartScreenState extends State<CartScreen> {
                           child: Row(
                             children: [
                               Checkbox(
-                                value: item["isChecked"],
+                                value: item.isChecked,
                                 onChanged: (bool? value) {
                                   setState(() {
-                                    state.cartItems![index]["isChecked"] =
-                                        value;
+                                    state.cartItems![index].isChecked = value;
                                   });
                                 },
                               ),
@@ -505,7 +526,7 @@ class _CartScreenState extends State<CartScreen> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: CachedNetworkImage(
-                                    imageUrl: "$url${item["productImage"]}",
+                                    imageUrl: "$url${item.productImage}",
                                     width: size20px * 4.5,
                                     height: size20px * 4.5 + 5,
                                     fit: BoxFit.cover,
@@ -520,9 +541,9 @@ class _CartScreenState extends State<CartScreen> {
                                     padding: const EdgeInsets.only(
                                         bottom: size20px - 15.0),
                                     child: Text(
-                                        item["productName"].length > 26
-                                            ? "${item["productName"].substring(0, 25)}. . ."
-                                            : item["productName"],
+                                        item.productName!.length > 26
+                                            ? "${item.productName!.substring(0, 25)}. . ."
+                                            : item.productName!,
                                         style: heading3),
                                   ),
                                   Row(
@@ -533,7 +554,7 @@ class _CartScreenState extends State<CartScreen> {
                                         children: [
                                           const Text("HS Code :",
                                               style: body2Medium),
-                                          Text(item["hsCode"],
+                                          Text(item.hsCode ?? "",
                                               style: body2Medium.copyWith(
                                                   color: greyColor2)),
                                         ],
@@ -545,7 +566,7 @@ class _CartScreenState extends State<CartScreen> {
                                         children: [
                                           const Text("CAS Number :",
                                               style: body2Medium),
-                                          Text(item["casNumber"],
+                                          Text(item.casNumber ?? "",
                                               style: body2Medium.copyWith(
                                                   color: greyColor2)),
                                         ],
@@ -560,7 +581,7 @@ class _CartScreenState extends State<CartScreen> {
                                       const Text("Quantity :",
                                           style: body2Medium),
                                       Text(
-                                          "${parseDoubleToIntegerIfNecessary(item['quantity'])} ${item["unit"]}",
+                                          "${parseDoubleToIntegerIfNecessary(item.quantity!)} ${item.unit}",
                                           style: body2Medium.copyWith(
                                               color: greyColor2)),
                                     ],
@@ -579,7 +600,7 @@ class _CartScreenState extends State<CartScreen> {
             bottomNavigationBar: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: size20px, vertical: size20px - 8.0),
-                child: state.cartItems!.any((item) => item["isChecked"])
+                child: state.cartItems!.any((item) => item.isChecked!)
                     ? ActiveButton(
                         titleButton: "Send Incquiry",
                         cartData: state.cartItems!,
@@ -686,7 +707,7 @@ class ActiveButton extends StatelessWidget {
       {super.key, required this.titleButton, required this.cartData});
 
   final String titleButton;
-  final List<dynamic> cartData;
+  final List<CartModel> cartData;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -704,14 +725,14 @@ class ActiveButton extends StatelessWidget {
         onPressed: (() {
           final List<ProductToRfq> selectedItem = [];
           for (var item in cartData) {
-            if (item['isChecked']) {
+            if (item.isChecked!) {
               ProductToRfq data = ProductToRfq(
-                  productName: item['productName'],
-                  productImage: item['productImage'],
-                  hsCode: item['hsCode'],
-                  casNumber: item['casNumber'],
-                  quantity: item['quantity'],
-                  unit: item['unit']);
+                  productName: item.productName!,
+                  productImage: item.productImage!,
+                  hsCode: item.hsCode!,
+                  casNumber: item.casNumber!,
+                  quantity: item.quantity,
+                  unit: item.unit);
               selectedItem.add(data);
             }
           }
