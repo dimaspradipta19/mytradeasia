@@ -27,6 +27,11 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<dynamic> loginUser(Map<String, String> s) async {
     final response = await _authUserFirebase.postLoginUser(s);
+    if (response == "user-not-found") {
+      return "user-not-found";
+    } else if (response == 'wrong-password') {
+      return "wrong-password";
+    }
     return response;
   }
 
@@ -54,5 +59,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Map<String, dynamic>> getUserData() {
     return _authUserFirebase.getUserData();
+  }
+
+  @override
+  void logoutUser() {
+    _authUserFirebase.postLogoutUser();
   }
 }

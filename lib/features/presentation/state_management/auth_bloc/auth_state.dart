@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mytradeasia/features/domain/entities/user_entities/user_credential_entity.dart';
 
 abstract class AuthState extends Equatable {
-  final User? user;
+  final UserCredentialEntity? user;
 
   const AuthState({this.user});
 
@@ -18,11 +19,11 @@ class AuthLoadingState extends AuthState {
   const AuthLoadingState();
 }
 
-class AuthErrorState extends AuthState {
-  final FirebaseAuthException error;
-  const AuthErrorState(this.error);
-}
+// class AuthErrorState extends AuthState {
+//   final FirebaseAuthException error;
+//   const AuthErrorState(this.error);
+// }
 
 class AuthLoggedInState extends AuthState {
-  const AuthLoggedInState(User? user) : super(user: user);
+  const AuthLoggedInState(UserCredentialEntity? user) : super(user: user);
 }

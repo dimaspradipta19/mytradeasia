@@ -3,6 +3,7 @@ import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.d
 abstract class UserRepository {
   Future<String> registerUser(UserEntity s);
   Future<dynamic> loginUser(Map<String, String> s);
+  void logoutUser();
   Stream<Map<String, dynamic>> getUserSnapshot();
   Future<Map<String, dynamic>> getUserData();
   Future<String> getCurrentUserId();

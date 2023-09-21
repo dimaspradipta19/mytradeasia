@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mytradeasia/features/data/model/user_credential_models/user_credential_model.dart';
 import 'package:mytradeasia/features/data/model/user_models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +32,8 @@ class AuthUserFirebase {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: auth["email"]!, password: auth["password"]!);
 
+      log(userCredential.toString());
+
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("email", auth["email"]!);
       // await prefs.setString("phoneNumber", event);
@@ -36,9 +41,17 @@ class AuthUserFirebase {
 
       // emit(AuthLoggedInState(userCredential.user));
       // context.go("/home");
-      return userCredential;
+      return UserCredentialModel.fromUserCredential(userCredential);
     } on FirebaseAuthException catch (e) {
-      return e.code;
+      return {'code': e.code, 'message': e.message};
+    }
+  }
+
+  Future<void> postLogoutUser() async {
+    try {
+      await _auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
     }
   }
 
