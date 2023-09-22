@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mytradeasia/features/data/data_sources/firebase/auth_user_firebase.dart';
 import 'package:mytradeasia/features/data/model/user_models/user_model.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
@@ -27,10 +29,13 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<dynamic> loginUser(Map<String, String> s) async {
     final response = await _authUserFirebase.postLoginUser(s);
-    if (response == "user-not-found") {
-      return "user-not-found";
-    } else if (response == 'wrong-password') {
-      return "wrong-password";
+    if (response is Map) {
+      if (response["code"] == "user-not-found") {
+        return "user-not-found";
+      }
+      if (response["code"] == 'wrong-password') {
+        return "wrong-password";
+      }
     }
     return response;
   }
@@ -38,6 +43,8 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Stream<Map<String, dynamic>> getUserSnapshot() {
     final uid = _authUserFirebase.getCurrentUId();
+    // var test = _authUserFirebase.getUserSnapshot(uid);
+
     return _authUserFirebase.getUserSnapshot(uid);
   }
 

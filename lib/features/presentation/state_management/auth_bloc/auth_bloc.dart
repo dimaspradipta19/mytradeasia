@@ -53,6 +53,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                   context.pop(context);
                 }),
           );
+        } else {
+          log('auth code error');
         }
       }
     });

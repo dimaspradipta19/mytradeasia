@@ -35,12 +35,24 @@ class UserModel extends UserEntity {
 
   factory UserModel.fromSnapshot(DocumentSnapshot documentSnapshot) {
     return UserModel(
-      role: documentSnapshot.get('role'),
-      companyName: documentSnapshot.get('companyName'),
-      country: documentSnapshot.get('country'),
-      firstName: documentSnapshot.get('firstName'),
-      lastName: documentSnapshot.get('lastName'),
-      phone: documentSnapshot.get('phone'),
+      role: documentSnapshot.data().toString().contains('role')
+          ? documentSnapshot.get('role')
+          : "",
+      companyName: documentSnapshot.data().toString().contains('companyName')
+          ? documentSnapshot.get('companyName')
+          : "",
+      country: documentSnapshot.data().toString().contains('country')
+          ? documentSnapshot.get('country')
+          : "",
+      firstName: documentSnapshot.data().toString().contains('firstName')
+          ? documentSnapshot.get('firstName')
+          : "",
+      lastName: documentSnapshot.data().toString().contains('lastName')
+          ? documentSnapshot.get('lastName')
+          : "",
+      phone: documentSnapshot.data().toString().contains('phone')
+          ? documentSnapshot.get('phone')
+          : "",
     );
   }
 }

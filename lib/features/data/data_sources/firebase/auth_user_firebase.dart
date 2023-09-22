@@ -32,15 +32,10 @@ class AuthUserFirebase {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: auth["email"]!, password: auth["password"]!);
 
-      log(userCredential.toString());
-
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("email", auth["email"]!);
-      // await prefs.setString("phoneNumber", event);
       await prefs.setBool("isLoggedIn", true);
 
-      // emit(AuthLoggedInState(userCredential.user));
-      // context.go("/home");
       return UserCredentialModel.fromUserCredential(userCredential);
     } on FirebaseAuthException catch (e) {
       return {'code': e.code, 'message': e.message};
@@ -58,9 +53,9 @@ class AuthUserFirebase {
   Stream<Map<String, dynamic>> getUserSnapshot(String uid) {
     final userSnapshot = _firestore.collection('biodata').doc(uid).get();
 
-    return userSnapshot
-        .asStream()
-        .map((event) => UserModel.fromSnapshot(event).toMap());
+    return userSnapshot.asStream().map((event) {
+      return UserModel.fromSnapshot(event).toMap();
+    });
   }
 
   Future<Map<String, dynamic>> getUserData() async {
