@@ -7,13 +7,14 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 class SearchProductBloc extends Bloc<SearchProductEvent, SearchProductState> {
   final GetSearchProduct _getSearchProduct;
   SearchProductBloc(this._getSearchProduct)
-      : super(const SearchProductLoading()) {
+      : super(const SearchProductInitial()) {
     on<SearchProduct>(onSearchProduct);
     on<ClearSearch>(onClearSearch);
   }
 
   void onSearchProduct(
       SearchProduct event, Emitter<SearchProductState> emit) async {
+    emit(const SearchProductLoading());
     final dataState = await _getSearchProduct(param: event.query);
     if (dataState is DataSuccess) {
       emit(SearchProductDone(dataState.data!));
