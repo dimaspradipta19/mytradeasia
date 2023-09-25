@@ -12,6 +12,10 @@ abstract class SearchProductState extends Equatable {
   List<Object?> get props => [searchProducts, error];
 }
 
+class SearchProductInitial extends SearchProductState {
+  const SearchProductInitial();
+}
+
 class SearchProductLoading extends SearchProductState {
   const SearchProductLoading();
 }

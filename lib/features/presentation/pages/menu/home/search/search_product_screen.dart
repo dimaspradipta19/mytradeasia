@@ -107,12 +107,28 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: BlocBuilder<SearchProductBloc, SearchProductState>(
                 builder: (context, state) {
-                  if (state is SearchProductLoading) {
+                  if (state is SearchProductInitial) {
+                    return const Column(
+                      children: [
+                        RecentlySeenWidget(),
+                        SizedBox(height: size20px),
+                        PopularSearchWidget()
+                      ],
+                    );
+                  } else if (state is SearchProductLoading) {
                     return const Center(
                       child: CircularProgressIndicator.adaptive(),
                     );
                   } else if (state is SearchProductDone &&
                       _searchProductController.text.isNotEmpty) {
+                    if (state.searchProducts!.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "No Product Found",
+                          style: heading2,
+                        ),
+                      );
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
