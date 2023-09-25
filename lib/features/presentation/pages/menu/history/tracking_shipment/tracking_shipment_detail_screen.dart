@@ -63,10 +63,10 @@ class TrackingShipmentDetailScreen extends StatelessWidget {
                           const SizedBox(
                             width: 11.0,
                           ),
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
                                 "Shipments",
                                 style: body1Regular,
@@ -101,10 +101,10 @@ class TrackingShipmentDetailScreen extends StatelessWidget {
                           const SizedBox(
                             width: 11.0,
                           ),
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
                                 "Containers",
                                 style: body1Regular,

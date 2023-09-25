@@ -22,7 +22,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
   String? _selectedValueUnit;
 
   void editCartItemBottomSheet(
@@ -326,7 +326,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     super.initState();
   }
 

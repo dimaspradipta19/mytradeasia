@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:mytradeasia/features/data/data_sources/firebase/auth_user_firebase.dart';
 import 'package:mytradeasia/features/data/model/user_models/user_model.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';

@@ -30,27 +30,27 @@ class CartModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['seo_url'] = this.seoUrl;
-    data['unit'] = this.unit;
-    data['quantity'] = this.quantity;
-    data['productImage'] = this.productImage;
-    data['hsCode'] = this.hsCode;
-    data['casNumber'] = this.casNumber;
-    data['productName'] = this.productName;
-    data['isChecked'] = this.isChecked;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['seo_url'] = seoUrl;
+    data['unit'] = unit;
+    data['quantity'] = quantity;
+    data['productImage'] = productImage;
+    data['hsCode'] = hsCode;
+    data['casNumber'] = casNumber;
+    data['productName'] = productName;
+    data['isChecked'] = isChecked;
     return data;
   }
 
   Map<String, dynamic> toFirebase() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['seo_url'] = this.seoUrl;
-    data['unit'] = this.unit;
-    data['quantity'] = this.quantity;
-    data['productImage'] = this.productImage;
-    data['hsCode'] = this.hsCode;
-    data['casNumber'] = this.casNumber;
-    data['productName'] = this.productName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['seo_url'] = seoUrl;
+    data['unit'] = unit;
+    data['quantity'] = quantity;
+    data['productImage'] = productImage;
+    data['hsCode'] = hsCode;
+    data['casNumber'] = casNumber;
+    data['productName'] = productName;
     return data;
   }
 }

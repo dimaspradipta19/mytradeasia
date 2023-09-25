@@ -54,16 +54,16 @@ class SalesBubleChat extends StatelessWidget {
                               style: heading3, textAlign: TextAlign.start),
                         ),
                         isFirstMessage == true
-                            ? Column(
+                            ? const Column(
                                 children: [
                                   // first row
                                   Padding(
-                                    padding: const EdgeInsets.only(
+                                    padding: EdgeInsets.only(
                                         top: size20px, bottom: size20px / 2.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         FirstMessageWidget(
                                           urlIcon:
                                               "assets/images/icon_products_message.png",
@@ -82,12 +82,12 @@ class SalesBubleChat extends StatelessWidget {
                                   ),
                                   // second row
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: size20px + 5.0),
+                                    padding:
+                                        EdgeInsets.only(bottom: size20px + 5.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         FirstMessageWidget(
                                             urlIcon:
                                                 "assets/images/icon_price.png",

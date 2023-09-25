@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       _connection = false;
     }
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {});
       checkConnection();
     });
@@ -245,11 +245,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: size20px),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: size20px),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Expanded(
                           child: Divider(thickness: 2, color: greyColor3),
                         ),
@@ -363,7 +363,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             _connection
-                ? SizedBox()
+                ? const SizedBox()
                 : SizedBox(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height,

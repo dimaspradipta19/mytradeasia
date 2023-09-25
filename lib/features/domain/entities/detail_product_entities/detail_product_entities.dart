@@ -16,10 +16,10 @@ class DetailsProductEntity extends Equatable {
   @override
   List<Object?> get props {
     return [
-      this.detailProduct,
-      this.listIndustry,
-      this.listCategory,
-      this.relatedProducts,
+      detailProduct,
+      listIndustry,
+      listCategory,
+      relatedProducts,
     ];
   }
 }

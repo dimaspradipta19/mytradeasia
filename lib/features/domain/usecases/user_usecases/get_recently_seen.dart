@@ -2,7 +2,7 @@ import 'package:mytradeasia/core/usecase/usecase.dart';
 import 'package:mytradeasia/features/domain/repository/user_repository.dart';
 
 class GetRecentlySeen implements UseCase<List<dynamic>, void> {
-  UserRepository _userRepository;
+  final UserRepository _userRepository;
 
   GetRecentlySeen(this._userRepository);
 

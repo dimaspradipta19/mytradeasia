@@ -436,7 +436,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                           children: [
                                                             Padding(
                                                               padding: const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   right:
                                                                       size20px +
                                                                           5.0),
@@ -471,7 +471,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                               children: [
                                                                 Padding(
                                                                   padding: const EdgeInsets
-                                                                      .only(
+                                                                          .only(
                                                                       bottom: size20px -
                                                                           15.0),
                                                                   child: Text(
@@ -557,7 +557,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                 child: InkWell(
                                                   // splashColor: Colors
                                                   //     .red, // inkwell color
-                                                  child: SizedBox(
+                                                  child: const SizedBox(
                                                       width: 46,
                                                       height: 46,
                                                       child: Icon(
@@ -723,7 +723,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         vertical:
                                                             size20px / 2.0),
                                                     child: Text(
@@ -779,7 +779,7 @@ class _RequestQuotationScreenState extends State<RequestQuotationScreen> {
                                                   // Button 2
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .symmetric(
+                                                            .symmetric(
                                                         vertical: 5.0),
                                                     child: SizedBox(
                                                       height: size20px * 1.5,

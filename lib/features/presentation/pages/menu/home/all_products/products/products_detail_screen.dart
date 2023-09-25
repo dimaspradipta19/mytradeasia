@@ -3,13 +3,10 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/old_file_tobedeleted/old_remote/detail_product_service.dart';
-// import 'package:mytradeasia/modelview/provider/detail_product_provider.dart';
-// import 'package:mytradeasia/modelview/provider/see_more_provider.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_event.dart';
@@ -18,7 +15,6 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
-// import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../widgets/tabbar_content/tabbar_detail_content_widget.dart';
@@ -61,7 +57,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
       required String casNumber,
       required String hsCode,
       required String productImage}) async {
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     String docsId = _auth.currentUser!.uid.toString();
 
     Map<String, dynamic> data = {
@@ -906,7 +902,7 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                                                       child: ClipRRect(
                                                         borderRadius:
                                                             const BorderRadius
-                                                                .all(
+                                                                    .all(
                                                                 Radius.circular(
                                                                     size20px /
                                                                         4)),

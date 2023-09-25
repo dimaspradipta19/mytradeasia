@@ -57,9 +57,7 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                         backgroundColor: primaryColor1),
                   );
                 } else if (state.industry!.detailIndustry!.isEmpty) {
-                  return Container(
-                    child: Center(child: Text("No Data Found")),
-                  );
+                  return const Center(child: Text("No Data Found"));
                 } else if (state is IndustryError) {
                   return const Center(
                     child: Text("An error occurred"),

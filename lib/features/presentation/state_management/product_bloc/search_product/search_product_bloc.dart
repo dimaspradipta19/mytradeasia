@@ -24,6 +24,6 @@ class SearchProductBloc extends Bloc<SearchProductEvent, SearchProductState> {
   }
 
   void onClearSearch(ClearSearch event, Emitter<SearchProductState> emit) {
-    emit(SearchProductDone([]));
+    emit(const SearchProductDone([]));
   }
 }

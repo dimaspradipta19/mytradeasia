@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -798,7 +796,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text("Last Seen Products",
                                           style: text18),
                                     ),
-                                    _recentlySeen.length == 0
+                                    _recentlySeen.isEmpty
                                         ? const Center(
                                             child: Text("Tidak ada product"))
                                         : Column(

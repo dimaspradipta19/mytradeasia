@@ -116,7 +116,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                      .symmetric(
+                                                          .symmetric(
                                                       horizontal: 8.0),
                                                   child: Text(
                                                     "Shipped",
@@ -140,7 +140,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                      .symmetric(
+                                                          .symmetric(
                                                       horizontal: 8.0),
                                                   child: Text(
                                                     "Pending",
@@ -185,14 +185,14 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                                   const SizedBox(
                                                     width: 11.0,
                                                   ),
-                                                  Column(
+                                                  const Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
-                                                    children: const [
+                                                    children: [
                                                       Text(
                                                         "Shipments",
                                                         style: body1Regular,
@@ -231,14 +231,14 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                                   const SizedBox(
                                                     width: 11.0,
                                                   ),
-                                                  Column(
+                                                  const Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
-                                                    children: const [
+                                                    children: [
                                                       Text(
                                                         "Containers",
                                                         style: body1Regular,

@@ -24,7 +24,7 @@ class RfqModel extends RfqEntity {
         );
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = Map<String, dynamic>();
+    final Map<String, dynamic> json = <String, dynamic>{};
     json['firstname'] = firstname;
     json['lastname'] = lastname;
     json['phone'] = phone;
@@ -49,7 +49,7 @@ class RfqProductModel extends RfqProduct {
           unit: unit,
         );
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = Map<String, dynamic>();
+    final Map<String, dynamic> json = <String, dynamic>{};
     json['product_name'] = productName;
     json['quantity'] = quantity;
     json['unit'] = unit;

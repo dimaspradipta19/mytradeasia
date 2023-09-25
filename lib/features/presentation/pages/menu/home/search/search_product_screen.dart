@@ -74,8 +74,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Form(
                         child: TextFormField(
                           onChanged: (value) {
-                            if (debouncerTime?.isActive ?? false)
+                            if (debouncerTime?.isActive ?? false) {
                               debouncerTime?.cancel();
+                            }
 
                             debouncerTime =
                                 Timer(const Duration(milliseconds: 700), () {
@@ -402,8 +403,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     );
                   } else if (state is SearchProductDone) {
-                    return Column(
-                      children: const [
+                    return const Column(
+                      children: [
                         RecentlySeenWidget(),
                         SizedBox(height: size20px),
                         PopularSearchWidget()
@@ -412,8 +413,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   } else if (state is SearchProductError) {
                     return const Center(child: Text("Error"));
                   } else {
-                    return Column(
-                      children: const [
+                    return const Column(
+                      children: [
                         RecentlySeenWidget(),
                         SizedBox(height: size20px),
                         PopularSearchWidget()
@@ -547,7 +548,7 @@ class _RecentlySeenWidgetState extends State<RecentlySeenWidget> {
         } else if (snapshot.hasError) {
           return const Text("Error");
         } else if (snapshot.hasData) {
-          var docsData = snapshot.data!.docs[0].data() as Map<String, dynamic>?;
+          var docsData = snapshot.data!.docs[0].data();
           return Column(
             children: [
               Padding(
@@ -587,7 +588,7 @@ class _RecentlySeenWidgetState extends State<RecentlySeenWidget> {
                   ],
                 ),
               ),
-              docsData!["recentlySeen"] == null
+              docsData["recentlySeen"] == null
                   ? const Text("Tidak ada product")
                   : SizedBox(
                       height: 120,

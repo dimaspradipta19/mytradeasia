@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
-import 'package:mytradeasia/old_file_tobedeleted/view/menu/history/history_screen.dart';
-import 'package:mytradeasia/old_file_tobedeleted/view/menu/messages/messages_screen.dart';
-import 'package:mytradeasia/old_file_tobedeleted/view/menu/mytradeasia/mytradeasia_screen.dart';
-
-import '../home/home_screen.dart';
 
 class NavigationBarWidget extends StatefulWidget {
   const NavigationBarWidget({super.key, required this.child});
@@ -17,7 +12,7 @@ class NavigationBarWidget extends StatefulWidget {
 }
 
 class _NavigationBarWidgetState extends State<NavigationBarWidget> {
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
   // void _onTapItem(int index) {
   //   setState(() {
@@ -59,12 +54,12 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
     return 0;
   }
 
-  final List<Widget> _widgetOption = [
-    const HomeScreen(),
-    const MessageScreen(),
-    const HistoryScreen(),
-    const MyTradeAsiaScreen(),
-  ];
+  // final List<Widget> _widgetOption = [
+  //   const HomeScreen(),
+  //   const MessageScreen(),
+  //   const HistoryScreen(),
+  //   const MyTradeAsiaScreen(),
+  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

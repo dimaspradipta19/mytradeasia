@@ -16,10 +16,10 @@ class SalesforceDataEntity extends Equatable {
   @override
   List<Object?> get props {
     return [
-      this.totalSize,
-      this.done,
-      this.nextRecordsUrl,
-      this.records,
+      totalSize,
+      done,
+      nextRecordsUrl,
+      records,
     ];
   }
 }

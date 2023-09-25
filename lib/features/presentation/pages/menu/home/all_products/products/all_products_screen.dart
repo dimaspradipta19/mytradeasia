@@ -22,7 +22,6 @@ import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../../../config/routes/parameters.dart';
-import '../../cart/cart_screen.dart';
 
 class AllProductsScreen extends StatefulWidget {
   const AllProductsScreen({super.key});
@@ -38,19 +37,19 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
   Timer? debouncerTime;
 
   Future<void> _getListProducts() async {
-    BlocProvider.of<ListProductBloc>(context).add(GetProducts());
+    BlocProvider.of<ListProductBloc>(context).add(const GetProducts());
   }
 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ListProductBloc>(context).add(GetProducts());
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    BlocProvider.of<ListProductBloc>(context).add(const GetProducts());
+    BlocProvider.of<CartBloc>(context).add(const GetCartItems());
   }
 
   @override
   void didChangeDependencies() {
-    BlocProvider.of<CartBloc>(context).add(GetCartItems());
+    BlocProvider.of<CartBloc>(context).add(const GetCartItems());
     super.didChangeDependencies();
   }
 

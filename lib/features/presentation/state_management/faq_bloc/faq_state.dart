@@ -8,6 +8,7 @@ abstract class FaqState extends Equatable {
 
   const FaqState({this.faqData, this.error});
 
+  @override
   List<Object> get props => [faqData!, error!];
 }
 

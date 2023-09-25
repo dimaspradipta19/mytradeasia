@@ -1,7 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../config/routes/parameters.dart';
 import '../../../../../config/themes/theme.dart';
 
@@ -116,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     countryNum = element.dialCode.toString(),
                                 // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                                 initialSelection: 'ID',
-                                favorite: ['ID', 'UK'],
+                                favorite: const ['ID', 'UK'],
                                 // optional. Shows only country name and flag
                                 showCountryOnly: false,
                                 showFlag: true,
@@ -320,9 +319,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                   ),
                   const SizedBox(height: size20px),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Expanded(
                         child: Divider(
                           thickness: 2,

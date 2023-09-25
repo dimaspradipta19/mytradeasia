@@ -61,8 +61,8 @@ class _FaqScreenState extends State<FaqScreen> {
                   shrinkWrap: true,
                   itemCount: 10,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => Column(
-                    children: const [
+                  itemBuilder: (context, index) => const Column(
+                    children: [
                       Padding(
                         padding: EdgeInsets.only(bottom: size20px / 2),
                         child: GFAccordion(),

@@ -102,19 +102,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ),
                         ),
                         onPressed: () {
-                          print(_emailController.text);
-
                           /* With go_route */
                           context.go("/auth/login/reset_password");
-
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) {
-                          //       return const ResetPasswordScreen();
-                          //     },
-                          //   ),
-                          // );
                         },
                         child: Text(
                           "Send",

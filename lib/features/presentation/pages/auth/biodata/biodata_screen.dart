@@ -283,7 +283,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                                 // Optional. Sets the theme for the country list picker.
                                 countryListTheme: CountryListThemeData(
                                   // Optional. Sets the border radius for the bottomsheet.
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(40.0),
                                     topRight: Radius.circular(40.0),
                                   ),
@@ -300,7 +300,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                                     ),
                                   ),
                                   // Optional. Styles the text in the search field
-                                  searchTextStyle: TextStyle(
+                                  searchTextStyle: const TextStyle(
                                     color: Colors.blue,
                                     fontSize: 18,
                                   ),
@@ -348,7 +348,6 @@ class _BiodataScreenState extends State<BiodataScreen> {
                               setState(() {
                                 _passwordVisible = !_passwordVisible;
                               });
-                              ;
                             },
                             icon: !_passwordVisible
                                 ? Image.asset(

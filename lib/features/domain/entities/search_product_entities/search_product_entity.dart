@@ -18,11 +18,11 @@ class SearchProductEntity extends Equatable {
   @override
   List<Object?> get props {
     return [
-      this.productname,
-      this.productimage,
-      this.hsCode,
-      this.casNumber,
-      this.seoUrl,
+      productname,
+      productimage,
+      hsCode,
+      casNumber,
+      seoUrl,
     ];
   }
 }

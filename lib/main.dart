@@ -116,7 +116,7 @@ class _MyAppState extends State<MyApp> {
               return Stack(
                 children: [
                   child!,
-                  _connection ? SizedBox() : LoadingOverlay(),
+                  _connection ? const SizedBox() : const LoadingOverlay(),
                 ],
               );
             },

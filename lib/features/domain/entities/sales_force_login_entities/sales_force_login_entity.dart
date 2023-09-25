@@ -20,12 +20,12 @@ class SalesforceLoginEntity extends Equatable {
   @override
   List<Object?> get props {
     return [
-      this.accessToken,
-      this.instanceUrl,
-      this.id,
-      this.tokenType,
-      this.issuedAt,
-      this.signature,
+      accessToken,
+      instanceUrl,
+      id,
+      tokenType,
+      issuedAt,
+      signature,
     ];
   }
 }

@@ -296,7 +296,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                             unit: _selectedValueUnit!)));
 
                                     BlocProvider.of<CartBloc>(context)
-                                        .add(GetCartItems());
+                                        .add(const GetCartItems());
 
                                     setState(() {
                                       _quantityController.text = '';
