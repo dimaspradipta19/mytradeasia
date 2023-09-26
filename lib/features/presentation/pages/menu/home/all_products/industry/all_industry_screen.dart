@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/industry_bloc/industry_state.dart';
@@ -27,7 +28,8 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
+            BlocProvider.of<IndustryBloc>(context).add(const DisposeState());
           },
           icon: Image.asset(
             "assets/images/icon_back.png",
@@ -56,12 +58,15 @@ class _AllIndustryScreenState extends State<AllIndustryScreen> {
                     child: CircularProgressIndicator.adaptive(
                         backgroundColor: primaryColor1),
                   );
-                } else if (state.industry!.detailIndustry!.isEmpty) {
-                  return const Center(child: Text("No Data Found"));
-                } else if (state is IndustryError) {
+                }
+                if (state is IndustryError) {
                   return const Center(
                     child: Text("An error occurred"),
                   );
+                }
+
+                if (state.industry!.detailIndustry!.isEmpty) {
+                  return const Center(child: Text("No Data Found"));
                 }
 
                 return GridView.builder(

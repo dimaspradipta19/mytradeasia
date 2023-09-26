@@ -5,3 +5,7 @@ abstract class IndustryEvent {
 class GetIndustry extends IndustryEvent {
   const GetIndustry();
 }
+
+class DisposeState extends IndustryEvent {
+  const DisposeState();
+}

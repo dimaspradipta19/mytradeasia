@@ -9,6 +9,11 @@ class IndustryBloc extends Bloc<IndustryEvent, IndustryState> {
 
   IndustryBloc(this._getIndustryData) : super(const IndustryLoading()) {
     on<GetIndustry>(onGetIndustry);
+    on<DisposeState>(onDisposeState);
+  }
+
+  void onDisposeState(DisposeState event, Emitter<IndustryState> emit) {
+    emit(const IndustryLoading());
   }
 
   void onGetIndustry(GetIndustry event, Emitter<IndustryState> emit) async {
