@@ -29,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (response is UserCredentialEntity) {
         try {
           final user =
-              await SendbirdChat.connect('akmal', nickname: event.email);
+              await SendbirdChat.connect(response.uid!, nickname: event.email);
           emit(AuthLoggedInState(response, user));
           context.go("/home");
         } catch (e) {
