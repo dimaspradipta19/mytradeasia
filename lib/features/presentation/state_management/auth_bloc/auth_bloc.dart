@@ -7,6 +7,7 @@ import 'package:mytradeasia/features/domain/entities/user_entities/user_credenti
 import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/logout.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../old_file_tobedeleted/widget/dialog_sheet_widget.dart';
@@ -26,8 +27,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await _postLoginUser
           .call(param: {"email": event.email, "password": event.password});
       if (response is UserCredentialEntity) {
-        emit(AuthLoggedInState(response));
-        context.go("/home");
+        try {
+          final user =
+              await SendbirdChat.connect('akmal', nickname: event.email);
+          emit(AuthLoggedInState(response, user));
+          context.go("/home");
+        } catch (e) {
+          log("failed to login with error: $e");
+        }
       } else {
         if (response == "user-not-found") {
           showDialog(

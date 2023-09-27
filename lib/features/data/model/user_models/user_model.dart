@@ -29,7 +29,7 @@ class UserModel extends UserEntity {
       'country': country,
       'firstName': firstName,
       'lastName': lastName,
-      'phoneNumber': phone,
+      'phone': phone,
     };
   }
 
