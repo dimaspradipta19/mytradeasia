@@ -15,8 +15,11 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/product_bloc/detail_product_bloc/detail_product_state.dart';
 import 'package:mytradeasia/features/presentation/widgets/cart_button.dart';
+import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../state_management/auth_bloc/auth_bloc.dart';
+import '../../../../../state_management/auth_bloc/auth_state.dart';
 import '../../../../../widgets/tabbar_content/tabbar_detail_content_widget.dart';
 import '../../../../../widgets/tabbar_content/tabbar_detail_description_widget.dart';
 import '../../../../../widgets/text_editing_widget.dart';
@@ -785,23 +788,50 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
               SizedBox(
                 height: size20px * 2.75,
                 width: size20px * 2.75,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(whiteColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(color: greyColor3)),
-                    ),
-                    elevation: MaterialStateProperty.all<double>(0.0),
-                  ),
-                  onPressed: () {},
-                  child: Image.asset(
-                    "assets/images/icon_message_not_active.png",
-                    width: size20px + 4.0,
-                    color: primaryColor1,
-                  ),
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(whiteColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(color: greyColor3)),
+                        ),
+                        elevation: MaterialStateProperty.all<double>(0.0),
+                      ),
+                      onPressed: () async {
+                        if (state is AuthLoggedInState) {
+                          try {
+                            final groupChannel =
+                                await GroupChannel.createChannel(
+                                    GroupChannelCreateParams()
+                                      ..userIds = [
+                                        state.sendbirdUser!.userId,
+                                        'sales'
+                                      ]);
+                            print(groupChannel.channelUrl);
+                          } catch (e) {
+                            // Handle error.
+                            print(e);
+                          }
+                        }
+                        if (state is AuthLoadingState) {
+                          print("Authtest");
+                        }
+                        if (state is AuthInitState) {
+                          print("bruh");
+                        }
+                      },
+                      child: Image.asset(
+                        "assets/images/icon_message_not_active.png",
+                        width: size20px + 4.0,
+                        color: primaryColor1,
+                      ),
+                    );
+                  },
                 ),
               ),
               // Cart

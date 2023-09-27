@@ -46,6 +46,10 @@ class RegisterWithEmail extends AuthEvent {
   );
 }
 
+class IsLoggedIn extends AuthEvent {
+  const IsLoggedIn();
+}
+
 class AuthLoading extends AuthEvent {
   const AuthLoading();
 }
