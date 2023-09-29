@@ -42,6 +42,33 @@ class AuthUserFirebase {
     }
   }
 
+  Future<String> updateProfile(Map<String, dynamic> data) async {
+    final DocumentReference docRef =
+        FirebaseFirestore.instance.collection('biodata').doc(getCurrentUId());
+
+    return docRef.get().then((docSnapshot) async {
+      var response = "network-error";
+      if (docSnapshot.exists) {
+        response = await docRef.update({
+          'firstName': data["firstName"],
+          'lastName': data["lastName"],
+          'companyName': data["companyName"],
+        }).then((_) {
+          return "success";
+        }).catchError((e) {
+          return "error";
+        });
+      } else {
+        response = await docRef.set(data).then((_) {
+          return "success";
+        }).catchError((e) {
+          return "error";
+        });
+      }
+      return response;
+    });
+  }
+
   Future<void> postLogoutUser() async {
     try {
       await _auth.signOut();
@@ -56,6 +83,12 @@ class AuthUserFirebase {
     return userSnapshot.asStream().map((event) {
       return UserModel.fromSnapshot(event).toMap();
     });
+  }
+
+  Future<UserCredentialModel> getUserCredentials() async {
+    final userCredential = FirebaseAuth.instance.currentUser!;
+
+    return UserCredentialModel.fromUser(userCredential);
   }
 
   Future<Map<String, dynamic>> getUserData() async {

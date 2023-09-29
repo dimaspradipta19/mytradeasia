@@ -22,32 +22,37 @@ class _MyTradeAsiaWidgetState extends State<MyTradeAsiaWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: size20px * 0.75),
-              child: Image.asset(
-                widget.urlIcon,
-                width: size20px * 2,
+      child: InkWell(
+        onTap: widget.onPressedFunction,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(right: size20px * 0.75, left: 10),
+                child: Image.asset(
+                  widget.urlIcon,
+                  width: size20px * 2,
+                ),
               ),
-            ),
-            Text(
-              widget.nama,
-              style: text12,
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: widget.onPressedFunction,
-              icon: Image.asset(
-                "assets/images/icon_forward.png",
-                width: 24.0,
-                height: 24.0,
-                color: greyColor2,
+              Text(
+                widget.nama,
+                style: text12,
               ),
-            ),
-          ],
+              const Spacer(),
+              IconButton(
+                onPressed: widget.onPressedFunction,
+                splashRadius: 1,
+                icon: Image.asset(
+                  "assets/images/icon_forward.png",
+                  width: 24.0,
+                  height: 24.0,
+                  color: greyColor2,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

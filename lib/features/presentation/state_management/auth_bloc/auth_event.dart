@@ -1,15 +1,14 @@
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
 
 abstract class AuthEvent extends Equatable {
-  final User? user;
+  // final User? user;
 
-  const AuthEvent({this.user});
+  const AuthEvent();
 
   @override
-  List<Object> get props => [user!];
+  List<Object> get props => [];
 }
 
 class LoginWithEmail extends AuthEvent {
