@@ -20,7 +20,7 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-  // final String _currentUser = FirebaseAuth.instance.currentUser!.uid.toString();
+  final String _currentUser = FirebaseAuth.instance.currentUser!.uid.toString();
 
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -35,6 +35,14 @@ class _MessageScreenState extends State<MessageScreen> {
 // Membuat atau mendapatkan referensi koleksi "Messages"
 //   CollectionReference messagesCollection =
 //       FirebaseFirestore.instance.collection('messages');
+
+  // LIST<MEMBER> Length is EXACTLY 2
+  String lookForOtherUser(
+      {required String currentUserId, required List<Member> listMember}) {
+    return listMember
+        .firstWhere((element) => element.userId != currentUserId)
+        .userId;
+  }
 
   @override
   void initState() {
@@ -170,7 +178,12 @@ class _MessageScreenState extends State<MessageScreen> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                "TEST",
+                                                // ASSUMPTIONS : ONLY 2 Member inside the Group Channel
+                                                lookForOtherUser(
+                                                    currentUserId: _currentUser,
+                                                    listMember: state
+                                                        .channels![index]
+                                                        .members),
                                                 style: heading3.copyWith(
                                                   color: blackColor,
                                                 ),
@@ -182,7 +195,9 @@ class _MessageScreenState extends State<MessageScreen> {
                                         ),
                                         const SizedBox(height: size20px / 4),
                                         Text(
-                                          "Message",
+                                          state.channels![index].lastMessage
+                                                  ?.message ??
+                                              "",
                                           style: text10.copyWith(
                                               color: greyColor2),
                                           maxLines: 2,
@@ -203,7 +218,9 @@ class _MessageScreenState extends State<MessageScreen> {
                                         maxRadius: 12,
                                         backgroundColor: secondaryColor1,
                                         child: Text(
-                                          "$index",
+                                          state.channels![index]
+                                              .unreadMessageCount
+                                              .toString(),
                                           style: body1Regular.copyWith(
                                               color: whiteColor),
                                         ),
