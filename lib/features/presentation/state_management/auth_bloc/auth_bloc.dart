@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_credential_entity.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_credentials.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/logout.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
@@ -21,6 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUser _postLoginUser;
   final LogOutUser _postLogoutUser;
   final GetUserData _geUserData = injections<GetUserData>();
+  final GetUserCredentials _getUserCredentials =
+      injections<GetUserCredentials>();
 
   AuthBloc(this._postRegisterUser, this._postLoginUser, this._postLogoutUser)
       : super(const AuthInitState()) {
@@ -38,7 +41,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (userData["role"] != "Sales") {
             user = await SendbirdChat.connect(response.uid!,
                 nickname: event.email);
-            print(user.userId);
           } else {
             user = await SendbirdChat.connect("sales");
           }
@@ -111,11 +113,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final User user;
       if (role != "Sales") {
         user = await SendbirdChat.connect(userId!);
-        print(user.userId);
       } else {
         user = await SendbirdChat.connect("sales");
       }
-      emit(AuthLoggedInState(UserCredentialEntity(), user));
+      emit(AuthLoggedInState(await _getUserCredentials.call(), user));
     });
 
     on<LogOut>((event, emit) async {

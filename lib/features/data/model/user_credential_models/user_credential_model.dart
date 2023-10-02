@@ -29,4 +29,15 @@ class UserCredentialModel extends UserCredentialEntity {
       uid: userCredential.user!.uid,
     );
   }
+
+  factory UserCredentialModel.fromUser(User userCredential) {
+    return UserCredentialModel(
+      displayName: userCredential.displayName,
+      email: userCredential.email,
+      emailVerified: userCredential.emailVerified,
+      phoneNumber: userCredential.phoneNumber,
+      photoUrl: userCredential.photoURL,
+      uid: userCredential.uid,
+    );
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:mytradeasia/features/data/data_sources/firebase/auth_user_firebase.dart';
 import 'package:mytradeasia/features/data/model/user_models/user_model.dart';
+import 'package:mytradeasia/features/domain/entities/user_entities/user_credential_entity.dart';
 import 'package:mytradeasia/features/domain/entities/user_entities/user_entity.dart';
 import 'package:mytradeasia/features/domain/repository/user_repository.dart';
 
@@ -69,5 +70,15 @@ class UserRepositoryImpl implements UserRepository {
   @override
   void logoutUser() {
     _authUserFirebase.postLogoutUser();
+  }
+
+  @override
+  Future<UserCredentialEntity> getUserCredentials() {
+    return _authUserFirebase.getUserCredentials();
+  }
+
+  @override
+  Future<String> updateProfile(Map<String, dynamic> data) {
+    return _authUserFirebase.updateProfile(data);
   }
 }

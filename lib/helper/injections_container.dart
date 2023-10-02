@@ -60,11 +60,13 @@ import 'package:mytradeasia/features/domain/usecases/top_product_usecases/get_to
 import 'package:mytradeasia/features/domain/usecases/user_usecases/add_recently_seen.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_current_userid.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_recently_seen.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_credentials.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_data.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/logout.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/update_profile.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
@@ -160,6 +162,9 @@ Future<void> initializeDependencies() async {
   injections.registerSingleton<DeleteCartItem>(DeleteCartItem(injections()));
   injections.registerSingleton<UpdateCart>(UpdateCart(injections()));
   injections.registerSingleton<LogOutUser>(LogOutUser(injections()));
+  injections
+      .registerSingleton<GetUserCredentials>(GetUserCredentials(injections()));
+  injections.registerSingleton<UpdateProfile>(UpdateProfile(injections()));
   injections.registerSingleton<GetChannels>(GetChannels(injections()));
 
   //Bloc

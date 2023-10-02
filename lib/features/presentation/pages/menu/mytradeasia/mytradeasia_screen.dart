@@ -6,9 +6,9 @@ import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_event.dart';
+import 'package:mytradeasia/features/presentation/widgets/dialog_sheet_widget.dart';
+import 'package:mytradeasia/features/presentation/widgets/mytradeasia_widget.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
-import 'package:mytradeasia/old_file_tobedeleted/widget/dialog_sheet_widget.dart';
-import 'package:mytradeasia/old_file_tobedeleted/widget/mytradeasia_widget.dart';
 
 class MyTradeAsiaScreen extends StatefulWidget {
   const MyTradeAsiaScreen({super.key});
@@ -105,15 +105,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 urlIcon: "assets/images/icon_profile.png",
                                 onPressedFunction: () {
                                   context.go("/mytradeasia/personal_data");
-
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) {
-                                  //       return const PersonalDataScreen();
-                                  //     },
-                                  //   ),
-                                  // );
                                 }),
 
                             // change password menu
@@ -122,14 +113,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 urlIcon: "assets/images/icon_password.png",
                                 onPressedFunction: () {
                                   context.go("/mytradeasia/change_password");
-
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         const ChangePasswordScreen(),
-                                  //   ),
-                                  // );
                                 }),
 
                             // settings menu
@@ -137,14 +120,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               nama: "Settings",
                               urlIcon: "assets/images/icon_setting.png",
                               onPressedFunction: () =>
-                                  context.go("/mytradeasia/settings")
-                              // Navigator.push(
-                              // context,
-                              // MaterialPageRoute(
-                              //   builder: (context) =>
-                              //       const SettingsScreen(),
-                              // ))
-                              ,
+                                  context.go("/mytradeasia/settings"),
                             ),
 
                             // language menu
@@ -153,12 +129,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                 urlIcon: "assets/images/icon_language.png",
                                 onPressedFunction: () {
                                   context.go("/mytradeasia/language");
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           const LanguageAppsScreen(),
-                                  //     ));
                                 }),
 
                             // my cart menu
@@ -169,12 +139,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                     urlIcon: "assets/images/icon_mycart.png",
                                     onPressedFunction: () {
                                       context.push("/mytradeasia/cart");
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //       builder: (context) =>
-                                      //           const CartScreen(),
-                                      //     ));
                                     }),
 
                             // quotations menu
@@ -187,20 +151,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                   } else {
                                     context.go("/mytradeasia/quotations");
                                   }
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) {
-                                  //       if (streamSnapshot.data?.docs[0]
-                                  //               ['role'] ==
-                                  //           "Sales") {
-                                  //         return const SalesQuotationsScreen();
-                                  //       } else {
-                                  //         return const QuotationsScreen();
-                                  //       }
-                                  //     },
-                                  //   ),
-                                  // );
                                 }),
 
                             // contact us menu
@@ -209,14 +159,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               urlIcon: "assets/images/icon_cs.png",
                               onPressedFunction: () {
                                 context.go("/mytradeasia/contact_us");
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) {
-                                //       return const ContactUsScreen();
-                                //     },
-                                //   ),
-                                // );
                               },
                             ),
 
@@ -226,15 +168,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                               urlIcon: "assets/images/icon_faq.png",
                               onPressedFunction: () {
                                 context.go("/mytradeasia/faq");
-
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) {
-                                //       return const FaqScreen();
-                                //     },
-                                //   ),
-                                // );
                               },
                             ),
 
@@ -247,7 +180,7 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          right: size20px * 0.75),
+                                          right: size20px * 0.75, left: 10),
                                       child: Image.asset(
                                         "assets/images/icon_version.png",
                                         width: size20px * 2,
@@ -311,13 +244,6 @@ class _MyTradeAsiaScreenState extends State<MyTradeAsiaScreen> {
 
                                               /* With go_route */
                                               context.go("/auth");
-
-                                              // Navigator.pushAndRemoveUntil(
-                                              //     context, MaterialPageRoute(
-                                              //   builder: (context) {
-                                              //     return const RoleUserScreen();
-                                              //   },
-                                              // ), (route) => false);
                                             });
                                       },
                                     );
