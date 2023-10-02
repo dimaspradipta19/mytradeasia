@@ -14,6 +14,7 @@ class UserRepositoryImpl implements UserRepository {
     UserModel userData = UserModel(
       companyName: s.companyName,
       country: s.country,
+      countryCode: s.countryCode,
       email: s.email,
       firstName: s.firstName,
       lastName: s.lastName,

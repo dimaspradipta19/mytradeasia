@@ -110,21 +110,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: CountryCodePicker(
-                                onChanged: (element) =>
-                                    countryNum = element.dialCode.toString(),
-                                // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                                initialSelection: 'ID',
-                                favorite: const ['ID', 'UK'],
-                                // optional. Shows only country name and flag
-                                showCountryOnly: false,
-                                showFlag: true,
-                                hideMainText: true,
-                                // optional. Shows only country name and flag when popup is closed.
-                                showOnlyCountryWhenClosed: false,
-                                // optional. aligns the flag and the Text left
-                                // alignLeft: false,
-                                padding: EdgeInsets.zero,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: greyColor3),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                child: CountryCodePicker(
+                                  onChanged: (element) =>
+                                      countryNum = element.dialCode.toString(),
+                                  // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                                  initialSelection: 'ID',
+                                  favorite: const ['ID', 'UK'],
+                                  // optional. Shows only country name and flag
+                                  showCountryOnly: false,
+                                  showFlag: true,
+                                  hideMainText: true,
+                                  // optional. Shows only country name and flag when popup is closed.
+                                  showOnlyCountryWhenClosed: false,
+                                  // optional. aligns the flag and the Text left
+                                  // alignLeft: false,
+                                  padding: EdgeInsets.only(left: 5),
+                                ),
                               ),
                               // InkWell(
                               //   onTap: () => Navigator.push(

@@ -1,8 +1,8 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/update_profile.dart';
@@ -27,20 +27,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String countryNum = '+62';
+  Map<String, dynamic> user = {};
+
+  XFile? _imageFile;
+  ImageProvider? _imagePicked;
+  final ImagePicker _picker = ImagePicker();
 
   final GetUserSnapshot _getUserSnapshot = injections<GetUserSnapshot>();
   final UpdateProfile _updateProfile = injections<UpdateProfile>();
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  // final DocumentReference docRef = FirebaseFirestore.instance
-  //     .collection('biodata')
-  //     .doc(FirebaseAuth.instance.currentUser!.uid.toString());
-
-  // Future<bool> checkIfDocumentExists() async {
-  //   final DocumentSnapshot snapshot =
-  //       await _firestore.doc(_auth.currentUser!.uid.toString()).get();
-  //   return snapshot.exists;
-  // }
 
   @override
   void dispose() {
@@ -50,6 +45,116 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     _companyNameController.dispose();
     _emailController.dispose();
     super.dispose();
+  }
+
+  void _updateMyProfile(String uid, Map<String, dynamic> user) {
+    if (_firstNameController.text != "" ||
+        _lastNameController.text != "" ||
+        _companyNameController.text != "" ||
+        _phoneNumberController.text != "") {
+      Map<String, dynamic> data = {
+        'firstName': _firstNameController.text != ""
+            ? _firstNameController.text
+            : user["firstName"],
+        'lastName': _lastNameController.text != ""
+            ? _lastNameController.text
+            : user["lastName"],
+        'companyName': _companyNameController.text != ""
+            ? _companyNameController.text
+            : user["company"],
+        'phone': _phoneNumberController.text != ""
+            ? countryNum + _phoneNumberController.text
+            : user["phone"],
+        'uid': uid,
+      };
+
+      _updateProfile.call(param: data).then((value) {
+        if (value == "success") {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return DialogWidget(
+                  urlIcon: "assets/images/logo_email_change.png",
+                  title: "Personal Data has been Change",
+                  subtitle:
+                      "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                  textForButton: "Back to My Tradeasia",
+                  navigatorFunction: () {
+                    /* With go_route */
+                    context.go("/home");
+                    context.pop();
+                  });
+            },
+          );
+        }
+        if (value == "error") {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return DialogWidget(
+                  urlIcon: "assets/images/logo_email_change.png",
+                  title: "Error",
+                  subtitle: "Something went wrong",
+                  textForButton: "Back to My Tradeasia",
+                  navigatorFunction: () {
+                    /* With go_route */
+                    context.go("/home");
+                    context.pop();
+                  });
+            },
+          );
+        }
+      });
+    }
+  }
+
+  void _takeImage() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: 150,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(children: [
+                InkWell(
+                  onTap: () async {
+                    _imageFile =
+                        await _picker.pickImage(source: ImageSource.camera);
+                    setState(() {});
+                  },
+                  child: SizedBox(
+                    height: 50,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.photo_camera),
+                        Text(' Take picture from Camera '),
+                      ],
+                    ),
+                  ),
+                ),
+                const Divider(),
+                InkWell(
+                  onTap: () async {
+                    _imageFile =
+                        await _picker.pickImage(source: ImageSource.gallery);
+                    // print(_imageFile);
+                    setState(() {});
+                  },
+                  child: SizedBox(
+                    height: 50,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.photo_library),
+                        Text(' Browse from gallery '),
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+          );
+        });
   }
 
   @override
@@ -89,9 +194,29 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     child: Center(
                       child: Stack(
                         children: [
-                          Image.asset(
-                            "assets/images/profile_picture.png",
-                            width: size20px * 3.6,
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: greyColor3),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                            padding: EdgeInsets.all(2),
+                            child: Image.asset(
+                              "assets/images/profile_picture.png",
+                              width: size20px * 3.6,
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                onTap: () {
+                                  _takeImage();
+                                },
+                              ),
+                            ),
                           ),
                           Positioned(
                             bottom: 0,
@@ -117,6 +242,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     stream: _getUserSnapshot.call(),
                     builder: (context, AsyncSnapshot streamSnapshot) {
                       if (streamSnapshot.hasData) {
+                        user = {
+                          "firstName": streamSnapshot.data["firstName"],
+                          "lastName": streamSnapshot.data["lastName"],
+                          "phone": streamSnapshot.data["phone"],
+                          "company": streamSnapshot.data["companyName"],
+                        };
                         return Form(
                           key: _formKey,
                           child: Column(
@@ -198,13 +329,23 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                               ),
                                               border: Border.all(
                                                   color: greyColor3)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(
-                                                size20px / 2),
-                                            child: Image.asset(
-                                              "assets/images/logo_indonesia.png",
-                                              width: size20px,
-                                            ),
+                                          child: CountryCodePicker(
+                                            onChanged: (element) => countryNum =
+                                                element.dialCode.toString(),
+                                            // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                                            initialSelection: streamSnapshot
+                                                    .data["countryCode"] ??
+                                                "ID",
+                                            favorite: const ['ID', 'UK'],
+                                            // optional. Shows only country name and flag
+                                            showCountryOnly: false,
+                                            showFlag: true,
+                                            hideMainText: true,
+                                            // optional. Shows only country name and flag when popup is closed.
+                                            showOnlyCountryWhenClosed: false,
+                                            // optional. aligns the flag and the Text left
+                                            // alignLeft: false,
+                                            padding: EdgeInsets.only(left: 5),
                                           ),
                                         ),
                                       ),
@@ -215,41 +356,36 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                                             width: size20px * 8.0,
                                             height: size20px + 30,
                                             child: TextFormField(
-                                                readOnly: true,
-                                                keyboardType: TextInputType
-                                                    .number,
+                                                readOnly: false,
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 controller:
                                                     _phoneNumberController,
                                                 decoration: InputDecoration(
-                                                    hintText: "Phone Number",
-                                                    hintStyle: body1Regular
-                                                        .copyWith(
+                                                    hintText: streamSnapshot
+                                                        .data["phone"]
+                                                        .toString()
+                                                        .substring(2),
+                                                    hintStyle:
+                                                        body1Regular.copyWith(
                                                             color: greyColor),
                                                     contentPadding:
-                                                        const EdgeInsets
-                                                                .symmetric(
+                                                        const EdgeInsets.symmetric(
                                                             horizontal: 20.0),
                                                     enabledBorder:
-                                                        const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color:
-                                                                        greyColor3),
-                                                            borderRadius:
-                                                                BorderRadius.all(
-                                                                    Radius.circular(
-                                                                        7.0))),
-                                                    focusedBorder:
                                                         const OutlineInputBorder(
                                                             borderSide: BorderSide(
                                                                 color:
                                                                     greyColor3),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                  7.0),
-                                                            ))))),
+                                                                BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        7.0))),
+                                                    focusedBorder: const OutlineInputBorder(
+                                                        borderSide: BorderSide(color: greyColor3),
+                                                        borderRadius: BorderRadius.all(
+                                                          Radius.circular(7.0),
+                                                        ))))),
                                       ),
                                     ],
                                   ),
@@ -342,154 +478,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    Map<String, dynamic> data = {
-                      'firstName': _firstNameController.text,
-                      'lastName': _lastNameController.text,
-                      'companyName': _companyNameController.text,
-                      // 'country': _countryController.text,
-                      // 'password': _passwordController.text,
-                      'uid': state.user!.uid,
-                    };
-
-                    _updateProfile.call(param: data).then((value) {
-                      if (value == "success") {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return DialogWidget(
-                                urlIcon: "assets/images/logo_email_change.png",
-                                title: "Personal Data has been Change",
-                                subtitle:
-                                    "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                                textForButton: "Back to My Tradeasia",
-                                navigatorFunction: () {
-                                  /* With go_route */
-                                  context.go("/home");
-                                  context.pop();
-                                });
-                          },
-                        );
-                      }
-                      if (value == "error") {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return DialogWidget(
-                                urlIcon: "assets/images/logo_email_change.png",
-                                title: "Error",
-                                subtitle: "Something went wrong",
-                                textForButton: "Back to My Tradeasia",
-                                navigatorFunction: () {
-                                  /* With go_route */
-                                  context.go("/home");
-                                  context.pop();
-                                });
-                          },
-                        );
-                      }
-                    });
-
-                    // docRef.get().then((docSnapshot) async {
-                    //   if (docSnapshot.exists) {
-                    //     // Document exists, update its fields
-                    //     docRef
-                    //         .update({
-                    //           'firstName': _firstNameController.text,
-                    //           'lastName': _lastNameController.text,
-                    //           'companyName': _companyNameController.text,
-                    //         })
-                    //         .then((value) => showDialog(
-                    //               context: context,
-                    //               builder: (context) {
-                    //                 return DialogWidget(
-                    //                     urlIcon:
-                    //                         "assets/images/logo_email_change.png",
-                    //                     title: "Personal Data has been Change",
-                    //                     subtitle:
-                    //                         "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                    //                     textForButton: "Back to My Tradeasia",
-                    //                     navigatorFunction: () =>
-                    //                         /* With go_route */
-                    //                         context.go("/home")
-                    //                     // Navigator.pushAndRemoveUntil(context,
-                    //                     //     MaterialPageRoute(
-                    //                     //   builder: (context) {
-                    //                     //     return const NavigationBarWidget();
-                    //                     //   },
-                    //                     // ), (route) => false)
-                    //                     );
-                    //               },
-                    //             ))
-                    //         .catchError((error) => showDialog(
-                    //               context: context,
-                    //               builder: (context) {
-                    //                 return DialogWidget(
-                    //                     urlIcon:
-                    //                         "assets/images/logo_email_change.png",
-                    //                     title: "Error",
-                    //                     subtitle: "Something went wrong",
-                    //                     textForButton: "Back to My Tradeasia",
-                    //                     navigatorFunction: () =>
-                    //                         /* With go_route */
-                    //                         context.go("/home")
-                    //                     // Navigator.pushAndRemoveUntil(context,
-                    //                     //     MaterialPageRoute(
-                    //                     //   builder: (context) {
-                    //                     //     return const NavigationBarWidget();
-                    //                     //   },
-                    //                     // ), (route) => false)
-                    //                     );
-                    //               },
-                    //             ));
-                    //   } else {
-                    //     // Document does not exist, create it with the given data
-                    //     Map<String, dynamic> data = {
-                    //       'firstName': _firstNameController.text,
-                    //       'lastName': _lastNameController.text,
-                    //       'companyName': _companyNameController.text,
-                    //       // 'country': _countryController.text,
-                    //       // 'password': _passwordController.text,
-                    //       'uid': state.user!.uid,
-                    //     };
-
-                    //     await docRef
-                    //         .set(data)
-                    //         .then((value) => showDialog(
-                    //               context: context,
-                    //               builder: (context) {
-                    //                 return DialogWidget(
-                    //                     urlIcon:
-                    //                         "assets/images/logo_email_change.png",
-                    //                     title:
-                    //                         "Personal Data has been Submitted",
-                    //                     subtitle:
-                    //                         "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                    //                     textForButton: "Back to My Tradeasia",
-                    //                     navigatorFunction: () =>
-                    //                         /* With go_route */
-                    //                         context.go("/home"));
-                    //               },
-                    //             ))
-                    //         .catchError((error) => showDialog(
-                    //               context: context,
-                    //               builder: (context) {
-                    //                 return DialogWidget(
-                    //                     urlIcon:
-                    //                         "assets/images/logo_email_change.png",
-                    //                     title:
-                    //                         "Cannot update your personal Data",
-                    //                     subtitle:
-                    //                         "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                    //                     textForButton: "Back to My Tradeasia",
-                    //                     navigatorFunction: () =>
-                    //                         /* With go_route */
-                    //                         context.go("/home"));
-                    //               },
-                    //             ));
-                    //   }
-                    // });
-                  }
+                  _updateMyProfile(state.user!.uid!, user);
                 },
                 child: Text(
                   "Edit Personal Data",

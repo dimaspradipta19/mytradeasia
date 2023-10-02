@@ -52,6 +52,7 @@ class AuthUserFirebase {
         response = await docRef.update({
           'firstName': data["firstName"],
           'lastName': data["lastName"],
+          'phone': data["phone"],
           'companyName': data["companyName"],
         }).then((_) {
           return "success";

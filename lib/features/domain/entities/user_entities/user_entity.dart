@@ -6,6 +6,7 @@ class UserEntity extends Equatable {
   final String? role;
   final String? companyName;
   final String? country;
+  final String? countryCode;
   final String? firstName;
   final String? lastName;
   final String? phone;
@@ -16,6 +17,7 @@ class UserEntity extends Equatable {
     this.role,
     this.companyName,
     this.country,
+    this.countryCode,
     this.firstName,
     this.lastName,
     this.phone,
@@ -29,6 +31,7 @@ class UserEntity extends Equatable {
       role,
       companyName,
       country,
+      countryCode,
       firstName,
       lastName,
       phone,

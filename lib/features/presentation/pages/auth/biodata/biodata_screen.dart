@@ -278,6 +278,7 @@ class _BiodataScreenState extends State<BiodataScreen> {
                                 showPhoneCode: false,
                                 onSelect: (Country country) {
                                   // countryName = country.displayName;
+                                  print(country.countryCode);
                                   _countryController.text = country.name;
                                 },
                                 // Optional. Sets the theme for the country list picker.

@@ -8,6 +8,7 @@ class UserModel extends UserEntity {
     String? role,
     String? companyName,
     String? country,
+    String? countryCode,
     String? firstName,
     String? lastName,
     String? phone,
@@ -17,6 +18,7 @@ class UserModel extends UserEntity {
           role: role,
           companyName: companyName,
           country: country,
+          countryCode: countryCode,
           firstName: firstName,
           lastName: lastName,
           phone: phone,
@@ -27,6 +29,7 @@ class UserModel extends UserEntity {
       'role': role,
       'companyName': companyName,
       'country': country,
+      'countryCode': countryCode,
       'firstName': firstName,
       'lastName': lastName,
       'phone': phone,
@@ -43,6 +46,9 @@ class UserModel extends UserEntity {
           : "",
       country: documentSnapshot.data().toString().contains('country')
           ? documentSnapshot.get('country')
+          : "",
+      countryCode: documentSnapshot.data().toString().contains('countryCode')
+          ? documentSnapshot.get('countryCode')
           : "",
       firstName: documentSnapshot.data().toString().contains('firstName')
           ? documentSnapshot.get('firstName')
