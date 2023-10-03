@@ -151,7 +151,8 @@ class _MessageScreenState extends State<MessageScreen> {
                                   MessageDetailParameter(
                                       otherUserId: otherUser,
                                       currentUserId: _currentUser,
-                                      chatId: chatId.toString());
+                                      chatId: chatId.toString(),
+                                      channelUrl: '');
 
                               context.goNamed("message", extra: param);
                               // Navigator.push(

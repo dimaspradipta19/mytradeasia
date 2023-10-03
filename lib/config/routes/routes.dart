@@ -118,7 +118,8 @@ class Routes {
                       return MessagesDetailScreen(
                           otherUserId: param.otherUserId,
                           currentUserId: param.currentUserId,
-                          chatId: param.chatId);
+                          chatId: param.chatId,
+                          channelUrl: param.channelUrl);
                     })
               ]),
           GoRoute(

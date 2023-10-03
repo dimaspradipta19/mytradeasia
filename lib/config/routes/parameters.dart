@@ -24,10 +24,12 @@ class MessageDetailParameter {
   String otherUserId;
   String currentUserId;
   String chatId;
+  String channelUrl;
   MessageDetailParameter(
       {required this.otherUserId,
       required this.currentUserId,
-      required this.chatId});
+      required this.chatId,
+      required this.channelUrl});
 }
 
 class BiodataParameter {
