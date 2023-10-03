@@ -39,6 +39,9 @@ class _MessageScreenState extends State<MessageScreen> {
   // LIST<MEMBER> Length is EXACTLY 2
   String lookForOtherUser(
       {required String currentUserId, required List<Member> listMember}) {
+    if (listMember.length != 2) {
+      return "Invalid channel";
+    }
     return listMember
         .firstWhere((element) => element.userId != currentUserId)
         .userId;
@@ -120,120 +123,132 @@ class _MessageScreenState extends State<MessageScreen> {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is ChannelListDoneState) {
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount:
-                          state.channels == null ? 0 : state.channels!.length,
-                      itemBuilder: (context, index) {
-                        log("COUNT : ${state.channels == null ? 0 : state.channels!.length}");
-                        return InkWell(
-                          onTap: () {
-                            /* With go_router */
-                            // MessageDetailParameter param =
-                            // MessageDetailParameter(
-                            //     otherUserId: otherUser,
-                            //     currentUserId: _currentUser,
-                            //     chatId: chatId.toString());
-                            //
-                            // context.goNamed("message", extra: param);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) {
-                            //       return MessagesDetailScreen(
-                            //         otherUserId: otherUser,
-                            //         currentUserId: _currentUser,
-                            //         chatId: chatId.toString(),
-                            //       );
-                            //     },
-                            //   ),
-                            // );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                    log("CHANNELS : ${state.channels}");
+                    if (state.channels == null || state.channels!.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "No conversation yet",
+                          style: text18,
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount:
+                            state.channels == null ? 0 : state.channels!.length,
+                        itemBuilder: (context, index) {
+                          log("COUNT : ${state.channels == null ? 0 : state.channels!.length}");
+                          return InkWell(
+                            onTap: () {
+                              /* With go_router */
+                              // MessageDetailParameter param =
+                              // MessageDetailParameter(
+                              //     otherUserId: otherUser,
+                              //     currentUserId: _currentUser,
+                              //     chatId: chatId.toString());
+                              //
+                              // context.goNamed("message", extra: param);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return MessagesDetailScreen(
+                              //         otherUserId: otherUser,
+                              //         currentUserId: _currentUser,
+                              //         chatId: chatId.toString(),
+                              //       );
+                              //     },
+                              //   ),
+                              // );
+                            },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 7.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(size20px * 5)),
-                                    child: Image.asset(
-                                      "assets/images/profile_picture.png",
-                                      height: size20px + 34.0,
-                                      width: size20px + 34.0,
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 7.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(size20px * 5)),
+                                      child: Image.asset(
+                                        "assets/images/profile_picture.png",
+                                        height: size20px + 34.0,
+                                        width: size20px + 34.0,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: size20px),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                // ASSUMPTIONS : ONLY 2 Member inside the Group Channel
-                                                lookForOtherUser(
-                                                    currentUserId: _currentUser,
-                                                    listMember: state
-                                                        .channels![index]
-                                                        .members),
-                                                style: heading3.copyWith(
-                                                  color: blackColor,
+                                    const SizedBox(width: size20px),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  // ASSUMPTIONS : ONLY 2 Member inside the Group Channel
+                                                  lookForOtherUser(
+                                                      currentUserId:
+                                                          _currentUser,
+                                                      listMember: state
+                                                          .channels![index]
+                                                          .members),
+                                                  style: heading3.copyWith(
+                                                    color: blackColor,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: size20px / 4),
+                                            ],
+                                          ),
+                                          const SizedBox(height: size20px / 4),
+                                          Text(
+                                            state.channels![index].lastMessage
+                                                    ?.message ??
+                                                "",
+                                            style: text10.copyWith(
+                                                color: greyColor2),
+                                            maxLines: 2,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: size20px),
+                                    Column(
+                                      children: [
                                         Text(
-                                          state.channels![index].lastMessage
-                                                  ?.message ??
-                                              "",
+                                          "Sales",
                                           style: text10.copyWith(
                                               color: greyColor2),
-                                          maxLines: 2,
                                         ),
+                                        const SizedBox(height: size20px / 4),
+                                        CircleAvatar(
+                                          maxRadius: 12,
+                                          backgroundColor: secondaryColor1,
+                                          child: Text(
+                                            state.channels![index]
+                                                .unreadMessageCount
+                                                .toString(),
+                                            style: body1Regular.copyWith(
+                                                color: whiteColor),
+                                          ),
+                                        )
                                       ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: size20px),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Sales",
-                                        style:
-                                            text10.copyWith(color: greyColor2),
-                                      ),
-                                      const SizedBox(height: size20px / 4),
-                                      CircleAvatar(
-                                        maxRadius: 12,
-                                        backgroundColor: secondaryColor1,
-                                        child: Text(
-                                          state.channels![index]
-                                              .unreadMessageCount
-                                              .toString(),
-                                          style: body1Regular.copyWith(
-                                              color: whiteColor),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
+                          );
+                        },
+                      );
+                    }
                   } else {
                     return Center(
                       child: Text("Error : ${state.error}"),
