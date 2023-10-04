@@ -25,6 +25,7 @@ class MessagesDetailScreen extends StatefulWidget {
 
 class MessagesDetailScreenState extends State<MessagesDetailScreen> {
   final TextEditingController _message = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   MessageCollection? collection;
   String title = '';
@@ -102,15 +103,15 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
       index = 0;
     }
 
-    // while (!itemScrollController.isAttached) {
-    //   await Future.delayed(const Duration(milliseconds: 1));
-    // }
+    while (!_scrollController.hasClients) {
+      await Future.delayed(const Duration(milliseconds: 1));
+    }
 
-    // itemScrollController.scrollTo(
-    //   index: index,
-    //   duration: const Duration(milliseconds: 200),
-    //   curve: Curves.fastOutSlowIn,
-    // );
+    _scrollController.animateTo(
+      index.toDouble(),
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   @override
@@ -179,7 +180,7 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
           child: Column(
             children: [
               Expanded(
-                child: _list(widget.currentUserId, "sales"),
+                child: _list(widget.currentUserId, "sales", _scrollController),
                 // StreamBuilder(
                 //     stream: messagesCollection
                 //         .doc(
@@ -323,24 +324,28 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
         });
   }
 
-  Widget _list(String userId, String salesId) {
+  Widget _list(
+      String userId, String salesId, ScrollController scrollController) {
     return Scrollbar(
+      // controller: scrollController,
+      controller: scrollController,
       thumbVisibility: true,
       child: ListView.builder(
+        controller: scrollController,
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
-        itemCount: messageList.length,
+        itemCount: 1 + messageList.length,
         itemBuilder: (context, index) {
-          BaseMessage message = messageList[index];
+          if (index == 0) {
+            return const SalesBubleChat(
+                isFirstMessage: true, message: "Hello how can i help you?");
+          }
+          BaseMessage message = messageList[index - 1];
           if (message.sender?.userId != userId) {
             return SalesBubleChat(
                 isFirstMessage: false, message: message.message);
           }
           return UserBubleChat(message: message.message);
-          // print(message.sender);
-          // message.sender?.userId == userId
-          //     ? UserBubleChat(message: message.message)
-          //     : SalesBubleChat(isFirstMessage: true, message: message.message);
         },
       ),
     );
