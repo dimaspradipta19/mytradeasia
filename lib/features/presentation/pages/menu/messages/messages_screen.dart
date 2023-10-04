@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,6 +51,12 @@ class _MessageScreenState extends State<MessageScreen> {
   void initState() {
     BlocProvider.of<ChannelListBloc>(context).add(const GetChannelList());
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<ChannelListBloc>(context).add(const GetChannelList());
+    super.didChangeDependencies();
   }
 
   @override
@@ -252,17 +256,24 @@ class _MessageScreenState extends State<MessageScreen> {
                                             ),
                                             const SizedBox(
                                                 height: size20px / 4),
-                                            CircleAvatar(
-                                              maxRadius: 12,
-                                              backgroundColor: secondaryColor1,
-                                              child: Text(
-                                                state.channels![index]
-                                                    .unreadMessageCount
-                                                    .toString(),
-                                                style: body1Regular.copyWith(
-                                                    color: whiteColor),
-                                              ),
-                                            )
+                                            state.channels![index]
+                                                        .unreadMessageCount !=
+                                                    0
+                                                ? CircleAvatar(
+                                                    maxRadius: 12,
+                                                    backgroundColor:
+                                                        secondaryColor1,
+                                                    child: Text(
+                                                      state.channels![index]
+                                                          .unreadMessageCount
+                                                          .toString(),
+                                                      style:
+                                                          body1Regular.copyWith(
+                                                              color:
+                                                                  whiteColor),
+                                                    ),
+                                                  )
+                                                : Container()
                                           ],
                                         )
                                       ],
