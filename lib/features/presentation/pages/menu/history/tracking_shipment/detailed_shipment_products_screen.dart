@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_state.dart';
@@ -28,7 +29,7 @@ class _DetailedShipmentProductsScreenState
       "Vessel",
       "POL",
       "POD",
-      "COntainer Qty",
+      "Container Qty",
     ],
     [
       "6890524180",
@@ -197,7 +198,10 @@ class _DetailedShipmentProductsScreenState
                             const EdgeInsets.symmetric(horizontal: size20px),
                         child: Column(
                           children: [
-                            Image.asset("assets/images/dummy_map.png"),
+                            InkWell(
+                              child: Image.asset("assets/images/dummy_map.png"),
+                              onTap: () => context.goNamed("map"),
+                            ),
                             const SizedBox(height: size20px),
                             ListView.builder(
                               shrinkWrap: true,

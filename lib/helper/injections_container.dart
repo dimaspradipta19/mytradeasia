@@ -10,6 +10,7 @@ import 'package:mytradeasia/features/data/data_sources/remote/rfq_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/sales_force_data_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/sales_force_detail_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/sales_force_login_service.dart';
+import 'package:mytradeasia/features/data/data_sources/remote/searates_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/search_product_service.dart';
 import 'package:mytradeasia/features/data/data_sources/remote/top_products_service.dart';
 import 'package:mytradeasia/features/data/data_sources/sendbird/sendbird_services.dart';
@@ -24,6 +25,7 @@ import 'package:mytradeasia/features/data/repository/rfq_repository_impl.dart';
 import 'package:mytradeasia/features/data/repository/sales_force_data_repository.dart';
 import 'package:mytradeasia/features/data/repository/sales_force_detail_repository.dart';
 import 'package:mytradeasia/features/data/repository/sales_force_login_repository.dart';
+import 'package:mytradeasia/features/data/repository/searates_route_repository_impl.dart';
 import 'package:mytradeasia/features/data/repository/search_product_repository.dart';
 import 'package:mytradeasia/features/data/repository/top_product_repository.dart';
 import 'package:mytradeasia/features/data/repository/user_repository_impl.dart';
@@ -32,6 +34,7 @@ import 'package:mytradeasia/features/domain/repository/detail_product_repository
 import 'package:mytradeasia/features/domain/repository/dhl_shipment_repository.dart';
 import 'package:mytradeasia/features/domain/repository/faq_repository.dart';
 import 'package:mytradeasia/features/domain/repository/industry_repository.dart';
+import 'package:mytradeasia/features/domain/repository/searates_repository.dart';
 import 'package:mytradeasia/features/domain/repository/sendbird_repository.dart';
 import 'package:mytradeasia/features/domain/repository/list_product_repository.dart';
 import 'package:mytradeasia/features/domain/repository/rfq_repository.dart';
@@ -49,6 +52,7 @@ import 'package:mytradeasia/features/domain/usecases/detail_product_usecases/get
 import 'package:mytradeasia/features/domain/usecases/dhl_shipment_usecases/get_dhl_shipment.dart';
 import 'package:mytradeasia/features/domain/usecases/faq_usecases/get_faq_data.dart';
 import 'package:mytradeasia/features/domain/usecases/industry_usecases/get_industry.dart';
+import 'package:mytradeasia/features/domain/usecases/searates_usecases/get_searates_route.dart';
 import 'package:mytradeasia/features/domain/usecases/sendbird_usecases/get_channels.dart';
 import 'package:mytradeasia/features/domain/usecases/list_product_usecases/get_list_product.dart';
 import 'package:mytradeasia/features/domain/usecases/rfq_usecases/submit_rfq.dart';
@@ -79,6 +83,7 @@ import 'package:mytradeasia/features/presentation/state_management/product_bloc/
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_data/salesforce_data_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_detail/salesforce_detail_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/salesforce_bloc/salesforce_login/salesforce_login_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/top_products_bloc/top_products_bloc.dart';
 
 final injections = GetIt.instance;
@@ -101,6 +106,7 @@ Future<void> initializeDependencies() async {
   injections.registerSingleton<RfqService>(RfqService());
   injections.registerSingleton<CartFirebase>(CartFirebase());
   injections.registerSingleton<SendbirdServices>(SendbirdServices());
+  injections.registerSingleton<SearatesService>(SearatesService());
 
   //Repositories Dependencies
   injections.registerSingleton<DetailProductRepository>(
@@ -129,6 +135,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<CartRepository>(CartRepositoryImpl(injections()));
   injections.registerSingleton<SendbirdRepository>(
       SendbirdRepositoryImpl(injections()));
+  injections.registerSingleton<SearatesRepository>(
+      SearatesRouteRepositoryImpl(injections()));
 
   //UseCases Dependencies
   injections
@@ -166,6 +174,8 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetUserCredentials>(GetUserCredentials(injections()));
   injections.registerSingleton<UpdateProfile>(UpdateProfile(injections()));
   injections.registerSingleton<GetChannels>(GetChannels(injections()));
+  injections
+      .registerSingleton<GetSearatesRoute>(GetSearatesRoute(injections()));
 
   //Bloc
   injections
@@ -193,4 +203,6 @@ Future<void> initializeDependencies() async {
       () => CartBloc(injections(), injections(), injections(), injections()));
   injections
       .registerFactory<ChannelListBloc>(() => ChannelListBloc(injections()));
+  injections.registerFactory<SearatesRouteBloc>(
+      () => SearatesRouteBloc(injections()));
 }

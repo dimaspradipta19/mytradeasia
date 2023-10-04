@@ -5,12 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_state.dart';
-import '../config/themes/theme.dart';
 
-class ShipGoScreen extends StatelessWidget {
-  ShipGoScreen({super.key});
+import '../../../../../../config/themes/theme.dart';
 
+class TrackingShipmentMapScreen extends StatefulWidget {
+  const TrackingShipmentMapScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TrackingShipmentMapScreen> createState() =>
+      _TrackingShipmentMapScreenState();
+}
+
+class _TrackingShipmentMapScreenState extends State<TrackingShipmentMapScreen> {
   final double latitude = 777.9;
   final double longitude = 777.9;
 
@@ -52,6 +60,13 @@ class ShipGoScreen extends StatelessWidget {
     [1.0607778, 103.9370553],
     [1.28967, 103.85007000000002]
   ];
+
+  @override
+  void initState() {
+    BlocProvider.of<SearatesRouteBloc>(context)
+        .add(GetRoute("COAU7885072330", "BL", "COSU"));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
