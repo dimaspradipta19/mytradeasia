@@ -4,6 +4,7 @@ import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/features/presentation/widgets/sales_bubble_chat_widget.dart';
 import 'package:mytradeasia/features/presentation/widgets/user_bubble_chat_widget.dart';
 import 'package:mytradeasia/old_file_tobedeleted/widget/text_editing_widget.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
 class MessagesDetailScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class MessagesDetailScreen extends StatefulWidget {
 
 class MessagesDetailScreenState extends State<MessagesDetailScreen> {
   final TextEditingController _message = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  final ItemScrollController _scrollController = ItemScrollController();
 
   MessageCollection? collection;
   String title = '';
@@ -103,12 +104,12 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
       index = 0;
     }
 
-    while (!_scrollController.hasClients) {
+    while (!_scrollController.isAttached) {
       await Future.delayed(const Duration(milliseconds: 1));
     }
 
-    _scrollController.animateTo(
-      index.toDouble(),
+    _scrollController.scrollTo(
+      index: index,
       duration: const Duration(milliseconds: 200),
       curve: Curves.fastOutSlowIn,
     );
@@ -325,29 +326,27 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
   }
 
   Widget _list(
-      String userId, String salesId, ScrollController scrollController) {
-    return Scrollbar(
-      // controller: scrollController,
-      controller: scrollController,
-      thumbVisibility: true,
-      child: ListView.builder(
-        controller: scrollController,
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: 1 + messageList.length,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return const SalesBubleChat(
-                isFirstMessage: true, message: "Hello how can i help you?");
-          }
-          BaseMessage message = messageList[index - 1];
-          if (message.sender?.userId != userId) {
-            return SalesBubleChat(
-                isFirstMessage: false, message: message.message);
-          }
-          return UserBubleChat(message: message.message);
-        },
-      ),
+      String userId, String salesId, ItemScrollController scrollController) {
+    return ScrollablePositionedList.builder(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemScrollController: _scrollController,
+      itemCount: 1 + messageList.length,
+      initialScrollIndex: (collection != null && collection!.params.reverse)
+          ? 0
+          : messageList.length,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return const SalesBubleChat(
+              isFirstMessage: true, message: "Hello how can i help you?");
+        }
+        BaseMessage message = messageList[index - 1];
+        if (message.sender?.userId != userId) {
+          return SalesBubleChat(
+              isFirstMessage: false, message: message.message);
+        }
+        return UserBubleChat(message: message.message);
+      },
     );
   }
 }
