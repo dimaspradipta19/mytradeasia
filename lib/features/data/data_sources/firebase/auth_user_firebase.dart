@@ -9,8 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthUserFirebase {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  var verificationId = '';
 
   Future<String> postRegisterUser(UserModel userData) async {
+    // await _auth.signInWithCredential(
+    //     PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode));
     try {
       await _auth.createUserWithEmailAndPassword(
           email: userData.email!, password: userData.password!);
@@ -124,5 +127,39 @@ class AuthUserFirebase {
     }
 
     return recentlySeenData;
+  }
+
+  Future<String> phoneAuthentication(String phoneNo) async {
+    var res = "";
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNo,
+      verificationCompleted: (credential) async {
+        await _auth.signInWithCredential(credential);
+        res = "verification-complete";
+      },
+      verificationFailed: (e) {
+        if (e.code == "invalid-phone-number") {
+          res = "invalid-phone-number";
+        } else {
+          res = "error";
+        }
+      },
+      codeSent: (verificationId, resendToken) {
+        this.verificationId = verificationId;
+      },
+      codeAutoRetrievalTimeout: (verificationId) {
+        this.verificationId = verificationId;
+      },
+    );
+    return res;
+  }
+
+  Future<bool> verifyOTP(String otp) async {
+    var credentials =
+        await _auth.signInWithCredential(PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: otp,
+    ));
+    return credentials.user != null ? true : false;
   }
 }

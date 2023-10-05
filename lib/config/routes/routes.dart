@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
+import 'package:mytradeasia/features/presentation/pages/auth/register/register_otp_screen.dart';
 import '../../features/presentation/pages/auth/biodata/biodata_screen.dart';
 import '../../features/presentation/pages/auth/choose_role/role_user_screen.dart';
 import '../../features/presentation/pages/auth/login/forgot_password/forgot_password_screen.dart';
@@ -267,6 +268,18 @@ class Routes {
               path: "register",
               builder: (context, state) => const RegisterScreen(),
               routes: [
+                GoRoute(
+                    path: "otp-register",
+                    builder: (context, state) {
+                      // BiodataParameter param = state.extra as BiodataParameter;
+                      OtpVerificationParameter param =
+                          state.extra as OtpVerificationParameter;
+
+                      return RegisterOtpScreen(
+                        phone: param.phone,
+                        email: param.email,
+                      );
+                    }),
                 GoRoute(
                     path: "biodata",
                     builder: (context, state) {

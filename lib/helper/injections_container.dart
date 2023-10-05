@@ -65,8 +65,10 @@ import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_data
 import 'package:mytradeasia/features/domain/usecases/user_usecases/get_user_snapshot.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/login.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/logout.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/phone_authentication.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/register.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/update_profile.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/verify_otp.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/cart_bloc/cart_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
@@ -166,6 +168,9 @@ Future<void> initializeDependencies() async {
       .registerSingleton<GetUserCredentials>(GetUserCredentials(injections()));
   injections.registerSingleton<UpdateProfile>(UpdateProfile(injections()));
   injections.registerSingleton<GetChannels>(GetChannels(injections()));
+  injections.registerSingleton<PhoneAuthentication>(
+      PhoneAuthentication(injections()));
+  injections.registerSingleton<VerifyOtp>(VerifyOtp(injections()));
 
   //Bloc
   injections

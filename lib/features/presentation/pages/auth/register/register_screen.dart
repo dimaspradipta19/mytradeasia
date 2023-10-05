@@ -1,6 +1,8 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/phone_authentication.dart';
+import 'package:mytradeasia/helper/injections_container.dart';
 import '../../../../../config/routes/parameters.dart';
 import '../../../../../config/themes/theme.dart';
 
@@ -17,6 +19,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final PhoneAuthentication _phoneAuthentication =
+      injections<PhoneAuthentication>();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -258,49 +263,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             onPressed: () async {
-                              // valueLoading.isLoading;
-                              // valueLoading.getStateLoading();
-                              // final FirebaseAuth auth = FirebaseAuth.instance;
+                              OtpVerificationParameter param =
+                                  OtpVerificationParameter(
+                                      phone: _phoneNumberController.text,
+                                      email: _emailController.text);
+                              var res = await _phoneAuthentication.call(
+                                  param:
+                                      "$countryNum${_phoneNumberController.text}");
 
-                              // final SharedPreferences prefs =
-                              //     await SharedPreferences.getInstance();
-
-                              // Provider.of<AuthProvider>(context, listen: false)
-                              //     .registerWithEmail(
-                              //         _emailController.text,
-                              //         _phoneNumberController.text,
-                              //         prefs.getString("role") ?? "",
-                              //         context)
-                              //     .then((value) {
-                              //   valueLoading.isLoading;
-                              //   valueLoading.getStateLoading();
-                              // }).then((value) {
-                              //   prefs.setString(
-                              //       "uid", auth.currentUser!.uid.toString());
-                              //   prefs.setString(
-                              //       "password", _phoneNumberController.text);
-                              // }).then(
-                              //   (value) {
-                              //     String docsId = FirebaseAuth
-                              //         .instance.currentUser!.uid
-                              //         .toString();
-                              //     Map<String, dynamic> data = {
-                              //       "uid": prefs.getString("uid") ?? "",
-                              //       "password":
-                              //           prefs.getString("password") ?? "",
-                              //     };
-                              //     FirebaseFirestore.instance
-                              //         .collection('biodata')
-                              //         .doc(docsId)
-                              //         .update(data);
-                              //   },
-                              // );
-                              BiodataParameter param = BiodataParameter(
-                                email: _emailController.text,
-                                phone: countryNum + _phoneNumberController.text,
-                              );
-
-                              context.go("/auth/register/biodata",
+                              if (res == "invalid-phone-number") {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text("Invalid Phone Number"),
+                                  duration: Duration(milliseconds: 300),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text("There seem to be an error"),
+                                  duration: Duration(milliseconds: 300),
+                                ));
+                              }
+                              context.go("/auth/register/otp-register",
                                   extra: param);
                             },
                             child: Text(

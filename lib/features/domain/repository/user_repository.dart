@@ -12,4 +12,6 @@ abstract class UserRepository {
   Future<List<dynamic>> getRecentlySeen();
   Future<UserCredentialEntity> getUserCredentials();
   Future<String> updateProfile(Map<String, dynamic> data);
+  Future<String> phoneAuthentication(String s);
+  Future<bool> verifyOtp(String s);
 }
