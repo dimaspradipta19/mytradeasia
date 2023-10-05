@@ -1,12 +1,17 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_event.dart';
 import 'package:mytradeasia/features/presentation/state_management/dhl_shipment_bloc/dhl_shipment_state.dart';
+import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_bloc.dart';
+import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_event.dart';
+import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_state.dart';
+import 'package:mytradeasia/helper/helper_functions.dart';
 
 import '../../../../../../config/themes/theme.dart';
 
@@ -47,7 +52,87 @@ class _DetailedShipmentProductsScreenState
   void initState() {
     BlocProvider.of<DhlShipmentBloc>(context)
         .add(const FetchDhlShipment("4995568406"));
+    BlocProvider.of<SearatesRouteBloc>(context)
+        .add(GetRoute("COAU7885072330", "BL", "COSU"));
     super.initState();
+  }
+
+  Widget shipmentMap() {
+    return BlocBuilder<SearatesRouteBloc, SearatesRouteState>(
+      builder: (context, state) {
+        log("ROUTE STATE : ${state}");
+        if (state is SearatesRouteLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is SearatesRouteDone) {
+          return FlutterMap(
+            nonRotatedChildren: [
+              RichAttributionWidget(
+                attributions: [
+                  TextSourceAttribution('OpenStreetMap contributors',
+                      onTap: () {}),
+                ],
+              ),
+            ],
+            options: MapOptions(
+                center: listDoubleToLatLng(state.route!.data!.pin!), zoom: 3),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'com.example.app',
+              ),
+              PolylineLayer(
+                polylines: [
+                  Polyline(
+                      points: toListLatLng(state.route!.data!.route![0].path!),
+                      color: Colors.blue,
+                      strokeWidth: 3,
+                      isDotted: true),
+                ],
+              ),
+              PolylineLayer(
+                polylines: [
+                  Polyline(
+                      points: toListLatLng(state.route!.data!.route![1].path!),
+                      color: Colors.blue,
+                      strokeWidth: 3,
+                      isDotted: true),
+                ],
+              ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    // point: LatLng(-6.1333333333333, 106.83333333333),
+                    point: listDoubleToLatLng(state.route!.data!.pin!),
+                    builder: (context) {
+                      return const Icon(
+                        Icons.directions_boat_filled_rounded,
+                        color: Color(0xFF123C69),
+                        size: 20,
+                      );
+                    },
+                  ),
+                  Marker(
+                    point:
+                        toListLatLng(state.route!.data!.route!.last.path!).last,
+                    builder: (context) {
+                      return const Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                        size: 20,
+                      );
+                    },
+                  ),
+                ],
+              )
+            ],
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 
   @override
@@ -198,9 +283,10 @@ class _DetailedShipmentProductsScreenState
                             const EdgeInsets.symmetric(horizontal: size20px),
                         child: Column(
                           children: [
-                            InkWell(
-                              child: Image.asset("assets/images/dummy_map.png"),
-                              onTap: () => context.goNamed("map"),
+                            SizedBox(
+                              height: 200,
+                              width: 335,
+                              child: shipmentMap(),
                             ),
                             const SizedBox(height: size20px),
                             ListView.builder(

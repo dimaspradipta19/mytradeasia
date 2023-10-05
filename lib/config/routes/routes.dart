@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
-import 'package:mytradeasia/features/presentation/pages/menu/history/tracking_shipment/tracking_shipment_map_screen.dart';
-import 'package:mytradeasia/utils/ship_go.dart';
 import '../../features/presentation/pages/auth/biodata/biodata_screen.dart';
 import '../../features/presentation/pages/auth/choose_role/role_user_screen.dart';
 import '../../features/presentation/pages/auth/login/forgot_password/forgot_password_screen.dart';
@@ -172,15 +170,7 @@ class Routes {
                                 name: "shipment_product",
                                 builder: (context, state) {
                                   return const DetailedShipmentProductsScreen();
-                                },
-                                routes: [
-                                  GoRoute(
-                                      path: "map",
-                                      name: "map",
-                                      builder: (context, state) {
-                                        return const TrackingShipmentMapScreen();
-                                      })
-                                ])
+                                })
                           ])
                     ]),
               ]),

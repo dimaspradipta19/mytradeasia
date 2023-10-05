@@ -1,3 +1,4 @@
+import 'package:latlong2/latlong.dart';
 import 'package:mytradeasia/features/data/model/cart_models/cart_models.dart';
 import 'package:mytradeasia/features/domain/entities/product_entities/product_entity.dart';
 
@@ -24,4 +25,16 @@ CartModel castProductEntityToCartModel(
       seoUrl: product.seoUrl,
       quantity: quantity,
       unit: unit);
+}
+
+LatLng listDoubleToLatLng(List<double> list) {
+  return LatLng(list.first, list.last);
+}
+
+List<LatLng> toListLatLng(List<List<double>> list) {
+  List<LatLng> newList = [];
+  for (var element in list) {
+    newList.add(LatLng(element.first, element.last));
+  }
+  return newList;
 }
