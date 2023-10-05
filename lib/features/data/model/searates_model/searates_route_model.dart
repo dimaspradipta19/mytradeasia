@@ -1,3 +1,4 @@
+import 'package:latlong2/latlong.dart';
 import 'package:mytradeasia/features/domain/entities/searates_entities/searates_route_entity.dart';
 
 class SearatesRouteModel extends SearatesRouteEntity {
@@ -10,13 +11,13 @@ class SearatesRouteModel extends SearatesRouteEntity {
   SearatesRouteModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -33,19 +34,19 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     if (json['route'] != null) {
       route = <Route>[];
-      json['route'].forEach((v) {
-        route!.add(new Route.fromJson(v));
-      });
+      for (var item in json['route']) {
+        route!.add(Route.fromJson(item));
+      }
     }
     pin = json['pin'].cast<double>();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.route != null) {
-      data['route'] = this.route!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (route != null) {
+      data['route'] = route!.map((v) => v.toJson()).toList();
     }
-    data['pin'] = this.pin;
+    data['pin'] = pin;
     return data;
   }
 }
@@ -60,21 +61,22 @@ class Route {
   Route.fromJson(Map<String, dynamic> json) {
     if (json['path'] != null) {
       path = <List<double>>[];
-      json['path'].forEach((v) {
-        path!.add(v);
-      });
+      for (var item in json['path']) {
+        path!.add(List<double>.from(item.map((x) => x.toDouble())));
+      }
     }
     type = json['type'];
     transportType = json['transport_type'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.path != null) {
-      data['path'] = this.path!.map((v) => v).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (path != null) {
+      data['path'] =
+          path!.map((v) => List<dynamic>.from(v.map((x) => x))).toList();
     }
-    data['type'] = this.type;
-    data['transport_type'] = this.transportType;
+    data['type'] = type;
+    data['transport_type'] = transportType;
     return data;
   }
 }

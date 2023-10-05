@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/routes/parameters.dart';
@@ -157,6 +159,7 @@ class Routes {
                           path: "detail",
                           name: "detail_tracking_shipment",
                           builder: (context, state) {
+                            log("EXTRA : ${state.extra.toString()}");
                             TrackingShipmentParameter param =
                                 state.extra as TrackingShipmentParameter;
                             return TrackingShipmentDetailScreen(

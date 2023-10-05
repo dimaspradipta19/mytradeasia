@@ -20,8 +20,6 @@ class DhlShipmentService {
 
     final data = response.data;
 
-    log("DHL DATA : $data");
-
     final dhlShipmentData = DhlShipmentModel.fromJson(data);
 
     return Response<DhlShipmentModel>(
