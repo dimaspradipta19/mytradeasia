@@ -19,6 +19,7 @@ class SearatesService {
     return Response<SearatesRouteModel>(
         requestOptions: response.requestOptions,
         statusCode: response.statusCode,
+        statusMessage: response.data['status'],
         data: SearatesRouteModel.fromJson(data));
   }
 }

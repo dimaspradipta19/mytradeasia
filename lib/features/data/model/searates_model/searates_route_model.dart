@@ -38,7 +38,7 @@ class Data {
         route!.add(Route.fromJson(item));
       }
     }
-    pin = json['pin'].cast<double>();
+    pin = json['pin'] == null ? null : json['pin'].cast<double>();
   }
 
   Map<String, dynamic> toJson() {
