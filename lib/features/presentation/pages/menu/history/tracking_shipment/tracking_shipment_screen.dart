@@ -116,7 +116,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                          .symmetric(
+                                                      .symmetric(
                                                       horizontal: 8.0),
                                                   child: Text(
                                                     "Shipped",
@@ -140,7 +140,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                          .symmetric(
+                                                      .symmetric(
                                                       horizontal: 8.0),
                                                   child: Text(
                                                     "Pending",
@@ -159,7 +159,7 @@ class _TrackingShipmentScreenState extends State<TrackingShipmentScreen> {
                                           )
                                         ],
                                       ),
-                                      const SizedBox(height: 20.0),
+                                      const SizedBox(height: 10.0),
                                       Row(
                                         children: [
                                           // shipments
