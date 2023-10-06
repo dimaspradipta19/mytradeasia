@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -20,7 +21,17 @@ class SearatesRouteRepositoryImpl implements SearatesRepository {
       final response = await _searatesRouteService.getRoute(
           number: number, type: type, sealine: sealine);
       if (response.statusCode == HttpStatus.ok) {
-        return DataSuccess(response.data!);
+        log("RESPONSE DATA : ${response.data}");
+        if (response.statusMessage != "error") {
+          return DataSuccess(response.data!);
+        } else {
+          return DataFailed(DioException(
+            error: response.statusMessage,
+            response: response,
+            type: DioExceptionType.badResponse,
+            requestOptions: response.requestOptions,
+          ));
+        }
       } else {
         return DataFailed(DioException(
           error: response.statusMessage,
