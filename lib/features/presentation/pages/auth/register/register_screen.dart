@@ -267,23 +267,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   OtpVerificationParameter(
                                       phone: _phoneNumberController.text,
                                       email: _emailController.text);
-                              var res = await _phoneAuthentication.call(
-                                  param:
-                                      "$countryNum${_phoneNumberController.text}");
+                              // var res = await _phoneAuthentication.call(
+                              //     param:
+                              //         "$countryNum${_phoneNumberController.text}");
 
-                              if (res == "invalid-phone-number") {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text("Invalid Phone Number"),
-                                  duration: Duration(milliseconds: 300),
-                                ));
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text("There seem to be an error"),
-                                  duration: Duration(milliseconds: 300),
-                                ));
-                              }
+                              // if (res == "invalid-phone-number") {
+                              //   ScaffoldMessenger.of(context)
+                              //       .showSnackBar(const SnackBar(
+                              //     content: Text("Invalid Phone Number"),
+                              //     duration: Duration(milliseconds: 300),
+                              //   ));
+                              // } else {
+                              //   ScaffoldMessenger.of(context)
+                              //       .showSnackBar(const SnackBar(
+                              //     content: Text("There seem to be an error"),
+                              //     duration: Duration(milliseconds: 300),
+                              //   ));
+                              // }
                               context.go("/auth/register/otp-register",
                                   extra: param);
                             },

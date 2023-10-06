@@ -35,91 +35,98 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: size20px * 2.5),
-              child: Center(
-                child: Image.asset(
-                  "assets/images/logo_biru.png",
-                  width: 159.0,
-                  height: 65.0,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: size20px * 2.5),
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/logo_biru.png",
+                    width: 159.0,
+                    height: 65.0,
+                  ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: size20px * 1.5),
-              child: Text(
-                "Which role that describes you?",
-                style: heading1,
+              const Padding(
+                padding: EdgeInsets.only(bottom: size20px * 1.5),
+                child: Text(
+                  "Which role that describes you?",
+                  style: heading1,
+                ),
               ),
-            ),
 
-            /* Customer */
-            ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: roleUser.length,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(bottom: size20px / 2),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      // Deselect all other containers
-                      for (int i = 0; i < roleUser.length; i++) {
-                        if (i != index) {
-                          roleUser[i].isSelected = false;
+              /* Customer */
+              ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: roleUser.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.only(bottom: size20px / 2),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        // Deselect all other containers
+                        for (int i = 0; i < roleUser.length; i++) {
+                          if (i != index) {
+                            roleUser[i].isSelected = false;
+                          }
                         }
-                      }
-                      // Select user
-                      roleUser[index].isSelected = !roleUser[index].isSelected;
-                    });
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: roleUser[index].isSelected == true
-                              ? secondaryColor1
-                              : greyColor3),
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            roleUser[index].urlImage,
-                            width: 43.0,
-                            height: 43.0,
-                          ),
-                          const SizedBox(width: 20.0),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(roleUser[index].role),
-                                const SizedBox(height: 5.0),
-                                Text(
-                                  roleUser[index].roleDescription,
-                                  style: body2Light.copyWith(color: greyColor),
-                                )
-                              ],
+                        // Select user
+                        roleUser[index].isSelected =
+                            !roleUser[index].isSelected;
+                      });
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: roleUser[index].isSelected == true
+                                ? secondaryColor1
+                                : greyColor3),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              roleUser[index].urlImage,
+                              width: 43.0,
+                              height: 43.0,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 20.0),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(roleUser[index].role),
+                                  const SizedBox(height: 5.0),
+                                  Text(
+                                    roleUser[index].roleDescription,
+                                    style:
+                                        body2Light.copyWith(color: greyColor),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -159,33 +166,14 @@ class _RoleUserScreenState extends State<RoleUserScreen> {
 
                         /* With go_route */
                         context.go("/auth/register");
-
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const RegisterScreen(),
-                        //   ),
-                        // );
                       } else if (selectedRole.role == "Agent") {
                         await prefs.setString("role", selectedRole.role);
                         /* With go_route */
                         context.go("/auth/register");
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const RegisterScreen(),
-                        //   ),
-                        // );
                       } else if (selectedRole.role == "Sales") {
                         await prefs.setString("role", selectedRole.role);
                         /* With go_route */
                         context.go("/auth/register");
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const RegisterScreen(),
-                        //   ),
-                        // );
                       }
                     }
                   : null,

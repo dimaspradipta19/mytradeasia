@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/features/domain/usecases/user_usecases/verify_otp.dart';
+import 'package:mytradeasia/helper/injections_container.dart';
 
 import '../../../../../../../config/themes/theme.dart';
 import '../../../widgets/dialog_sheet_widget.dart';
@@ -21,11 +23,16 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
   final TextEditingController _digit2Controller = TextEditingController();
   final TextEditingController _digit3Controller = TextEditingController();
   final TextEditingController _digit4Controller = TextEditingController();
+  final TextEditingController _digit5Controller = TextEditingController();
+  final TextEditingController _digit6Controller = TextEditingController();
   final FocusNode _focusNode1 = FocusNode();
   final FocusNode _focusNode2 = FocusNode();
   final FocusNode _focusNode3 = FocusNode();
   final FocusNode _focusNode4 = FocusNode();
+  final FocusNode _focusNode5 = FocusNode();
+  final FocusNode _focusNode6 = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  final VerifyOtp _verifyOtp = injections<VerifyOtp>();
 
   @override
   void dispose() {
@@ -33,13 +40,18 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
     _digit2Controller.dispose();
     _digit3Controller.dispose();
     _digit4Controller.dispose();
+    _digit5Controller.dispose();
+    _digit6Controller.dispose();
     _focusNode1.dispose();
     _focusNode2.dispose();
     _focusNode3.dispose();
     _focusNode4.dispose();
+    _focusNode5.dispose();
+    _focusNode6.dispose();
     super.dispose();
   }
 
+  //TODO:masih pake firebase
   final _auth = FirebaseAuth.instance;
 
   @override
@@ -85,7 +97,7 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 60,
+                      width: 50,
                       child: TextFormField(
                         controller: _digit1Controller,
                         focusNode: _focusNode1,
@@ -119,7 +131,7 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 50,
                       child: TextFormField(
                         controller: _digit2Controller,
                         focusNode: _focusNode2,
@@ -127,6 +139,80 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                         onChanged: (value) {
                           if (value.length == 1) {
                             _focusNode2.unfocus();
+                            _focusNode3.requestFocus();
+                          } else {
+                            _focusNode1.requestFocus();
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                          border: OutlineInputBorder(),
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: secondaryColor1),
+                          ),
+                        ),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a digit';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50,
+                      child: TextFormField(
+                        controller: _digit3Controller,
+                        focusNode: _focusNode3,
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            _focusNode3.unfocus();
+                            _focusNode4.requestFocus();
+                          } else {
+                            _focusNode2.requestFocus();
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                          border: OutlineInputBorder(),
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: greyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: secondaryColor1),
+                          ),
+                        ),
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a digit';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50,
+                      child: TextFormField(
+                        controller: _digit4Controller,
+                        focusNode: _focusNode4,
+                        textInputAction: TextInputAction.next,
+                        onChanged: (value) {
+                          if (value.length == 1) {
+                            _focusNode4.unfocus();
+                            _focusNode5.requestFocus();
+                          } else {
                             _focusNode3.requestFocus();
                           }
                         },
@@ -153,14 +239,16 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 50,
                       child: TextFormField(
-                        controller: _digit3Controller,
-                        focusNode: _focusNode3,
+                        controller: _digit5Controller,
+                        focusNode: _focusNode5,
                         textInputAction: TextInputAction.next,
                         onChanged: (value) {
                           if (value.length == 1) {
-                            _focusNode3.unfocus();
+                            _focusNode5.unfocus();
+                            _focusNode6.requestFocus();
+                          } else {
                             _focusNode4.requestFocus();
                           }
                         },
@@ -187,14 +275,16 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 50,
                       child: TextFormField(
-                        controller: _digit4Controller,
-                        focusNode: _focusNode4,
+                        controller: _digit6Controller,
+                        focusNode: _focusNode6,
                         textInputAction: TextInputAction.next,
                         onChanged: (value) {
                           if (value.length == 1) {
-                            _focusNode4.unfocus();
+                            _focusNode6.unfocus();
+                          } else {
+                            _focusNode5.requestFocus();
                           }
                         },
                         decoration: const InputDecoration(
@@ -232,7 +322,9 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                         _digit1Controller.text.isNotEmpty &&
                                 _digit2Controller.text.isNotEmpty &&
                                 _digit3Controller.text.isNotEmpty &&
-                                _digit4Controller.text.isNotEmpty
+                                _digit4Controller.text.isNotEmpty &&
+                                _digit5Controller.text.isNotEmpty &&
+                                _digit6Controller.text.isNotEmpty
                             ? primaryColor1
                             : greyColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -244,24 +336,37 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                   onPressed: _digit1Controller.text.isNotEmpty &&
                           _digit2Controller.text.isNotEmpty &&
                           _digit3Controller.text.isNotEmpty &&
-                          _digit4Controller.text.isNotEmpty
-                      ? () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return DialogWidget(
-                                  urlIcon:
-                                      "assets/images/logo_email_change.png",
-                                  title: "Password has been Change",
-                                  subtitle:
-                                      "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                                  textForButton: "Back to My Tradeasia",
-                                  navigatorFunction: () {
-                                    /* With go_route */
-                                    context.go("/home");
-                                  });
-                            },
-                          );
+                          _digit4Controller.text.isNotEmpty &&
+                          _digit5Controller.text.isNotEmpty &&
+                          _digit6Controller.text.isNotEmpty
+                      ? () async {
+                          String otpCode = _digit1Controller.text +
+                              _digit2Controller.text +
+                              _digit3Controller.text +
+                              _digit4Controller.text +
+                              _digit5Controller.text +
+                              _digit6Controller.text;
+                          var res = await _verifyOtp.call(param: otpCode);
+                          if (res) {
+                            context.pushReplacement("/auth/login");
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DialogWidget(
+                                    urlIcon:
+                                        "assets/images/logo_email_change.png",
+                                    title: "OTP code wrong/already expired",
+                                    subtitle:
+                                        "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                    textForButton: "Close",
+                                    navigatorFunction: () {
+                                      /* With go_route */
+                                      context.pop();
+                                    });
+                              },
+                            );
+                          }
                         }
                       : null,
                   child: Text(
