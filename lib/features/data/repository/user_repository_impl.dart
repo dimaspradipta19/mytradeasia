@@ -82,4 +82,14 @@ class UserRepositoryImpl implements UserRepository {
   Future<String> updateProfile(Map<String, dynamic> data) {
     return _authUserFirebase.updateProfile(data);
   }
+
+  @override
+  Future<String> phoneAuthentication(String s) {
+    return _authUserFirebase.phoneAuthentication(s);
+  }
+
+  @override
+  Future<bool> verifyOtp(String s) {
+    return _authUserFirebase.verifyOTP(s);
+  }
 }

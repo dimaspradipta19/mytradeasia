@@ -38,6 +38,12 @@ class BiodataParameter {
   BiodataParameter({required this.email, required this.phone});
 }
 
+class OtpVerificationParameter {
+  String email;
+  String phone;
+  OtpVerificationParameter({required this.email, required this.phone});
+}
+
 class RequestQuotationParameter {
   List<ProductToRfq> products;
   RequestQuotationParameter({required this.products});
