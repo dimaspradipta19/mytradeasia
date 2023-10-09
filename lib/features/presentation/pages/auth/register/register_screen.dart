@@ -2,6 +2,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/phone_authentication.dart';
+import 'package:mytradeasia/features/presentation/widgets/loading_overlay_widget.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
 import '../../../../../config/routes/parameters.dart';
 import '../../../../../config/themes/theme.dart';
@@ -267,23 +268,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   OtpVerificationParameter(
                                       phone: _phoneNumberController.text,
                                       email: _emailController.text);
-                              // var res = await _phoneAuthentication.call(
-                              //     param:
-                              //         "$countryNum${_phoneNumberController.text}");
-
-                              // if (res == "invalid-phone-number") {
-                              //   ScaffoldMessenger.of(context)
-                              //       .showSnackBar(const SnackBar(
-                              //     content: Text("Invalid Phone Number"),
-                              //     duration: Duration(milliseconds: 300),
-                              //   ));
-                              // } else {
-                              //   ScaffoldMessenger.of(context)
-                              //       .showSnackBar(const SnackBar(
-                              //     content: Text("There seem to be an error"),
-                              //     duration: Duration(milliseconds: 300),
-                              //   ));
-                              // }
+                              //TODO: captcha OTP
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (context) {
+                              //     return const LoadingOverlay();
+                              //   },
+                              // );
+                              await _phoneAuthentication
+                                  .call(
+                                      param:
+                                          "$countryNum${_phoneNumberController.text}")
+                                  .then((value) {
+                                if (value == "invalid-phone-number") {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text("Invalid Phone Number"),
+                                    duration: Duration(milliseconds: 300),
+                                  ));
+                                } else if (value == "verification-completed") {
+                                  context.go("/auth/register/otp-register",
+                                      extra: param);
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text("There seem to be an error"),
+                                    duration: Duration(milliseconds: 300),
+                                  ));
+                                }
+                              });
                               context.go("/auth/register/otp-register",
                                   extra: param);
                             },

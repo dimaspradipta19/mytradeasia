@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mytradeasia/config/routes/parameters.dart';
 import 'package:mytradeasia/features/domain/usecases/user_usecases/verify_otp.dart';
 import 'package:mytradeasia/helper/injections_container.dart';
 
@@ -346,27 +347,31 @@ class _RegisterOtpScreenState extends State<RegisterOtpScreen> {
                               _digit4Controller.text +
                               _digit5Controller.text +
                               _digit6Controller.text;
-                          var res = await _verifyOtp.call(param: otpCode);
-                          if (res) {
-                            context.pushReplacement("/auth/login");
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return DialogWidget(
-                                    urlIcon:
-                                        "assets/images/logo_email_change.png",
-                                    title: "OTP code wrong/already expired",
-                                    subtitle:
-                                        "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
-                                    textForButton: "Close",
-                                    navigatorFunction: () {
-                                      /* With go_route */
-                                      context.pop();
-                                    });
-                              },
-                            );
-                          }
+                          BiodataParameter param = BiodataParameter(
+                              email: widget.email, phone: widget.phone);
+                          await _verifyOtp.call(param: otpCode).then((value) {
+                            if (value) {
+                              context.pushReplacement("/auth/register/biodata",
+                                  extra: param);
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return DialogWidget(
+                                      urlIcon:
+                                          "assets/images/logo_email_change.png",
+                                      title: "OTP code wrong/already expired",
+                                      subtitle:
+                                          "Lorem ipsum dolor sit amet consectetur. Egestas porttitor risus enim cursus rutrum molestie tortor",
+                                      textForButton: "Close",
+                                      navigatorFunction: () {
+                                        /* With go_route */
+                                        context.pop();
+                                      });
+                                },
+                              );
+                            }
+                          });
                         }
                       : null,
                   child: Text(

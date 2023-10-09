@@ -20,7 +20,7 @@ class DialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 170.0),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70.0),
       scrollable: false,
       contentPadding: const EdgeInsets.all(20),
       content: Column(

@@ -131,35 +131,53 @@ class AuthUserFirebase {
 
   Future<String> phoneAuthentication(String phoneNo) async {
     var res = "";
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNo,
-      verificationCompleted: (credential) async {
-        await _auth.signInWithCredential(credential);
-        res = "verification-complete";
-      },
-      verificationFailed: (e) {
-        if (e.code == "invalid-phone-number") {
-          res = "invalid-phone-number";
-        } else {
-          res = "error";
-        }
-      },
-      codeSent: (verificationId, resendToken) {
-        this.verificationId = verificationId;
-      },
-      codeAutoRetrievalTimeout: (verificationId) {
-        this.verificationId = verificationId;
-      },
-    );
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        verificationCompleted: (credential) async {
+          // await _auth.signInWithCredential(credential);
+          res = "verification-complete";
+          log(credential.smsCode.toString());
+          log(credential.token.toString());
+          log(credential.verificationId.toString());
+          log(credential.accessToken.toString());
+        },
+        verificationFailed: (e) {
+          if (e.code == "invalid-phone-number") {
+            res = "invalid-phone-number";
+          } else {
+            log(e.toString());
+            res = "error";
+          }
+        },
+        codeSent: (verificationId, resendToken) {
+          this.verificationId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (verificationId) {
+          this.verificationId = verificationId;
+        },
+      );
+    } catch (e) {
+      log(e.toString());
+      res = "error";
+    }
+
     return res;
   }
 
   Future<bool> verifyOTP(String otp) async {
-    var credentials =
-        await _auth.signInWithCredential(PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: otp,
-    ));
-    return credentials.user != null ? true : false;
+    try {
+      // _auth.authStateChanges().
+      var credentials =
+          await _auth.signInWithCredential(PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: otp,
+      ));
+
+      return credentials.user != null ? true : false;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
   }
 }
