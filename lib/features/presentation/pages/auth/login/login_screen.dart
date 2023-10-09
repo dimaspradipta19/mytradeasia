@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       _emailController.text,
                                       _phoneNumberController.text,
                                       context));
-                                  if (state is! AuthLoggedInState) {
+                                  if (state is AuthLoggedInState) {
                                     _connection = !_connection;
                                   }
                                 }
