@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mytradeasia/config/themes/theme.dart';
+import 'package:mytradeasia/features/presentation/state_management/chat_handler/message_collecting_handler.dart';
 import 'package:mytradeasia/features/presentation/widgets/sales_bubble_chat_widget.dart';
 import 'package:mytradeasia/features/presentation/widgets/user_bubble_chat_widget.dart';
 import 'package:mytradeasia/old_file_tobedeleted/widget/text_editing_widget.dart';
@@ -35,100 +36,21 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
   List<BaseMessage> messageList = [];
   List<String> memberIdList = [];
 
-  void _initializeMessageCollection() {
-    GroupChannel.getChannel(widget.channelUrl).then((channel) {
-      collection = MessageCollection(
-        channel: channel,
-        params: MessageListParams(),
-        handler: MessageCollectingHandler(this),
-      )..initialize();
-
-      setState(() {
-        title = '${channel.name} (${messageList.length})';
-        memberIdList = channel.members.map((member) => member.userId).toList();
-        memberIdList.sort((a, b) => a.compareTo(b));
-      });
-    });
-  }
-
-  void _disposeMessageCollection() {
-    collection?.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
-    _initializeMessageCollection();
+    initializeMessageCollection();
   }
 
   @override
   void dispose() {
     _message.dispose();
-    _disposeMessageCollection();
+    disposeMessageCollection();
     super.dispose();
-  }
-
-  void _refresh({bool markAsRead = false}) {
-    if (markAsRead) {
-      SendbirdChat.markAsRead(channelUrls: [widget.channelUrl]);
-    }
-
-    setState(() {
-      if (collection != null) {
-        messageList = collection!.messageList;
-
-        title = '${collection!.channel.name} (${messageList.length})';
-        hasPrevious = collection!.params.reverse
-            ? collection!.hasNext
-            : collection!.hasPrevious;
-        hasNext = collection!.params.reverse
-            ? collection!.hasPrevious
-            : collection!.hasNext;
-        memberIdList =
-            collection!.channel.members.map((member) => member.userId).toList();
-        memberIdList.sort((a, b) => a.compareTo(b));
-      }
-    });
-  }
-
-  void _scrollToAddedMessages(CollectionEventSource eventSource) async {
-    if (collection == null || collection!.messageList.length <= 1) return;
-
-    final reverse = collection!.params.reverse;
-    final previous = eventSource == CollectionEventSource.messageLoadPrevious;
-
-    final int index;
-    if ((reverse && previous) || (!reverse && !previous)) {
-      index = collection!.messageList.length - 1;
-    } else {
-      index = 0;
-    }
-
-    while (!_scrollController.isAttached) {
-      await Future.delayed(const Duration(milliseconds: 1));
-    }
-
-    _scrollController.scrollTo(
-      index: index,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.fastOutSlowIn,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // var user1 = FirebaseFirestore.instance
-    //     .collection('messages')
-    //     .doc("${widget.currentUserId}_${widget.otherUserId}")
-    //     .collection("Message")
-    //     .orderBy("timestamp", descending: true)
-    //     .snapshots();
-    // var user2 = FirebaseFirestore.instance
-    //     .collection('messages')
-    //     .doc("${widget.otherUserId}_${widget.currentUserId}")
-    //     .collection("Message")
-    //     .orderBy("timestamp", descending: true)
-    //     .snapshots();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -147,32 +69,6 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
         backgroundColor: whiteColor,
         centerTitle: false,
         title: Text(title),
-        // StreamBuilder(
-        //     stream: biodataCollection
-        //         .where("uid", isEqualTo: widget.otherUserId)
-        //         .snapshots(),
-        //     builder: (context, snapshotUser) {
-        //       if (snapshotUser.connectionState == ConnectionState.waiting) {
-        //         return Container();
-        //       }
-
-        //       if (snapshotUser.hasData) {
-        //         return Column(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             Text(
-        //               "${snapshotUser.data?.docs[0]["firstName"] + " " + snapshotUser.data?.docs[0]["lastName"]}",
-        //               style: text15,
-        //             ),
-        //             Text(
-        //               snapshotUser.data?.docs[0]["role"],
-        //               style: body1Regular.copyWith(color: greyColor2),
-        //             )
-        //           ],
-        //         );
-        //       }
-        //       return Container();
-        //     }),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -182,43 +78,6 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
             children: [
               Expanded(
                 child: _list(widget.currentUserId, "sales", _scrollController),
-                // StreamBuilder(
-                //     stream: messagesCollection
-                //         .doc(
-                //             "rZl7GBrXeOZadvoh4SwTZnFCnEJ2_4bgyPjXoiae5dXGYbvJSuDyVNuy1")
-                //         .collection("Message")
-                //         .orderBy("timestamp", descending: true)
-                //         .snapshots(),
-                //     // stream: messagesCollection.where("users", arrayContains: _currentUser).snapshots(),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.hasError) {
-                //         return Text('Error: ${snapshot.error}');
-                //       }
-
-                //       if (snapshot.connectionState == ConnectionState.waiting) {
-                //         return const Center(
-                //             child: CircularProgressIndicator.adaptive());
-                //       }
-
-                //       // final dataSnapshot = snapshot.data!;
-
-                //       return StreamBuilder(
-                //         stream: null,
-                //         builder: (context, snapshot) {
-                //           if (snapshot.hasError) {
-                //             return Text('Error: ${snapshot.error}');
-                //           }
-
-                //           if (snapshot.connectionState ==
-                //               ConnectionState.waiting) {
-                //             return const Center(
-                //                 child: CircularProgressIndicator.adaptive());
-                //           }
-
-                //           return ListView();
-                //         },
-                //       );
-                //     }),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: size20px - 7.0),
@@ -268,7 +127,7 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
                             handler: (UserMessage message,
                                 SendbirdException? e) async {
                               if (e != null) {
-                                await _showDialogToResendUserMessage(message);
+                                await showDialogToResendUserMessage(message);
                               }
                             },
                           );
@@ -291,7 +150,7 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
     );
   }
 
-  Future<void> _showDialogToResendUserMessage(UserMessage message) async {
+  Future<void> showDialogToResendUserMessage(UserMessage message) async {
     await showDialog(
         context: context,
         barrierDismissible: false,
@@ -305,7 +164,7 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
                     message,
                     handler: (message, e) async {
                       if (e != null) {
-                        await _showDialogToResendUserMessage(message);
+                        await showDialogToResendUserMessage(message);
                       }
                     },
                   );
@@ -349,52 +208,75 @@ class MessagesDetailScreenState extends State<MessagesDetailScreen> {
       },
     );
   }
-}
 
-class MessageCollectingHandler extends MessageCollectionHandler {
-  final MessagesDetailScreenState _state;
+  void initializeMessageCollection() {
+    GroupChannel.getChannel(widget.channelUrl).then((channel) {
+      collection = MessageCollection(
+        channel: channel,
+        params: MessageListParams(),
+        handler: MessageCollectingHandler(this),
+      )..initialize();
 
-  MessageCollectingHandler(this._state);
+      setState(() {
+        title = '${channel.name} (${messageList.length})';
+        memberIdList = channel.members.map((member) => member.userId).toList();
+        memberIdList.sort((a, b) => a.compareTo(b));
+      });
+    });
+  }
 
-  @override
-  void onMessagesAdded(MessageContext context, GroupChannel channel,
-      List<BaseMessage> messages) async {
-    _state._refresh(markAsRead: true);
+  void close() {
+    context.pop();
+  }
 
-    if (context.collectionEventSource !=
-        CollectionEventSource.messageInitialize) {
-      Future.delayed(
-        const Duration(milliseconds: 100),
-        () => _state._scrollToAddedMessages(context.collectionEventSource),
-      );
+  void disposeMessageCollection() {
+    collection?.dispose();
+  }
+
+  void refresh({bool markAsRead = false}) {
+    if (markAsRead) {
+      SendbirdChat.markAsRead(channelUrls: [widget.channelUrl]);
     }
+
+    setState(() {
+      if (collection != null) {
+        messageList = collection!.messageList;
+
+        title = '${collection!.channel.name} (${messageList.length})';
+        hasPrevious = collection!.params.reverse
+            ? collection!.hasNext
+            : collection!.hasPrevious;
+        hasNext = collection!.params.reverse
+            ? collection!.hasPrevious
+            : collection!.hasNext;
+        memberIdList =
+            collection!.channel.members.map((member) => member.userId).toList();
+        memberIdList.sort((a, b) => a.compareTo(b));
+      }
+    });
   }
 
-  @override
-  void onMessagesUpdated(MessageContext context, GroupChannel channel,
-      List<BaseMessage> messages) {
-    _state._refresh();
-  }
+  void scrollToAddedMessages(CollectionEventSource eventSource) async {
+    if (collection == null || collection!.messageList.length <= 1) return;
 
-  @override
-  void onMessagesDeleted(MessageContext context, GroupChannel channel,
-      List<BaseMessage> messages) {
-    _state._refresh();
-  }
+    final reverse = collection!.params.reverse;
+    final previous = eventSource == CollectionEventSource.messageLoadPrevious;
 
-  @override
-  void onChannelUpdated(GroupChannelContext context, GroupChannel channel) {
-    _state._refresh();
-  }
+    final int index;
+    if ((reverse && previous) || (!reverse && !previous)) {
+      index = collection!.messageList.length - 1;
+    } else {
+      index = 0;
+    }
 
-  @override
-  void onChannelDeleted(GroupChannelContext context, String deletedChannelUrl) {
-    // Get.back();
-  }
+    while (!_scrollController.isAttached) {
+      await Future.delayed(const Duration(milliseconds: 1));
+    }
 
-  @override
-  void onHugeGapDetected() {
-    _state._disposeMessageCollection();
-    _state._initializeMessageCollection();
+    _scrollController.scrollTo(
+      index: index,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 }

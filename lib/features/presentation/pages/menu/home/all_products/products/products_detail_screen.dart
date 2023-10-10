@@ -807,11 +807,15 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
                           try {
                             final groupChannel =
                                 await GroupChannel.createChannel(
-                                    GroupChannelCreateParams()
-                                      ..userIds = [
-                                        state.sendbirdUser!.userId,
-                                        'sales'
-                                      ]);
+                                        GroupChannelCreateParams()
+                                          ..name = state.sendbirdUser!.nickname
+                                          ..userIds = [
+                                            state.sendbirdUser!.userId,
+                                            'sales'
+                                          ])
+                                    .whenComplete(
+                              () => context.go("/message"),
+                            );
                             print(groupChannel.channelUrl);
                           } catch (e) {
                             // Handle error.

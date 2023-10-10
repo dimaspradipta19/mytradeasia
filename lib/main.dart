@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:mytradeasia/features/presentation/state_management/message_bloc/channel_list/channel_list_bloc.dart';
+// import 'package:mytradeasia/features/presentation/state_management/message_bloc/channel_list/channel_list_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/searates_bloc/searates_route/searates_route_bloc.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 import 'package:mytradeasia/config/routes/routes.dart';
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => injections<SalesforceLoginBloc>()),
         BlocProvider(create: (_) => injections<SalesforceDataBloc>()),
         BlocProvider(create: (_) => injections<SalesforceDetailBloc>()),
-        BlocProvider(create: (_) => injections<ChannelListBloc>()),
+        // BlocProvider(create: (_) => ChannelListBloc()),
         BlocProvider(create: (_) => injections<SearatesRouteBloc>())
       ],
       child: StreamBuilder<InternetConnectionStatus>(
