@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,9 +6,6 @@ import 'package:mytradeasia/config/themes/theme.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_bloc.dart';
 import 'package:mytradeasia/features/presentation/state_management/auth_bloc/auth_state.dart';
 import 'package:mytradeasia/features/presentation/state_management/chat_handler/channel_collecting_handler.dart';
-// import 'package:mytradeasia/features/presentation/state_management/message_bloc/channel_list/channel_list_bloc.dart';
-// import 'package:mytradeasia/features/presentation/state_management/message_bloc/channel_list/channel_list_event.dart';
-// import 'package:mytradeasia/features/presentation/state_management/message_bloc/channel_list/channel_list_state.dart';
 import 'package:sendbird_chat_sdk/sendbird_chat_sdk.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -21,8 +16,6 @@ class MessageScreen extends StatefulWidget {
 }
 
 class MessageScreenState extends State<MessageScreen> {
-  // final String _currentUser = FirebaseAuth.instance.currentUser!.uid.toString();
-
   late GroupChannelCollection collection;
 
   String title = 'GroupChannels';
@@ -42,9 +35,7 @@ class MessageScreenState extends State<MessageScreen> {
 
   @override
   void initState() {
-    // BlocProvider.of<ChannelListBloc>(context).add(const Dispose());
     super.initState();
-    // BlocProvider.of<ChannelListBloc>(context).add(GetChannelList(this));
     collection = GroupChannelCollection(
       query: GroupChannelListQuery()
         ..order = GroupChannelListQueryOrder.latestLastMessage,
@@ -275,9 +266,7 @@ class MessageScreenState extends State<MessageScreen> {
   }
 
   void refresh() {
-    // var channelListBloc = BlocProvider.of<ChannelListBloc>(context);
     setState(() {
-      // channelListBloc.add(Refresh());
       channelList = collection.channelList;
       if (collection.channelList.isNotEmpty) {}
     });
